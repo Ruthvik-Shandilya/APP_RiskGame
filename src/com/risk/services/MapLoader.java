@@ -26,7 +26,7 @@ public class MapLoader {
 		this.territoriesDetail = new ArrayList<String>();
 	}
 
-	public void validateAndLoadMapFile(String mapFile) {
+	public boolean validateAndLoadMapFile(String mapFile) {
 		
 		boolean mapFileValidated;
 		MapValidate mapValidate = new MapValidate();
@@ -83,7 +83,9 @@ public class MapLoader {
 			} 
 			catch (IOException e) {
 				e.printStackTrace();
+				return false;
 			}
-		} 
+		}
+		return true; 
 	}
 }
