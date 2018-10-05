@@ -2,7 +2,7 @@ package com.risk.model;
 
 import java.util.ArrayList;
 
-public class Continent {
+public class Continent{
 
     private String name;
 
@@ -13,6 +13,7 @@ public class Continent {
     public Continent(String name, int controlValue) {
         this.name = name;
         this.controlValue = controlValue;
+        listOfCountries = new ArrayList<Country>();
     }
 
     public String getName() {
@@ -53,6 +54,12 @@ public class Continent {
             return true;
         if(!(obj instanceof Continent))
             return false;
-        return this.getName().equals(((Continent)obj).getName());
+        return this.getName().toLowerCase().equals(((Continent)obj).getName().toLowerCase());
     }
+
+    @Override
+    public int hashCode(){
+        return getName().toLowerCase().hashCode();
+    }
+
 }

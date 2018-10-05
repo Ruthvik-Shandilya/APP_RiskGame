@@ -1,5 +1,9 @@
 package com.risk.model;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+
 /**
  * Class representing country data for game play.
  *
@@ -27,11 +31,16 @@ public class Country {
     /** NUmber of armies*/
     private int noOfArmies;
 
+    private ArrayList<Country> adjacentCountries;
+
+    private Continent partOfContinent;
+
     /**
      * @param name
      * */
     public Country(String name) {
         this.name = name;
+        adjacentCountries = new ArrayList<Country>();
     }
 
     /**
@@ -97,9 +106,20 @@ public class Country {
         this.noOfArmies = noOfArmies;
     }
 
-    @Override
-    public String toString() {
-        return this.getName();
+    public ArrayList<Country> getAdjacentCountries() {
+        return adjacentCountries;
+    }
+
+    public void setAdjacentCountries(ArrayList<Country> adjacentCountries) {
+        this.adjacentCountries = adjacentCountries;
+    }
+
+    public Continent getPartOfContinent() {
+        return partOfContinent;
+    }
+
+    public void setPartOfContinent(Continent partOfContinent) {
+        this.partOfContinent = partOfContinent;
     }
 
    @Override
@@ -108,6 +128,17 @@ public class Country {
             return true;
         if(!(obj instanceof Country))
             return false;
-        return this.getName().equals(((Country)obj).getName());
+        return this.getName().toLowerCase().equals(((Country)obj).getName().toLowerCase());
     }
+
+    @Override
+    public int hashCode(){
+        return getName().hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return this.getName();
+    }
+
 }
