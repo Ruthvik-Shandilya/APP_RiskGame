@@ -15,11 +15,14 @@ import com.risk.model.Continent;
 
 public class MapValidate {
 
-    private HashMap<String, Continent> continentSetOfContinents;
+
+
+    private HashMap<String, Continent> continentSetOfContinents; // Used
 
     private HashMap<String, Continent> continentSetOfTerritories;
 
-    private HashMap<String, Country> countrySet;
+    private HashMap<String, Country> countrySet; //Used
+
 
     private HashMap<Country,ArrayList<Country>> adjacentCountries;
 
@@ -60,6 +63,7 @@ public class MapValidate {
 
     public boolean validateMapFile(String mapFile){
         this.fileName = mapFile;
+
         if(mapFile!=null){
             try(BufferedReader read = new BufferedReader(new FileReader(mapFile))) {
                 String inputText = new String(Files.readAllBytes(Paths.get(mapFile)), StandardCharsets.UTF_8);
@@ -190,6 +194,19 @@ public class MapValidate {
             }
         }
         }
+        ArrayList<Country> arr = new ArrayList<>();
+        for(Map.Entry<String, Country> entry : countrySet.entrySet()){
+
+            System.out.print(entry.getValue().getName() + " " + entry.getValue().getContinent() + " " + entry.getValue().getxValue() + " " + entry.getValue().getyValue());
+            arr = entry.getValue().getAdjacentCountries();
+            break;
+
+
+        }
+        System.out.println(arr);
+        for(Country c: arr){
+            System.out.println(c.getName());
+        }
 
         if(continentSetOfContinents.size()!=continentSetOfTerritories.size()){
            System.out.println("Number of continents defined in continents tag does not match " +
@@ -236,5 +253,15 @@ public class MapValidate {
         }
         return count;
     }
+
+    public HashMap<String, Country> getCountrySet() {
+        return countrySet;
+    }
+
+    public void setContinentSetOfContinents(HashMap<String, Continent> continentSetOfContinents) {
+        this.continentSetOfContinents = continentSetOfContinents;
+    }
+
+
 
 }
