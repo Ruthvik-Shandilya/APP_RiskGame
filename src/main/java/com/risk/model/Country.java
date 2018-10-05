@@ -120,6 +120,10 @@ public class Country {
 
     public void setPartOfContinent(Continent partOfContinent) {
         this.partOfContinent = partOfContinent;
+      
+    @Override
+    public String toString() {
+        return this.getName();
     }
 
    @Override
@@ -140,5 +144,4 @@ public class Country {
     public String toString() {
         return this.getName();
     }
-
 }

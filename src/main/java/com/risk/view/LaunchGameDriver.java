@@ -16,8 +16,7 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 
 /**
- * Launches the main window and provides the view for the user, either to load
- * or create a new map.
+ * Launches the main window and provides the view for the user, either to load or create a new map.
  *
  * @author karandeep
  * @author ruthvik

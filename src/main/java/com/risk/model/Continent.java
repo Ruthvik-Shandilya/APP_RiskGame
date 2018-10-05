@@ -2,7 +2,7 @@ package com.risk.model;
 
 import java.util.ArrayList;
 
-public class Continent{
+public class Continent {
 
     private String name;
 
@@ -61,5 +61,4 @@ public class Continent{
     public int hashCode(){
         return getName().toLowerCase().hashCode();
     }
-
 }

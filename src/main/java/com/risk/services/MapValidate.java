@@ -259,5 +259,4 @@ public class MapValidate {
 	public void setContinentSetOfContinents(HashMap<String, Continent> continentSetOfContinents) {
 		this.continentSetOfContinents = continentSetOfContinents;
 	}
-
 }
