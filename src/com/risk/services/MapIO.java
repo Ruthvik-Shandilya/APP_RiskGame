@@ -14,9 +14,18 @@ import java.util.Map;
 
 public class MapIO {
 
+
     private HashMap<String, Continent> continents;
 
     private HashMap<Country, ArrayList<Country>> adjacentCountries;
+
+    public HashMap<Continent, HashSet<Country>> getCountriesInContinent() {
+        return countriesInContinent;
+    }
+
+    public void setCountriesInContinent(HashMap<Continent, HashSet<Country>> countriesInContinent) {
+        this.countriesInContinent = countriesInContinent;
+    }
 
     private HashMap<Continent, HashSet<Country>> countriesInContinent;
 
@@ -31,12 +40,17 @@ public class MapIO {
     private static final String COMMA_DELIMITER = ",";
 
 
+
+    private HashMap<String, Country> countrySet;
+
+
     public MapIO(MapValidate map) {
         this.continents = map.getContinentSetOfContinents();
         this.adjacentCountries = map.getAdjacentCountries();
         this.countriesInContinent = map.getCountriesInContinent();
         this.fileName = map.getFileName();
         this.mapTagData = map.getMapTagData();
+        this.countrySet = map.getCountrySet();
     }
 
     public MapIO(HashMap<String, Continent> continents, HashMap<Country, ArrayList<Country>> adjacentCountries,
@@ -98,4 +112,29 @@ public class MapIO {
         }
         return this;
     }
+
+    public HashMap<Country, ArrayList<Country>> getAdjacentCountries() {
+        return adjacentCountries;
+    }
+
+    public void setAdjacentCountries(HashMap<Country, ArrayList<Country>> adjacentCountries) {
+        this.adjacentCountries = adjacentCountries;
+    }
+
+    public HashMap<String, Country> getCountrySet() {
+        return countrySet;
+    }
+
+    public void setCountrySet(HashMap<String, Country> countrySet) {
+        this.countrySet = countrySet;
+    }
+
+    public HashMap<String, Continent> getContinents() {
+        return continents;
+    }
+
+    public void setContinents(HashMap<String, Continent> continents) {
+        this.continents = continents;
+    }
+
 }

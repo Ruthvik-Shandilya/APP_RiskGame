@@ -1,5 +1,8 @@
 package com.risk.view;
 
+import com.risk.model.Continent;
+import com.risk.services.MapEditor;
+import com.risk.services.MapValidate;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -12,12 +15,27 @@ import javafx.scene.Scene;
 
 
 
-class GameDriver extends Application {
+public class LaunchGameDriver extends Application {
 
     Button loadMap, createMap;
 
     public static void main(String[] args) {
+
+        System.out.println("sdc");
+
         launch(args);
+
+//        System.out.println("sdc");
+//
+//        Continent n = new Continent("anem", 5);
+//        Continent m = new Continent("anem", 6);
+//
+//        MapEditor me = new MapEditor();
+//        me.createNewMap();
+
+        MapValidate mv = new MapValidate();
+        mv.validateMapFile("C:\\Users\\Palash\\Desktop\\Africa.map");
+
     }
 
     @Override
