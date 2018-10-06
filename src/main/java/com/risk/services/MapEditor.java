@@ -5,16 +5,19 @@ import com.risk.model.*;
 import java.util.*;
 
 public class MapEditor {
+	
+	private MapGraph mapGraph;
+	
+	public MapEditor(MapGraph mapgraph){
+		this.mapGraph = mapGraph;
+	}
 
 	public void createNewMap() {
 
 		int numOfContinents;
 		HashSet<Continent> continentSet = new HashSet<Continent>();
 		HashSet<Country> countrySet = new HashSet<Country>();
-
-		// For now I dont need this
-		// HashMap<Continent, HashSet<Country>> countriesincontinent = new
-		// HashMap<Continent, HashSet<Country>>();
+		
 
 		int numberofcountry = 0;
 		Continent bufferContinent;
@@ -43,15 +46,12 @@ public class MapEditor {
 		System.out.println("Please provide the number of continents you want to create (only an integer)");
 		try {
 			numOfContinents = Integer.parseInt(scan.nextLine().trim());
-			// System.out.println("Please enter name of continent and control
-			// value seperated by \",\"");
 			for (int i = 0; i < numOfContinents; i++) {
 
 				System.out.println("Please enter name of continent and control value seperated by \",\"");
 				String[] continentAndValue = scan.nextLine().split(",");
 				Continent checkContinent = new Continent(continentAndValue[0].trim(),
 						Integer.parseInt(continentAndValue[1].trim()));
-				// System.out.println(continentSet.contains(checkContinent));
 				if ((continentSet.contains(checkContinent))) {
 					System.out.println("Continent already exists please enter another Continent");
 					i--;
@@ -69,11 +69,9 @@ public class MapEditor {
 			System.out.println("Please enter the continent, to which you want to add countries.");
 			bufferContinent = new Continent(scan.nextLine().toLowerCase().trim(), 0);
 
-			// Searching if the continent is there or not
 			System.out.println(bufferContinent.getName());
 			if (continentSet.contains(bufferContinent)) {
 				for (Continent continent : continentSet) {
-					// Getting the right continent
 					if (continent.equals(bufferContinent)) {
 						bufferContinent = continent;
 						break;
@@ -92,7 +90,6 @@ public class MapEditor {
 
 					if (countrySet.contains(temporaryCountry)) {
 						for (Country country : countrySet) {
-							// Getting the right country
 							if (country.equals(temporaryCountry)) {
 								temporaryCountry = country;
 								break;
@@ -109,7 +106,6 @@ public class MapEditor {
 						Country temporaryNeighbourCountry = new Country(userdata[neighborCountry].trim());
 						if (countrySet.contains(temporaryNeighbourCountry)) {
 							for (Country country : countrySet) {
-								// Getting the right country
 								if (country.equals(temporaryNeighbourCountry)) {
 									temporaryNeighbourCountry = country;
 									break;
@@ -152,8 +148,8 @@ public class MapEditor {
 				}
 			}
 
-			// Code for removing a
-			// country+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+			// Code for removing a country
+
 			System.out.println(
 					"To add more countries press T, else press any key to exit, map will not be saved until complete");
 
@@ -173,28 +169,8 @@ public class MapEditor {
 
 		HashSet<Country> countrySet = new HashSet<Country>();
 		HashSet<Continent> continentSet = new HashSet<Continent>();
-
-		// Setting name, x,y and name of continent
-		for (Map.Entry<String, Country> countries : mIO.getCountrySet().entrySet()) {
-			Country checkCountry = countries.getValue();
-			countrySet.add(checkCountry);
-		}
-		// Setting anem and control value
-		for (Map.Entry<String, Continent> continents : mIO.getContinents().entrySet()) {
-			Continent checkContinent = continents.getValue();
-			continentSet.add(checkContinent);
-		}
-
-		for (Map.Entry<Continent, HashSet<Country>> countriesInContinent : mIO.getCountriesInContinent().entrySet()) {
-			// listOfCOuntries
-			// partOfContinenet
-			ArrayList<Country> arOfCountries = new ArrayList<>();
-			// convert arraylist to hashset
-			for (Country country : countriesInContinent.getValue()) {
-				arOfCountries.add(country);
-			}
-
-		}
+        
+		
 
 	}
 }
