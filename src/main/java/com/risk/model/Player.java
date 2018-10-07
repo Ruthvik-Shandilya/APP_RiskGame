@@ -5,15 +5,16 @@ import java.util.ArrayList;
 public class Player {
     private String name;
 
-    private int armyCount;
+    private int armyCount=0;
 
     private ArrayList<Country> myCountries;
 
     private ArrayList<ICardType> listOfCards;
 
 
-    public Player(ArrayList<Country> myCountries) {
-        this.myCountries = myCountries;
+    public Player() {
+        this.myCountries = new ArrayList<Country>();
+        this.listOfCards = new ArrayList<ICardType>();
     }
 
     public String getName() {
@@ -51,5 +52,20 @@ public class Player {
 
     public void setListOfCards(ArrayList<ICardType> listOfCards) {
         this.listOfCards = listOfCards;
+    }
+    
+    public void addArmiesToCountry(Country country, int numberOfArmies) {
+    	if(this.getArmyCount()>0 && this.getArmyCount()>=numberOfArmies) {
+    		if(!this.getMyCountries().contains(country)) {
+    			System.out.println("This country is not under your territory.");
+    		}
+    		else {
+    			country.setNoOfArmies(country.getNoOfArmies() + numberOfArmies);
+    			this.setArmyCount(this.getArmyCount() - numberOfArmies);
+    		}
+    	}
+    	else {
+    		System.out.println("Sufficient number of armies not available.");
+    	}
     }
 }
