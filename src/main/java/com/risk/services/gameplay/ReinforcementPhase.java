@@ -23,7 +23,7 @@ public class ReinforcementPhase {
 	ArrayList<Country> continentListOfCountries;
 	
 	/**
-	 * Method to calculate the number of countries owned by the player
+	 * Method to find the number of countries owned by the player
 	 * and to assign the armies based on the countries list.
 	 * 
 	 * @param player
@@ -34,9 +34,9 @@ public class ReinforcementPhase {
 	 * 		reinforcement armies
 	 */
 
-	public int calculateNoOfCountries(Player player, Continent continent) {
+	public int findNoOfArmies(Player player, Continent continent) {
 		int myCountries = player.getMyCountries().size();
-		int armiesCount = (int) Math.round(myCountries / 3);
+		int armiesCount = (int) Math.floor(myCountries / 3);
 
 		playerOwnedContries = player.getMyCountries();
 		continentListOfCountries = continent.getListOfCountries();
