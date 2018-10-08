@@ -19,7 +19,7 @@ public class MapValidate {
 
     private HashMap<String, Continent> continentSetOfContinents;
 
-    private HashMap<String, Continent> continentSetOfTerritories;
+	private HashMap<String, Continent> continentSetOfTerritories;
 
     private HashMap<String, Country> countrySet;
 
@@ -39,7 +39,15 @@ public class MapValidate {
         this.mapTagData = new ArrayList<>();
         this.countrySet = new HashMap<>();
     }
+    
+    public HashMap<String, Continent> getContinentSetOfTerritories() {
+		return continentSetOfTerritories;
+	}
 
+	public void setContinentSetOfTerritories(HashMap<String, Continent> continentSetOfTerritories) {
+		this.continentSetOfTerritories = continentSetOfTerritories;
+	}
+	
     public HashMap<String, Continent> getContinentSetOfContinents() {
         return continentSetOfContinents;
     }
@@ -110,6 +118,7 @@ public class MapValidate {
                                 String input[] = line.split(",");
                                 if (continentSetOfTerritories.get(input[3].trim()) == null) {
                                     Continent continent = new Continent(input[3].trim(), 0);
+                                    continent.setControlValue(continentSetOfContinents.get(input[3].trim()).getControlValue());
                                     continentSetOfTerritories.put(continent.getName(), continent);
                                 }
                                 Country country = null;
@@ -195,19 +204,19 @@ public class MapValidate {
                 }
             }
         }
-        ArrayList<Country> arr = new ArrayList<>();
-        for (Map.Entry<String, Country> entry : countrySet.entrySet()) {
-
-            System.out.print(entry.getValue().getName() + " " + entry.getValue().getContinent() + " " + entry.getValue().getxValue() + " " + entry.getValue().getyValue());
-            arr = entry.getValue().getAdjacentCountries();
-            break;
-
-
-        }
-        System.out.println(arr);
-        for (Country c : arr) {
-            System.out.println(c.getName());
-        }
+//        ArrayList<Country> arr = new ArrayList<>();
+//        for (Map.Entry<String, Country> entry : countrySet.entrySet()) {
+//
+//            System.out.print(entry.getValue().getName() + " " + entry.getValue().getContinent() + " " + entry.getValue().getxValue() + " " + entry.getValue().getyValue());
+//            arr = entry.getValue().getAdjacentCountries();
+//            break;
+//
+//
+//        }
+////        System.out.println(arr);
+//        for (Country c : arr) {
+//            System.out.println(c.getName());
+//        }
 
         if (continentSetOfContinents.size() != continentSetOfTerritories.size()) {
             System.out.println("Number of continents defined in continents tag does not match " +

@@ -126,9 +126,10 @@ public class Country {
     public boolean equals(Object obj) {
         if(obj==this)
             return true;
-        if(!(obj instanceof Country))
+        if(!(obj instanceof Country)){
             return false;
-        return this.getName().toLowerCase().equals(((Country)obj).getName().toLowerCase());
+        }
+        return this.getName().toLowerCase().trim().equals(((Country)obj).getName().toLowerCase().trim());
     }
 
     @Override
