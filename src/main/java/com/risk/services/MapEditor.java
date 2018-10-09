@@ -15,7 +15,6 @@ public class MapEditor {
 	private int numberofcountry = 0;
 	private Continent bufferContinent;
 	private Country temporaryCountry;
-	private String nameofcontinent;
 	private boolean isMoreCountries = true;
 	private boolean isDeleteCountry = true;
 	private boolean isAddEdge = true;
@@ -44,7 +43,9 @@ public class MapEditor {
 		adjacentCountries = new HashMap<Country, ArrayList<Country>>();
 	}
 
-	public void createNewMap() {
+	public boolean createNewMap() {
+		
+		editMapTagData();
 
 		Scanner scan = new Scanner(System.in);
 
@@ -67,7 +68,6 @@ public class MapEditor {
 			}
 		} catch (Exception e) {
 			System.out.println("Soemthing wentwrong in adding a continent");
-			;
 		}
 
 		while (isMoreCountries) {
@@ -124,14 +124,19 @@ public class MapEditor {
 		for (Country country : countrySet) {
 			adjacentCountries.put(country, country.getAdjacentCountries());
 		}
-
+		
+		return true;
 	}
 
-	public void editExistingMap() {
-
+	public boolean editExistingMap() {
+		
 		Scanner scan = new Scanner(System.in);
 		MapIO mapIO = mapGraph.getMapIO();
 		HashMap<String, Continent> hashMapContinent = mapIO.getContinents();
+		System.out.println("Do you want to edit Map tag data?(true or false)");
+		if(Boolean.parseBoolean(scan.nextLine())) {
+			editMapTagData();
+		}
 		System.out.println(
 				"List of already existing coontinent along with control value, list of countries and adjacent countries is listed below");
 		for (Map.Entry<String, Continent> entry : hashMapContinent.entrySet()) {
@@ -262,6 +267,8 @@ public class MapEditor {
 		for (Country country : countrySet) {
 			adjacentCountries.put(country, country.getAdjacentCountries());
 		}
+		
+		return true;
 	}
 
 	public void editMapTagData() {

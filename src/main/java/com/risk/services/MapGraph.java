@@ -17,7 +17,9 @@ public class MapGraph {
     
     private MapIO mapIO;
     
-    public MapGraph(){}
+    public MapGraph(){
+    	
+    }
     
 	public MapGraph(MapIO mapIO) {
     	this.mapIO = mapIO;
