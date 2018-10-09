@@ -14,8 +14,16 @@ import java.util.regex.Pattern;
 import com.risk.model.Country;
 import com.risk.model.Continent;
 
-public class MapValidate {
 
+/**
+ * 
+ * @author Karandeep Singh
+ * @author Ruthvik Shandilya
+ * @author Palash Jain
+ *
+ */
+
+public class MapValidate {
 
     private HashMap<String, Continent> continentSetOfContinents;
 
@@ -204,19 +212,6 @@ public class MapValidate {
                 }
             }
         }
-//        ArrayList<Country> arr = new ArrayList<>();
-//        for (Map.Entry<String, Country> entry : countrySet.entrySet()) {
-//
-//            System.out.print(entry.getValue().getName() + " " + entry.getValue().getContinent() + " " + entry.getValue().getxValue() + " " + entry.getValue().getyValue());
-//            arr = entry.getValue().getAdjacentCountries();
-//            break;
-//
-//
-//        }
-////        System.out.println(arr);
-//        for (Country c : arr) {
-//            System.out.println(c.getName());
-//        }
 
         if (continentSetOfContinents.size() != continentSetOfTerritories.size()) {
             System.out.println("Number of continents defined in continents tag does not match " +

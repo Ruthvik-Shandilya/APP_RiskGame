@@ -6,10 +6,11 @@ import java.util.Scanner;
 import com.risk.services.MapEditor;
 import com.risk.services.MapIO;
 import com.risk.services.MapValidate;
-//import com.risk.services.StartUpPhase;
-//import com.risk.services.gameplay.ReinforcementPhase;
-//import com.risk.services.gameplay.FortificationPhase;
-//import com.risk.services.gameplay.RoundRobin;
+import com.risk.services.StartUpPhase;
+import com.risk.services.gameplay.ReinforcementPhase;
+import com.risk.services.gameplay.FortificationPhase;
+import com.risk.services.gameplay.RoundRobin;
+
 import com.risk.model.Continent;
 import com.risk.model.Country;
 import com.risk.model.Player;
@@ -39,6 +40,8 @@ public class LaunchGameDriver extends Application {
 	Button loadMapButton, createMapButton;
 
 	MapIO readMap;
+	
+	boolean status = false;
 
 	public static void main(String[] args) {
 		launch(args);
@@ -72,7 +75,7 @@ public class LaunchGameDriver extends Application {
 				MapValidate mapValidate = new MapValidate();
 				if (mapValidate.validateMapFile(fileName)) {
 					readMap = new MapIO(mapValidate);
-					new MapEditor(readMap.readFile()).editExistingMap();
+					status = new MapEditor(readMap.readFile()).editExistingMap();
 				}
 			}
 		});
@@ -81,7 +84,7 @@ public class LaunchGameDriver extends Application {
 		createMapButton.setText("Create a New Map");
 		createMapButton.setOnAction(e -> {
 			createMapButton.getScene().getWindow().hide();
-			new MapEditor().createNewMap();
+			status = new MapEditor().createNewMap();
 		});
 
 		loadMapButton.setMaxWidth(150);
@@ -97,82 +100,84 @@ public class LaunchGameDriver extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		
-//		gamePlay(readMap);
+		if(status) {
+			gamePlay(readMap);
+		}
 	}
 
-//	private void gamePlay(MapIO mapIO) {
-//		Scanner scan = new Scanner(System.in);
-//
-//		System.out.println("Beginning Startup Phase.");
-//		StartUpPhase startUpPhase = new StartUpPhase(mapIO);
-//		startUpPhase.countryAllocation();
-//		startUpPhase.armyAllocationToPlayers();
-//		startUpPhase.initialArmyAllocationToCountries();
-//		startUpPhase.balanceArmyAllocationToCountries();
-//
-//		int turn = 1;
-//		RoundRobin roundRobin = new RoundRobin(startUpPhase.getListOfPlayers());
-//		
-//		while(turn <= 4) {
-//			Player player = roundRobin.next();
-//			System.out.println("Beginning Reinforcement phase for player : " + player.getName() + "\n\n");
-//			Continent continent = mapIO.getContinents().get(player.getMyCountries().get(0).getContinent());
-//			int balanceArmyCount = (new ReinforcementPhase()).findNoOfArmies(player, continent);
-//			System.out.println("Total number of armies available are: " + balanceArmyCount);
-//			player.setArmyCount(player.getArmyCount() + balanceArmyCount);
-//			for(Country country: player.getMyCountries()) {
-//				if(player.getArmyCount()>0) {
-//					System.out.println("Number of armies currently assigned to country " + country.getName() + " :" + country.getNoOfArmies());
-//					System.out.println("Available number of armies :" + player.getArmyCount());
-//					System.out.println("Enter number of armies to assign to country " + country.getName() + " :");
-//					try {
-//						int assignArmies = Integer.parseInt(scan.nextLine());
-//						player.addArmiesToCountry(country, assignArmies);
-//					}catch(NumberFormatException e) {
-//						System.out.println("Invalid number of armies.");
-//					}
-//				}
-//				else {
-//					System.out.println("You do not have sufficient number of armies available.");
-//					break;
-//				}
-//			}
-//
-//
-//			System.out.println("Beginning Fortification phase for player : " + player.getName() + "\n\n");
-//			boolean flag = true;
-//			String giverCountry = "";
-//			String receiverCountry = "";
-//			do {
-//				flag=true;
-//				System.out.println("Enter the name of country from which you want to move some army :");
-//				giverCountry = scan.nextLine();
-//				System.out.println("Enter the name of country to which you want to move some army from country " + giverCountry);
-//				receiverCountry = scan.nextLine();
-//				if(!mapIO.getCountrySet().containsKey(giverCountry.trim()) || !mapIO.getCountrySet().containsKey(receiverCountry.trim())) {
-//					flag=false;
-//					System.out.println("Please enter correct country name.");
-//				}
-//			}while(flag==false);
-//
-//			int countOfArmies = 0;
-//			do {
-//				flag=true;
-//				System.out.println("Enter the number of armies to move from " + giverCountry + " to " + receiverCountry);
-//				try {
-//					countOfArmies = Integer.parseInt(scan.nextLine());
-//					if(countOfArmies > mapIO.getCountrySet().get(giverCountry).getNoOfArmies()) {
-//						System.out.println("Sufficient number of armies is not available.");
-//						flag=false;
-//					}
-//				}catch(NumberFormatException e) {
-//					System.out.println("Invalid number of armies.");
-//				}
-//			}while(flag==false);
-//
-//			(new FortificationPhase()).moveArmies(mapIO.getCountrySet().get(giverCountry), mapIO.getCountrySet().get(receiverCountry), countOfArmies);
-//
-//			scan.close();
-//		}
-//	}
+	private void gamePlay(MapIO mapIO) {
+		Scanner scan = new Scanner(System.in);
+
+		System.out.println("Beginning Startup Phase.");
+		StartUpPhase startUpPhase = new StartUpPhase(mapIO);
+		startUpPhase.countryAllocation();
+		startUpPhase.armyAllocationToPlayers();
+		startUpPhase.initialArmyAllocationToCountries();
+		startUpPhase.balanceArmyAllocationToCountries();
+
+		int turn = 1;
+		RoundRobin roundRobin = new RoundRobin(startUpPhase.getListOfPlayers());
+		
+		while(turn <= 4) {
+			Player player = roundRobin.next();
+			System.out.println("Beginning Reinforcement phase for player : " + player.getName() + "\n\n");
+			Continent continent = mapIO.getContinents().get(player.getMyCountries().get(0).getContinent());
+			int balanceArmyCount = (new ReinforcementPhase()).findNoOfArmies(player, continent);
+			System.out.println("Total number of armies available are: " + balanceArmyCount);
+			player.setArmyCount(player.getArmyCount() + balanceArmyCount);
+			for(Country country: player.getMyCountries()) {
+				if(player.getArmyCount()>0) {
+					System.out.println("Number of armies currently assigned to country " + country.getName() + " :" + country.getNoOfArmies());
+					System.out.println("Available number of armies :" + player.getArmyCount());
+					System.out.println("Enter number of armies to assign to country " + country.getName() + " :");
+					try {
+						int assignArmies = Integer.parseInt(scan.nextLine());
+						player.addArmiesToCountry(country, assignArmies);
+					}catch(NumberFormatException e) {
+						System.out.println("Invalid number of armies.");
+					}
+				}
+				else {
+					System.out.println("You do not have sufficient number of armies available.");
+					break;
+				}
+			}
+
+
+			System.out.println("Beginning Fortification phase for player : " + player.getName() + "\n\n");
+			boolean flag = true;
+			String giverCountry = "";
+			String receiverCountry = "";
+			do {
+				flag=true;
+				System.out.println("Enter the name of country from which you want to move some army :");
+				giverCountry = scan.nextLine();
+				System.out.println("Enter the name of country to which you want to move some army from country " + giverCountry);
+				receiverCountry = scan.nextLine();
+				if(!mapIO.getCountrySet().containsKey(giverCountry.trim()) || !mapIO.getCountrySet().containsKey(receiverCountry.trim())) {
+					flag=false;
+					System.out.println("Please enter correct country name.");
+				}
+			}while(flag==false);
+
+			int countOfArmies = 0;
+			do {
+				flag=true;
+				System.out.println("Enter the number of armies to move from " + giverCountry + " to " + receiverCountry);
+				try {
+					countOfArmies = Integer.parseInt(scan.nextLine());
+					if(countOfArmies > mapIO.getCountrySet().get(giverCountry).getNoOfArmies()) {
+						System.out.println("Sufficient number of armies is not available.");
+						flag=false;
+					}
+				}catch(NumberFormatException e) {
+					System.out.println("Invalid number of armies.");
+				}
+			}while(flag==false);
+
+			(new FortificationPhase()).moveArmies(mapIO.getCountrySet().get(giverCountry), mapIO.getCountrySet().get(receiverCountry), countOfArmies);
+
+			scan.close();
+		}
+	}
 }

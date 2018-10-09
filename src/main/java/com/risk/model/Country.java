@@ -1,14 +1,12 @@
 package com.risk.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 
 /**
  * Class representing country data for game play.
  *
- * @author karandeep
- * @author palash
+ * @author Karandeep Singh
+ * @author Palash Jain
  */
 
 public class Country {

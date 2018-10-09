@@ -4,7 +4,7 @@ import com.risk.model.*;
 
 import java.util.*;
 
-public class MapEditor {
+public class MapEdit
 
 	private int numberOfContinents;
 	private HashSet<Continent> continentSet = new HashSet<Continent>();
@@ -15,7 +15,6 @@ public class MapEditor {
 	private int numberofcountry = 0;
 	private Continent bufferContinent;
 	private Country temporaryCountry;
-	private String nameofcontinent;
 	private boolean isMoreCountries = true;
 	private boolean isDeleteCountry = true;
 	private boolean isAddEdge = true;
@@ -44,7 +43,9 @@ public class MapEditor {
 		adjacentCountries = new HashMap<Country, ArrayList<Country>>();
 	}
 
-	public void createNewMap() {
+	public boolean createNewMap() {
+		
+		editMapTagData();
 
 		Scanner scan = new Scanner(System.in);
 
@@ -67,7 +68,6 @@ public class MapEditor {
 			}
 		} catch (Exception e) {
 			System.out.println("Soemthing wentwrong in adding a continent");
-			;
 		}
 
 		while (isMoreCountries) {
@@ -84,7 +84,6 @@ public class MapEditor {
 					while (isMoreCountries) {
 						isMoreCountries = this.addMoreCountries(true);
 					}
-
 				} catch (Exception e) {
 					System.out.println("Something went wrong in adding a country");
 				}
@@ -124,14 +123,19 @@ public class MapEditor {
 		for (Country country : countrySet) {
 			adjacentCountries.put(country, country.getAdjacentCountries());
 		}
-
+		
+		return true;
 	}
 
-	public void editExistingMap() {
-
+	public boolean editExistingMap() {
+		
 		Scanner scan = new Scanner(System.in);
 		MapIO mapIO = mapGraph.getMapIO();
 		HashMap<String, Continent> hashMapContinent = mapIO.getContinents();
+		System.out.println("Do you want to edit Map tag data?(true or false)");
+		if(Boolean.parseBoolean(scan.nextLine())) {
+			editMapTagData();
+		}
 		System.out.println(
 				"List of already existing coontinent along with control value, list of countries and adjacent countries is listed below");
 		for (Map.Entry<String, Continent> entry : hashMapContinent.entrySet()) {
@@ -262,6 +266,8 @@ public class MapEditor {
 		for (Country country : countrySet) {
 			adjacentCountries.put(country, country.getAdjacentCountries());
 		}
+		
+		return true;
 	}
 
 	public void editMapTagData() {
@@ -299,7 +305,7 @@ public class MapEditor {
 		System.out.println("Please enter number of countries to be added to " + bufferContinent.getName());
 		numberofcountry = Integer.parseInt(scan.nextLine().trim());
 		for (int i = 0; i < numberofcountry; i++) {
-
+      
 			System.out.println(
 					"Please enter name of country, x and y coordinate and neighboring countries seperated by ,");
 			String[] userdata = scan.nextLine().split(",");
@@ -473,7 +479,7 @@ public class MapEditor {
 	}
 
 	public Country searchCountry(Country country) {
-
+    
 		for (Country mycountry : countrySet) {
 			if (mycountry.getName().toLowerCase().trim().equals(country.getName().toLowerCase().trim())) {
 				return mycountry;
