@@ -7,6 +7,13 @@ import java.util.Scanner;
 import com.risk.model.Country;
 import com.risk.model.Player;
 
+
+/**
+ * 
+ * @author Karandeep Singh
+ * @author Neha Pal 
+ */
+
 public class StartUpPhase {
 
 	private ArrayList<Player> listOfPlayers;
@@ -19,6 +26,34 @@ public class StartUpPhase {
 
 	private static final int MAXIMUM_PLAYER_COUNT = 6;
 
+	public StartUpPhase(MapIO mapIO) {
+		this.mapIO = mapIO;
+		this.listOfPlayers = new ArrayList<Player>();
+		Scanner scan = new Scanner(System.in);
+		try {
+			do {
+				System.out.println("Enter number of players:");
+				this.playerCount = Integer.parseInt(scan.nextLine());
+				if(this.playerCount<2 || this.playerCount>6) {
+					System.out.println("Number of players must be between 2 and 6.");
+				}
+			}while(this.playerCount<2 || this.playerCount>6);
+		}
+		catch(NumberFormatException e) {
+			System.out.println("Invalid number format.");
+		}
+
+		for(int i=0; i<this.playerCount; ++i) {
+			Player player = new Player();
+			String name = null;
+			if((name = scan.nextLine())!=null) {
+				player.setName(name);
+			}
+			this.listOfPlayers.add(player);
+		}
+
+		scan.close();
+	}
 
 	public ArrayList<Player> getListOfPlayers() {
 		return listOfPlayers;
@@ -50,35 +85,6 @@ public class StartUpPhase {
 
 	public static int getMaximumPlayerCount() {
 		return MAXIMUM_PLAYER_COUNT;
-	}
-
-	public StartUpPhase(MapIO mapIO) {
-		this.mapIO = mapIO;
-		this.listOfPlayers = new ArrayList<Player>();
-		Scanner scan = new Scanner(System.in);
-		try {
-			do {
-				System.out.println("Enter number of players:");
-				this.playerCount = Integer.parseInt(scan.nextLine());
-				if(this.playerCount<2 || this.playerCount>6) {
-					System.out.println("Number of players must be between 2 and 6.");
-				}
-			}while(this.playerCount<2 || this.playerCount>6);
-		}
-		catch(NumberFormatException e) {
-			System.out.println("Invalid number format.");
-		}
-
-		for(int i=0; i<this.playerCount; ++i) {
-			Player player = new Player();
-			String name = null;
-			if((name = scan.nextLine())!=null) {
-				player.setName(name);
-			}
-			this.listOfPlayers.add(player);
-		}
-
-		scan.close();
 	}
 
 	public void countryAllocation() {
@@ -122,7 +128,7 @@ public class StartUpPhase {
 			}
 		}
 	}
-	
+
 	public void initialArmyAllocationToCountries() {
 		for(Country country : mapIO.getCountrySet().values()) {
 			country.setNoOfArmies(1);
@@ -131,7 +137,7 @@ public class StartUpPhase {
 			player.setArmyCount(player.getArmyCount() - player.getMyCountries().size());
 		}
 	}
-	
+
 	public void balanceArmyAllocationToCountries() {
 		Scanner scan = new Scanner(System.in);
 		for(Player player: this.listOfPlayers) {

@@ -1,14 +1,12 @@
 package com.risk.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 
 /**
  * Class representing country data for game play.
  *
- * @author karandeep
- * @author palash
+ * @author Karandeep Singh
+ * @author Palash Jain
  */
 
 public class Country {
@@ -126,9 +124,10 @@ public class Country {
     public boolean equals(Object obj) {
         if(obj==this)
             return true;
-        if(!(obj instanceof Country))
+        if(!(obj instanceof Country)){
             return false;
-        return this.getName().toLowerCase().equals(((Country)obj).getName().toLowerCase());
+        }
+        return this.getName().toLowerCase().trim().equals(((Country)obj).getName().toLowerCase().trim());
     }
 
     @Override
