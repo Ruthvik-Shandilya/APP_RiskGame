@@ -14,7 +14,6 @@ import java.util.Map;
 
 public class MapIO {
 
-
 	private HashMap<String, Continent> continents;
 
 	private HashMap<Country, ArrayList<Country>> adjacentCountries;

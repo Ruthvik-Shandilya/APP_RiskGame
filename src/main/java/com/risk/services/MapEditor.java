@@ -4,7 +4,7 @@ import com.risk.model.*;
 
 import java.util.*;
 
-public class MapEditor {
+public class MapEdit
 
 	private int numberOfContinents;
 	private HashSet<Continent> continentSet = new HashSet<Continent>();
@@ -84,7 +84,6 @@ public class MapEditor {
 					while (isMoreCountries) {
 						isMoreCountries = this.addMoreCountries(true);
 					}
-
 				} catch (Exception e) {
 					System.out.println("Something went wrong in adding a country");
 				}
@@ -306,7 +305,7 @@ public class MapEditor {
 		System.out.println("Please enter number of countries to be added to " + bufferContinent.getName());
 		numberofcountry = Integer.parseInt(scan.nextLine().trim());
 		for (int i = 0; i < numberofcountry; i++) {
-
+      
 			System.out.println(
 					"Please enter name of country, x and y coordinate and neighboring countries seperated by ,");
 			String[] userdata = scan.nextLine().split(",");
@@ -480,7 +479,7 @@ public class MapEditor {
 	}
 
 	public Country searchCountry(Country country) {
-
+    
 		for (Country mycountry : countrySet) {
 			if (mycountry.getName().toLowerCase().trim().equals(country.getName().toLowerCase().trim())) {
 				return mycountry;
