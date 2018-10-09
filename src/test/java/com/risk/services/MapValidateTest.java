@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
  * @author Neha Pal
  *
  */
-class MapValidationTest {
+class MapValidateTest {
 
 	/** Object for MapValidation class*/
 
