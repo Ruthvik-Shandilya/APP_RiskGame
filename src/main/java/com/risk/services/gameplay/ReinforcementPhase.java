@@ -37,7 +37,6 @@ public class ReinforcementPhase {
 	public int findNoOfArmies(Player player, Continent continent) {
 		int myCountries = player.getMyCountries().size();
 		int armiesCount = (int) Math.floor(myCountries / 3);
-
 		playerOwnedContries = player.getMyCountries();
 		continentListOfCountries = continent.getListOfCountries();
 		

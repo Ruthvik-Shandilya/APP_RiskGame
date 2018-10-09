@@ -5,7 +5,7 @@ import com.risk.model.Country;
 /**
  * 
  * Fortification Phase class contains methods for 
- * the Fortification phase gameplay.
+ * the Fortification phase of gameplay.
  * 
  * @author Ruthvik Shandilya
  * @author Neha pal

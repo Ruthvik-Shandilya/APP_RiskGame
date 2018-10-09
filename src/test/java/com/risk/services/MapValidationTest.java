@@ -1,19 +1,19 @@
 package com.risk.services;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
  * Test Class for MapValidation
  *
- * @author neha_
+ * @author Neha Pal
  *
  */
 class MapValidationTest {
 
-	/** MapValidation Object */
+	/** Object for MapValidation class*/
 
 	private MapValidate mapValidation;
 
@@ -30,7 +30,7 @@ class MapValidationTest {
 	private String invalidMapFile;
 
 	/**
-	 * Set up the initial objects
+	 * Set up the initial objects for Map Validation
 	 * @throws Exception
 	 */
 	@BeforeEach
@@ -48,24 +48,29 @@ class MapValidationTest {
 	 * @throws Exception
 	 */
 	@Test
-	public void testValidateFile() throws Exception {
+	public void testValidateFileValidFile() throws Exception {
 
 		assertTrue(mapValidation.validateMapFile(validMapFile));
+	}
+	@Test
+	public void testValidateFileInValidFile() throws Exception {
+
 		assertFalse(mapValidation.validateMapFile(invalidMapFile));
 	}
-
 
 	/**
 	 * test method for checking all necessary tags like [Map], [Continents], [Territories]
 	 * @throws Exception
 	 */
 	@Test
-	public void testCheckMandatoryTags() throws Exception {
+	public void testCheckMandatoryTagsValidTags() throws Exception {
 
-		assertFalse(mapValidation.checkAllTags(invalidTag));
-		System.out.println(mapValidation);
-		System.out.println("hello");
 		assertTrue(mapValidation.checkAllTags(validTag));
 	}
 
+	@Test
+	public void testCheckMandatoryTagsInValidTags() throws Exception {
+
+		assertFalse(mapValidation.checkAllTags(invalidTag));
+	}
 }
