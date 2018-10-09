@@ -37,7 +37,7 @@ public class MapIO {
 
 
     public MapIO(MapValidate map) {
-        this.continents = map.getContinentSetOfContinents();
+        this.continents = map.getContinentSetOfTerritories();
         this.adjacentCountries = map.getAdjacentCountries();
         this.countriesInContinent = map.getCountriesInContinent();
         this.fileName = map.getFileName();

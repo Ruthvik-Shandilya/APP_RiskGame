@@ -16,8 +16,10 @@ public class MapGraph {
     private int countOfCountries=0;
     
     private MapIO mapIO;
-
-    public MapGraph(MapIO mapIO) {
+    
+    public MapGraph(){}
+    
+	public MapGraph(MapIO mapIO) {
     	this.mapIO = mapIO;
         this.continents = mapIO.getContinents();
         this.adjacentCountries = mapIO.getAdjacentCountries();
@@ -46,6 +48,15 @@ public class MapGraph {
 	public void setCountOfCountries(int countOfCountries) {
 		this.countOfCountries = countOfCountries;
 	}
+	
+	public MapIO getMapIO() {
+		return mapIO;
+	}
+
+	public void setMapIO(MapIO mapIO) {
+		this.mapIO = mapIO;
+	}
+
 
 	public void addEdgeBetweenCountries(Country source, Country destination) {
     	if(adjacentCountries.containsKey(source)) {
