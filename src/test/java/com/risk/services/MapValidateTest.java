@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
  * Test Class for MapValidation
  *
  * @author Neha Pal
- *
+ * @author Farhan Shaheen
  */
 class MapValidateTest {
 
@@ -27,7 +27,13 @@ class MapValidateTest {
 	private String validMapFile;
 
 	/** String to hold an Invalid Map File */
-	private String invalidMapFile;
+	private String invalidMapFile0;
+	/** String to hold an Invalid Map File */
+	private String invalidMapFile1;
+	/** String to hold an Invalid Map File */
+	private String invalidMapFile2;
+	/** String to hold an Invalid Map File */
+	private String invalidMapFile3;
 
 	/**
 	 * Set up the initial objects for Map Validation
@@ -39,8 +45,11 @@ class MapValidateTest {
 		mapValidation = new MapValidate();
 		invalidTag = " [Continents] [Territories]";
 		validTag = "[Map] [Continents] [Territories]";
-		validMapFile = "D:\\Europe.map";
-		invalidMapFile = "D:\\Africa.map";
+		validMapFile = "C:\\Temp\\Alberta.map";
+		invalidMapFile0 = "C:\\Temp\\FileDoesnotExist.map";
+		invalidMapFile1 = "C:\\Temp\\Test1.map";
+		invalidMapFile2 = "C:\\Temp\\Test2.map";
+		invalidMapFile3 = "C:\\Temp\\Test3.map";
 	}
 
 	/**
@@ -52,12 +61,42 @@ class MapValidateTest {
 
 		assertTrue(mapValidation.validateMapFile(validMapFile));
 	}
+	/**
+	 * File Does not exist
+	 * @throws Exception
+	 */
 	@Test
-	public void testValidateFileInValidFile() throws Exception {
-
-		assertFalse(mapValidation.validateMapFile(invalidMapFile));
+	public void testValidateFileInValidFile0() throws Exception {
+		
+		assertFalse(mapValidation.validateMapFile(invalidMapFile0));
 	}
-
+	/**
+	 * Testing for invalid TAGS
+	 * @throws Exception
+	 */
+	@Test
+	public void testValidateFileInValidFile1() throws Exception {
+		
+		assertFalse(mapValidation.validateMapFile(invalidMapFile1));
+	}
+	/**
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void testValidateFileInValidFile2() throws Exception {
+		
+		assertFalse(mapValidation.validateMapFile(invalidMapFile2));
+	}
+	/**
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void testValidateFileInValidFile3() throws Exception {
+		
+		assertFalse(mapValidation.validateMapFile(invalidMapFile3));
+	}
 	/**
 	 * test method for checking all necessary tags like [Map], [Continents], [Territories]
 	 * @throws Exception
