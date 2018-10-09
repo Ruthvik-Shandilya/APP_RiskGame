@@ -63,6 +63,9 @@ class MapValidateTest {
 	}
 	/**
 	 * File Does not exist
+	 * <code>
+	 * if (mapFile != null) {
+	 * </code>
 	 * @throws Exception
 	 */
 	@Test
@@ -72,6 +75,9 @@ class MapValidateTest {
 	}
 	/**
 	 * Testing for invalid TAGS
+	 * <code>
+	 * if (!checkAllTags(inputText)) {
+	 * </code>
 	 * @throws Exception
 	 */
 	@Test
@@ -80,7 +86,7 @@ class MapValidateTest {
 		assertFalse(mapValidation.validateMapFile(invalidMapFile1));
 	}
 	/**
-	 * 
+	 * Wrong TAGS
 	 * @throws Exception
 	 */
 	@Test
