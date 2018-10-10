@@ -63,20 +63,20 @@ Territory41,564,917,Greater Edmonton,Territory24,Territory40,Territory42,Territo
 Territory42,593,963,Greater Edmonton,Territory40,Territory41,Territory43,Edmonton,Territory45,Territory46
 Territory43,632,992,Greater Edmonton,Territory37,Territory39,Territory42,Edmonton,Territory45,Territory50,Territory51
 Edmonton,655,967,Greater Edmonton,Territory39,Territory40,Territory42,Territory43
-Territory45,509,1008,Foothills,Territory42,Territory43,Territory46,Territory48,Territory50
+Territory45,509,1008,Foothills
 Territory46,376,982,Grande Prairie,Territory23,Territory24,Territory41,Territory42,Territory45,Territory47,Territory48
 Territory47,278,1039,Grande Prairie,Territory46,Territory48,Territory58
-Territory48,483,1107,Foothills,Territory45,Territory46,Territory47,Territory49,Territory50,Territory56,Territory57,Territory58,Territory59
-Territory49,600,1060,Foothills,Territory48,Territory50,Territory56
-Territory50,664,1052,Foothills,Territory43,Territory45,Territory48,Territory49,Territory51,Territory52,Territory54,Territory55
-Territory51,723,1028,Foothills,Territory37,Territory43,Territory50,Territory52
+Territory48,483,1107,Foothills
+Territory49,600,1060,Foothills
+Territory50,664,1052,Foothills
+Territory51,723,1028,Foothills
 Territory52,799,1059,Badlands,Territory33,Territory37,Territory50,Territory51,Territory53,Territory54
 Territory53,907,1088,Badlands,Territory33,Territory52,Territory54,Territory62
 Territory54,813,1124,Badlands,Territory50,Territory52,Territory53,Territory55,Territory61,Territory62
-Territory55,696,1132,Foothills,Territory50,Territory54,Territory56,Territory57,Territory60,Territory61
-Territory56,605,1106,Foothills,Territory48,Territory49,Territory55,Territory57
-Territory57,604,1155,Foothills,Territory48,Territory55,Territory56,Territory59
-Territory58,478,1256,Foothills,Territory47,Territory48,Territory59,Territory71,Territory72,Territory73
+Territory55,696,1132,Foothills
+Territory56,605,1106,Foothills
+Territory57,604,1155,Foothills
+Territory58,478,1256,Foothills
 Territory59,596,1213,Greater Calgary,Territory48,Territory57,Territory58,Territory60,Territory71
 Territory60,703,1222,Greater Calgary,Territory55,Territory59,Territory61,Territory69,Calgary,Territory71
 Territory61,822,1251,Badlands,Territory54,Territory55,Territory60,Territory62,Territory63,Territory64,Territory65,Territory67,Territory68,Territory69

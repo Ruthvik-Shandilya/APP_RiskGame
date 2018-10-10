@@ -40,6 +40,8 @@ class MapValidateTest {
 	private String invalidMapFile5;
 	/** String to hold an Invalid Map File */
 	private String invalidMapFile6;
+	/** String to hold an Invalid Map File */
+	private String invalidMapFile7;
 	/**
 	 * Set up the initial objects for Map Validation
 	 * @throws Exception
@@ -59,6 +61,7 @@ class MapValidateTest {
 		invalidMapFile4 = "C:\\Temp\\Test4.map";
 		invalidMapFile5 = "C:\\Temp\\Test5.map";
 		invalidMapFile6 = "C:\\Temp\\Test6.map";
+		invalidMapFile7 = "C:\\Temp\\Test7.map";
 	}
 
 	/**
@@ -139,7 +142,15 @@ class MapValidateTest {
 		
 		assertFalse(mapValidation.validateMapFile(invalidMapFile6));
 	}
-	
+	/**
+	 * Test for "Invalid map configuration"
+	 * @throws Exception
+	 */
+	@Test
+	public void testValidateFileInValidFile7() throws Exception {
+		
+		assertFalse(mapValidation.validateMapFile(invalidMapFile7));
+	}
 	/**
 	 * test method for checking all necessary tags like [Map], [Continents], [Territories]
 	 * @throws Exception
@@ -154,5 +165,32 @@ class MapValidateTest {
 	public void testCheckMandatoryTagsInValidTags() throws Exception {
 
 		assertFalse(mapValidation.checkAllTags(invalidTag));
+	}
+	
+	/**
+	 * 
+	 * <code>
+	 * countries.getValue().size() < 1
+	 * </code>
+	 * @throws Exception
+	 */
+	@Test
+	public void testGetCountriesInContinent() throws Exception {
+		
+		mapValidation.validateMapFile(validMapFile);
+		//System.out.println(mapValidation.getCountriesInContinent());
+		assertEquals(mapValidation.getCountriesInContinent(),10);
+	}
+	/**
+	 * 
+	 * Countries are not adjacent
+	 * @throws Exception
+	 */
+	@Test
+	public void testAdjacentCountries() throws Exception {
+		
+		mapValidation.validateMapFile(validMapFile);
+		
+	//	assertEquals(mapValidation.adjacentCountries(),10);
 	}
 }
