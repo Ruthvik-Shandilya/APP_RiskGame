@@ -1,0 +1,20 @@
+[Map]
+author=Noel Palmer
+warn=yes
+image=Alberta.bmp
+wrap=no
+scroll=vertical
+
+[Continents]
+Northern Alberta=4
+Grande Prairie=6
+Slave Lake=7
+Greater Edmonton=6
+Cold Lake=7
+Foothills=7
+Greater Calgary=4
+Badlands=5
+Crowsnest=7
+Prairies=6
+
+[Territories]
