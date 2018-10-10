@@ -46,9 +46,9 @@ class ReinforcementPhaseTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		reinforcementPhase = new ReinforcementPhase();
-
 		playerOwnedContries = new ArrayList<Country>();
 		continentListOfCountries = new ArrayList<Country>();
+		
 		country = new Country("C1");
 		playerOwnedContries.add(country);
 		continentListOfCountries.add(country);
@@ -61,7 +61,8 @@ class ReinforcementPhaseTest {
 		playerOwnedContries.add(country);
 		continentListOfCountries.add(country);
 
-		player = new Player(playerOwnedContries);
+		player = new Player();
+		player.setMyCountries(playerOwnedContries);
 		continent = new Continent("Europe", 2);
 
 		continent.setListOfCountries(continentListOfCountries);
