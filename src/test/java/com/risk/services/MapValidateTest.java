@@ -19,7 +19,7 @@ class MapValidateTest {
 
 	/** String to hold Invalid Tags */
 	private String invalidTag;
-
+	private String invalidTag2;
 	/** String to hold Valid Tags */    
 	private String validTag;
 
@@ -34,7 +34,12 @@ class MapValidateTest {
 	private String invalidMapFile2;
 	/** String to hold an Invalid Map File */
 	private String invalidMapFile3;
-
+	/** String to hold an Invalid Map File */
+	private String invalidMapFile4;
+	/** String to hold an Invalid Map File */
+	private String invalidMapFile5;
+	/** String to hold an Invalid Map File */
+	private String invalidMapFile6;
 	/**
 	 * Set up the initial objects for Map Validation
 	 * @throws Exception
@@ -44,12 +49,16 @@ class MapValidateTest {
 		System.out.println("In setup");
 		mapValidation = new MapValidate();
 		invalidTag = " [Continents] [Territories]";
+		invalidTag2 = "[Map] [Territories] [Continents]";
 		validTag = "[Map] [Continents] [Territories]";
 		validMapFile = "C:\\Temp\\Alberta.map";
 		invalidMapFile0 = "C:\\Temp\\FileDoesnotExist.map";
 		invalidMapFile1 = "C:\\Temp\\Test1.map";
 		invalidMapFile2 = "C:\\Temp\\Test2.map";
 		invalidMapFile3 = "C:\\Temp\\Test3.map";
+		invalidMapFile4 = "C:\\Temp\\Test4.map";
+		invalidMapFile5 = "C:\\Temp\\Test5.map";
+		invalidMapFile6 = "C:\\Temp\\Test6.map";
 	}
 
 	/**
@@ -95,7 +104,7 @@ class MapValidateTest {
 		assertFalse(mapValidation.validateMapFile(invalidMapFile2));
 	}
 	/**
-	 * 
+	 * Correct but out of order TAGS
 	 * @throws Exception
 	 */
 	@Test
@@ -103,6 +112,34 @@ class MapValidateTest {
 		
 		assertFalse(mapValidation.validateMapFile(invalidMapFile3));
 	}
+	/**
+	 * empty for [Map] tag
+	 * @throws Exception
+	 */
+	@Test
+	public void testValidateFileInValidFile4() throws Exception {
+		
+		assertFalse(mapValidation.validateMapFile(invalidMapFile4));
+	}
+	/**
+	 * empty for [Continents] tag
+	 * @throws Exception
+	 */
+	@Test
+	public void testValidateFileInValidFile5() throws Exception {
+		
+		assertFalse(mapValidation.validateMapFile(invalidMapFile5));
+	}
+	/**
+	 * empty for [Territories] tag
+	 * @throws Exception
+	 */
+	@Test
+	public void testValidateFileInValidFile6() throws Exception {
+		
+		assertFalse(mapValidation.validateMapFile(invalidMapFile6));
+	}
+	
 	/**
 	 * test method for checking all necessary tags like [Map], [Continents], [Territories]
 	 * @throws Exception
