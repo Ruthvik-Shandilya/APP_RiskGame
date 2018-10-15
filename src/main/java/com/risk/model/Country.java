@@ -26,21 +26,25 @@ public class Country {
     /** Y dimension*/
     private String yValue;
 
-    /** NUmber of armies*/
+    /** Number of armies*/
     private int noOfArmies;
-
+    
+    /** Adjacent Country holder */
     private ArrayList<Country> adjacentCountries;
 
+    /** Part of Continent */
     private Continent partOfContinent;
 
     /**
+     * Country constructor.
+     * 
      * @param name
+     * 			name of the country
      * */
     public Country(String name) {
         this.name = name;
         adjacentCountries = new ArrayList<Country>();
     }
-
     /**
      * Get country name
      *
@@ -49,7 +53,6 @@ public class Country {
     public String getName() {
         return name;
     }
-
     /**
      * Set country name
      *
@@ -58,64 +61,127 @@ public class Country {
     public void setName(String name) {
         this.name = name;
     }
-
     /**
      * Get Player name
+     * 
      * @return player The name of player
      */
     public String getPlayer() {
         return player;
     }
-
-
+    /**
+     * Set the name of the Player.
+     * 
+     * @param player
+     * 			name of the player.
+     */
     public void setPlayer(String player) {
         this.player = player;
     }
-
+    /**
+     * Get the continent name.
+     * 
+     * @return
+     * 		name of the continent
+     */
     public String getContinent() {
         return continent;
     }
-
+    /**
+     * Set the name of the continent
+     * 
+     * @param continent
+     * 			name of the continent
+     */
     public void setContinent(String continent) {
         this.continent = continent;
     }
-
+    /**
+     * get the value of X coordinate of the map
+     * 
+     * @return
+     * 		X coordinate value
+     */
     public String getxValue() {
         return xValue;
     }
-
+    /**
+     * Set the value of X coordinate
+     * 
+     * @param xValue
+     * 			X cooridnate value
+     */
     public void setxValue(String xValue) {
         this.xValue = xValue;
     }
-
+    /**
+     * get the value of Y coordinate of the map
+     * 
+     * @return
+     * 		Y coordinate value
+     */
     public String getyValue() {
         return yValue;
     }
-
+    /**
+     * Set the value of Y coordinate
+     * 
+     * @param yValue
+     * 			Y cooridnate value
+     */
     public void setyValue(String yValue) {
         this.yValue = yValue;
     }
-
+    /**
+     * Method to get the initial number of armies in a country
+     * 
+     * @return
+     * 		Integer value of number of armies
+     */
     public int getNoOfArmies() {
         return noOfArmies;
     }
-
+    /**
+     * Method to set the initial number of armies in a country
+     * 
+     * @param noOfArmies Integer value of number of armies
+     */
     public void setNoOfArmies(int noOfArmies) {
         this.noOfArmies = noOfArmies;
     }
-
+    /**
+     * Method to get the list of Adjacent countries.
+     * 
+     * @return
+     * 		list of adjacent countries
+     */
     public ArrayList<Country> getAdjacentCountries() {
         return adjacentCountries;
     }
-
+    /**
+     * Method to set the adjacent countries.
+     * 
+     * @param adjacentCountries
+     * 					List of adjacent countries
+     */
     public void setAdjacentCountries(ArrayList<Country> adjacentCountries) {
         this.adjacentCountries = adjacentCountries;
     }
-
+    /**
+     * Method to check whether the country is part of the continent
+     * 
+     * @return
+     * 		continent name
+     */
     public Continent getPartOfContinent() {
         return partOfContinent;
     }
-
+    /**
+     * Method to set the country as part of this continent
+     * 
+     * @param partOfContinent
+     * 				Continent name
+     */
     public void setPartOfContinent(Continent partOfContinent) {
         this.partOfContinent = partOfContinent;
     }
