@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import com.risk.model.Country;
 
@@ -16,7 +16,7 @@ import com.risk.model.Country;
  *
  */
 
-class FortificationPhaseTest {
+public class FortificationPhaseTest {
 
 	/** Object for FortificationPhase class */
 	private FortificationPhase fortificationPhase;
@@ -37,8 +37,7 @@ class FortificationPhaseTest {
 	 * Set up the initial objects for Fortification Phase
 	 * @throws Exception
 	 */
-	@BeforeEach
-	
+	@Before	
 	public void setUp() throws Exception {
 		country1 = new Country("C1");
 		country2 = new Country("C2");
