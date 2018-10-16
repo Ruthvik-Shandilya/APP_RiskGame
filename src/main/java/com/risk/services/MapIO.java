@@ -7,19 +7,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 
 
 public class MapIO {
-
-
-	private HashMap<String, Continent> continents;
-
-	private HashMap<Country, ArrayList<Country>> adjacentCountries;
-
-	private HashMap<Continent, HashSet<Country>> countriesInContinent;
 
 	private String fileName;
 
@@ -27,83 +18,77 @@ public class MapIO {
 
 	private String newFileName;
 
-	private boolean isNewFile = false;
-
 	private static final String COMMA_DELIMITER = ",";
 
-	private HashMap<String, Country> countrySet;
-
 	private MapGraph mapGraph;
-
+	
+	public MapIO() {
+		this.mapGraph = new MapGraph();
+		this.mapTagData = new ArrayList<>();
+	}
 
 	public MapIO(MapValidate map) {
-		this.continents = map.getContinentSetOfTerritories();
-		this.adjacentCountries = map.getAdjacentCountries();
-		this.countriesInContinent = map.getCountriesInContinent();
+		this.mapGraph = new MapGraph();
+		this.mapGraph.setContinents(map.getContinentSetOfTerritories());
+		this.mapGraph.setAdjacentCountries(map.getAdjacentCountries());
+		this.mapGraph.setCountriesInContinent(map.getCountriesInContinent());
 		this.fileName = map.getFileName();
 		this.mapTagData = map.getMapTagData();
-		this.countrySet = map.getCountrySet();
-		this.mapGraph = new MapGraph(this);
+		this.mapGraph.setCountrySet(map.getCountrySet());
+		
 	}
 
-	public MapIO(MapGraph mapGraph, String fileName,
-			ArrayList<String> mapTagData, String newFileName, boolean isNewFile) {
-		this.mapGraph = mapGraph;
-		this.continents = mapGraph.getContinents();
-		this.adjacentCountries = mapGraph.getAdjacentCountries();
+	public MapIO readFile() {
+		return this;
+	}
+
+	public void setFileName(String fileName) {
 		this.fileName = fileName;
-		this.mapTagData = mapTagData;
+	}
+
+	public void setNewFileName(String newFileName) {
 		this.newFileName = newFileName;
-		this.isNewFile = isNewFile;
 	}
-
-	public HashMap<Continent, HashSet<Country>> getCountriesInContinent() {
-		return countriesInContinent;
-	}
-
-	public void setCountriesInContinent(HashMap<Continent, HashSet<Country>> countriesInContinent) {
-		this.countriesInContinent = countriesInContinent;
-	}
-
-	public MapGraph readFile() {
-		return this.mapGraph;
-	}
-
 
 	public MapIO writeToFile(boolean isNewFile) {
 		File file;
 		StringBuilder stringBuilder = new StringBuilder();
-		if (this.isNewFile) {
+		if (isNewFile) {
 			file = new File(new File("").getAbsolutePath() + "\\src\\main\\maps\\" + this.fileName + ".map");
 		} else {
+			System.out.println("this.newFileName=" + this.newFileName);
 			file = new File(new File("").getAbsolutePath() + "\\src\\main\\maps\\" + this.newFileName + ".map");
 		}
 
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(file.getAbsolutePath()))) {
 
-			stringBuilder.append("[Map]");
+			stringBuilder.append("[Map]\n");
 			for (String line : mapTagData) {
 				stringBuilder.append(line);
+				stringBuilder.append("\n");
 			}
 			stringBuilder.append("\n");
 
 
-			stringBuilder.append("[Continents]");
-			for (Map.Entry<String, Continent> continentEntry : continents.entrySet()) {
-				stringBuilder.append(continentEntry.getValue() + "=" + continentEntry.getValue().getControlValue());
+			stringBuilder.append("[Continents]\n");
+			for (Map.Entry<String, Continent> continentEntry : mapGraph.getContinents().entrySet()) {
+				stringBuilder.append(continentEntry.getValue().getName() + "=" + continentEntry.getValue().getControlValue());
+				stringBuilder.append("\n");
 			}
 			stringBuilder.append("\n");
 
-			stringBuilder.append("[Territories]");
-			for (Map.Entry<Country,ArrayList<Country>> adjacentCountriesEntry : adjacentCountries.entrySet()) {
+			stringBuilder.append("[Territories]\n");
+			for (Map.Entry<Country,ArrayList<Country>> adjacentCountriesEntry : mapGraph.getAdjacentCountries().entrySet()) {
 				Country country = adjacentCountriesEntry.getKey();
 				ArrayList<Country> neighbourList = adjacentCountriesEntry.getValue();
-				String line = country.getName() + COMMA_DELIMITER + country.getxValue() + COMMA_DELIMITER + country.getyValue() +
+				String line = country.getName() + COMMA_DELIMITER + country.getxValue() + COMMA_DELIMITER + country.getyValue() + COMMA_DELIMITER +
 						country.getContinent();
 				for(Country adjacentCountry: neighbourList) {
 					line += COMMA_DELIMITER + adjacentCountry.getName();
 				}
-				stringBuilder.append(line);			
+				stringBuilder.append(line);
+				
+				stringBuilder.append("\n");
 			}
 
 			writer.write(stringBuilder.toString());
@@ -113,28 +98,12 @@ public class MapIO {
 		return this;
 	}
 
-	public HashMap<Country, ArrayList<Country>> getAdjacentCountries() {
-		return adjacentCountries;
+	public MapGraph getMapGraph() {
+		return mapGraph;
 	}
 
-	public void setAdjacentCountries(HashMap<Country, ArrayList<Country>> adjacentCountries) {
-		this.adjacentCountries = adjacentCountries;
+	public ArrayList<String> getMapTagData() {
+		return mapTagData;
 	}
-
-	public HashMap<String, Country> getCountrySet() {
-		return countrySet;
-	}
-
-	public void setCountrySet(HashMap<String, Country> countrySet) {
-		this.countrySet = countrySet;
-	}
-
-	public HashMap<String, Continent> getContinents() {
-		return continents;
-	}
-
-	public void setContinents(HashMap<String, Continent> continents) {
-		this.continents = continents;
-	}
-
+	
 }
