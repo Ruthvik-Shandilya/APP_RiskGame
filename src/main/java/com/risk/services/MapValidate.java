@@ -90,7 +90,6 @@ public class MapValidate {
                 for (String line; (line = read.readLine()) != null; ) {
                     if (line.trim().equals("[Map]")) {
                         while (!((line = read.readLine()).equals("[Continents]"))) {
-                            line = read.readLine();
                             if (!line.trim().isEmpty() && !(line.contains("="))) {
                                 System.out.print("Invalid map configuration");
                                 return false;
@@ -194,7 +193,7 @@ public class MapValidate {
 
 
             for (Map.Entry<Continent, HashSet<Country>> countries : countriesInContinent.entrySet()) {
-                if (countries.getValue().size() < 1) {
+                if (countries.getValue().size() < 2) {
                     System.out.println(countries);
                     System.out.println("Number of countries in a continent is less");
                     return false;
