@@ -47,7 +47,7 @@ public class MapIO {
 	}
 
 	public MapIO(MapGraph mapGraph, String fileName,
-			ArrayList<String> mapTagData, String newFileName, boolean isNewFile) {
+		ArrayList<String> mapTagData, String newFileName, boolean isNewFile) {
 		this.mapGraph = mapGraph;
 		this.continents = mapGraph.getContinents();
 		this.adjacentCountries = mapGraph.getAdjacentCountries();
