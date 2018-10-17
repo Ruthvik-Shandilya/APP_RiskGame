@@ -1,9 +1,10 @@
 package com.risk.services;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test Class for MapValidation
@@ -11,7 +12,7 @@ import org.junit.jupiter.api.Test;
  * @author Neha Pal
  *
  */
-class MapValidateTest {
+public class MapValidateTest {
 
 	/** Object for MapValidation class*/
 
@@ -33,14 +34,14 @@ class MapValidateTest {
 	 * Set up the initial objects for Map Validation
 	 * @throws Exception
 	 */
-	@BeforeEach
+	@Before
 	public void setUp() throws Exception {
 		System.out.println("In setup");
 		mapValidation = new MapValidate();
 		invalidTag = " [Continents] [Territories]";
 		validTag = "[Map] [Continents] [Territories]";
-		validMapFile = "D:\\Europe.map";
-		invalidMapFile = "D:\\Africa.map";
+		validMapFile = "src/main/maps/Europe.map";
+		invalidMapFile = "src/main/maps/Africa.map";
 	}
 
 	/**

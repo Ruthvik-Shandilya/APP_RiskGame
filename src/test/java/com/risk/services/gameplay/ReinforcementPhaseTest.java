@@ -1,10 +1,11 @@
 package com.risk.services.gameplay;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 
-import org.junit.jupiter.api.BeforeEach;
-import static org.junit.Assert.assertEquals;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import com.risk.model.Continent;
 import com.risk.model.Country;
@@ -17,7 +18,7 @@ import com.risk.model.Player;
  *
  */
 
-class ReinforcementPhaseTest {
+public class ReinforcementPhaseTest {
 
 	/** Object for ReinforcementPhase class */
 	private ReinforcementPhase reinforcementPhase;
@@ -43,8 +44,8 @@ class ReinforcementPhaseTest {
 	 * @throws Exception
 	 */
 
-	@BeforeEach
-	void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		reinforcementPhase = new ReinforcementPhase();
 		playerOwnedContries = new ArrayList<Country>();
 		continentListOfCountries = new ArrayList<Country>();
@@ -73,7 +74,7 @@ class ReinforcementPhaseTest {
 	 */
 
 	@Test
-	void testFindNoOfArmiesWhenPlayerOwnContinent() {
+	public void testFindNoOfArmiesWhenPlayerOwnContinent() {
 		assertEquals(continent.getControlValue(), reinforcementPhase.findNoOfArmies(player, continent));
 	}
 
@@ -82,7 +83,7 @@ class ReinforcementPhaseTest {
 	 * Test to validate number of armies when player does not owns the continent
 	 */
 	@Test
-	void testFindNoOfArmiesWhenPlayerDoesNotOwnContinent() {
+	public void testFindNoOfArmiesWhenPlayerDoesNotOwnContinent() {
 
 		country = new Country("C4");
 		continentListOfCountries.add(country);
