@@ -42,7 +42,8 @@ public class StartUpPhase {
 		catch(NumberFormatException e) {
 			System.out.println("Invalid number format.");
 		}
-
+		
+		System.out.println("Please enter the name of player(s).");
 		for(int i=0; i<this.playerCount; ++i) {
 			Player player = new Player();
 			String name = null;
@@ -51,8 +52,6 @@ public class StartUpPhase {
 			}
 			this.listOfPlayers.add(player);
 		}
-
-		scan.close();
 	}
 
 	public ArrayList<Player> getListOfPlayers() {
@@ -88,7 +87,7 @@ public class StartUpPhase {
 	}
 
 	public void countryAllocation() {
-		ArrayList<Country> countries = new ArrayList<>(this.mapIO.getCountrySet().values());
+		ArrayList<Country> countries = new ArrayList<>(this.mapIO.getMapGraph().getCountrySet().values());
 		while(countries.size()>0) {
 			for(int i=0; i<this.listOfPlayers.size(); ++i) {
 				if(countries.size()>1) {
@@ -130,7 +129,7 @@ public class StartUpPhase {
 	}
 
 	public void initialArmyAllocationToCountries() {
-		for(Country country : mapIO.getCountrySet().values()) {
+		for(Country country : mapIO.getMapGraph().getCountrySet().values()) {
 			country.setNoOfArmies(1);
 		}
 		for(Player player: this.listOfPlayers) {
@@ -146,15 +145,19 @@ public class StartUpPhase {
 				if(player.getArmyCount()>0) {
 					System.out.println("Number of armies currently assigned to country " + country.getName() + " is: " + country.getNoOfArmies());
 					System.out.println("Your available number of armies: " + player.getArmyCount());
-					System.out.println("Enter number of armies you want to assign to country " + country.getName());
-					int count = Integer.parseInt(scan.nextLine());
-					player.addArmiesToCountry(country, count);
+					System.out.println("Enter number of armies you want to assign to country " + country.getName() + " :");
+					int count=0;
+					try {
+						count = Integer.parseInt(scan.nextLine());
+						player.addArmiesToCountry(country, count);
+					}catch(NumberFormatException e) {
+						System.out.println("Please enter a valid number.");
+					}
 				}
 				else {
 					break;
 				}
 			}
 		}
-		scan.close();
 	}
 }

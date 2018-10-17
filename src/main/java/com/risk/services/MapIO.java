@@ -56,6 +56,7 @@ public class MapIO {
 		if (isNewFile) {
 			file = new File(new File("").getAbsolutePath() + "\\src\\main\\maps\\" + this.fileName + ".map");
 		} else {
+			System.out.println("this.newFileName=" + this.newFileName);
 			file = new File(new File("").getAbsolutePath() + "\\src\\main\\maps\\" + this.newFileName + ".map");
 		}
 
