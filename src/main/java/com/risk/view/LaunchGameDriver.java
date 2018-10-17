@@ -3,9 +3,9 @@ package com.risk.view;
 import java.io.File;
 import java.util.Scanner;
 
-import com.risk.services.MapEditor;
 import com.risk.services.MapIO;
 import com.risk.services.MapValidate;
+import com.risk.services.MapEditor;
 import com.risk.services.StartUpPhase;
 import com.risk.services.gameplay.ReinforcementPhase;
 import com.risk.services.gameplay.FortificationPhase;
@@ -39,7 +39,7 @@ public class LaunchGameDriver extends Application {
 	Button loadMapButton, createMapButton;
 
 	MapIO readMap;
-	
+
 	boolean status = false;
 
 	public static void main(String[] args) {
@@ -98,7 +98,7 @@ public class LaunchGameDriver extends Application {
 		Scene scene = new Scene(layout, 400, 400);
 		primaryStage.setScene(scene);
 		primaryStage.show();
-		
+
 		if(status) {
 			gamePlay(readMap);
 		}
@@ -116,11 +116,11 @@ public class LaunchGameDriver extends Application {
 
 		int turn = 1;
 		RoundRobin roundRobin = new RoundRobin(startUpPhase.getListOfPlayers());
-		
+
 		while(turn <= 4) {
 			Player player = roundRobin.next();
 			System.out.println("Beginning Reinforcement phase for player : " + player.getName() + "\n\n");
-			Continent continent = mapIO.getContinents().get(player.getMyCountries().get(0).getContinent());
+			Continent continent = mapIO.getMapGraph().getContinents().get(player.getMyCountries().get(0).getContinent());
 			int balanceArmyCount = (new ReinforcementPhase()).findNoOfArmies(player, continent);
 			System.out.println("Total number of armies available are: " + balanceArmyCount);
 			player.setArmyCount(player.getArmyCount() + balanceArmyCount);
@@ -153,7 +153,7 @@ public class LaunchGameDriver extends Application {
 				giverCountry = scan.nextLine();
 				System.out.println("Enter the name of country to which you want to move some army from country " + giverCountry);
 				receiverCountry = scan.nextLine();
-				if(!mapIO.getCountrySet().containsKey(giverCountry.trim()) || !mapIO.getCountrySet().containsKey(receiverCountry.trim())) {
+				if(!mapIO.getMapGraph().getCountrySet().containsKey(giverCountry.trim()) || !mapIO.getMapGraph().getCountrySet().containsKey(receiverCountry.trim())) {
 					flag=false;
 					System.out.println("Please enter correct country name.");
 				}
@@ -165,7 +165,7 @@ public class LaunchGameDriver extends Application {
 				System.out.println("Enter the number of armies to move from " + giverCountry + " to " + receiverCountry);
 				try {
 					countOfArmies = Integer.parseInt(scan.nextLine());
-					if(countOfArmies > mapIO.getCountrySet().get(giverCountry).getNoOfArmies()) {
+					if(countOfArmies > mapIO.getMapGraph().getCountrySet().get(giverCountry).getNoOfArmies()) {
 						System.out.println("Sufficient number of armies is not available.");
 						flag=false;
 					}
@@ -174,7 +174,7 @@ public class LaunchGameDriver extends Application {
 				}
 			}while(flag==false);
 
-			(new FortificationPhase()).moveArmies(mapIO.getCountrySet().get(giverCountry), mapIO.getCountrySet().get(receiverCountry), countOfArmies);
+			(new FortificationPhase()).moveArmies(mapIO.getMapGraph().getCountrySet().get(giverCountry), mapIO.getMapGraph().getCountrySet().get(receiverCountry), countOfArmies);
 
 			scan.close();
 		}

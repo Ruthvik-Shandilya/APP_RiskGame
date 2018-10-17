@@ -88,7 +88,7 @@ public class StartUpPhase {
 	}
 
 	public void countryAllocation() {
-		ArrayList<Country> countries = new ArrayList<>(this.mapIO.getCountrySet().values());
+		ArrayList<Country> countries = new ArrayList<>(this.mapIO.getMapGraph().getCountrySet().values());
 		while(countries.size()>0) {
 			for(int i=0; i<this.listOfPlayers.size(); ++i) {
 				if(countries.size()>1) {
@@ -130,7 +130,7 @@ public class StartUpPhase {
 	}
 
 	public void initialArmyAllocationToCountries() {
-		for(Country country : mapIO.getCountrySet().values()) {
+		for(Country country : mapIO.getMapGraph().getCountrySet().values()) {
 			country.setNoOfArmies(1);
 		}
 		for(Player player: this.listOfPlayers) {
