@@ -193,12 +193,12 @@ public class MapEditor {
 			String fileName = scan.nextLine();
 			mapIO.setFileName(fileName);
 			mapIO.writeToFile(true);
-			System.exit(0);
+			return true;
 		}
 		else {
 			System.out.println("Please enter valid input.");
+			createNewMap();
 		}
-		createNewMap();
 		return true;
 	}
 
@@ -206,8 +206,8 @@ public class MapEditor {
 		
 		printCurrentMapContents();
 		
-		System.out.println("\nCreate a New Map : " + "\n\n1. Enter Map tag data\n2. Add Continents\n3. Remove a Continent\n4. Add Countries\n5. " +
-				"Remove a Country\n6. Add an Edge\n7. Delete an Edge\n8. Print current map contents\n9. Save and Exit");
+		System.out.println("\nEdit Map : " + "\n\n1. Enter Map tag data\n2. Add Continents\n3. Remove a Continent\n4. Add Countries\n5. " +
+				"Remove a Country\n6. Add an Edge\n7. Delete an Edge\n8. Save and Exit");
 		Scanner scan = new Scanner(System.in);
 		int select=0;
 		try {
@@ -365,11 +365,6 @@ public class MapEditor {
 		}
 
 		else if(select == 8) {
-			printCurrentMapContents();
-			editExistingMap();
-		}
-
-		else if(select == 9) {
 			if(!checkCountriesAreAdjacent()) {
 				return false;
 			}
@@ -380,7 +375,7 @@ public class MapEditor {
 			String fileName = scan.nextLine().trim();
 			mapIO.setNewFileName(fileName);
 			mapIO.writeToFile(false);
-			System.exit(0);
+			return true;
 		}
 		else {
 			System.out.println("Please enter valid input.");
@@ -415,6 +410,8 @@ public class MapEditor {
 	}
 
 	public void editMapTagData(Scanner scan) {
+		
+		mapIO.getMapTagData().clear();
 
 		System.out.println("Please enter name of the author");
 		String author = "Author = " + scan.nextLine().trim();
