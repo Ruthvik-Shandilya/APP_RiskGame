@@ -8,25 +8,43 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
-
-
+/**
+ * Map Input Output to read the contents from an existing map 
+ * or to create a new Map for the game.
+ * 
+ * @author Karandeep Singh
+ * @author Palash Jain 
+ */
 public class MapIO {
-
+	
+	/** FileName of the existing map */
 	private String fileName;
 
+	/** List to hold the contents under the Map tag from the map */
 	private ArrayList<String> mapTagData;
 
+	/** FileName for the new map */
 	private String newFileName;
 
+	/** COMMA Delimiter */
 	private static final String COMMA_DELIMITER = ",";
 
+	/** Object of MapGraph */
 	private MapGraph mapGraph;
 	
+	/**
+	 * Constructor to load the contents of a New Map.
+	 */
 	public MapIO() {
 		this.mapGraph = new MapGraph();
 		this.mapTagData = new ArrayList<>();
 	}
-
+	
+	/**
+	 * Constructor to load the contents of an Existing Map.
+	 * 
+	 * @param map Object of MapValidate
+	 */
 	public MapIO(MapValidate map) {
 		this.mapGraph = new MapGraph();
 		this.mapGraph.setContinents(map.getContinentSetOfTerritories());
@@ -37,26 +55,47 @@ public class MapIO {
 		this.mapGraph.setCountrySet(map.getCountrySet());
 		
 	}
-
+	
+	/**
+	 * Method to read the data of existing Map file.
+	 * 
+	 * @return contents of the Map file
+	 */
 	public MapIO readFile() {
 		return this;
 	}
-
+	
+	/**
+	 * Method to set the FileName
+	 * 
+	 * @param fileName String
+	 */
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
-
+	
+	/**
+	 * Method to set the new FileName
+	 * 
+	 * @param newFileName String
+	 */
 	public void setNewFileName(String newFileName) {
 		this.newFileName = newFileName;
 	}
-
+	
+	/**
+	 * MapIO write contents to .map file
+	 * 
+	 * @param isNewFile boolean
+	 * 
+	 * @return MapIO file
+	 */
 	public MapIO writeToFile(boolean isNewFile) {
 		File file;
 		StringBuilder stringBuilder = new StringBuilder();
 		if (isNewFile) {
 			file = new File(new File("").getAbsolutePath() + "\\src\\main\\maps\\" + this.fileName + ".map");
 		} else {
-			System.out.println("this.newFileName=" + this.newFileName);
 			file = new File(new File("").getAbsolutePath() + "\\src\\main\\maps\\" + this.newFileName + ".map");
 		}
 
@@ -97,11 +136,21 @@ public class MapIO {
 		}
 		return this;
 	}
-
+	
+	/**
+	 * Object to get the MapGraph data
+	 * 
+	 * @return data of the MapGraph
+	 */
 	public MapGraph getMapGraph() {
 		return mapGraph;
 	}
-
+	
+	/**
+	 * Method to get the mapTagData contents
+	 * 
+	 * @return mapTagData contents
+	 */
 	public ArrayList<String> getMapTagData() {
 		return mapTagData;
 	}
