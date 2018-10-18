@@ -88,9 +88,9 @@ public class MapIO {
 	 * 
 	 * @param isNewFile boolean
 	 * 
-	 * @return MapIO file
+	 * @return true if file is written correctly
 	 */
-	public MapIO writeToFile(boolean isNewFile) {
+	public boolean writeToFile(boolean isNewFile) {
 		File file;
 		StringBuilder stringBuilder = new StringBuilder();
 		if (isNewFile) {
@@ -132,9 +132,10 @@ public class MapIO {
 
 			writer.write(stringBuilder.toString());
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("IO Exception while writing to a file");
+			return false;
 		}
-		return this;
+		return true;
 	}
 	
 	/**

@@ -104,21 +104,8 @@ public class LaunchGameDriver extends Application implements EventHandler<Action
 			}
 		}
 		else {
-			FileChooser fileChooser = new FileChooser();
-			fileChooser.setTitle("Select a Map File");
-			fileChooser.getExtensionFilters()
-			.add(new FileChooser.ExtensionFilter("Map File Extensions (*.map or *.MAP)", "*.map", "*.MAP"));
-			File selectedFile = fileChooser.showOpenDialog(null);
-			if (selectedFile != null) {
-				loadMapButton.getScene().getWindow().hide();
-				String fileName = selectedFile.getAbsolutePath();
-				System.out.println("File location: " + fileName);
-				MapValidate mapValidate = new MapValidate();
-				if (mapValidate.validateMapFile(fileName)) {
-					readMap = new MapIO(mapValidate);
-					status = new MapEditor(readMap.readFile()).editExistingMap();
-				}
-			}
+			createMapButton.getScene().getWindow().hide();
+			status = new MapEditor().createNewMap();
 		}
 		if(status) {
 			System.out.println("Do you want to play the game?(true or false)");
