@@ -10,22 +10,26 @@ import org.junit.Test;
 import com.risk.model.Continent;
 import com.risk.model.Country;
 import com.risk.model.Player;
+import com.risk.services.MapIO;
+import com.risk.services.MapValidate;
+import com.risk.services.StartUpPhase;
 
 /**
- * Test class for Reinforcement Phase.
+ * Test class for Round Robin.
  * 
- * @author Neha Pal
+ * @author Farhan Shaheen
  *
  */
 
-public class ReinforcementPhaseTest {
+public class RoundRobinTest {
 
-	/** Object for ReinforcementPhase class */
-	private ReinforcementPhase reinforcementPhase;
+	/** Object for RoundRobin class */
+	private RoundRobin roundRobin;
 
 	/** Object for Player class */
-	private Player player;
-
+	Player player;
+	Player player1;
+	Player player2;
 	/** Object for Country class */
 	private Country country;
 
@@ -37,7 +41,8 @@ public class ReinforcementPhaseTest {
 
 	/** ArrayList to hold list of countries in continent */
 	private ArrayList<Country> continentListOfCountries;
-
+	
+	private ArrayList<Player> listOfPlayers;
 	/**
 	 * Set up the initial objects for Reinforcement Phase
 	 * 
@@ -46,9 +51,11 @@ public class ReinforcementPhaseTest {
 
 	@Before
 	public void setUp() throws Exception {
-		reinforcementPhase = new ReinforcementPhase();
+
 		playerOwnedContries = new ArrayList<Country>();
 		continentListOfCountries = new ArrayList<Country>();
+		listOfPlayers = new ArrayList<Player>();
+		player = new Player();
 		
 		country = new Country("C1");
 		playerOwnedContries.add(country);
@@ -58,37 +65,31 @@ public class ReinforcementPhaseTest {
 		playerOwnedContries.add(country);
 		continentListOfCountries.add(country);
 
+		player1 = new Player();
+		player1.setMyCountries(playerOwnedContries);
+		continent = new Continent("Europe", 2);
+		
 		country = new Country("C3");
 		playerOwnedContries.add(country);
 		continentListOfCountries.add(country);
-
-		player = new Player();
-		player.setMyCountries(playerOwnedContries);
-		continent = new Continent("Europe", 2);
-
-		continent.setListOfCountries(continentListOfCountries);
 		
-
+		player2 = new Player();
+		player2.setMyCountries(playerOwnedContries);
+		continent = new Continent("Asia", 2);
+		
+		listOfPlayers.add(player1);
+		listOfPlayers.add(player2);
+		
+		roundRobin = new RoundRobin(listOfPlayers);
 	}
 
 	/**
-	 * Test to validate number of armies when the whole continent is owned by the player
-	 */
-
+	* Test to return the next player.
+	*/
 	@Test
-	public void testFindNoOfArmiesWhenPlayerOwnContinent() {
-		assertEquals(continent.getControlValue(), reinforcementPhase.findNoOfArmies(player, continent));
-	}
-
-	
-	/**
-	 * Test to validate number of armies when player does not owns the continent
-	 */
-	@Test
-	public void testFindNoOfArmiesWhenPlayerDoesNotOwnContinent() {
-
-		country = new Country("C4");
-		continentListOfCountries.add(country);
-		assertEquals(3, reinforcementPhase.findNoOfArmies(player, continent));
+	public void testnext() throws Exception{
+		player = roundRobin.next();
+		System.out.println(player.getName());
+		assertEquals(3, player.getName());
 	}
 }

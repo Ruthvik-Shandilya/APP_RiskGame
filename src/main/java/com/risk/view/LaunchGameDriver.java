@@ -115,6 +115,8 @@ public class LaunchGameDriver extends Application {
 		startUpPhase.balanceArmyAllocationToCountries();
 
 		int turn = 1;
+		System.out.println("Xzoxsdsod: " + startUpPhase.getListOfPlayers());
+		
 		RoundRobin roundRobin = new RoundRobin(startUpPhase.getListOfPlayers());
 
 		while(turn <= 4) {
