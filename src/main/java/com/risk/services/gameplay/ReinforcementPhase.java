@@ -49,7 +49,6 @@ public class ReinforcementPhase {
 		for (Country country : continentListOfCountries) {
 			if (!playerOwnedContries.contains(country)) {
 				isPlayerOwnedContinent = false;
-				System.out.println("Player does not own this continent");
 				break;
 			}
 		}
@@ -58,7 +57,6 @@ public class ReinforcementPhase {
 		//to the control value of the continent.
 		if (isPlayerOwnedContinent) {
 			armiesCount = continent.getControlValue();
-			System.out.println("Player owns this continent");
 		}
 
 		return armiesCount;

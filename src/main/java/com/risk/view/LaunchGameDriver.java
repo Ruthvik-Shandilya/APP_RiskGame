@@ -27,7 +27,8 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 
 /**
- * Launches the main window and provides the view for the user, either to load or create a new map.
+ * Launches the Game and provides the main window and the view for the user, 
+ * either to load or create a new map.
  *
  * @author Karandeep Singh
  * @author Ruthvik Shandilya
@@ -39,15 +40,40 @@ public class LaunchGameDriver extends Application implements EventHandler<Action
 	 * Declare buttons for loading and creating a map file.
 	 */
 	Button loadMapButton, createMapButton;
-
+	
+	/**
+	 * readMap a MapIO Object
+	 */
 	MapIO readMap;
 
 	boolean status = false;
-
+	
+	/**
+	 * The Main Method which Launches the Game and drives by providing
+	 * the options. 
+	 *  
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		launch(args);
 	}
-
+	
+	/**
+	 * 
+	 * The main entry point for all JavaFX applications.The start method is called after the
+	 *  init method has returned,and after the system is ready for the application to begin running. 
+	 *  NOTE: This method is called on the JavaFX Application Thread.
+	 *  
+	 *  @param primaryStage the primary stage for this application, onto which the application scene 
+	 *  can be set. The primary stage will be embedded in the browser if the application was launched
+	 *  as an applet.Applications may create other stages, if needed, but they will not be primary 
+	 *  stages and will not be embedded in the browser.
+	 *  
+	 *  
+	 *  @throws Exception
+	 *  
+	 * @see javafx.application.Application#start(javafx.stage.Stage)
+	 */
 	@Override
 	public void start(Stage primaryStage) {
 		primaryStage.setTitle("Conquest - World (Build 1)");
@@ -83,7 +109,15 @@ public class LaunchGameDriver extends Application implements EventHandler<Action
 		primaryStage.show();
 
 	}
-
+	
+	/**
+	 * Invoked when a specific event of the type for which this handler
+	 * is registered happens.
+	 * 
+	 * @param  event the event which occurred
+	 * 
+	 * @see javafx.event.EventHandler#handle(javafx.event.Event)
+	 */
 	@Override
 	public void handle(ActionEvent event) {
 		if(event.getSource()==loadMapButton) {
@@ -115,6 +149,14 @@ public class LaunchGameDriver extends Application implements EventHandler<Action
 			}
 		}
 	}
+	
+	/**
+	 * This gamePlay method begins the startup phase and depending on the no of the turns,
+	 * enters into the reinforcement phase and assigns the armies based on the input value.
+	 * 
+	 * @param mapIO Object
+	 * 
+	 */
 	private void gamePlay(MapIO mapIO) {
 		Scanner scan = new Scanner(System.in);
 
