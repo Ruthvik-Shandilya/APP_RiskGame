@@ -189,6 +189,11 @@ public class MapEditor {
 			if(!checkMinimumCountriesInContinent()) {
 				return false;
 			}
+			ConnectedGraph connected = new ConnectedGraph(new HashSet<Country>(mapIO.getMapGraph().getCountrySet().values()));
+
+			if (!connected.isConnected()) {
+				return false;
+			}
 			System.out.println("\nPlease enter the file name to save map file.");
 			String fileName = scan.nextLine();
 			mapIO.setFileName(fileName);
@@ -369,6 +374,11 @@ public class MapEditor {
 				return false;
 			}
 			if(!checkMinimumCountriesInContinent()) {
+				return false;
+			}
+			ConnectedGraph connected = new ConnectedGraph(new HashSet<Country>(mapIO.getMapGraph().getCountrySet().values()));
+
+			if (!connected.isConnected()) {
 				return false;
 			}
 			System.out.println("\nPlease enter a new file name to save map file.");
