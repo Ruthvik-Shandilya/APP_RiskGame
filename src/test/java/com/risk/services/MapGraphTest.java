@@ -23,12 +23,16 @@ public class MapGraphTest {
 
 	/** Object for Continent class*/
 	private Continent continent;
+	
 	/** Object for MapGraph class*/
 	private MapGraph mapGraph;
+	
 	/** Object for Country class*/
 	private Country country;
+	
 	/** Adjacent countries*/
 	private HashMap<Country, ArrayList<Country>> adjacentCountries;
+	
 	/** List of countries*/
 	private ArrayList<Country> countryList;
 
