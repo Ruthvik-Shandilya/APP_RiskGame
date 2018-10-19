@@ -1,6 +1,5 @@
 package com.risk.services;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -80,7 +79,6 @@ public class MapEditorTest {
 
 		mapValidate = new MapValidate();
 		mapIO = new MapIO(mapValidate);
-		mapIO.getMapGraph().setCountriesInContinent(countriesInContinent);
 
 		adjacentCountries = new HashMap<Country, ArrayList<Country>>();
 		adjacentCountries.put(country1, listOfCountries);

@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 import com.risk.model.Continent;
 import com.risk.model.Country;
+import com.risk.view.LaunchGameDriver;
 
 /**
  * Class proving the m=functionality for creating a new map or edit existing map
@@ -153,7 +154,9 @@ public class MapEditor {
 						} else {
 							adjacentCountry = mapIO.getMapGraph().getCountrySet().get(input[j].trim());
 						}
-						adjacentCountry.getAdjacentCountries().add(country);
+						if(!adjacentCountry.getAdjacentCountries().contains(country)){
+							adjacentCountry.getAdjacentCountries().add(country);
+						}
 						countries.add(adjacentCountry);
 					}
 					country.setAdjacentCountries(countries);
@@ -238,6 +241,7 @@ public class MapEditor {
 			String fileName = scan.nextLine();
 			mapIO.setFileName(fileName);
 			mapIO.writeToFile(true);
+			LaunchGameDriver.status=true;
 			return true;
 		} else {
 			System.out.println("Please enter valid input.");
@@ -367,7 +371,9 @@ public class MapEditor {
 						adjacentCountry
 								.setContinent(mapIO.getMapGraph().getContinents().get(input[3].trim()).getName());
 						adjacentCountry.setPartOfContinent(mapIO.getMapGraph().getContinents().get(input[3].trim()));
-						adjacentCountry.getAdjacentCountries().add(country);
+						if(!adjacentCountry.getAdjacentCountries().contains(country)){
+							adjacentCountry.getAdjacentCountries().add(country);
+						}
 						countries.add(adjacentCountry);
 					}
 					country.setAdjacentCountries(countries);
@@ -447,6 +453,7 @@ public class MapEditor {
 			String fileName = scan.nextLine().trim();
 			mapIO.setNewFileName(fileName);
 			mapIO.writeToFile(false);
+			LaunchGameDriver.status=true;
 			return true;
 		} else {
 			System.out.println("Please enter valid input.");
@@ -481,10 +488,9 @@ public class MapEditor {
 	 * @return true if each continent has at least 2 countries; otherwise false.
 	 */
 	public boolean checkMinimumCountriesInContinent() {
-		for (Map.Entry<Continent, HashSet<Country>> continent : mapIO.getMapGraph().getCountriesInContinent()
-				.entrySet()) {
-			if (continent.getKey().getListOfCountries().size() < 2) {
-				System.out.println("Number of countries in a continent " + continent.getKey().getName() + " is less");
+		for (Continent continent : mapIO.getMapGraph().getContinents().values()){
+			if (continent.getListOfCountries().size() < 2) {
+				System.out.println("Number of countries in a continent " + continent.getName() + " is less");
 				return false;
 			}
 		}

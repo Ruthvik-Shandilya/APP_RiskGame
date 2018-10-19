@@ -52,7 +52,6 @@ public class MapIO {
 		this.mapGraph = new MapGraph();
 		this.mapGraph.setContinents(map.getContinentSetOfTerritories());
 		this.mapGraph.setAdjacentCountries(map.getAdjacentCountries());
-		this.mapGraph.setCountriesInContinent(map.getCountriesInContinent());
 		this.fileName = map.getFileName();
 		this.mapTagData = map.getMapTagData();
 		this.mapGraph.setCountrySet(map.getCountrySet());

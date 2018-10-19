@@ -45,7 +45,7 @@ public class LaunchGameDriver extends Application implements EventHandler<Action
 	 */
 	MapIO readMap;
 
-	boolean status = false;
+	public static boolean status = false;
 	
 	/**
 	 * The Main Method which Launches the Game and drives by providing
@@ -132,14 +132,15 @@ public class LaunchGameDriver extends Application implements EventHandler<Action
 				MapValidate mapValidate = new MapValidate();
 				if (mapValidate.validateMapFile(fileName)) {
 					readMap = new MapIO(mapValidate);
-					status = new MapEditor(readMap.readFile()).editExistingMap();
+					new MapEditor(readMap.readFile()).editExistingMap();
 				}
 			}
 		}
 		else {
 			createMapButton.getScene().getWindow().hide();
-			status = new MapEditor().createNewMap();
+			new MapEditor().createNewMap();
 		}
+		
 		if(status) {
 			System.out.println("Do you want to play the game?(true or false)");
 			Scanner scan = new Scanner(System.in);
