@@ -10,18 +10,51 @@ import java.util.regex.Pattern;
 import com.risk.model.Continent;
 import com.risk.model.Country;
 
+
+/**
+ * Class proving the m=functionality for creating a new map
+ * or edit existing map according the risk game rules.
+ * 
+ * @author Palash Jain
+ * @author Karandeep Singh
+ * 
+ */
+
 public class MapEditor {
 	
+	/** Variable for MapIO object */
 	private MapIO mapIO;
+
+	/**
+	 * Constructor for the MapEditor class
+	 * Initializes mapIO object.
+	 */
 
 	public MapEditor() {
 		this.mapIO = new MapIO();
 	}
 
+	/**
+	 * Constructor for the MapEditor class
+	 * Initializes mapIO object.
+	 * 
+	 * @param mapIO MapIO object.
+	 */
 	public MapEditor(MapIO mapIO) {
 		this.mapIO = mapIO;
 	}
-
+	
+	
+	/**
+	 * Method for creating a new map from scratch.
+	 * It provides 9 options to the user from creating 
+	 * continent and country. Deleting Continent and Country.
+	 * Adding and deleting edge between countries, 
+	 * getting mapTagDat, printing current data and save and exit.
+	 * 
+	 * @return true if the map is successfully created; otherwise false.
+	 */
+	
 	public boolean createNewMap() {
 		System.out.println("\nCreate a New Map : " + "\n\n1. Enter Map tag data\n2. Add Continents\n3. Remove a Continent\n4. Add Countries\n5. " +
 				"Remove a Country\n6. Add an Edge\n7. Delete an Edge\n8. Print current map contents\n9. Save and Exit");
@@ -206,7 +239,18 @@ public class MapEditor {
 		}
 		return true;
 	}
-
+	
+	
+	/**
+	 * Method for editing an already existing Map file.
+	 * It provides 9 options to the user from creating 
+	 * continent and country. Deleting Continent and Country.
+	 * Adding and deleting edge between countries, 
+	 * getting mapTagDat and save and exit.
+	 * 
+	 * @return true if the map is successfully created; otherwise false.
+	 */
+	
 	public boolean editExistingMap(){
 		
 		printCurrentMapContents();
@@ -394,6 +438,13 @@ public class MapEditor {
 		return true;
 	}
 
+	/**
+	 * Method for verifying if the adjacent countries in the game
+	 * are also adjacent according to the .map file.
+	 * 
+	 * @return true if adjacent country data is true; otherwise false.
+	 */
+	
 	public boolean checkCountriesAreAdjacent() {
 		for (Map.Entry<Country, ArrayList<Country>> countries : mapIO.getMapGraph().getAdjacentCountries().entrySet()) {
 			Country checkCountry = countries.getKey();
@@ -408,6 +459,11 @@ public class MapEditor {
 		return true;
 	}
 
+	/**
+	 * Method for verifying if every continent has at least two countries.
+	 * 
+	 * @return true if each continent has at least 2 countries; otherwise false.
+	 */
 	public boolean checkMinimumCountriesInContinent() {
 		for (Map.Entry<Continent, HashSet<Country>> countries : mapIO.getMapGraph().getCountriesInContinent().entrySet()) {
 			if (countries.getKey().getListOfCountries().size() < 2) {
@@ -419,6 +475,13 @@ public class MapEditor {
 		return true;
 	}
 
+	/**
+	 * Method for editing or adding map tag data.
+	 * 
+	 * @param scan Scanner object
+	 * 
+	 */
+	
 	public void editMapTagData(Scanner scan) {
 		
 		mapIO.getMapTagData().clear();
@@ -447,11 +510,21 @@ public class MapEditor {
 		System.out.println("Added map tag data.");
 	}
 
+	/**
+	 * Method for skipping blank lines in the .map file.
+	 * 
+	 * @param scan Scanner object
+	 */
+	
 	private void skipNewLines(Scanner scan) {
 		while(scan.nextLine().equals("\n")) {	
 		}
 	}
 
+	/**
+	 * Method for printing current map details which is being created.
+	 */
+	
 	private void printCurrentMapContents() {
 		System.out.println("\nCurrent map contents:\n");
 		System.out.println("Map tag data [MAP]:");
