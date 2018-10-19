@@ -52,6 +52,9 @@ public class ConnectedGraphTest {
 		country3.setAdjacentCountries(adjacentCountries);
 	}
 
+	/**
+	 * Test method to check if a Graph is connected
+	 */
 	@Test
 	public void testIsConnected() {
 		
