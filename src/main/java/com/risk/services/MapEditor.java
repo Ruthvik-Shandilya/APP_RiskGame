@@ -287,7 +287,7 @@ public class MapEditor {
 				count = Integer.parseInt(scan.nextLine());
 			} catch (NumberFormatException e) {
 				System.out.println("\nPlease enter a valid number.");
-				createNewMap();
+				editExistingMap();
 			}
 			System.out.println("Please enter continent details in below format.");
 			System.out.println("Continent name=Control value");
@@ -331,7 +331,7 @@ public class MapEditor {
 				count = Integer.parseInt(scan.nextLine());
 			} catch (NumberFormatException e) {
 				System.out.println("\nPlease enter a valid number.");
-				createNewMap();
+				editExistingMap();
 			}
 			System.out.println("\nEnter Countries details in below format.\n");
 			System.out.println(
