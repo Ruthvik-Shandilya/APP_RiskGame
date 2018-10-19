@@ -10,7 +10,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.risk.model.Country;
-
+/**
+ * Test Class for MapValidation
+ *
+ * @author Neha Pal
+ *
+ */
 public class ConnectedGraphTest {
 
 	/**Object for ConnectedGraph Class*/
