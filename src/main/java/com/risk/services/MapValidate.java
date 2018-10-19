@@ -23,7 +23,6 @@ import com.risk.model.Continent;
  * @author Ruthvik Shandilya
  * @author Palash Jain
  */
-
 public class MapValidate {
 
 	/** Containing set of all the continents */
@@ -55,7 +54,6 @@ public class MapValidate {
 	 * MapValidate class.
 	 * 
 	 */
-
 	public MapValidate() {
 		this.continentSetOfContinents = new HashMap<>();
 		this.continentSetOfTerritories = new HashMap<>();
@@ -70,7 +68,6 @@ public class MapValidate {
 	 * 
 	 * @return HashMap<String, Continent> which is continentSetOfTerritories
 	 */
-
 	public HashMap<String, Continent> getContinentSetOfTerritories() {
 		return continentSetOfTerritories;
 	}
@@ -81,7 +78,6 @@ public class MapValidate {
 	 * @param continentSetOfTerritories
 	 *            which is continent set generated from territories data.
 	 */
-
 	public void setContinentSetOfTerritories(HashMap<String, Continent> continentSetOfTerritories) {
 		this.continentSetOfTerritories = continentSetOfTerritories;
 	}
@@ -91,7 +87,6 @@ public class MapValidate {
 	 * 
 	 * @return HashMap<String, Continent> which is continentSetOfTerritories
 	 */
-
 	public HashMap<String, Continent> getContinentSetOfContinents() {
 		return continentSetOfContinents;
 	}
@@ -102,7 +97,6 @@ public class MapValidate {
 	 * @return HashMap<Country, ArrayList<Country>> which contains adjacent
 	 *         countries corresponding each country.
 	 */
-
 	public HashMap<Country, ArrayList<Country>> getAdjacentCountries() {
 		return adjacentCountries;
 	}
@@ -113,7 +107,6 @@ public class MapValidate {
 	 * @return HashMap<Continent, HashSet<Country>> which contains countries in
 	 *         a continent.
 	 */
-
 	public HashMap<Continent, HashSet<Country>> getCountriesInContinent() {
 		return countriesInContinent;
 	}
@@ -123,7 +116,6 @@ public class MapValidate {
 	 * 
 	 * @return String fileName
 	 */
-
 	public String getFileName() {
 		return fileName;
 	}
@@ -133,7 +125,6 @@ public class MapValidate {
 	 * 
 	 * @return ArrayList<String> Contents of map details
 	 */
-
 	public ArrayList<String> getMapTagData() {
 		return mapTagData;
 	}
@@ -155,7 +146,6 @@ public class MapValidate {
 	 * 
 	 * @return true if map is validated; otherwise false
 	 */
-
 	public boolean validateMapFile(String mapFile) {
 		this.fileName = mapFile;
 
@@ -322,7 +312,6 @@ public class MapValidate {
 	 * 
 	 * @return HashSet<Country> countries inside a continent.
 	 */
-
 	public HashSet<Country> getCountriesFromContinent(String continent,
 			HashMap<Continent, HashSet<Country>> countriesInAContinent) {
 		for (Map.Entry<Continent, HashSet<Country>> pair : countriesInAContinent.entrySet()) {
@@ -342,7 +331,6 @@ public class MapValidate {
 	 * 
 	 * @return true if mapTagData is present; otherwise false.
 	 */
-
 	public boolean checkAllTags(String fileData) {
 		if (!fileData.contains("[Map]") || countOccurrences(fileData, "[Map]") != 1) {
 			return false;
@@ -366,7 +354,6 @@ public class MapValidate {
 	 * 
 	 * @return int is not number of occurrences.
 	 */
-
 	public int countOccurrences(String input, String search) {
 		int count = 0, startIndex = 0;
 		Pattern pattern = Pattern.compile(search, Pattern.LITERAL);
@@ -384,7 +371,6 @@ public class MapValidate {
 	 * 
 	 * @return HashMap<String, Country> countrySet.
 	 */
-
 	public HashMap<String, Country> getCountrySet() {
 		return countrySet;
 	}
@@ -395,7 +381,6 @@ public class MapValidate {
 	 * @param continentSetOfContinents
 	 *            HashMap containing, continents of the map.
 	 */
-
 	public void setContinentSetOfContinents(HashMap<String, Continent> continentSetOfContinents) {
 		this.continentSetOfContinents = continentSetOfContinents;
 	}

@@ -10,76 +10,76 @@ import java.util.regex.Pattern;
 import com.risk.model.Continent;
 import com.risk.model.Country;
 
-
 /**
- * Class proving the m=functionality for creating a new map
- * or edit existing map according the risk game rules.
+ * Class proving the m=functionality for creating a new map or edit existing map
+ * according the risk game rules.
  * 
  * @author Palash Jain
  * @author Karandeep Singh
  * 
  */
-
 public class MapEditor {
-	
+
 	/** Variable for MapIO object */
 	private MapIO mapIO;
 
 	/**
-	 * Constructor for the MapEditor class
-	 * Initializes mapIO object.
+	 * Constructor for the MapEditor class Initializes mapIO object.
 	 */
-
 	public MapEditor() {
 		this.mapIO = new MapIO();
 	}
 
 	/**
-	 * Constructor for the MapEditor class
-	 * Initializes mapIO object.
+	 * Constructor for the MapEditor class Initializes mapIO object.
 	 * 
-	 * @param mapIO MapIO object.
+	 * @param mapIO
+	 *            MapIO object.
 	 */
 	public MapEditor(MapIO mapIO) {
 		this.mapIO = mapIO;
 	}
-	
-	
+
 	/**
-	 * Method for creating a new map from scratch.
-	 * It provides 9 options to the user from creating 
-	 * continent and country. Deleting Continent and Country.
-	 * Adding and deleting edge between countries, 
-	 * getting mapTagDat, printing current data and save and exit.
+	 * Method for creating a new map from scratch. It provides 9 options to the
+	 * user from creating continent and country. Deleting Continent and Country.
+	 * Adding and deleting edge between countries, getting mapTagDat, printing
+	 * current data and save and exit.
 	 * 
 	 * @return true if the map is successfully created; otherwise false.
 	 */
-	
 	public boolean createNewMap() {
-		System.out.println("\nCreate a New Map : " + "\n\n1. Enter Map tag data\n2. Add Continents\n3. Remove a Continent\n4. Add Countries\n5. " +
-				"Remove a Country\n6. Add an Edge\n7. Delete an Edge\n8. Print current map contents\n9. Save and Exit");
+		System.out.println("\nCreate a New Map : "
+				+ "\n\n1. Enter Map tag data\n2. Add Continents\n3. Remove a Continent\n4. Add Countries\n5. "
+				+ "Remove a Country\n6. Add an Edge\n7. Delete an Edge\n8. Print current map contents\n9. Save and Exit");
 		Scanner scan = new Scanner(System.in);
-		int select=0;
+		int select = 0;
 		try {
 			select = Integer.parseInt(scan.nextLine());
-		}catch(NumberFormatException e) {
+		} catch (NumberFormatException e) {
 			System.out.println("\nPlease enter a valid number.");
 			createNewMap();
 		}
 
-		if(select == 1) {
+		if (select == 1) {
 			editMapTagData(scan);
 			skipNewLines(scan);
 			createNewMap();
 		}
 
-		else if(select == 2) {
+		else if (select == 2) {
 			System.out.println("Please enter number of continents to be added.");
-			int count = Integer.parseInt(scan.nextLine());
+			int count = 0;
+			try {
+				count = Integer.parseInt(scan.nextLine());
+			} catch (NumberFormatException e) {
+				System.out.println("\nPlease enter a valid number.");
+				createNewMap();
+			}
 			System.out.println("Please enter continent details in below format.");
 			System.out.println("Continent name=Control value");
 			Pattern pattern = Pattern.compile("[a-z, A-Z]+=[0-9]+");
-			for(int i=0;i<count;++i) {
+			for (int i = 0; i < count; ++i) {
 				String line = scan.nextLine();
 				Matcher match = pattern.matcher(line.trim());
 				if (!match.matches()) {
@@ -99,10 +99,10 @@ public class MapEditor {
 			createNewMap();
 		}
 
-		else if(select == 3) {
+		else if (select == 3) {
 			System.out.println("Enter the name of the continent to be deleted.");
 			String continentName = scan.nextLine();
-			if(!mapIO.getMapGraph().getContinents().containsKey(continentName.trim())){
+			if (!mapIO.getMapGraph().getContinents().containsKey(continentName.trim())) {
 				System.out.println("Continent " + continentName + " does not exist");
 				createNewMap();
 			}
@@ -111,12 +111,19 @@ public class MapEditor {
 			createNewMap();
 		}
 
-		else if(select == 4) {
+		else if (select == 4) {
 			System.out.println("Please enter number of countries to be added.");
-			int count = Integer.parseInt(scan.nextLine());
+			int count = 0;
+			try {
+				count = Integer.parseInt(scan.nextLine());
+			} catch (NumberFormatException e) {
+				System.out.println("\nPlease enter a valid number.");
+				createNewMap();
+			}
 			System.out.println("\nEnter Countries details in below format.\n");
-			System.out.println("Country Name, X-value, Y-value, Continent Name, List of adjacent countries separated by ,");
-			for(int i=0;i<count;++i) {
+			System.out.println(
+					"Country Name, X-value, Y-value, Continent Name, List of adjacent countries separated by ,");
+			for (int i = 0; i < count; ++i) {
 				String line = scan.nextLine();
 				if (!line.trim().isEmpty()) {
 					String input[] = line.split(",");
@@ -126,13 +133,12 @@ public class MapEditor {
 						continue;
 					}
 					Country country = null;
-					if(!mapIO.getMapGraph().getCountrySet().containsKey(input[0].trim())){
+					if (!mapIO.getMapGraph().getCountrySet().containsKey(input[0].trim())) {
 						country = new Country(input[0].trim());
 						country.setContinent(mapIO.getMapGraph().getContinents().get(input[3]).getName());
 						country.setxValue(input[1]);
 						country.setyValue(input[2]);
-					}
-					else {
+					} else {
 						country = mapIO.getMapGraph().getCountrySet().get(input[0].trim());
 						country.setContinent(mapIO.getMapGraph().getContinents().get(input[3]).getName());
 						country.setxValue(input[1]);
@@ -147,6 +153,7 @@ public class MapEditor {
 						} else {
 							adjacentCountry = mapIO.getMapGraph().getCountrySet().get(input[j].trim());
 						}
+						adjacentCountry.getAdjacentCountries().add(country);
 						countries.add(adjacentCountry);
 					}
 					country.setAdjacentCountries(countries);
@@ -155,11 +162,10 @@ public class MapEditor {
 			}
 			skipNewLines(scan);
 			createNewMap();
-		}
-		else if(select == 5) {
+		} else if (select == 5) {
 			System.out.println("Enter the name of the country to be deleted.");
 			String countryName = scan.nextLine();
-			if(!mapIO.getMapGraph().getCountrySet().containsKey(countryName.trim())){
+			if (!mapIO.getMapGraph().getCountrySet().containsKey(countryName.trim())) {
 				System.out.println("Country " + countryName + " does not exist");
 				createNewMap();
 			}
@@ -168,61 +174,62 @@ public class MapEditor {
 			createNewMap();
 		}
 
-		else if(select == 6) {
+		else if (select == 6) {
 			System.out.println("Enter the name of two countries to be connected, separated by newline.");
 			String country1 = scan.nextLine();
 			String country2 = scan.nextLine();
-			if(!mapIO.getMapGraph().getCountrySet().containsKey(country1)) {
+			if (!mapIO.getMapGraph().getCountrySet().containsKey(country1)) {
 				System.out.println("Country " + country1 + " does not exist.");
 				createNewMap();
-			}
-			else if(!mapIO.getMapGraph().getCountrySet().containsKey(country2)) {
+			} else if (!mapIO.getMapGraph().getCountrySet().containsKey(country2)) {
 				System.out.println("Country " + country2 + " does not exist.");
 				createNewMap();
-			}
-			else if(mapIO.getMapGraph().checkAdjacency(mapIO.getMapGraph().getCountrySet().get(country1), mapIO.getMapGraph().getCountrySet().get(country2))) {
+			} else if (mapIO.getMapGraph().checkAdjacency(mapIO.getMapGraph().getCountrySet().get(country1),
+					mapIO.getMapGraph().getCountrySet().get(country2))) {
 				System.out.println("Both countries are already adjacent.");
 				createNewMap();
 			}
-			mapIO.getMapGraph().addEdgeBetweenCountries(mapIO.getMapGraph().getCountrySet().get(country1), mapIO.getMapGraph().getCountrySet().get(country2));
+			mapIO.getMapGraph().addEdgeBetweenCountries(mapIO.getMapGraph().getCountrySet().get(country1),
+					mapIO.getMapGraph().getCountrySet().get(country2));
 			skipNewLines(scan);
 			createNewMap();
 		}
 
-		else if(select == 7) {
+		else if (select == 7) {
 			System.out.println("Enter the name of two countries to be disconnected, separated by newline.");
 			String country1 = scan.nextLine();
 			String country2 = scan.nextLine();
-			if(!mapIO.getMapGraph().getCountrySet().containsKey(country1)) {
+			if (!mapIO.getMapGraph().getCountrySet().containsKey(country1)) {
 				System.out.println("Country " + country1 + " does not exist.");
 				createNewMap();
-			}
-			else if(!mapIO.getMapGraph().getCountrySet().containsKey(country2)) {
+			} else if (!mapIO.getMapGraph().getCountrySet().containsKey(country2)) {
 				System.out.println("Country " + country2 + " does not exist.");
 				createNewMap();
-			}
-			else if(!mapIO.getMapGraph().checkAdjacency(mapIO.getMapGraph().getCountrySet().get(country1), mapIO.getMapGraph().getCountrySet().get(country2))) {
+			} else if (!mapIO.getMapGraph().checkAdjacency(mapIO.getMapGraph().getCountrySet().get(country1),
+					mapIO.getMapGraph().getCountrySet().get(country2))) {
 				System.out.println("Both countries are already not adjacent.");
 				createNewMap();
 			}
-			mapIO.getMapGraph().deleteEdgeBetweenCountries(mapIO.getMapGraph().getCountrySet().get(country1), mapIO.getMapGraph().getCountrySet().get(country2));
+			mapIO.getMapGraph().deleteEdgeBetweenCountries(mapIO.getMapGraph().getCountrySet().get(country1),
+					mapIO.getMapGraph().getCountrySet().get(country2));
 			skipNewLines(scan);
 			createNewMap();
 		}
 
-		else if(select == 8) {
+		else if (select == 8) {
 			printCurrentMapContents();
 			createNewMap();
 		}
 
-		else if(select == 9) {
-			if(!checkCountriesAreAdjacent()) {
+		else if (select == 9) {
+			if (!checkCountriesAreAdjacent()) {
 				return false;
 			}
-			if(!checkMinimumCountriesInContinent()) {
+			if (!checkMinimumCountriesInContinent()) {
 				return false;
 			}
-			ConnectedGraph connected = new ConnectedGraph(new HashSet<Country>(mapIO.getMapGraph().getCountrySet().values()));
+			ConnectedGraph connected = new ConnectedGraph(
+					new HashSet<Country>(mapIO.getMapGraph().getCountrySet().values()));
 
 			if (!connected.isConnected()) {
 				return false;
@@ -232,53 +239,56 @@ public class MapEditor {
 			mapIO.setFileName(fileName);
 			mapIO.writeToFile(true);
 			return true;
-		}
-		else {
+		} else {
 			System.out.println("Please enter valid input.");
 			createNewMap();
 		}
 		return true;
 	}
-	
-	
+
 	/**
-	 * Method for editing an already existing Map file.
-	 * It provides 9 options to the user from creating 
-	 * continent and country. Deleting Continent and Country.
-	 * Adding and deleting edge between countries, 
-	 * getting mapTagDat and save and exit.
+	 * Method for editing an already existing Map file. It provides 9 options to
+	 * the user from creating continent and country. Deleting Continent and
+	 * Country. Adding and deleting edge between countries, getting mapTagDat
+	 * and save and exit.
 	 * 
 	 * @return true if the map is successfully created; otherwise false.
 	 */
-	
-	public boolean editExistingMap(){
-		
+	public boolean editExistingMap() {
+
 		printCurrentMapContents();
-		
-		System.out.println("\nEdit Map : " + "\n\n1. Enter Map tag data\n2. Add Continents\n3. Remove a Continent\n4. Add Countries\n5. " +
-				"Remove a Country\n6. Add an Edge\n7. Delete an Edge\n8. Save and Exit");
+
+		System.out.println("\nEdit Map : "
+				+ "\n\n1. Enter Map tag data\n2. Add Continents\n3. Remove a Continent\n4. Add Countries\n5. "
+				+ "Remove a Country\n6. Add an Edge\n7. Delete an Edge\n8. Save and Exit");
 		Scanner scan = new Scanner(System.in);
-		int select=0;
+		int select = 0;
 		try {
 			select = Integer.parseInt(scan.nextLine());
-		}catch(NumberFormatException e) {
+		} catch (NumberFormatException e) {
 			System.out.println("\nPlease enter a valid number.");
 			editExistingMap();
 		}
 
-		if(select == 1) {
+		if (select == 1) {
 			editMapTagData(scan);
 			skipNewLines(scan);
 			editExistingMap();
 		}
 
-		else if(select == 2) {
+		else if (select == 2) {
 			System.out.println("Please enter number of continents to be added.");
-			int count = Integer.parseInt(scan.nextLine());
+			int count = 0;
+			try {
+				count = Integer.parseInt(scan.nextLine());
+			} catch (NumberFormatException e) {
+				System.out.println("\nPlease enter a valid number.");
+				createNewMap();
+			}
 			System.out.println("Please enter continent details in below format.");
 			System.out.println("Continent name=Control value");
 			Pattern pattern = Pattern.compile("[a-z, A-Z]+=[0-9]+");
-			for(int i=0;i<count;++i) {
+			for (int i = 0; i < count; ++i) {
 				String line = scan.nextLine();
 				Matcher match = pattern.matcher(line.trim());
 				if (!match.matches()) {
@@ -298,10 +308,10 @@ public class MapEditor {
 			editExistingMap();
 		}
 
-		else if(select == 3) {
+		else if (select == 3) {
 			System.out.println("Enter the name of the continent to be deleted.");
 			String continentName = scan.nextLine();
-			if(!mapIO.getMapGraph().getContinents().containsKey(continentName.trim())){
+			if (!mapIO.getMapGraph().getContinents().containsKey(continentName.trim())) {
 				System.out.println("Continent " + continentName + " does not exist");
 				editExistingMap();
 			}
@@ -310,12 +320,19 @@ public class MapEditor {
 			editExistingMap();
 		}
 
-		else if(select == 4) {
+		else if (select == 4) {
 			System.out.println("Please enter number of countries to be added.");
-			int count = Integer.parseInt(scan.nextLine());
+			int count = 0;
+			try {
+				count = Integer.parseInt(scan.nextLine());
+			} catch (NumberFormatException e) {
+				System.out.println("\nPlease enter a valid number.");
+				createNewMap();
+			}
 			System.out.println("\nEnter Countries details in below format.\n");
-			System.out.println("Country Name, X-value, Y-value, Continent Name, List of adjacent countries separated by ,");
-			for(int i=0;i<count;++i) {
+			System.out.println(
+					"Country Name, X-value, Y-value, Continent Name, List of adjacent countries separated by ,");
+			for (int i = 0; i < count; ++i) {
 				String line = scan.nextLine();
 				if (!line.trim().isEmpty()) {
 					String input[] = line.split(",");
@@ -325,14 +342,13 @@ public class MapEditor {
 						continue;
 					}
 					Country country = null;
-					if(!mapIO.getMapGraph().getCountrySet().containsKey(input[0].trim())){
+					if (!mapIO.getMapGraph().getCountrySet().containsKey(input[0].trim())) {
 						country = new Country(input[0].trim());
 						country.setContinent(mapIO.getMapGraph().getContinents().get(input[3].trim()).getName());
 						country.setPartOfContinent(mapIO.getMapGraph().getContinents().get(input[3].trim()));
 						country.setxValue(input[1]);
 						country.setyValue(input[2]);
-					}
-					else {
+					} else {
 						country = mapIO.getMapGraph().getCountrySet().get(input[0].trim());
 						country.setContinent(mapIO.getMapGraph().getContinents().get(input[3].trim()).getName());
 						country.setPartOfContinent(mapIO.getMapGraph().getContinents().get(input[3].trim()));
@@ -348,8 +364,10 @@ public class MapEditor {
 						} else {
 							adjacentCountry = mapIO.getMapGraph().getCountrySet().get(input[j].trim());
 						}
-						adjacentCountry.setContinent(mapIO.getMapGraph().getContinents().get(input[3].trim()).getName());
+						adjacentCountry
+								.setContinent(mapIO.getMapGraph().getContinents().get(input[3].trim()).getName());
 						adjacentCountry.setPartOfContinent(mapIO.getMapGraph().getContinents().get(input[3].trim()));
+						adjacentCountry.getAdjacentCountries().add(country);
 						countries.add(adjacentCountry);
 					}
 					country.setAdjacentCountries(countries);
@@ -358,11 +376,10 @@ public class MapEditor {
 			}
 			skipNewLines(scan);
 			editExistingMap();
-		}
-		else if(select == 5) {
+		} else if (select == 5) {
 			System.out.println("Enter the name of the country to be deleted.");
 			String countryName = scan.nextLine();
-			if(!mapIO.getMapGraph().getCountrySet().containsKey(countryName.trim())){
+			if (!mapIO.getMapGraph().getCountrySet().containsKey(countryName.trim())) {
 				System.out.println("Country " + countryName + " does not exist");
 				editExistingMap();
 			}
@@ -371,56 +388,57 @@ public class MapEditor {
 			editExistingMap();
 		}
 
-		else if(select == 6) {
+		else if (select == 6) {
 			System.out.println("Enter the name of two countries to be connected, separated by newline.");
 			String country1 = scan.nextLine();
 			String country2 = scan.nextLine();
-			if(!mapIO.getMapGraph().getCountrySet().containsKey(country1)) {
+			if (!mapIO.getMapGraph().getCountrySet().containsKey(country1)) {
 				System.out.println("Country " + country1 + " does not exist.");
 				editExistingMap();
-			}
-			else if(!mapIO.getMapGraph().getCountrySet().containsKey(country2)) {
+			} else if (!mapIO.getMapGraph().getCountrySet().containsKey(country2)) {
 				System.out.println("Country " + country2 + " does not exist.");
 				editExistingMap();
-			}
-			else if(mapIO.getMapGraph().checkAdjacency(mapIO.getMapGraph().getCountrySet().get(country1), mapIO.getMapGraph().getCountrySet().get(country2))) {
+			} else if (mapIO.getMapGraph().checkAdjacency(mapIO.getMapGraph().getCountrySet().get(country1),
+					mapIO.getMapGraph().getCountrySet().get(country2))) {
 				System.out.println("Both countries are already adjacent.");
 				editExistingMap();
 			}
-			mapIO.getMapGraph().addEdgeBetweenCountries(mapIO.getMapGraph().getCountrySet().get(country1), mapIO.getMapGraph().getCountrySet().get(country2));
+			mapIO.getMapGraph().addEdgeBetweenCountries(mapIO.getMapGraph().getCountrySet().get(country1),
+					mapIO.getMapGraph().getCountrySet().get(country2));
 			skipNewLines(scan);
 			editExistingMap();
 		}
 
-		else if(select == 7) {
+		else if (select == 7) {
 			System.out.println("Enter the name of two countries to be disconnected, separated by newline.");
 			String country1 = scan.nextLine();
 			String country2 = scan.nextLine();
-			if(!mapIO.getMapGraph().getCountrySet().containsKey(country1)) {
+			if (!mapIO.getMapGraph().getCountrySet().containsKey(country1)) {
 				System.out.println("Country " + country1 + " does not exist.");
 				editExistingMap();
-			}
-			else if(!mapIO.getMapGraph().getCountrySet().containsKey(country2)) {
+			} else if (!mapIO.getMapGraph().getCountrySet().containsKey(country2)) {
 				System.out.println("Country " + country2 + " does not exist.");
 				editExistingMap();
-			}
-			else if(!mapIO.getMapGraph().checkAdjacency(mapIO.getMapGraph().getCountrySet().get(country1), mapIO.getMapGraph().getCountrySet().get(country2))) {
+			} else if (!mapIO.getMapGraph().checkAdjacency(mapIO.getMapGraph().getCountrySet().get(country1),
+					mapIO.getMapGraph().getCountrySet().get(country2))) {
 				System.out.println("Both countries are already not adjacent.");
 				editExistingMap();
 			}
-			mapIO.getMapGraph().deleteEdgeBetweenCountries(mapIO.getMapGraph().getCountrySet().get(country1), mapIO.getMapGraph().getCountrySet().get(country2));
+			mapIO.getMapGraph().deleteEdgeBetweenCountries(mapIO.getMapGraph().getCountrySet().get(country1),
+					mapIO.getMapGraph().getCountrySet().get(country2));
 			skipNewLines(scan);
 			editExistingMap();
 		}
 
-		else if(select == 8) {
-			if(!checkCountriesAreAdjacent()) {
+		else if (select == 8) {
+			if (!checkCountriesAreAdjacent()) {
 				return false;
 			}
-			if(!checkMinimumCountriesInContinent()) {
+			if (!checkMinimumCountriesInContinent()) {
 				return false;
 			}
-			ConnectedGraph connected = new ConnectedGraph(new HashSet<Country>(mapIO.getMapGraph().getCountrySet().values()));
+			ConnectedGraph connected = new ConnectedGraph(
+					new HashSet<Country>(mapIO.getMapGraph().getCountrySet().values()));
 
 			if (!connected.isConnected()) {
 				return false;
@@ -430,8 +448,7 @@ public class MapEditor {
 			mapIO.setNewFileName(fileName);
 			mapIO.writeToFile(false);
 			return true;
-		}
-		else {
+		} else {
 			System.out.println("Please enter valid input.");
 			editExistingMap();
 		}
@@ -439,12 +456,11 @@ public class MapEditor {
 	}
 
 	/**
-	 * Method for verifying if the adjacent countries in the game
-	 * are also adjacent according to the .map file.
+	 * Method for verifying if the adjacent countries in the game are also
+	 * adjacent according to the .map file.
 	 * 
 	 * @return true if adjacent country data is true; otherwise false.
 	 */
-	
 	public boolean checkCountriesAreAdjacent() {
 		for (Map.Entry<Country, ArrayList<Country>> countries : mapIO.getMapGraph().getAdjacentCountries().entrySet()) {
 			Country checkCountry = countries.getKey();
@@ -465,10 +481,10 @@ public class MapEditor {
 	 * @return true if each continent has at least 2 countries; otherwise false.
 	 */
 	public boolean checkMinimumCountriesInContinent() {
-		for (Map.Entry<Continent, HashSet<Country>> countries : mapIO.getMapGraph().getCountriesInContinent().entrySet()) {
-			if (countries.getKey().getListOfCountries().size() < 2) {
-				System.out.println(countries);
-				System.out.println("Number of countries in a continent is less");
+		for (Map.Entry<Continent, HashSet<Country>> continent : mapIO.getMapGraph().getCountriesInContinent()
+				.entrySet()) {
+			if (continent.getKey().getListOfCountries().size() < 2) {
+				System.out.println("Number of countries in a continent " + continent.getKey().getName() + " is less");
 				return false;
 			}
 		}
@@ -478,12 +494,12 @@ public class MapEditor {
 	/**
 	 * Method for editing or adding map tag data.
 	 * 
-	 * @param scan Scanner object
+	 * @param scan
+	 *            Scanner object
 	 * 
 	 */
-	
 	public void editMapTagData(Scanner scan) {
-		
+
 		mapIO.getMapTagData().clear();
 
 		System.out.println("Please enter name of the author");
@@ -506,29 +522,28 @@ public class MapEditor {
 		mapIO.getMapTagData().add(image);
 		mapIO.getMapTagData().add(wrap);
 		mapIO.getMapTagData().add(scroll);
-		
+
 		System.out.println("Added map tag data.");
 	}
 
 	/**
 	 * Method for skipping blank lines in the .map file.
 	 * 
-	 * @param scan Scanner object
+	 * @param scan
+	 *            Scanner object
 	 */
-	
 	private void skipNewLines(Scanner scan) {
-		while(scan.nextLine().equals("\n")) {	
+		while (scan.nextLine().equals("\n")) {
 		}
 	}
 
 	/**
 	 * Method for printing current map details which is being created.
 	 */
-	
 	private void printCurrentMapContents() {
 		System.out.println("\nCurrent map contents:\n");
 		System.out.println("Map tag data [MAP]:");
-		for(String mapData: mapIO.getMapTagData()) {
+		for (String mapData : mapIO.getMapTagData()) {
 			System.out.println(mapData);
 		}
 		for (Map.Entry<String, Continent> entry : mapIO.getMapGraph().getContinents().entrySet()) {

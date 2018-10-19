@@ -18,30 +18,30 @@ import com.risk.model.Country;
  * @author Farhan Shaheen
  *
  */
- 
 public class MapGraphTest {
 
-	/** Object for Continent class*/
+	/** Object for Continent class */
 	private Continent continent;
-	
-	/** Object for MapGraph class*/
+
+	/** Object for MapGraph class */
 	private MapGraph mapGraph;
-	
-	/** Object for Country class*/
+
+	/** Object for Country class */
 	private Country country;
-	
-	/** Adjacent countries*/
+
+	/** Adjacent countries */
 	private HashMap<Country, ArrayList<Country>> adjacentCountries;
-	
-	/** List of countries*/
+
+	/** List of countries */
 	private ArrayList<Country> countryList;
 
 	/**
-	* Set up the initial objects for MapGraph
-	* @throws Exception
-	*/
+	 * Set up the initial objects for MapGraph
+	 * 
+	 * @throws Exception
+	 */
 	@Before
-	public void setUp() throws Exception {
+	public void initialize() throws Exception {
 		continent = new Continent("Asia", 2);
 		mapGraph = new MapGraph();
 		country = new Country("India");
@@ -50,27 +50,28 @@ public class MapGraphTest {
 		countryList.add(country);
 		adjacentCountries = new HashMap<Country, ArrayList<Country>>();
 		adjacentCountries.put(country, countryList);
-
 	}
 
 	/**
-	* Test method for testing adding a continent from the map
-	* @throws Exception
-	*/
+	 * Test method for testing adding a continent from the map
+	 * 
+	 * @throws Exception
+	 */
 	@Test
-	public void testAddContinent() throws Exception{
+	public void addContinentTest() throws Exception {
 		mapGraph.addContinent(continent);
 		assertEquals(mapGraph.getContinents().get("Asia").getControlValue(), continent.getControlValue());
 	}
 
 	/**
-	* Test method for testing removing a continent from the map
-	* @throws Exception
-	*/
+	 * Test method for testing removing a continent from the map
+	 * 
+	 * @throws Exception
+	 */
 	@Test
-	public void testRemoveContinent() throws Exception{
+	public void removeContinentTest() throws Exception {
 		mapGraph.addContinent(continent);
 		assertTrue(mapGraph.removeContinent(continent));
-	} 
-	 
+	}
+
 }

@@ -1,6 +1,7 @@
 package com.risk.model;
 
 import java.util.ArrayList;
+
 /**
  * Player class which provides the information regarding the player.
  * 
@@ -26,6 +27,7 @@ public class Player {
         this.myCountries = new ArrayList<Country>();
         this.listOfCards = new ArrayList<ICardType>();
     }
+    
     /**
      * Get the name of the Player.
      * 
@@ -35,6 +37,7 @@ public class Player {
     public String getName() {
         return name;
     }
+    
     /**
      * Set the name of the Player
      * 
@@ -44,6 +47,7 @@ public class Player {
     public void setName(String name) {
         this.name = name;
     }
+    
     /**
      * Method to get the Count of the Army that the Player Holds.
      * 
@@ -52,6 +56,7 @@ public class Player {
     public int getArmyCount() {
         return armyCount;
     }
+    
     /**
      * Method to set the count of the Army
      * 
@@ -61,6 +66,7 @@ public class Player {
     public void setArmyCount(int armyCount) {
         this.armyCount = armyCount;
     }
+    
     /**
      * Get the list of countries the player holds
      * 
@@ -70,6 +76,7 @@ public class Player {
     public ArrayList<Country> getMyCountries() {
         return myCountries;
     }
+    
     /**
      * Method to set the country list for player
      * 
@@ -79,6 +86,7 @@ public class Player {
     public void setMyCountries(ArrayList<Country> myCountries) {
         this.myCountries = myCountries;
     }
+    
     /**
      *  Method to add a single country to the player's country list
      *  
@@ -88,6 +96,7 @@ public class Player {
     public void addCountry(Country country){
         this.myCountries.add(country);
     }
+    
     /**
      * Method to get the list of cards the player holds
      * 
@@ -96,6 +105,7 @@ public class Player {
     public ArrayList<ICardType> getListOfCards() {
         return listOfCards;
     }
+    
     /**
      * Method to set the list of card of the particular type
      * 
@@ -104,6 +114,7 @@ public class Player {
     public void setListOfCards(ArrayList<ICardType> listOfCards) {
         this.listOfCards = listOfCards;
     }
+    
     /**
      * Method to add the armies to a country
      * 

@@ -14,7 +14,6 @@ import com.risk.model.Player;
  * @author Farhan Shaheen
  *
  */
-
 public class RoundRobinTest {
 
 	/** Object for RoundRobin class */
@@ -32,7 +31,7 @@ public class RoundRobinTest {
 	 * @throws Exception
 	 */
 	@Before
-	public void setUp() throws Exception {
+	public void initialize() throws Exception {
 
 		listOfPlayers = new ArrayList<Player>();
 		
@@ -60,7 +59,7 @@ public class RoundRobinTest {
 	* @throws Exception
 	*/
 	@Test
-	public void testnext() throws Exception{
+	public void nextTest() throws Exception{
 
 		assertEquals("ONE", roundRobin.next().getName());
 		assertEquals("TWO", roundRobin.next().getName());

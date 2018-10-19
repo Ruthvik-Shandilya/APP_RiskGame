@@ -9,9 +9,9 @@ import java.util.HashSet;
 import java.util.Map;
 
 /**
- * This MapGraph class contains all the methods to add , remove countries , continents 
- * and also to add , delete edges between countries. This also contains methods to set
- * and get the adjacent countries list.
+ * This MapGraph class contains all the methods to add , remove countries ,
+ * continents and also to add , delete edges between countries. This also
+ * contains methods to set and get the adjacent countries list.
  * 
  * @author Karandeep Singh
  * @author Ruthvik Shandilya
@@ -21,29 +21,29 @@ public class MapGraph {
 
 	/** HashMap to store the continent names */
 	private HashMap<String, Continent> continents;
-	
+
 	/** HashMap to store the list of adjacent countries */
 	private HashMap<Country, ArrayList<Country>> adjacentCountries;
 
 	/** HashMap to store the list of countries present in a continent */
 	private HashMap<Continent, HashSet<Country>> countriesInContinent;
-	
+
 	/** HashMap for set of countries */
 	private HashMap<String, Country> countrySet;
 
 	/** Count of the number of countries */
-	private int countOfCountries=0;
+	private int countOfCountries = 0;
 
 	/**
 	 * MapGraph constructor
 	 */
-	public MapGraph(){
+	public MapGraph() {
 		this.continents = new HashMap<>();
 		this.adjacentCountries = new HashMap<>();
 		this.countriesInContinent = new HashMap<>();
 		this.countrySet = new HashMap<>();
 	}
-	
+
 	/**
 	 * Method to get the continents
 	 * 
@@ -52,11 +52,12 @@ public class MapGraph {
 	public HashMap<String, Continent> getContinents() {
 		return continents;
 	}
-	
+
 	/**
 	 * Method to set a continent
 	 * 
-	 * @param continents Name of the continent
+	 * @param continents
+	 *            Name of the continent
 	 */
 	public void setContinents(HashMap<String, Continent> continents) {
 		this.continents = continents;
@@ -79,7 +80,7 @@ public class MapGraph {
 	public void setAdjacentCountries(HashMap<Country, ArrayList<Country>> adjacentCountries) {
 		this.adjacentCountries = adjacentCountries;
 	}
-	
+
 	/**
 	 * Method to get the count of the countries.
 	 * 
@@ -89,6 +90,11 @@ public class MapGraph {
 		return countOfCountries;
 	}
 
+	/**
+	 * Method to set the count of the countries.
+	 * 
+	 * @param countOfCountries
+	 */
 	public void setCountOfCountries(int countOfCountries) {
 		this.countOfCountries = countOfCountries;
 	}
@@ -101,7 +107,7 @@ public class MapGraph {
 	public HashMap<Continent, HashSet<Country>> getCountriesInContinent() {
 		return countriesInContinent;
 	}
-	
+
 	/**
 	 * Method to get the countries from a set
 	 * 
@@ -110,7 +116,7 @@ public class MapGraph {
 	public HashMap<String, Country> getCountrySet() {
 		return countrySet;
 	}
-	
+
 	/**
 	 * Method to set the countries in the continent
 	 * 
@@ -119,7 +125,7 @@ public class MapGraph {
 	public void setCountriesInContinent(HashMap<Continent, HashSet<Country>> countriesInContinent) {
 		this.countriesInContinent = countriesInContinent;
 	}
-	
+
 	/**
 	 * Method to the set the country in a set.
 	 * 
@@ -128,47 +134,52 @@ public class MapGraph {
 	public void setCountrySet(HashMap<String, Country> countrySet) {
 		this.countrySet = countrySet;
 	}
-	
+
 	/**
 	 * Method to add an edge between countries.
 	 * 
-	 * @param source Country
+	 * @param source
+	 *            Country
 	 * 
-	 * @param destination Country
+	 * @param destination
+	 *            Country
 	 * 
 	 */
 	public void addEdgeBetweenCountries(Country source, Country destination) {
-		if(adjacentCountries.containsKey(source)) {
+		if (adjacentCountries.containsKey(source)) {
 			adjacentCountries.get(source).add(destination);
 		}
 
-		if(adjacentCountries.containsKey(destination)) {
+		if (adjacentCountries.containsKey(destination)) {
 			adjacentCountries.get(destination).add(source);
 		}
 	}
-	
+
 	/**
 	 * Method to delete an edge between countries
 	 * 
-	 * @param source Country
+	 * @param source
+	 *            Country
 	 * 
-	 * @param destination Country
+	 * @param destination
+	 *            Country
 	 * 
 	 */
 	public void deleteEdgeBetweenCountries(Country source, Country destination) {
-		if(adjacentCountries.containsKey(source)) {
+		if (adjacentCountries.containsKey(source)) {
 			adjacentCountries.get(source).remove(destination);
 		}
 
-		if(adjacentCountries.containsKey(destination)) {
+		if (adjacentCountries.containsKey(destination)) {
 			adjacentCountries.get(destination).remove(source);
 		}
 	}
-	
+
 	/**
 	 * Method to add a country to the Graph
 	 * 
-	 * @param country Object
+	 * @param country
+	 *            Object
 	 * 
 	 */
 	public void addCountry(Country country) {
@@ -176,51 +187,55 @@ public class MapGraph {
 		adjacentCountries.put(country, country.getAdjacentCountries());
 		countrySet.put(country.getName(), country);
 	}
-	
+
 	/**
-	 * Method to remove a country 
+	 * Method to remove a country
 	 * 
-	 * @param country Object
+	 * @param country
+	 *            Object
 	 * 
 	 * @return True if country is removed successfully
 	 */
 	public boolean removeCountry(Country country) {
-		if(adjacentCountries.containsKey(country)) {
+		if (adjacentCountries.containsKey(country)) {
 			ArrayList<Country> neighbours = adjacentCountries.get(country);
-			for(Country adjacentCountry: neighbours) {
+			for (Country adjacentCountry : neighbours) {
 				adjacentCountries.get(adjacentCountry).remove(country);
 			}
 			adjacentCountries.remove(country);
 			countriesInContinent.get(country.getPartOfContinent()).remove(country);
+			continents.get(country.getContinent()).getListOfCountries().remove(country);
 			countrySet.remove(country.getName());
 			return true;
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Method to add a continent
 	 * 
-	 * @param continent Object
+	 * @param continent
+	 *            Object
 	 * 
 	 */
 	public void addContinent(Continent continent) {
 		continents.put(continent.getName(), continent);
 		countriesInContinent.put(continent, new HashSet<Country>());
 	}
-	
+
 	/**
 	 * Method to remove a continent
 	 * 
-	 * @param continent Object
+	 * @param continent
+	 *            Object
 	 * 
 	 * @return True if continent is removed successfully
 	 * 
 	 */
 	public boolean removeContinent(Continent continent) {
-		if(continents.containsKey(continent.getName())) {
-			for(Country country: continent.getListOfCountries()) {
-				if(!removeCountry(country))
+		if (continents.containsKey(continent.getName())) {
+			for (Country country : continent.getListOfCountries()) {
+				if (!removeCountry(country))
 					return false;
 			}
 			continents.remove(continent.getName());
@@ -229,13 +244,15 @@ public class MapGraph {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Method to check if there exists an adjacency between two countries
 	 * 
-	 * @param country1 Object
+	 * @param country1
+	 *            Object
 	 * 
-	 * @param country2 Object
+	 * @param country2
+	 *            Object
 	 * 
 	 * @return True if exists an adjacency
 	 */

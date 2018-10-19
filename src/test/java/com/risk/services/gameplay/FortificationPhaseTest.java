@@ -15,7 +15,6 @@ import com.risk.model.Country;
  * @author Neha Pal
  *
  */
-
 public class FortificationPhaseTest {
 
 	/** Object for FortificationPhase class */
@@ -38,7 +37,7 @@ public class FortificationPhaseTest {
 	 * @throws Exception
 	 */
 	@Before	
-	public void setUp() throws Exception {
+	public void initialize() throws Exception {
 		country1 = new Country("C1");
 		country2 = new Country("C2");
 		country1.setNoOfArmies(5);
@@ -55,9 +54,9 @@ public class FortificationPhaseTest {
 	 * Test to validate number of armies after the player moves fix number of armies.
 	 * between two adjacent countries owned by player
 	 */
-	
 	@Test
 	public void moveArmiesTest() throws Exception {
+		
 		fortificationPhase.moveArmies(country1, country2, numberOfArmies);
 		assertEquals(4,country1.getNoOfArmies());
 		assertEquals(8,country2.getNoOfArmies());

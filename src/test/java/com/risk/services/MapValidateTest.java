@@ -15,7 +15,6 @@ import org.junit.Test;
 public class MapValidateTest {
 
 	/** Object for MapValidation class*/
-
 	private MapValidate mapValidation;
 
 	/** String to hold Invalid Tags */
@@ -35,7 +34,7 @@ public class MapValidateTest {
 	 * @throws Exception
 	 */
 	@Before
-	public void setUp() throws Exception {
+	public void initialize() throws Exception {
 		System.out.println("In setup");
 		mapValidation = new MapValidate();
 		invalidTag = " [Continents] [Territories]";
@@ -49,12 +48,18 @@ public class MapValidateTest {
 	 * @throws Exception
 	 */
 	@Test
-	public void testValidateFileValidFile() throws Exception {
+	public void validateFileValidFileTest() throws Exception {
 
 		assertTrue(mapValidation.validateMapFile(validMapFile));
 	}
+	
+	/**
+	 * Test method for testing invalid file
+	 * 
+	 * @throws Exception
+	 */
 	@Test
-	public void testValidateFileInValidFile() throws Exception {
+	public void validateFileInValidFileTest() throws Exception {
 
 		assertFalse(mapValidation.validateMapFile(invalidMapFile));
 	}
@@ -64,13 +69,18 @@ public class MapValidateTest {
 	 * @throws Exception
 	 */
 	@Test
-	public void testCheckMandatoryTagsValidTags() throws Exception {
+	public void checkMandatoryTagsValidTagsTest() throws Exception {
 
 		assertTrue(mapValidation.checkAllTags(validTag));
 	}
 
+	/**
+	 * Test method for checking invalid tags
+	 * 
+	 * @throws Exception
+	 */
 	@Test
-	public void testCheckMandatoryTagsInValidTags() throws Exception {
+	public void checkMandatoryTagsInValidTagsTest() throws Exception {
 
 		assertFalse(mapValidation.checkAllTags(invalidTag));
 	}

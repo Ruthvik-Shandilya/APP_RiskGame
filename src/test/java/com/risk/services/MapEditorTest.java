@@ -20,7 +20,6 @@ import com.risk.model.Country;
  * @author Farhan Shaheen
  *
  */
-
 public class MapEditorTest {
 
 	/** Object for MapValidate Class */
@@ -51,11 +50,12 @@ public class MapEditorTest {
 	private HashMap<Country, ArrayList<Country>> adjacentCountries;
 
 	/**
-	 * Setup intial objects for MapEditor 
+	 * Setup intial objects for MapEditor
+	 * 
 	 * @throws Exception
 	 */
 	@Before
-	public void setUp() throws Exception {
+	public void initialize() throws Exception {
 
 		continent = new Continent("Asia", 2);
 		listOfCountries = new ArrayList<>();
@@ -93,24 +93,27 @@ public class MapEditorTest {
 
 	}
 
-	/** Test method for checking minimum number of countries in a continent.
+	/**
+	 * Test method for checking minimum number of countries in a continent.
+	 * 
 	 * @throws Exception
 	 */
 	@Test
-	public void testCheckMinimumCountriesInContinent() {
+	public void checkMinimumCountriesInContinentTest() {
 
 		assertTrue(mapEditor.checkMinimumCountriesInContinent());
 
 	}
 
-	/** Test method for checking if countries are adjacent.
+	/**
+	 * Test method for checking if countries are adjacent.
+	 * 
 	 * @throws Exception
 	 */
 	@Test
-	public void testCheckCountriesAdjacent() {
+	public void checkCountriesAdjacentTest() {
 
 		assertTrue(mapEditor.checkCountriesAreAdjacent());
 
 	}
-	
 }

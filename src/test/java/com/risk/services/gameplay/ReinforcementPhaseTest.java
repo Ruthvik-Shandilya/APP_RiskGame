@@ -43,9 +43,8 @@ public class ReinforcementPhaseTest {
 	 * 
 	 * @throws Exception
 	 */
-
 	@Before
-	public void setUp() throws Exception {
+	public void initialize() throws Exception {
 		reinforcementPhase = new ReinforcementPhase();
 		playerOwnedContries = new ArrayList<Country>();
 		continentListOfCountries = new ArrayList<Country>();
@@ -72,9 +71,9 @@ public class ReinforcementPhaseTest {
 	/**
 	 * Test to validate number of armies when the whole continent is owned by the player
 	 */
-
 	@Test
-	public void testFindNoOfArmiesWhenPlayerOwnContinent() {
+	public void findNoOfArmiesWhenPlayerOwnContinentTest() {
+		
 		assertEquals(continent.getControlValue(), reinforcementPhase.findNoOfArmies(player, continent));
 	}
 
@@ -83,7 +82,7 @@ public class ReinforcementPhaseTest {
 	 * Test to validate number of armies when player does not owns the continent
 	 */
 	@Test
-	public void testFindNoOfArmiesWhenPlayerDoesNotOwnContinent() {
+	public void findNoOfArmiesWhenPlayerDoesNotOwnContinentTest() {
 
 		country = new Country("C4");
 		continentListOfCountries.add(country);

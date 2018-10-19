@@ -33,7 +33,6 @@ import javafx.scene.Scene;
  * @author Karandeep Singh
  * @author Ruthvik Shandilya
  */
-
 public class LaunchGameDriver extends Application implements EventHandler<ActionEvent>{
 
 	/**
