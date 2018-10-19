@@ -57,6 +57,7 @@ public class RoundRobinTest {
 
 	/**
 	* Test to return the next player in round robin fashion.
+	* @throws Exception
 	*/
 	@Test
 	public void testnext() throws Exception{
