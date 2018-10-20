@@ -66,7 +66,7 @@ public class MapValidate {
 	/**
 	 * Method to get continent set generated from territories data.
 	 * 
-	 * @return HashMap<String, Continent> which is continentSetOfTerritories
+	 * @return HashMap which is continentSetOfTerritories
 	 */
 	public HashMap<String, Continent> getContinentSetOfTerritories() {
 		return continentSetOfTerritories;
@@ -85,7 +85,7 @@ public class MapValidate {
 	/**
 	 * Method to get Containing set of continent.
 	 * 
-	 * @return HashMap<String, Continent> which is continentSetOfTerritories
+	 * @return HashMap which is continentSetOfTerritories
 	 */
 	public HashMap<String, Continent> getContinentSetOfContinents() {
 		return continentSetOfContinents;
@@ -94,7 +94,7 @@ public class MapValidate {
 	/**
 	 * Method to get adjacent countries to a country.
 	 * 
-	 * @return HashMap<Country, ArrayList<Country>> which contains adjacent
+	 * @return HashMap which contains adjacent
 	 *         countries corresponding each country.
 	 */
 	public HashMap<Country, ArrayList<Country>> getAdjacentCountries() {
@@ -104,7 +104,7 @@ public class MapValidate {
 	/**
 	 * Method to get countries in a continent.
 	 * 
-	 * @return HashMap<Continent, HashSet<Country>> which contains countries in
+	 * @return HashMap which contains countries in
 	 *         a continent.
 	 */
 	public HashMap<Continent, HashSet<Country>> getCountriesInContinent() {
@@ -123,7 +123,7 @@ public class MapValidate {
 	/**
 	 * Method to get mapTagData.
 	 * 
-	 * @return ArrayList<String> Contents of map details
+	 * @return ArrayList Contents of map details
 	 */
 	public ArrayList<String> getMapTagData() {
 		return mapTagData;
@@ -307,10 +307,9 @@ public class MapValidate {
 	 * @param continent
 	 *            String that is the name of the continent.
 	 * @param countriesInAContinent
-	 *            HashMap<Continent, HashSet<Country>> Hashmap consisting of
-	 *            continents and their countries.
+	 *            HashMap consisting of continents and their countries.
 	 * 
-	 * @return HashSet<Country> countries inside a continent.
+	 * @return HashSet countries inside a continent.
 	 */
 	public HashSet<Country> getCountriesFromContinent(String continent,
 			HashMap<Continent, HashSet<Country>> countriesInAContinent) {
@@ -348,7 +347,7 @@ public class MapValidate {
 	 * 
 	 * 
 	 * @param input
-	 *            String .
+	 *            String
 	 * @param search
 	 *            String
 	 * 
@@ -369,7 +368,7 @@ public class MapValidate {
 	/**
 	 * Method for getting all the countries in the country set.
 	 * 
-	 * @return HashMap<String, Country> countrySet.
+	 * @return HashMap countrySet.
 	 */
 	public HashMap<String, Country> getCountrySet() {
 		return countrySet;

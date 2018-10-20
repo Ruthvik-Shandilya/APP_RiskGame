@@ -28,10 +28,9 @@ public class RoundRobinTest {
 	/**
 	 * Set up the initial objects for Round Robin Phase
 	 * 
-	 * @throws Exception
 	 */
 	@Before
-	public void initialize() throws Exception {
+	public void initialize() {
 
 		listOfPlayers = new ArrayList<Player>();
 		
@@ -56,10 +55,9 @@ public class RoundRobinTest {
 
 	/**
 	* Test to return the next player in round robin fashion.
-	* @throws Exception
 	*/
 	@Test
-	public void nextTest() throws Exception{
+	public void nextTest() {
 
 		assertEquals("ONE", roundRobin.next().getName());
 		assertEquals("TWO", roundRobin.next().getName());

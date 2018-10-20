@@ -31,10 +31,10 @@ public class MapValidateTest {
 
 	/**
 	 * Set up the initial objects for Map Validation
-	 * @throws Exception
+	 * 
 	 */
 	@Before
-	public void initialize() throws Exception {
+	public void initialize() {
 		System.out.println("In setup");
 		mapValidation = new MapValidate();
 		invalidTag = " [Continents] [Territories]";
@@ -45,10 +45,10 @@ public class MapValidateTest {
 
 	/**
 	 * Test method for testing validation of a file
-	 * @throws Exception
+	 * 
 	 */
 	@Test
-	public void validateFileValidFileTest() throws Exception {
+	public void validateFileValidFileTest() {
 
 		assertTrue(mapValidation.validateMapFile(validMapFile));
 	}
@@ -56,20 +56,19 @@ public class MapValidateTest {
 	/**
 	 * Test method for testing invalid file
 	 * 
-	 * @throws Exception
 	 */
 	@Test
-	public void validateFileInValidFileTest() throws Exception {
+	public void validateFileInValidFileTest() {
 
 		assertFalse(mapValidation.validateMapFile(invalidMapFile));
 	}
 
 	/**
-	 * test method for checking all necessary tags like [Map], [Continents], [Territories]
-	 * @throws Exception
+	 * Test method for checking all necessary tags like [Map], [Continents], [Territories]
+	 * 
 	 */
 	@Test
-	public void checkMandatoryTagsValidTagsTest() throws Exception {
+	public void checkMandatoryTagsValidTagsTest() {
 
 		assertTrue(mapValidation.checkAllTags(validTag));
 	}
@@ -77,10 +76,9 @@ public class MapValidateTest {
 	/**
 	 * Test method for checking invalid tags
 	 * 
-	 * @throws Exception
 	 */
 	@Test
-	public void checkMandatoryTagsInValidTagsTest() throws Exception {
+	public void checkMandatoryTagsInValidTagsTest() {
 
 		assertFalse(mapValidation.checkAllTags(invalidTag));
 	}

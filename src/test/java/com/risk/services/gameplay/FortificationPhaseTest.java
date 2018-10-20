@@ -34,10 +34,10 @@ public class FortificationPhaseTest {
 
 	/**
 	 * Set up the initial objects for Fortification Phase
-	 * @throws Exception
+	 * 
 	 */
 	@Before	
-	public void initialize() throws Exception {
+	public void initialize() {
 		country1 = new Country("C1");
 		country2 = new Country("C2");
 		country1.setNoOfArmies(5);
@@ -55,7 +55,7 @@ public class FortificationPhaseTest {
 	 * between two adjacent countries owned by player
 	 */
 	@Test
-	public void moveArmiesTest() throws Exception {
+	public void moveArmiesTest() {
 		
 		fortificationPhase.moveArmies(country1, country2, numberOfArmies);
 		assertEquals(4,country1.getNoOfArmies());

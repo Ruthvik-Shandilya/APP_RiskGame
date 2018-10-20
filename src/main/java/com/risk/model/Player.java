@@ -61,7 +61,7 @@ public class Player {
     /**
      * Method to set the count of the Army
      * 
-     * @param armyCount
+     * @param armyCount Count of the Army
      * 
      */
     public void setArmyCount(int armyCount) {
@@ -81,8 +81,8 @@ public class Player {
     /**
      * Method to set the country list for player
      * 
-     * @param myCountries
-     * 				list of countries
+     * @param myCountries list of countries
+     * 				
      */
     public void setMyCountries(ArrayList<Country> myCountries) {
         this.myCountries = myCountries;
@@ -110,7 +110,7 @@ public class Player {
     /**
      * Method to set the list of card of the particular type
      * 
-     * @param listOfCards
+     * @param listOfCards Types of cards
      */
     public void setListOfCards(ArrayList<ICardType> listOfCards) {
         this.listOfCards = listOfCards;

@@ -51,10 +51,9 @@ public class MapEditorTest {
 	/**
 	 * Setup intial objects for MapEditor
 	 * 
-	 * @throws Exception
 	 */
 	@Before
-	public void initialize() throws Exception {
+	public void initialize() {
 
 		continent = new Continent("Asia", 2);
 		listOfCountries = new ArrayList<>();
@@ -94,7 +93,6 @@ public class MapEditorTest {
 	/**
 	 * Test method for checking minimum number of countries in a continent.
 	 * 
-	 * @throws Exception
 	 */
 	@Test
 	public void checkMinimumCountriesInContinentTest() {
@@ -106,7 +104,6 @@ public class MapEditorTest {
 	/**
 	 * Test method for checking if countries are adjacent.
 	 * 
-	 * @throws Exception
 	 */
 	@Test
 	public void checkCountriesAdjacentTest() {

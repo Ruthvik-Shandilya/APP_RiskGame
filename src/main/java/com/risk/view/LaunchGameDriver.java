@@ -51,7 +51,7 @@ public class LaunchGameDriver extends Application implements EventHandler<Action
 	 * The Main Method which Launches the Game and drives by providing
 	 * the options. 
 	 *  
-	 * @param args
+	 * @param args main arguments
 	 */
 	public static void main(String[] args) {
 		launch(args);
@@ -69,7 +69,6 @@ public class LaunchGameDriver extends Application implements EventHandler<Action
 	 *  stages and will not be embedded in the browser.
 	 *  
 	 *  
-	 *  @throws Exception
 	 *  
 	 * @see javafx.application.Application#start(javafx.stage.Stage)
 	 */

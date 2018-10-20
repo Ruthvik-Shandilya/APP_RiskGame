@@ -32,10 +32,10 @@ public class ConnectedGraphTest {
 
 	/**
 	 * Set up the initial objects for ConnectedGraph
-	 * @throws Exception
+	 * 
 	 */
 	@Before
-	public void initialize() throws Exception {
+	public void initialize() {
 
 		country1= new Country("India");
 		country2 = new Country("China");
