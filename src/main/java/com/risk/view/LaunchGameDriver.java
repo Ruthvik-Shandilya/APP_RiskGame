@@ -202,50 +202,59 @@ public class LaunchGameDriver extends Application implements EventHandler<Action
 			System.out.println("Beginning Fortification phase for player : " + player.getName() + "\n\n");
 			System.out.println("Do you want to continue with Fortification phase? (Yes or No)");
 			if(scan.nextLine().trim().equalsIgnoreCase("Yes")) {
-				boolean flag = true;
-				String giverCountry = "";
-				String receiverCountry = "";
+				if(player.getMyCountries().size()>=2) {
+					boolean flag = true;
+					String giverCountry = "";
+					String receiverCountry = "";
 
-				do {
-					flag=true;
-					System.out.println("Enter the name of country from which you want to move some armies :");
-					giverCountry = scan.nextLine();
-					System.out.println("Enter the name of country to which you want to move some armies, from country " + giverCountry);
-					receiverCountry = scan.nextLine();
-					if(!mapIO.getMapGraph().getCountrySet().containsKey(giverCountry.trim()) || !mapIO.getMapGraph().getCountrySet().containsKey(receiverCountry.trim())) {
-						flag=false;
-						System.out.println("Please enter correct country name.");
+					System.out.println("List of countries owned by you and current army assigned are: ");
+					for(Country ownedCountry: player.getMyCountries()) {
+						System.out.println(ownedCountry.getName() + ":" + ownedCountry.getNoOfArmies());
 					}
-					Country givingCountry = mapIO.getMapGraph().getCountrySet().get(giverCountry.trim());
-					Country receviningCountry = mapIO.getMapGraph().getCountrySet().get(giverCountry.trim());
-					if(player.getMyCountries().contains(givingCountry) && player.getMyCountries().contains(receviningCountry)){
-						flag = true;
-					}
-					else {
-						System.out.println("Player does not own these country, please enter country names again");
-						flag = false;
-					}
-
-				}while(flag==false);
-
-
-				int countOfArmies = 0;
-				do {
-					flag=true;
-					System.out.println("Enter the number of armies to move from " + giverCountry + " to " + receiverCountry);
-					try {
-						countOfArmies = Integer.parseInt(scan.nextLine());
-						if(countOfArmies > mapIO.getMapGraph().getCountrySet().get(giverCountry).getNoOfArmies()) {
-							System.out.println("Sufficient number of armies is not available.");
+					do {
+						flag=true;
+						System.out.println("Enter the name of country from which you want to move some armies :");
+						giverCountry = scan.nextLine();
+						System.out.println("Enter the name of country to which you want to move some armies, from country " + giverCountry);
+						receiverCountry = scan.nextLine();
+						if(!mapIO.getMapGraph().getCountrySet().containsKey(giverCountry.trim()) || !mapIO.getMapGraph().getCountrySet().containsKey(receiverCountry.trim())) {
 							flag=false;
+							System.out.println("Please enter correct country name.");
+						}
+						Country givingCountry = mapIO.getMapGraph().getCountrySet().get(giverCountry.trim());
+						Country receviningCountry = mapIO.getMapGraph().getCountrySet().get(giverCountry.trim());
+						if(player.getMyCountries().contains(givingCountry) && player.getMyCountries().contains(receviningCountry)){
+							flag = true;
+						}
+						else {
+							System.out.println("Player does not own these country, please enter country names again");
+							flag = false;
 						}
 
-					}catch(NumberFormatException e) {
-						System.out.println("Invalid number of armies.");
-					}
-				}while(flag==false);
+					}while(flag==false);
 
-				(new FortificationPhase()).moveArmies(mapIO.getMapGraph().getCountrySet().get(giverCountry), mapIO.getMapGraph().getCountrySet().get(receiverCountry), countOfArmies);
+
+					int countOfArmies = 0;
+					do {
+						flag=true;
+						System.out.println("Enter the number of armies to move from " + giverCountry + " to " + receiverCountry);
+						try {
+							countOfArmies = Integer.parseInt(scan.nextLine());
+							if(countOfArmies > mapIO.getMapGraph().getCountrySet().get(giverCountry).getNoOfArmies()) {
+								System.out.println("Sufficient number of armies is not available.");
+								flag=false;
+							}
+
+						}catch(NumberFormatException e) {
+							System.out.println("Invalid number of armies.");
+						}
+					}while(flag==false);
+
+					(new FortificationPhase()).moveArmies(mapIO.getMapGraph().getCountrySet().get(giverCountry), mapIO.getMapGraph().getCountrySet().get(receiverCountry), countOfArmies);
+				}
+				else {
+					System.out.println("You don't have sufficient number of countries to choose from.");
+				}
 			}
 			turn++;
 		}
