@@ -39,14 +39,14 @@ public class LaunchGameDriver extends Application implements EventHandler<Action
 	 * Declare buttons for loading and creating a map file.
 	 */
 	Button loadMapButton, createMapButton;
-	
+
 	/**
 	 * readMap a MapIO Object
 	 */
 	MapIO readMap;
 
 	public static boolean status = false;
-	
+
 	/**
 	 * The Main Method which Launches the Game and drives by providing
 	 * the options. 
@@ -56,7 +56,7 @@ public class LaunchGameDriver extends Application implements EventHandler<Action
 	public static void main(String[] args) {
 		launch(args);
 	}
-	
+
 	/**
 	 * 
 	 * The main entry point for all JavaFX applications.The start method is called after the
@@ -107,7 +107,7 @@ public class LaunchGameDriver extends Application implements EventHandler<Action
 		primaryStage.show();
 
 	}
-	
+
 	/**
 	 * Invoked when a specific event of the type for which this handler
 	 * is registered happens.
@@ -137,9 +137,11 @@ public class LaunchGameDriver extends Application implements EventHandler<Action
 		}
 		else {
 			createMapButton.getScene().getWindow().hide();
-			new MapEditor().createNewMap();
+			MapEditor mapEditor = new MapEditor();
+			mapEditor.createNewMap();
+			readMap = mapEditor.getMapIO();
 		}
-		
+
 		if(status) {
 			System.out.println("Do you want to play the game?(true or false)");
 			Scanner scan = new Scanner(System.in);
@@ -148,7 +150,7 @@ public class LaunchGameDriver extends Application implements EventHandler<Action
 			}
 		}
 	}
-	
+
 	/**
 	 * This gamePlay method begins the startup phase and depending on the no of the turns,
 	 * enters into the reinforcement phase and assigns the armies based on the input value.
@@ -196,14 +198,14 @@ public class LaunchGameDriver extends Application implements EventHandler<Action
 					}
 				}
 			}
-			
+
 			System.out.println("Beginning Fortification phase for player : " + player.getName() + "\n\n");
 			System.out.println("Do you want to continue with Fortification phase? (Yes or No)");
 			if(scan.nextLine().trim().equalsIgnoreCase("Yes")) {
 				boolean flag = true;
 				String giverCountry = "";
 				String receiverCountry = "";
-				
+
 				do {
 					flag=true;
 					System.out.println("Enter the name of country from which you want to move some armies :");
@@ -223,10 +225,10 @@ public class LaunchGameDriver extends Application implements EventHandler<Action
 						System.out.println("Player does not own these country, please enter country names again");
 						flag = false;
 					}
-					
+
 				}while(flag==false);
-	
-				
+
+
 				int countOfArmies = 0;
 				do {
 					flag=true;
@@ -237,7 +239,7 @@ public class LaunchGameDriver extends Application implements EventHandler<Action
 							System.out.println("Sufficient number of armies is not available.");
 							flag=false;
 						}
-						
+
 					}catch(NumberFormatException e) {
 						System.out.println("Invalid number of armies.");
 					}

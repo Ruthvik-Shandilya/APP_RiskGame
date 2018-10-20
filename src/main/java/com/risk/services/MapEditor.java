@@ -42,6 +42,15 @@ public class MapEditor {
 	}
 
 	/**
+	 * Getter to fetch the MapIO Object
+	 * 
+	 * @return MapIO returns mapIO Object
+	 */
+	public MapIO getMapIO() {
+		return mapIO;
+	}
+
+	/**
 	 * Method for creating a new map from scratch. It provides 9 options to the
 	 * user from creating continent and country. Deleting Continent and Country.
 	 * Adding and deleting edge between countries, getting mapTagDat, printing
@@ -369,7 +378,7 @@ public class MapEditor {
 							adjacentCountry = mapIO.getMapGraph().getCountrySet().get(input[j].trim());
 						}
 						adjacentCountry
-								.setContinent(mapIO.getMapGraph().getContinents().get(input[3].trim()).getName());
+						.setContinent(mapIO.getMapGraph().getContinents().get(input[3].trim()).getName());
 						adjacentCountry.setPartOfContinent(mapIO.getMapGraph().getContinents().get(input[3].trim()));
 						if(!adjacentCountry.getAdjacentCountries().contains(country)){
 							adjacentCountry.getAdjacentCountries().add(country);

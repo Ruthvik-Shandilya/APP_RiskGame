@@ -208,9 +208,13 @@ public class MapGraph {
 	 */
 	public boolean removeContinent(Continent continent) {
 		if (continents.containsKey(continent.getName())) {
-			for (Country country : continent.getListOfCountries()) {
-				if (!removeCountry(country))
-					return false;
+			for(int i=0;i<continent.getListOfCountries().size();i++) {
+				ArrayList<Country> neighbours = adjacentCountries.get(continent.getListOfCountries().get(i));
+				for(Country adjCountry: neighbours) {
+					adjacentCountries.get(adjCountry).remove(continent.getListOfCountries().get(i));
+				}
+				adjacentCountries.remove(continent.getListOfCountries().get(i));
+				countrySet.remove(continent.getListOfCountries().get(i).getName());
 			}
 			continents.remove(continent.getName());
 			return true;
