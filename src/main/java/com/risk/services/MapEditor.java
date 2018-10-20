@@ -146,15 +146,16 @@ public class MapEditor {
 					if (!mapIO.getMapGraph().getCountrySet().containsKey(input[0].trim())) {
 						country = new Country(input[0].trim());
 						country.setContinent(mapIO.getMapGraph().getContinents().get(input[3]).getName());
+						country.setPartOfContinent(mapIO.getMapGraph().getContinents().get(input[3]));
 						country.setxValue(input[1]);
 						country.setyValue(input[2]);
 					} else {
 						country = mapIO.getMapGraph().getCountrySet().get(input[0].trim());
 						country.setContinent(mapIO.getMapGraph().getContinents().get(input[3]).getName());
+						country.setPartOfContinent(mapIO.getMapGraph().getContinents().get(input[3]));
 						country.setxValue(input[1]);
 						country.setyValue(input[2]);
 					}
-					country.setPartOfContinent(mapIO.getMapGraph().getContinents().get(input[3]));
 					ArrayList<Country> countries = new ArrayList<>();
 					for (int j = 4; j < input.length; ++j) {
 						Country adjacentCountry;
