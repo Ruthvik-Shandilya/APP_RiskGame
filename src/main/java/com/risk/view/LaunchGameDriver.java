@@ -170,7 +170,7 @@ public class LaunchGameDriver extends Application implements EventHandler<Action
 		int turn = 1;
 		RoundRobin roundRobin = new RoundRobin(startUpPhase.getListOfPlayers());
 
-		while(turn <= 2) {
+		while(turn <= 4) {
 			Player player = roundRobin.next();
 			System.out.println("Beginning Reinforcement phase for player : " + player.getName() + "\n\n");
 			System.out.println("Do you want to continue with Reinforcement phase? (Yes or No)");
