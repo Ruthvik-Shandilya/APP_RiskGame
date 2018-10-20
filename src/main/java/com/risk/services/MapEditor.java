@@ -154,6 +154,7 @@ public class MapEditor {
 						country.setxValue(input[1]);
 						country.setyValue(input[2]);
 					}
+					country.setPartOfContinent(mapIO.getMapGraph().getContinents().get(input[3]));
 					ArrayList<Country> countries = new ArrayList<>();
 					for (int j = 4; j < input.length; ++j) {
 						Country adjacentCountry;

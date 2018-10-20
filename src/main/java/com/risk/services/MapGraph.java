@@ -160,6 +160,7 @@ public class MapGraph {
 	 */
 	public void addCountry(Country country) {
 		continents.get(country.getContinent()).addCountry(country);
+		country.getPartOfContinent().addCountry(country);
 		adjacentCountries.put(country, country.getAdjacentCountries());
 		countrySet.put(country.getName(), country);
 	}
