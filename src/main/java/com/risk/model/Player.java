@@ -6,6 +6,7 @@ import java.util.ArrayList;
  * Player class which provides the information regarding the player.
  * 
  * @author Ruthvik Shandilya
+ * @author Palash Jain
  *
  */
 public class Player {

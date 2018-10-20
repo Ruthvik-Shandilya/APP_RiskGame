@@ -9,6 +9,7 @@ import com.risk.model.Player;
  * RoundRobin approach to iterate the Player turns.
  * 
  * @author Karandeep Singh
+ * @author Palash Jain
  *
  */
 public class RoundRobin {
