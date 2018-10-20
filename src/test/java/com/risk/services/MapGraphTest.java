@@ -38,10 +38,9 @@ public class MapGraphTest {
 	/**
 	 * Set up the initial objects for MapGraph
 	 * 
-	 * @throws Exception
 	 */
 	@Before
-	public void initialize() throws Exception {
+	public void initialize() {
 		continent = new Continent("Asia", 2);
 		mapGraph = new MapGraph();
 		country = new Country("India");
@@ -55,10 +54,9 @@ public class MapGraphTest {
 	/**
 	 * Test method for testing adding a continent from the map
 	 * 
-	 * @throws Exception
 	 */
 	@Test
-	public void addContinentTest() throws Exception {
+	public void addContinentTest() {
 		mapGraph.addContinent(continent);
 		assertEquals(mapGraph.getContinents().get("Asia").getControlValue(), continent.getControlValue());
 	}
@@ -66,10 +64,9 @@ public class MapGraphTest {
 	/**
 	 * Test method for testing removing a continent from the map
 	 * 
-	 * @throws Exception
 	 */
 	@Test
-	public void removeContinentTest() throws Exception {
+	public void removeContinentTest() {
 		mapGraph.addContinent(continent);
 		assertTrue(mapGraph.removeContinent(continent));
 	}

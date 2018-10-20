@@ -70,7 +70,7 @@ public class MapGraph {
 	/**
 	 * Method to set the adjacent countries
 	 * 
-	 * @param adjacentCountries
+	 * @param adjacentCountries countries which are adjacent to eachother
 	 */
 	public void setAdjacentCountries(HashMap<Country, ArrayList<Country>> adjacentCountries) {
 		this.adjacentCountries = adjacentCountries;
@@ -88,7 +88,7 @@ public class MapGraph {
 	/**
 	 * Method to set the count of the countries.
 	 * 
-	 * @param countOfCountries
+	 * @param countOfCountries Number of countries
 	 */
 	public void setCountOfCountries(int countOfCountries) {
 		this.countOfCountries = countOfCountries;
@@ -106,7 +106,7 @@ public class MapGraph {
 	/**
 	 * Method to the set the country in a set.
 	 * 
-	 * @param countrySet
+	 * @param countrySet Hashset to store country names
 	 */
 	public void setCountrySet(HashMap<String, Country> countrySet) {
 		this.countrySet = countrySet;
@@ -115,11 +115,10 @@ public class MapGraph {
 	/**
 	 * Method to add an edge between countries.
 	 * 
-	 * @param source
-	 *            Country
-	 * 
-	 * @param destination
-	 *            Country
+	 * @param source Country
+	 *            
+	 * @param destination Country
+	 *            
 	 * 
 	 */
 	public void addEdgeBetweenCountries(Country source, Country destination) {

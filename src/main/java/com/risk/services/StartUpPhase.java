@@ -71,7 +71,7 @@ public class StartUpPhase {
 	/**
 	 * Method for getting the list of players
 	 * 
-	 * @return ArrayList<Player> which has the list of players.
+	 * @return ArrayList which has the list of players.
 	 */
 	public ArrayList<Player> getListOfPlayers() {
 		return listOfPlayers;
@@ -118,7 +118,7 @@ public class StartUpPhase {
 	/**
 	 * Method for setting player count.
 	 * 
-	 * @param playerCount
+	 * @param playerCount number of Players
 	 */
 	public void setPlayerCount(int playerCount) {
 		this.playerCount = playerCount;

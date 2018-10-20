@@ -41,10 +41,9 @@ public class ReinforcementPhaseTest {
 	/**
 	 * Set up the initial objects for Reinforcement Phase
 	 * 
-	 * @throws Exception
 	 */
 	@Before
-	public void initialize() throws Exception {
+	public void initialize() {
 		reinforcementPhase = new ReinforcementPhase();
 		playerOwnedContries = new ArrayList<Country>();
 		continentListOfCountries = new ArrayList<Country>();

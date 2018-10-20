@@ -23,7 +23,7 @@ public class RoundRobin {
 	/**
 	 * RoundRobin Constructor
 	 * 
-	 * @param listOfPlayers
+	 * @param listOfPlayers list of Players
 	 */
 	public RoundRobin(ArrayList<Player> listOfPlayers) {
 		this.listOfPlayers = listOfPlayers;
