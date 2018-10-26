@@ -130,4 +130,11 @@ public class Continent {
 	public int hashCode() {
 		return getName().toLowerCase().hashCode();
 	}
+
+	@Override
+	public String toString() {
+		return this.getName();
+	}
+	
+	
 }

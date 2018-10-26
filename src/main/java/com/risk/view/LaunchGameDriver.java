@@ -176,8 +176,8 @@ public class LaunchGameDriver extends Application implements EventHandler<Action
 			System.out.println("Beginning Reinforcement phase for player : " + player.getName() + "\n\n");
 			System.out.println("Do you want to continue with Reinforcement phase? (Yes or No)");
 			if(scan.nextLine().trim().equalsIgnoreCase("Yes")) {
-				Continent continent = player.getMyCountries().get(player.getMyCountries().size()-1).getPartOfContinent();
-				int balanceArmyCount = (new ReinforcementPhase()).findNoOfArmies(player, continent);
+//				Continent continent = player.getMyCountries().get(player.getMyCountries().size()-1).getPartOfContinent();
+				int balanceArmyCount = (new ReinforcementPhase()).findNoOfArmies(player);
 				System.out.println("Armies received for reinforcement: " + balanceArmyCount);
 				player.setArmyCount(player.getArmyCount() + balanceArmyCount);
 				for(Country country: player.getMyCountries()) {

@@ -48,21 +48,26 @@ public class ReinforcementPhaseTest {
 		playerOwnedContries = new ArrayList<Country>();
 		continentListOfCountries = new ArrayList<Country>();
 		
+		continent = new Continent("Europe", 2);
+		
 		country = new Country("C1");
 		playerOwnedContries.add(country);
+		country.setPartOfContinent(continent);
 		continentListOfCountries.add(country);
 
 		country = new Country("C2");
 		playerOwnedContries.add(country);
+		country.setPartOfContinent(continent);
 		continentListOfCountries.add(country);
 
 		country = new Country("C3");
 		playerOwnedContries.add(country);
+		country.setPartOfContinent(continent);
 		continentListOfCountries.add(country);
 
 		player = new Player();
 		player.setMyCountries(playerOwnedContries);
-		continent = new Continent("Europe", 2);
+		
 
 		continent.setListOfCountries(continentListOfCountries);
 	}
@@ -73,7 +78,7 @@ public class ReinforcementPhaseTest {
 	@Test
 	public void findNoOfArmiesWhenPlayerOwnContinentTest() {
 		
-		assertEquals(continent.getControlValue(), reinforcementPhase.findNoOfArmies(player, continent));
+		assertEquals(continent.getControlValue(), reinforcementPhase.findNoOfArmies(player));
 	}
 
 	
@@ -85,6 +90,6 @@ public class ReinforcementPhaseTest {
 
 		country = new Country("C4");
 		continentListOfCountries.add(country);
-		assertEquals(3, reinforcementPhase.findNoOfArmies(player, continent));
+		assertEquals(3, reinforcementPhase.findNoOfArmies(player));
 	}
 }
