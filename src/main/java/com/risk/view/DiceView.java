@@ -22,8 +22,8 @@ public class DiceView implements EventHandler<ActionEvent> {
     }
 
     public void handle(ActionEvent event) {
-        final Stage newMapStage = new Stage();
-        newMapStage.setTitle("Attack Window");
+        final Stage diceStage = new Stage();
+        diceStage.setTitle("Attack Window");
 
         DiceController diceController = new DiceController(dice);
 
@@ -39,7 +39,7 @@ public class DiceView implements EventHandler<ActionEvent> {
         }
 
         Scene scene = new Scene(root);
-        newMapStage.setScene(scene);
-        newMapStage.show();
+        diceStage.setScene(scene);
+        diceStage.show();
     }
 }
