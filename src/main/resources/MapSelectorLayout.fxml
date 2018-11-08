@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane prefHeight="814.0" prefWidth="1312.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+      <HBox layoutX="14.0" layoutY="8.0" prefHeight="40.0" prefWidth="379.0">
+         <children>
+            <Label fx:id="phaseView" prefHeight="31.0" prefWidth="147.0" text="Phase" textFill="#dd0606" underline="true" />
+         </children>
+      </HBox>
+      <TextArea fx:id="terminalWindow" editable="false" layoutX="12.0" layoutY="56.0" prefHeight="749.0" prefWidth="379.0" style="-fx-background-color: #fff; -fx-border-color: #000;" wrapText="true" />
+      <Button fx:id="attack" layoutX="434.0" layoutY="696.0" mnemonicParsing="false" onAction="#completeAttack" prefHeight="31.0" prefWidth="228.0" text="Complete Attack" />
+      <Button fx:id="fortify" layoutX="434.0" layoutY="730.0" mnemonicParsing="false" onAction="#fortify" prefHeight="31.0" prefWidth="228.0" text="Fortify" />
+      <Button fx:id="endTurn" layoutX="434.0" layoutY="765.0" mnemonicParsing="false" onAction="#endTurn" prefHeight="31.0" prefWidth="228.0" text="End Turn" />
+      <Button fx:id="reinforcement" layoutX="434.0" layoutY="357.0" mnemonicParsing="false" onAction="#reinforcement" prefHeight="31.0" prefWidth="140.0" text="Reinforcements" />
+      <Button fx:id="cards" layoutX="580.0" layoutY="357.0" mnemonicParsing="false" onAction="#initCardWindow" prefHeight="31.0" prefWidth="82.0" text="Cards" />
+      <ListView fx:id="selectedCountryList" layoutX="434.0" layoutY="78.0" prefHeight="272.0" prefWidth="228.0" />
+      <ListView fx:id="adjCountryList" layoutX="434.0" layoutY="424.0" prefHeight="251.0" prefWidth="228.0" />
+      <Label layoutX="435.0" layoutY="44.0" prefHeight="31.0" prefWidth="200.0" text="Selected Country" />
+      <Label layoutX="435.0" layoutY="395.0" prefHeight="31.0" prefWidth="200.0" text="Adjacent Country" />
+      <Label fx:id="playerSelected" layoutX="434.0" layoutY="4.0" prefHeight="31.0" prefWidth="182.0" text="Playing........" />
+      <Button fx:id="placeArmy" layoutX="643.0" layoutY="5.0" mnemonicParsing="false" onAction="#placeArmy" prefHeight="31.0" prefWidth="94.0" text="Place Army" />
+      <TitledPane layoutX="800.0" layoutY="6.0" prefHeight="806.0" prefWidth="510.0" text="World Domination">
+         <content>
+            <VBox prefHeight="765.0" prefWidth="498.0">
+               <children>
+                   <BarChart fx:id="dominationBarChart">
+                       <xAxis>
+                           <CategoryAxis side="BOTTOM" />
+                       </xAxis>
+                       <yAxis>
+                           <NumberAxis side="LEFT" />
+                       </yAxis>
+                   </BarChart>
+                  <ScrollPane layoutX="814.0" layoutY="13.0" prefHeight="571.0" prefViewportHeight="794.0" prefViewportWidth="540.0" prefWidth="496.0">
+                     <content>
+                        <VBox fx:id="displayBox" layoutX="670.0" layoutY="14.0" prefHeight="535.0" prefWidth="491.0" />
+                     </content>
+                  </ScrollPane>
+               </children>
+            </VBox>
+         </content>
+      </TitledPane>      
+    </children>
+</Pane>
