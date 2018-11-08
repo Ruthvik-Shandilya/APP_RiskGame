@@ -11,13 +11,12 @@ import java.util.Observer;
 import java.util.ResourceBundle;
 import java.util.Stack;
 
-import com.risk.exception.InvalidGameMoveException;
+import com.risk.map.util.WindowUtil;
 import com.risk.model.Card;
 import com.risk.model.Continent;
 import com.risk.services.MapIO;
 import com.risk.model.Player;
 import com.risk.model.Country;
-import com.risk.map.util.WindowUtil;
 import com.risk.services.RoundRobin;
 import com.risk.services.StartUpPhase;
 import com.risk.model.PlayerWorldDomination;
@@ -44,60 +43,75 @@ public class GamePlayController implements Initializable, Observer {
 
     private RoundRobin roundRobin;
 
+
     private MapIO map;
 
     private StartUpPhase startUpPhase;
 
+
     private Card card;
+
+    @FXML
+    private BarChart dominationBarChart;
+
 
     private Player player;
 
     private PlayerWorldDomination worldDomination;
 
+
     @FXML
     private Button attack;
 
     @FXML
-    private Button cards;
-
-    @FXML
     private Button fortify;
+
 
     @FXML
     private Button endTurn;
+
 
     @FXML
     private Button reinforcement;
 
     @FXML
-    private Label playerSelected;
-
-    @FXML
-    private Label phaseView;
-
-    @FXML
-    private BarChart dominationBarChart;
+    private Button cards;
 
     @FXML
     private VBox displayBox;
 
+
     @FXML
     private ListView<Country> selectedCountryList;
 
+
     @FXML
-    private ListView<Country> adjCountryList;
+    private ListView<Country> adjacentCountryList;
+
+    @FXML
+    private Label playerChosen;
+
+
+    @FXML
+    private Label phaseView;
+
 
     @FXML
     private TextArea terminalWindow;
 
+
     @FXML
     private Button placeArmy;
 
-    private int selectedPlayers;
+
+    private int numberOfPlayersSelected;
+
 
     private ArrayList<Player> gamePlayerList;
 
-    private Player CurrentPlayer;
+
+    private Player playerPlaying;
+
 
     private Stack<Card> cardStack;
 
@@ -116,80 +130,155 @@ public class GamePlayController implements Initializable, Observer {
         this.setNumberOfCardSetExchanged(0);
     }
 
-    public void createPlayer() {
+    public void playerCreation() {
 
-        setSelectedPlayers(this.playerNames.length);
+        setNumberOfPlayersSelected(this.playerNames.length);
         gamePlayerList.clear();
-        gamePlayerList = player.createPlayer(getSelectedPlayers(), this.playerNames, terminalWindow);
+        WindowUtil.updateterminalWindow("Set up phase started\n", terminalWindow );
+        gamePlayerList = player.generatePlayer(getNumberOfPlayersSelected(), this.playerNames, terminalWindow);
+        WindowUtil.updateterminalWindow("All players generated\n", terminalWindow );
 
         roundRobin = new RoundRobin(this.gamePlayerList);
-        //playerIterator = gamePlayerList.iterator();
 
         player.assignArmiesToPlayers(gamePlayerList, terminalWindow);
-        assignCountryToPlayer();
-        loadMapContent();
+        allocateCountryToPlayerInGamePlay();
+        WindowUtil.updateterminalWindow("All countries assigned\n", terminalWindow );
+
+        loadMapData();
         loadCurrentPlayer();
-        loadWorldDominationData();
+        generateBarGraph();
         WindowUtil.enableButtonControl(cards);
     }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         gamePlayerList = new ArrayList<>();
-        createPlayer();
-        loadCards();
-        loadMapContent();
+        playerCreation();
+        loadGameCard();
+        loadMapData();
         phaseView.setText("Phase: Start Up");
         WindowUtil.disableButtonControl(reinforcement, fortify, attack, cards);
 
         selectedCountryList.setCellFactory(param -> new ListCell<Country>() {
             @Override
-            protected void updateItem(Country item, boolean empty) {
-                super.updateItem(item, empty);
+            protected void updateItem(Country currentCountry, boolean empty) {
+                super.updateItem(currentCountry, empty);
 
-                if (empty || item == null || item.getName() == null) {
+                if (empty || currentCountry == null || currentCountry.getName() == null) {
                     setText(null);
                 } else {
-                    setText(item.getName() + ":" + item.getNoOfArmies() + "-" + item.getPlayer().getName());
+                    setText(currentCountry.getName() + ":-" + currentCountry.getNoOfArmies() + "-" + currentCountry.getPlayer().getName());
                 }
             }
         });
         selectedCountryList.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                Country territory = selectedCountryList.getSelectionModel().getSelectedItem();
-                occupyAdjCountry(territory);
+                Country country = selectedCountryList.getSelectionModel().getSelectedItem();
+                moveToAdjacentCountry(country);
             }
         });
 
-        adjCountryList.setCellFactory(param -> new ListCell<Country>() {
+        adjacentCountryList.setCellFactory(param -> new ListCell<Country>() {
             @Override
-            protected void updateItem(Country item, boolean empty) {
-                super.updateItem(item, empty);
+            protected void updateItem(Country currentCountry, boolean empty) {
+                super.updateItem(currentCountry, empty);
 
-                if (empty || item == null || item.getName() == null) {
+                if (empty || currentCountry == null || currentCountry.getName() == null) {
                     setText(null);
                 } else {
-                    setText(item.getName() + "-" + item.getNoOfArmies() + "-" + item.getPlayer().getName());
+                    setText(currentCountry.getName() + "-" + currentCountry.getNoOfArmies() + "-" + currentCountry.getPlayer().getName());
                 }
             }
         });
     }
 
-    private void occupyAdjCountry(Country country) {
-        this.adjCountryList.getItems().clear();
+    private void moveToAdjacentCountry(Country country) {
+        this.adjacentCountryList.getItems().clear();
         if (country != null) {
             for (Country adjTerr : country.getAdjacentCountries()) {
-                this.adjCountryList.getItems().add(adjTerr);
+                this.adjacentCountryList.getItems().add(adjTerr);
             }
         }
     }
 
-    private void loadCards() {
+    private void loadGameCard() {
         cardStack = startUpPhase.assignCardToCountry(map, terminalWindow);
+        WindowUtil.updateterminalWindow("Cards loaded\n", terminalWindow);
     }
 
-    private void loadMapContent() {
+
+    @FXML
+    private void completeAttack(ActionEvent event) {
+        adjacentCountryList.setOnMouseClicked(e -> System.out.print(""));
+        if (player.getCountryWon() > 0) {
+            allocateCardToPlayer();
+        }
+        WindowUtil.updateterminalWindow("Attack phase ended\n", terminalWindow);
+        isValidFortificationPhase();
+    }
+
+
+    private void allocateCardToPlayer() {
+        Card cardToBeAdded = cardStack.pop();
+        playerPlaying.getCardList().add(cardToBeAdded);
+        player.setCountryWon(0);
+        WindowUtil.updateterminalWindow(cardToBeAdded.getCardType().toString() + "card is assigned to " + playerPlaying.getName() + " and won country " + cardToBeAdded.getCountry().getName() + "\n");
+    }
+
+    private void attack() {
+        Country attackingTerritory = selectedCountryList.getSelectionModel().getSelectedItem();
+        Country defendingTerritory = adjacentCountryList.getSelectionModel().getSelectedItem();
+
+        player.attackPhase(attackingTerritory, defendingTerritory);
+
+    }
+
+    @FXML
+    private void fortify(ActionEvent event) {
+        Country selectedCountry = this.selectedCountryList.getSelectionModel().getSelectedItem();
+        Country adjacentCountry = this.adjacentCountryList.getSelectionModel().getSelectedItem();
+
+        player.fortificationPhase(selectedCountry, adjacentCountry, terminalWindow);
+        selectedCountryList.refresh();
+        adjacentCountryList.refresh();
+        loadMapData();
+    }
+
+    @FXML
+    private void endTurn(ActionEvent event) {
+        adjacentCountryList.setOnMouseClicked(e -> System.out.print(""));
+        WindowUtil.updateterminalWindow("Player " + playerPlaying.getName() + " ended his turn.\n", terminalWindow);
+        if (player.getCountryWon() > 0) {
+            allocateCardToPlayer();
+        }
+        initializeReinforcement();
+        card.openCardWindow(playerPlaying, card);
+    }
+
+
+    @FXML
+    private void placeArmy(ActionEvent event) {
+        player.placeArmyOnCountry(playerPlaying, selectedCountryList, gamePlayerList, terminalWindow);
+    }
+
+
+    @FXML
+    private void reinforcement(ActionEvent event) {
+        Country country = selectedCountryList.getSelectionModel().getSelectedItem();
+        if (playerPlaying.getCardList().size() >= 5) {
+            WindowUtil.popUpWindow("Exchange Card", "Card exchange popup", "You have at least 5 cards please exchange for armies");
+            return;
+        }
+        player.reinforcementPhase(country, terminalWindow);
+        selectedCountryList.refresh();
+        loadMapData();
+        playerChosen.setText(playerPlaying.getName() + ":- " + playerPlaying.getArmyCount() + " armies left.");
+    }
+
+
+    private void loadMapData() {
         displayBox.getChildren().clear();
         for (Continent continent : map.getMapGraph().getContinents().values()) {
             displayBox.autosize();
@@ -197,148 +286,90 @@ public class GamePlayController implements Initializable, Observer {
         }
     }
 
-    private void allocateCardToPlayer() {
-        Card cardToBeAdded = cardStack.pop();
-        CurrentPlayer.getListOfCards().add(cardToBeAdded);
-        player.setCountryWon(0);
-        WindowUtil.textToTerminalWindow(CurrentPlayer.getName() + " has been assigned a card with type " + cardToBeAdded.getCardType().toString() + " and territory " + cardToBeAdded.getCountry().getName() + "\n", terminalWindow);
-    }
-
-    private void attack() {
-        Country attackingTerritory = selectedCountryList.getSelectionModel().getSelectedItem();
-        Country defendingTerritory = adjCountryList.getSelectionModel().getSelectedItem();
-    	try {
-        player.attackPhase(attackingTerritory, defendingTerritory);
-		} catch (InvalidGameMoveException ex) {
-			WindowUtil.userInfo(ex.getMessage(), "Message", "");
-			return;
-		}
-    }
-
-    @FXML
-    private void reinforcement(ActionEvent event) {
-        Country territory = selectedCountryList.getSelectionModel().getSelectedItem();
-        if (CurrentPlayer.getListOfCards().size() >= 5) {
-            WindowUtil.userInfo("You have five or more Risk Card, please exchange these cards for army.", "Info", "");
-            return;
-        }
-        player.reinforcementPhase(territory, terminalWindow);
-        selectedCountryList.refresh();
-        loadMapContent();
-        playerSelected.setText(CurrentPlayer.getName() + ": " + CurrentPlayer.getArmyCount() + " armies left");
-    }
-
-    private void prePlaceArmy() {
-        loadMapContent();
-        selectedCountryList.refresh();
-        loadCurrentPlayer();
-    }
-
-    @FXML
-    private void placeArmy(ActionEvent event) {
-        player.placeArmy(CurrentPlayer, selectedCountryList, gamePlayerList, terminalWindow);
-    }
-
-    @FXML
-    private void fortify(ActionEvent event) {
-        Country selectedTerritory = this.selectedCountryList.getSelectionModel().getSelectedItem();
-        Country adjTerritory = this.adjCountryList.getSelectionModel().getSelectedItem();
-
-        player.fortificationPhase(selectedTerritory, adjTerritory, terminalWindow);
-        selectedCountryList.refresh();
-        adjCountryList.refresh();
-        loadMapContent();
-    }
-
-    @FXML
-    private void endTurn(ActionEvent event) {
-        adjCountryList.setOnMouseClicked(e -> System.out.print(""));
-        WindowUtil.textToTerminalWindow(CurrentPlayer.getName() + " ended his turn.\n", terminalWindow);
-        if (player.getCountryWon() > 0) {
-            allocateCardToPlayer();
-        }
-        preReinforcement();
-        card.openCardWindow(CurrentPlayer, card);
-    }
-
-    private void assignCountryToPlayer() {
+    private void allocateCountryToPlayerInGamePlay() {
+        WindowUtil.updateterminalWindow("Assigning countries to all players\n", terminalWindow);
         startUpPhase.assignCountryToPlayer(map, gamePlayerList, terminalWindow);
     }
 
     private void loadCurrentPlayer() {
-        CurrentPlayer = roundRobin.next();
-        player.setPlayerPlaying(CurrentPlayer);
+        playerPlaying = roundRobin.next();
+        player.setPlayerPlaying(playerPlaying);
         player.setCountryWon(0);
-        WindowUtil.textToTerminalWindow(CurrentPlayer.getName() + "....started playing.\n", terminalWindow);
+        WindowUtil.updateterminalWindow(playerPlaying.getName() + "'s turn started.\n", terminalWindow);
+
         selectedCountryList.getItems().clear();
-        adjCountryList.getItems().clear();
-        loadMapContent();
-        for (Country country : CurrentPlayer.getMyCountries()) {
-            selectedCountryList.getItems().add(country);
+        adjacentCountryList.getItems().clear();
+        loadMapData();
+        for (Country territory : playerPlaying.getPlayerCountries()) {
+            selectedCountryList.getItems().add(territory);
         }
-        playerSelected.setText(CurrentPlayer.getName() + ": " + CurrentPlayer.getArmyCount() + " armies left\n");
+        playerChosen.setText(playerPlaying.getName() + ":- " + playerPlaying.getArmyCount() + " armies left.\n");
     }
 
     public void calculateReinforcementArmies() {
-        if (this.CurrentPlayer != null) {
-            CurrentPlayer = player.calculateReinforcementArmies(CurrentPlayer);
-            playerSelected.setText(CurrentPlayer.getName() + ": " + CurrentPlayer.getArmyCount() + " armies left");
+        if (this.playerPlaying != null) {
+            playerPlaying = player.noOfReinsforcementArmies(playerPlaying);
+            playerChosen.setText(playerPlaying.getName() + ":- " + playerPlaying.getArmyCount() + " armies left.");
         } else {
-            WindowUtil.textToTerminalWindow("Error!. No player playing.", terminalWindow);
+            WindowUtil.updateterminalWindow("Wait, no player is assigned the position of current player\n", terminalWindow);
         }
     }
 
+
     @FXML
     public void initCardWindow(ActionEvent event) {
-        card.openCardWindow(CurrentPlayer, card);
+        card.openCardWindow(playerPlaying, card);
     }
 
-    private void preReinforcement() {
+
+    private void initializeReinforcement() {
         loadCurrentPlayer();
 
         phaseView.setText("Phase: Reinforcement");
         WindowUtil.disableButtonControl(placeArmy, fortify, attack);
         WindowUtil.enableButtonControl(reinforcement);
         reinforcement.requestFocus();
+        WindowUtil.updateterminalWindow("\nReinforcement phase started\n",terminalWindow);
         calculateReinforcementArmies();
     }
 
-    private void launchAttack() {
-        adjCountryList.setOnMouseClicked(e -> attack());
+    private void performAttack() {
+        adjacentCountryList.setOnMouseClicked(e -> attack());
     }
 
-    private void preAttack() {
-        if (player.playerHasAValidAttackMove(selectedCountryList, terminalWindow)) {
+
+    private void initializeAttack() {
+        WindowUtil.updateterminalWindow("\n Attack phase started.\n",terminalWindow);
+
+        if (player.playerCanAttack(selectedCountryList, terminalWindow)) {
             phaseView.setText("Phase: Attack");
+
             WindowUtil.disableButtonControl(reinforcement, placeArmy);
             WindowUtil.enableButtonControl(attack);
+
             attack.requestFocus();
-            launchAttack();
+            performAttack();
         }
     }
 
-    private void preFortification() {
+    private void initializeFortification() {
+
         WindowUtil.disableButtonControl(reinforcement, attack, placeArmy);
         WindowUtil.enableButtonControl(fortify);
         phaseView.setText("Phase: Fortification");
         fortify.requestFocus();
+        WindowUtil.updateterminalWindow("\nFortification phase started.\n",terminalWindow);
+
     }
 
-    private void checkIfFortificationPhaseIsValid() {
-        player.isFortificationPhaseValid(map, CurrentPlayer);
-    }
 
-    private void noFortificationPhase() {
-        WindowUtil.textToTerminalWindow(CurrentPlayer.getName() + " has no armies to be fortified.\n", terminalWindow);
-        preReinforcement();
-    }
-
-    private void loadWorldDominationData() {
+    private void generateBarGraph() {
         CategoryAxis xAxis = new CategoryAxis();
         NumberAxis yAxis = new NumberAxis();
         xAxis.setLabel("Player");
         yAxis.setLabel("Percentage");
-        HashMap<Player, Double> playerTerPercent = worldDomination.worldDominationData(map);
+        //xAxis.setTickLabelRotation(90);
+        HashMap<Player, Double> playerTerPercent = worldDomination.generateWorldDominationData(map);
         System.out.println(playerTerPercent.toString());
         ObservableList<XYChart.Series<String, Double>> answer = FXCollections.observableArrayList();
         ArrayList<XYChart.Series<String, Double>> chartData = new ArrayList<>();
@@ -354,75 +385,89 @@ public class GamePlayController implements Initializable, Observer {
         dominationBarChart.setData(answer);
     }
 
-    @FXML
-    private void completeAttack(ActionEvent event) {
-        adjCountryList.setOnMouseClicked(e -> System.out.print(""));
-        if (player.getCountryWon() > 0) {
-            allocateCardToPlayer();
-        }
-        checkIfFortificationPhaseIsValid();
-    }
-
-    private void checkPlayerLost() {
-        Player playerLost = player.checkIfAnyPlayerLostTheGame(gamePlayerList);
+    private void isAnyPlayerLost() {
+        Player playerLost = player.checkPlayerLost(gamePlayerList);
         if (playerLost != null) {
             gamePlayerList.remove(playerLost);
             roundRobin.updateAfterPlayerLost(playerLost);
-            WindowUtil.userInfo("Player: " + playerLost.getName() + " lost all his country and is out of the game",
-                    "Info", "");
-            WindowUtil.textToTerminalWindow(playerLost.getName() + " lost all countries and lost the game.\n",
-                    terminalWindow);
+            WindowUtil.popUpWindow(playerLost.getName() + " Lost", "Player Lost popup", "Player: " + playerLost.getName() + " lost the game");
+            WindowUtil.updateterminalWindow(playerLost.getName() +" loast the game and hence all the countries.\n\n", terminalWindow);
         }
     }
 
-    private boolean checkPlayerWon() {
+
+    private void endGame() {
+        WindowUtil.disableButtonControl(selectedCountryList, adjacentCountryList, reinforcement, attack, fortify, cards, endTurn);
+        phaseView.setText("GAME OVER");
+        playerChosen.setText(playerPlaying.getName().toUpperCase() + " WON.");
+        WindowUtil.updateterminalWindow("\n " + playerPlaying.getName().toUpperCase() + " WON.\n\n");
+
+    }
+
+    private boolean isAnyPlayerWon() {
         boolean playerWon = false;
         if (gamePlayerList.size() == 1) {
-            WindowUtil.userInfo("Player: " + gamePlayerList.get(0).getName() + " won the game!", "Info", "");
+            WindowUtil.popUpWindow("Player: " + gamePlayerList.get(0).getName(), "Winning popup", "Game complete.");
             playerWon = true;
-            gameOver();
+            endGame();
         }
 
         return playerWon;
     }
-    
-    private void viewChange() {
-        checkPlayerLost();
+
+    private void resetWindow() {
+        isAnyPlayerLost();
         selectedCountryList.getItems().clear();
-        adjCountryList.getItems().clear();
-        for (Country country : CurrentPlayer.getMyCountries()) {
+        adjacentCountryList.getItems().clear();
+        for (Country country : playerPlaying.getPlayerCountries()) {
             selectedCountryList.getItems().add(country);
         }
-        loadMapContent();
-        loadWorldDominationData();
-        playerSelected.setText(CurrentPlayer.getName() + ": " + CurrentPlayer.getArmyCount() + " armies left\n");
-        if (!checkPlayerWon()) {
-            player.playerHasAValidAttackMove(selectedCountryList, terminalWindow);
+        loadMapData();
+        generateBarGraph();
+        playerChosen.setText(playerPlaying.getName() + ": " + playerPlaying.getArmyCount() + " armies left.\n");
+        if (!isAnyPlayerWon()) {
+            player.playerCanAttack(selectedCountryList, terminalWindow);
         }
     }
 
-    private void gameOver() {
-        WindowUtil.disableButtonControl(selectedCountryList, adjCountryList, reinforcement, attack, fortify, cards,
-                endTurn);
-        phaseView.setText("GAME OVER");
-        playerSelected.setText(CurrentPlayer.getName().toUpperCase() + " WON THE GAME");
-        WindowUtil.textToTerminalWindow(CurrentPlayer.getName().toUpperCase() + " WON THE GAME\n", terminalWindow);
-
+    private void initializePlaceArmy() {
+        loadMapData();
+        selectedCountryList.refresh();
+        loadCurrentPlayer();
     }
 
-   
-    public void exchangeCardsForArmy(Card change) {
-        List<Card> tradedCards = change.getCardsToExchange();
+    private void isValidFortificationPhase() {
+        player.isFortificationPhaseValid(map, playerPlaying);
+    }
+
+
+    private void noFortificationPhase() {
+        WindowUtil.updateterminalWindow("Fortification phase started\n",terminalWindow);
+        WindowUtil.updateterminalWindow(playerPlaying.getName() + " does not have armies to fortify.\n",terminalWindow);
+        WindowUtil.updateterminalWindow("Fortification phase ended\n",terminalWindow);
+        initializeReinforcement();
+    }
+
+    public int getNumberOfPlayersSelected() {
+        return numberOfPlayersSelected;
+    }
+
+    public void setNumberOfPlayersSelected(int numberOfPlayersSelected) {
+        this.numberOfPlayersSelected = numberOfPlayersSelected;
+    }
+
+    public void exchangeCards(Card exch) {
+        List<Card> tradedCards = exch.getCardsToExchange();
         setNumberOfCardSetExchanged(getNumberOfCardSetExchanged() + 1);
-        player.tradeCardsForArmy(tradedCards, getNumberOfCardSetExchanged(), terminalWindow);
-        CurrentPlayer.getListOfCards().removeAll(tradedCards);
+        player.exchangeCards(tradedCards, getNumberOfCardSetExchanged(), terminalWindow);
+        playerPlaying.getCardList().removeAll(tradedCards);
         cardStack.addAll(tradedCards);
         Collections.shuffle(cardStack);
         selectedCountryList.refresh();
-        adjCountryList.refresh();
-        loadMapContent();
-        loadWorldDominationData();
-        playerSelected.setText(CurrentPlayer.getName() + ": " + CurrentPlayer.getArmyCount() + " armies left\n");
+        adjacentCountryList.refresh();
+        loadMapData();
+        generateBarGraph();
+        playerChosen.setText(playerPlaying.getName() + ":- " + playerPlaying.getArmyCount() + " armies left.\n");
     }
 
     public void update(Observable o, Object arg) {
@@ -430,48 +475,39 @@ public class GamePlayController implements Initializable, Observer {
         String view = (String) arg;
 
         if (view.equals("Attack")) {
-            preAttack();
+            initializeAttack();
         }
         if (view.equals("FirstAttack")) {
             loadCurrentPlayer();
-            preAttack();
+            initializeAttack();
         }
         if (view.equals("Reinforcement")) {
-            preReinforcement();
-            card.openCardWindow(CurrentPlayer, card);
+            initializeReinforcement();
+            card.openCardWindow(playerPlaying, card);
         }
         if (view.equals("Fortification")) {
-            preFortification();
+            initializeFortification();
         }
-        if (view.equals("placeArmy")) {
-            prePlaceArmy();
+        if (view.equals("placeArmyOnCountry")) {
+            initializePlaceArmy();
         }
         if (view.equals("WorldDomination")) {
-            loadWorldDominationData();
+            generateBarGraph();
         }
         if (view.equals("checkIfFortificationPhaseValid")) {
-            checkIfFortificationPhaseIsValid();
+            isValidFortificationPhase();
         }
         if (view.equals("noFortificationMove")) {
             noFortificationPhase();
-            card.openCardWindow(CurrentPlayer, card);
+            card.openCardWindow(playerPlaying, card);
         }
         if (view.equals("rollDiceComplete")) {
-            viewChange();
+            resetWindow();
         }
         if (view.equals("cardsTrade")) {
-            Card exchange = (Card) o;
-            exchangeCardsForArmy(exchange);
+            Card cm = (Card) o;
+            exchangeCards(cm);
         }
-    }
-
-    public int getSelectedPlayers() {
-        return selectedPlayers;
-    }
-
-
-    public void setSelectedPlayers(int selectedPlayers) {
-        this.selectedPlayers = selectedPlayers;
     }
 
 
