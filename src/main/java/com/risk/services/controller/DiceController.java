@@ -97,9 +97,11 @@ public class DiceController implements Initializable {
 	@FXML
 	private Button cancelMove;
 	
+	/** TextField variable for number of armies to move*/
 	@FXML
 	private TextField numberOfArmiesToMove;
 	
+	/** Variable for Dice Object */
 	private Dice dice;
 	
 	public DiceController(Dice dice) {
