@@ -1,25 +1,16 @@
 package com.risk.model;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.risk.exception.InvalidGameMoveException;
-import com.risk.model.Continent;
-import com.risk.model.Country;
-import com.risk.model.Player;
 import com.risk.services.MapIO;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
 
 public class PlayerTest {
 	
@@ -34,8 +25,14 @@ public class PlayerTest {
 	private Country attackingCountry;
 	
 	private Country defendingCountry;
+
+	private Country country1;
+
+	private Country country2;
 	
 	private ArrayList<Country> myCountries;
+
+	private ArrayList<Country> playercountries;
 	
 	private Continent continent;
 	
@@ -62,13 +59,32 @@ public class PlayerTest {
 		defendingCountry.setPlayer(player2);
 		
 		continent = new Continent("Asia", 2);
-		defendingCountry.setPartOfContinent(continent);
+		//defendingCountry.setPartOfContinent(continent);
 		
 		myCountries = new ArrayList<Country>();
 		myCountries.add(defendingCountry);
+
+		country1 = new Country("Canada");
+		country1.setPartOfContinent(continent);
+		continent.getListOfCountries().add(country1);
+
+		country2 = new Country("America");
+		country2.setPartOfContinent(continent);
+		continent.getListOfCountries().add(country2);
+
+		country1.getAdjacentCountries().add(country2);
+		country2.getAdjacentCountries().add(country1);
+
+		mapIO.getMapGraph().addContinent(continent);
 		
 		continent.setListOfCountries(myCountries);
-		playerPlaying.setMyCountries(myCountries); 
+		playerPlaying.setMyCountries(myCountries);
+
+		playercountries = new ArrayList<>();
+		playercountries.add(country1);
+		playercountries.add(country2);
+		player1.setMyCountries(playercountries);
+
 		
 	}
 	
@@ -94,8 +110,15 @@ public class PlayerTest {
 	}
 	
 	@Test
-	public void noOfReinsforcementArmiesTest() {
+	public void noOfReinforcementArmiesTest() {
 		assertEquals(playerPlaying,player1.noOfReinsforcementArmies(playerPlaying));
 	}
-	
+
+//	@Test
+//	public void isFortificationValidTest(){
+//		country1.setPlayer(player1);
+//		country1.setNoOfArmies(3);
+//		country2.setPlayer(player1);
+//		assertEquals(true,player1.isFortificationPhaseValid(mapIO,player1));
+//	}
 }
