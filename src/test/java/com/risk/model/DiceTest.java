@@ -64,23 +64,39 @@ public class DiceTest {
 		playResult = new ArrayList<>();
 	}
 	
+	/**
+	* Test to check if dice throw is possible.
+	* 
+	*/
 	@Test
 	public void checkDiceThrowPossibleTest() {
 		dice.updateCountryList();
 		assertEquals(player1, defendingCountry.getPlayer());
 	}
 	
+	/**
+	* Test to check country list update after dice throw.
+	* 
+	*/
 	@Test
 	public void updateCountryListTest() {
 		assertTrue(dice.checkDiceThrowPossible());
 	}
 	
+	/**
+	* Test to check update armies after attack defender lost.
+	* 
+	*/
 	@Test
 	public void updateArmiesAfterAttackDefenderLostTest() {
 		dice.updateArmiesAfterAttack(2, 3, playResult);
 		assertEquals("Defender has lost one army.",playResult.get(0));
 	}
 	
+	/**
+	* Test to check update armies after attack attacker lost.
+	* 
+	*/
 	@Test
 	public void updateArmiesAfterAttackAttackerLostTest() {
 		dice.updateArmiesAfterAttack(3, 2, playResult);
