@@ -72,6 +72,14 @@ public class CardController implements Initializable {
         this.card = card;
     }
 
+    /**
+	 * Initialize player attributes for cards.
+	 * 
+	 * @param location
+	 *            URL
+	 * @param resources
+	 *            ResourceBundle
+	 */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // TODO Auto-generated method stub
