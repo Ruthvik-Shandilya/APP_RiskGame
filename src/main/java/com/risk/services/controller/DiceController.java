@@ -25,24 +25,31 @@ import java.util.ResourceBundle;
  */
 public class DiceController implements Initializable {
 
+	/** Label variable for attacking player*/
 	@FXML
 	private Label attackingPlayer;
 
+	/** Label variable for attacking Country */
 	@FXML
 	private Label attackingCountry;
 	
+	/** Label variable for attacking armies */
 	@FXML
 	private Label attackingArmies;
 	
+	/** Label variable for defending player */
 	@FXML
 	private Label defendingPlayer;
 	
+	/** Label variable for defending country */
 	@FXML
 	private Label defendingCountry;
 	
+	/** Label variable for defending armies */
 	@FXML
 	private Label defendingArmies;
 	
+	/** Label variable for winner name */
 	@FXML
 	private Label winnerName;
 	
