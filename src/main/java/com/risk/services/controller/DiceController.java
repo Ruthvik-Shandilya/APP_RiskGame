@@ -186,6 +186,7 @@ public class DiceController implements Initializable {
 	 * 
 	 * @param event
 	 *  	ActionEvent
+	 *  
 	 */
 	@FXML
 	private void moveArmies(ActionEvent event) {
@@ -207,6 +208,7 @@ public class DiceController implements Initializable {
 	 * 
 	 * @param event
 	 *  	ActionEvent
+	 *  
 	 */
 	@FXML
 	private void cancelMove(ActionEvent event){
@@ -219,6 +221,7 @@ public class DiceController implements Initializable {
 	 * 
 	 * @param event
 	 *  	ActionEvent
+	 *  
 	 */
 	@FXML
 	private void cancelThrow(ActionEvent event) {
@@ -231,6 +234,7 @@ public class DiceController implements Initializable {
 	 * 
 	 * @param event
 	 *  	ActionEvent
+	 *  
 	 */
 	@FXML
 	private void continueDiceRoll(ActionEvent event) {
@@ -245,6 +249,7 @@ public class DiceController implements Initializable {
 	 * 
 	 * @param allCheckBoxes
 	 *  	CheckBox
+	 *  
 	 */
 	public void attackDiceValue(CheckBox... allCheckBoxes) {
 		for (CheckBox checkBox : allCheckBoxes) {
@@ -261,6 +266,7 @@ public class DiceController implements Initializable {
 	 * 
 	 * @param allCheckBoxes
 	 *  	CheckBox
+	 *  
 	 */
 	public void defenceDiceValue(CheckBox... allCheckBoxes) {
 		for (CheckBox checkBox : allCheckBoxes) {
@@ -277,6 +283,7 @@ public class DiceController implements Initializable {
 	 * 
 	 * @param event
 	 *  	ActionEvent
+	 *  
 	 */
 	@FXML
 	public void startRoll(ActionEvent event) {
