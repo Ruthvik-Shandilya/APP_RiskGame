@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
  */
 public class DiceController implements Initializable {
 
-	/** Label variable for attacking player*/
+	/** Label variable for attacking player */
 	@FXML
 	private Label attackingPlayer;
 
