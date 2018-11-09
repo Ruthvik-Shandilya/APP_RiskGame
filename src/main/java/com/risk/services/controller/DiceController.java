@@ -104,6 +104,12 @@ public class DiceController implements Initializable {
 	/** Variable for Dice Object */
 	private Dice dice;
 	
+	/**
+	 * DiceController Constructor
+	 * 
+	 * @param dice
+	 *  	Dice odject
+	 */
 	public DiceController(Dice dice) {
 		this.dice = dice;
 	}
