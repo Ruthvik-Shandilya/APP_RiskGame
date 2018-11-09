@@ -109,12 +109,11 @@ public class CardController implements Initializable {
     }
 
     /**
-	 * Method for check exchange
+	 * Method for check exchange. Checks for the card 
+	 * combination and number of cards selected by the player
 	 * 
-	 * @param location
-	 *            URL
-	 * @param resources
-	 *            ResourceBundle
+	 * @param event
+	 *            Action Event
 	 */
     @FXML
     private void checkExchange(ActionEvent event) {
