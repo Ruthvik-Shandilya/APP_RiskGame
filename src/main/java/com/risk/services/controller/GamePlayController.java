@@ -689,9 +689,9 @@ public class GamePlayController implements Initializable, Observer {
         if (view.equals("rollDiceComplete")) {
             resetWindow();
         }
-        if (view.equals("cardsTrade")) {
-            Card cm = (Card) o;
-            exchangeCards(cm);
+        if (view.equals("cardsExchange")) {
+            Card cardObject = (Card) o;
+            exchangeCards(cardObject);
         }
     }
 

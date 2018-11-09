@@ -322,14 +322,14 @@ public class Player extends Observable implements Observer {
                 return;
             }
 
-            int reinsforcementArmies = Integer.valueOf(WindowUtil.userInput());
-            if (currentPlayer.getArmyCount() < reinsforcementArmies) {
+            int reinforcementArmies = Integer.valueOf(WindowUtil.userInput());
+            if (currentPlayer.getArmyCount() < reinforcementArmies) {
                 WindowUtil.popUpWindow("Insufficient Armies", "popUp", currentPlayer.getName() + " don't have enough armies");
                 return;
             }
-            country.setNoOfArmies(country.getNoOfArmies() + reinsforcementArmies);
-            currentPlayer.setArmyCount(currentPlayer.getArmyCount() - reinsforcementArmies);
-            WindowUtil.updateTerminalWindow(country.getName() + " was assigned " + reinsforcementArmies + " armies \n", textArea);
+            country.setNoOfArmies(country.getNoOfArmies() + reinforcementArmies);
+            currentPlayer.setArmyCount(currentPlayer.getArmyCount() - reinforcementArmies);
+            WindowUtil.updateTerminalWindow(country.getName() + " was assigned " + reinforcementArmies + " armies \n", textArea);
 
         }
         if (currentPlayer.getArmyCount() <= 0) {

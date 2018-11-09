@@ -190,6 +190,6 @@ public class Card extends Observable {
     public void setCardsExchangeable(List<Card> selectedCards) {
         setCardsToExchange(selectedCards);
         setChanged();
-        notifyObservers("cardsTrade");
+        notifyObservers("cardsExchange");
     }
 }
