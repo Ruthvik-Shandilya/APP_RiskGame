@@ -8,6 +8,12 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * Test class for Dice.
+ * 
+ * @author Farhan Shaheen
+ *
+ */
 public class DiceTest {
 
 	private Country attackingCountry;
