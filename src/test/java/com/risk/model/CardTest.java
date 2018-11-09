@@ -6,6 +6,13 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * Test class for Card.
+ * 
+ * @author Farhan Shaheen
+ *
+ */
+
 public class CardTest {
 
     private Card card;
