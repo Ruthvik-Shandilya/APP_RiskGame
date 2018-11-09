@@ -252,7 +252,6 @@ public class MapEditor {
 			String fileName = scan.nextLine();
 			mapIO.setFileName(fileName);
 			mapIO.writeToFile(true);
-			LaunchGameDriver.status=true;
 			return true;
 		} else {
 			System.out.println("Please enter valid input.");
@@ -464,7 +463,6 @@ public class MapEditor {
 			String fileName = scan.nextLine().trim();
 			mapIO.setNewFileName(fileName);
 			mapIO.writeToFile(false);
-			LaunchGameDriver.status=true;
 			return true;
 		} else {
 			System.out.println("Please enter valid input.");

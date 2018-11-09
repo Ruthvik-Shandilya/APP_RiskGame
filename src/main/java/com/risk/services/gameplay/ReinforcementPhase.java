@@ -35,10 +35,10 @@ public class ReinforcementPhase {
 	 * @return reinforcement armies
 	 */
 	public int findNoOfArmies(Player player) {
-		int myCountries = player.getMyCountries().size();
+		int myCountries = player.getPlayerCountries().size();
 		int armiesCount = (int) Math.floor(myCountries / 3);
 		countryInContinent = new HashSet<>();
-		playerOwnedContries = player.getMyCountries();
+		playerOwnedContries = player.getPlayerCountries();
 
 		for(Country country : playerOwnedContries){
 			countryInContinent.add(country.getPartOfContinent());

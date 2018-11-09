@@ -1,7 +1,7 @@
 package com.risk.model;
 
-import com.risk.controller.DiceController;
-import com.risk.map.util.WindowUtil;
+import com.risk.services.controller.Util.WindowUtil;
+import com.risk.services.controller.DiceController;
 import com.risk.services.MapIO;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

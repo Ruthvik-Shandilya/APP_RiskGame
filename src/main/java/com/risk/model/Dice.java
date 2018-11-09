@@ -1,7 +1,6 @@
 package com.risk.model;
 
-import com.risk.map.util.GameUtil;
-import com.risk.map.util.WindowUtil;
+import com.risk.services.controller.Util.WindowUtil;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
@@ -142,7 +141,7 @@ public class Dice extends Observable {
             getAttackingCountry().setNoOfArmies(currentArmies - armiesToMove);
             getDefendingCountry().setNoOfArmies(armiesToMove);
             updateCountryList();
-            GameUtil.closeScreen(moveArmies);
+            WindowUtil.exitWindow(moveArmies);
             setChanged();
             notifyObservers("rollDiceComplete");
         }

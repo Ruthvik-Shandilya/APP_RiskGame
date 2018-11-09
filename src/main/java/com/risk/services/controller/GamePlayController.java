@@ -1,4 +1,4 @@
-package com.risk.controller;
+package com.risk.services.controller;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -11,13 +11,13 @@ import java.util.Observer;
 import java.util.ResourceBundle;
 import java.util.Stack;
 
-import com.risk.map.util.WindowUtil;
+import com.risk.services.controller.Util.WindowUtil;
 import com.risk.model.Card;
 import com.risk.model.Continent;
 import com.risk.services.MapIO;
 import com.risk.model.Player;
 import com.risk.model.Country;
-import com.risk.services.RoundRobin;
+import com.risk.services.gameplay.RoundRobin;
 import com.risk.services.StartUpPhase;
 import com.risk.model.PlayerWorldDomination;
 

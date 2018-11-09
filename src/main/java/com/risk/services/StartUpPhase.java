@@ -3,6 +3,8 @@ package com.risk.services;
 import java.util.*;
 
 import com.risk.model.*;
+import com.risk.services.controller.Util.WindowUtil;
+
 import javafx.scene.control.TextArea;
 
 /**
@@ -20,7 +22,7 @@ public class StartUpPhase {
 	public Stack<Card> assignCardToCountry(MapIO map, TextArea textArea) {
 		Stack<Card> stackOfCards = new Stack<>();
 
-		List<Country> allCountries = (List<Country>) map.getMapGraph().getCountrySet().values();
+		List<Country> allCountries = new ArrayList<>(map.getMapGraph().getCountrySet().values());
 
 		List<String> cardTypes = new ArrayList<>();
 		cardTypes.add(ICardType.ARTILLERY);
@@ -36,7 +38,7 @@ public class StartUpPhase {
 	}
 
 
-	public List<Player> assignCountryToPlayer(MapIO map, List<Player> players, TextArea textAres) {
+	public List<Player> assignCountryToPlayer(MapIO map, List<Player> players, TextArea textArea) {
 
 		ArrayList<Country> countries = new ArrayList<>(map.getMapGraph().getCountrySet().values());
 		while (countries.size() > 0) {
@@ -46,22 +48,20 @@ public class StartUpPhase {
 					players.get(i).addCountry(countries.get(assignCountryIndex));
 					countries.get(assignCountryIndex).setPlayer(players.get(i));
 					countries.get(assignCountryIndex).setNoOfArmies(1);
-					MapUtil.appendTextToGameConsole(
-							countries.get(assignCountryIndex).getName() + " assigned to " +
-									players.get(i).getName() + " ! \n", textAres);
+					WindowUtil.updateterminalWindow(countries.get(assignCountryIndex).getName() + " assigned to " +
+							players.get(i).getName() + " ! \n", textArea);
 					countries.remove(assignCountryIndex);
 				} else if (countries.size() == 1) {
 					players.get(i).addCountry(countries.get(0));
 					countries.get(0).setPlayer(players.get(i));
 					countries.get(0).setNoOfArmies(1);
-					MapUtil.appendTextToGameConsole(
-							countries.get(0).getName() + " assigned to " +
-									players.get(i).getName() + " ! \n", textAres);
+					WindowUtil.updateterminalWindow(countries.get(0).getName() + " assigned to " +
+									players.get(i).getName() + " ! \n", textArea);
 					countries.remove(0);
 					break;
 				} else {
 					for (Player player : players) {
-						player.setArmyCount(player.getArmyCount() - player.getMyCountries().size());
+						player.setArmyCount(player.getArmyCount() - player.getPlayerCountries().size());
 					}
 					break;
 				}

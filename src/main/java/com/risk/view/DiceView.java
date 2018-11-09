@@ -2,7 +2,7 @@ package com.risk.view;
 
 import java.io.IOException;
 
-import com.risk.controller.DiceController;
+import com.risk.services.controller.DiceController;
 import com.risk.model.Dice;
 
 import javafx.event.ActionEvent;

@@ -1,7 +1,7 @@
 package com.risk.view;
 
-import com.risk.controller.PlayerDetailsController;
-import com.risk.map.util.WindowUtil;
+import com.risk.services.controller.PlayerDetailsController;
+import com.risk.services.controller.Util.WindowUtil;
 import com.risk.services.MapIO;
 import com.risk.services.MapValidate;
 import javafx.event.ActionEvent;
@@ -30,7 +30,7 @@ public class PlayerDetailsView implements EventHandler<ActionEvent> {
             readMap = new MapIO(mapValidate);
         }
         else{
-            WindowUtil.userInfo("","Error","Invalid Map file.");
+            WindowUtil.popUpWindow("","Error","Invalid Map file.");
             return;
         }
 

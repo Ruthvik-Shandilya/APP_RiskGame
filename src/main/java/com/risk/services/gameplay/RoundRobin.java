@@ -41,4 +41,9 @@ public class RoundRobin {
 		}
 		return this.iterator.next();
 	}
+	
+	public void updateAfterPlayerLost(Player player){
+        this.listOfPlayers.remove(player);
+        this.iterator = this.listOfPlayers.iterator();
+    }
 }
