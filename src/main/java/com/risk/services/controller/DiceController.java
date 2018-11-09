@@ -53,18 +53,23 @@ public class DiceController implements Initializable {
 	@FXML
 	private Label winnerName;
 	
+	/** Checkbox variable for dice 1 attacker */
 	@FXML
 	private CheckBox dice1_Attacker;
 	
+	/** Checkbox variable for dice 2 attacker*/
 	@FXML
 	private CheckBox dice2_Attacker;
 	
+	/** Checkbox variable for dice 3 attacker*/
 	@FXML
 	private CheckBox dice3_Attacker;
 	
+	/** Checkbox variable for dice 1 denfender*/ 
 	@FXML
 	private CheckBox dice1_Defender;
 	
+	/** Checkbox variable for dice 2 defender*/ 
 	@FXML
 	private CheckBox dice2_Defender;	
 	
