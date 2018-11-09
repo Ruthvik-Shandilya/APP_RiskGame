@@ -17,6 +17,13 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
+/**
+ * Card Controller Class
+ * 
+ * @author Farhan Shaheen
+ *
+ */
+
 public class CardController implements Initializable {
 
     private Player player;
