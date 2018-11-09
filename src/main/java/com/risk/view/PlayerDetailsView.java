@@ -15,9 +15,19 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 
-
+/**
+ * Provides the view for the user showing details of the players
+ *
+ * @author Ruthvik Shandilya
+ * @author Neha Pal
+ */
 public class PlayerDetailsView implements EventHandler<ActionEvent> {
 
+	/*
+	* (non-Javadoc)
+	* This method is overridden to create a scene at UI end.
+	* @see javafx.event.EventHandler#handle(javafx.event.Event)
+	*/
     @Override
     public void handle(ActionEvent event) {
 
