@@ -13,5 +13,12 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({ConnectedGraphTest.class,MapValidateTest.class,MapGraphTest.class,MapEditorTest.class,
         FortificationPhaseTest.class,ReinforcementPhaseTest.class,RoundRobinTest.class,StartUpPhaseTest.class})
 
+/**
+ * TestSuite Class for all services test classes
+ * 
+ * @author Palash Jain
+ * @author Farhan Shaheen
+ *
+ */
 public class ServicesTestSuite {
 }

@@ -12,15 +12,31 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * This class will setup attack window
+ * @author Ruthvik Shandilya
+ * @author Neha Pal
+ *
+ */
 public class DiceView implements EventHandler<ActionEvent> {
 
+	/** Object for Dice Class */
     private Dice dice;
 
+    /**
+     * Constructor for DiceView
+     * @param dice	object of dice class
+     */
     public DiceView(Dice dice) {
 
         this.dice = dice;
     }
 
+    /*
+	 * (non-Javadoc)
+	 * This method is overridden to create a scene at UI end.
+	 * @see javafx.event.EventHandler#handle(javafx.event.Event)
+	 */
     public void handle(ActionEvent event) {
         final Stage diceStage = new Stage();
         diceStage.setTitle("Attack Window");

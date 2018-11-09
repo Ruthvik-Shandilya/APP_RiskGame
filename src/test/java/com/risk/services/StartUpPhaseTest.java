@@ -16,32 +16,53 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNotNull;
 
+/**
+ * Test class for Dice.
+ * 
+ * @author Neha Pal
+ * @author Palash
+ *
+ */
 public class StartUpPhaseTest {
 
+	/** Object for StartUpPhase Class */
     private StartUpPhase startUpPhase;
 
+    /** Object for Continent Class */
     private Continent continent;
 
+    /** Object for Country Class */
     private Country country1;
 
+    /** Object for Country CLass */
     private Country country2;
 
+    /** Object for MapIO Class */
     private MapIO map;
 
+    /** Object for Player Class */
     private Player player;
 
+    /** The @fxPanel */
     @FXML
     private JFXPanel jfxPanel;
 
+    /** The @textArea */
     @FXML
     private TextArea textArea;
 
+    /** ArrayList to hold list of continents */
     private ArrayList<Continent> listOfContinents;
 
+    /** ArrayList to hold list of Countries */
     private ArrayList<Country> listOfCountries;
 
+    /** ArrayList to hold list of Players */
     private ArrayList<Player> listOfPlayers;
 
+    /**
+	 * Set up the initial objects for StartUpPhaseTest
+	 */
     @Before
     public void initialize(){
         startUpPhase = new StartUpPhase();
@@ -75,11 +96,17 @@ public class StartUpPhaseTest {
         textArea=new TextArea();
     }
 
+    /**
+     * Test for checking assignment of cards to a Country
+     */
     @Test
     public void assignCardToCountryTest(){
         assertNotNull(startUpPhase.assignCardToCountry(map,textArea));
     }
 
+    /**
+     * Test for checking assignment of country to a player
+     */
     @Test
     public void assignCountryToPlayerTest(){
         assertNotNull(startUpPhase.assignCountryToPlayer(map,listOfPlayers,textArea));

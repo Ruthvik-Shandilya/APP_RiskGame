@@ -64,7 +64,7 @@ public class Player extends Observable implements Observer {
     }
 
     /**
-     * Method to get name of the olayer
+     * Method to get name of the player
      *
      * @return player's name
      */
@@ -147,7 +147,7 @@ public class Player extends Observable implements Observer {
     }
 
     /**
-     * Mehtodd for adding armies to a country
+     * Method for adding armies to a country
      *
      * @param country        Country to which armies are to be assigned
      * @param numberOfArmies number for armies to be assigned
@@ -185,8 +185,8 @@ public class Player extends Observable implements Observer {
      * depending upon the total number of players
      *
      * @param players  List of all the players
-     * @param textArea TeaxtArea for displaying gamed etails
-     * @return true, is armies are succefully assigned,; otherwise false
+     * @param textArea TeaxtArea for displaying game details
+     * @return true, is armies are successfully assigned,; otherwise false
      */
 
     public static boolean assignArmiesToPlayers(List<Player> players, TextArea textArea) {
@@ -215,7 +215,7 @@ public class Player extends Observable implements Observer {
 
 
     /**
-     * Mthod for generating players accordin gto the data entered by the user
+     * Method for generating players according to the data entered by the user
      *
      * @param noOfPlayer  number of players
      * @param playersList List of all the player names
@@ -232,9 +232,9 @@ public class Player extends Observable implements Observer {
     }
 
     /**
-     * Mthod for calvulating number of reinforcement armies to be allocated to the player
+     * Method for calculating number of reinforcement armies to be allocated to the player
      *
-     * @param currentPlayer Player to which armies are to be aloocated
+     * @param currentPlayer Player to which armies are to be allocated
      * @return Player, object of the current player
      */
 
@@ -423,7 +423,7 @@ public class Player extends Observable implements Observer {
     }
 
     /**
-     * Mthod to check if the fortification move taking place in fortification is valid or not
+     * Method to check if the fortification move taking place in fortification is valid or not
      *
      * @param map           MapIO object
      * @param playerPlaying current player

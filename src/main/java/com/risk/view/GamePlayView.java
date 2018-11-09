@@ -13,16 +13,35 @@ import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * This class provides the view for the user showing game screen.
+ * 
+ * @author Palash Jain
+ * @author Farhan Shaheen
+ */
 public class GamePlayView implements EventHandler<ActionEvent> {
+	
+	/** Object for MapIO Class */
     private MapIO mapIO;
 
+    /** Array of String to hold names of players */
     private String[] names;
 
+    /**
+     * Constructor to load contents of map 
+     * @param mapIO		MapIO Object
+     * @param names		names of players
+     */
     public GamePlayView(MapIO mapIO, String[] names) {
         this.mapIO = mapIO;
         this.names = names;
     }
 
+    /*
+	 * (non-Javadoc)
+	 * This method is overridden to create a scene at UI end.
+	 * @see javafx.event.EventHandler#handle(javafx.event.Event)
+	 */
     @Override
     public void handle(ActionEvent event) {
 

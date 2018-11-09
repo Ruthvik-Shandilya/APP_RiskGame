@@ -18,7 +18,14 @@ import javafx.scene.control.TextArea;
  * 
  */
 public class StartUpPhase {
-
+	
+	/**
+	 * Method to assign countries to a player
+	 * 
+	 * @param map 		MapIO Object
+	 * @param textArea		to show data on UI
+	 * @return stackOfCards
+	 */
 	public Stack<Card> assignCardToCountry(MapIO map, TextArea textArea) {
 		Stack<Card> stackOfCards = new Stack<>();
 
@@ -37,6 +44,13 @@ public class StartUpPhase {
 		return stackOfCards;
 	}
 
+	/**
+	 * Method to assign countries to a player
+	 * @param map			MapIO Object
+	 * @param players 		list of players
+	 * @param textArea 		to show data on UI
+	 * @return players	
+	 */
 
 	public List<Player> assignCountryToPlayer(MapIO map, List<Player> players, TextArea textArea) {
 

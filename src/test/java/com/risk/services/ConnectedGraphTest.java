@@ -18,16 +18,16 @@ import com.risk.model.Country;
  */
 public class ConnectedGraphTest {
 
-	/**Object for ConnectedGraph Class*/
+	/** Object for ConnectedGraph Class */
 	private ConnectedGraph connectedGraph;
 
 	/** Objects for Country Class */
 	private Country country1, country2, country3;
 
-	/**Set to store countries*/
+	/** Set to store countries */
 	private Set<Country> countrySet;
 
-	/**ArrayList to store adjacent countries*/
+	/** ArrayList to store adjacent countries */
 	private ArrayList<Country> adjacentCountries;
 
 	/**

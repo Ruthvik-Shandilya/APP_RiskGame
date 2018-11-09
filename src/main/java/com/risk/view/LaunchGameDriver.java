@@ -81,7 +81,10 @@ public class LaunchGameDriver extends Application {
 		}
 	}
 
-
+	/**
+	 * Map Create Button
+	 * @return {@link Button} wherein button opens up a create map screen.
+	 */
 	public static Button createMapButton() {
 		Button createMapButton = new Button("Create a New Map");
 		createMapButton.setOnAction(e-> {
@@ -93,7 +96,10 @@ public class LaunchGameDriver extends Application {
 		return createMapButton;
 	}
 
-
+	/**
+	 * Load map Button
+	 * @return {@link Button} wherein button opens up a new screen to load or edit a map.
+	 */
 	public static Button loadMapButton() {
 		Button loadMapButton = new Button("Edit existing Map File");
 		loadMapButton.setOnAction(e -> {
@@ -118,7 +124,10 @@ public class LaunchGameDriver extends Application {
 		return loadMapButton;
 	}
 
-
+	/**
+	 * Start Game Button
+	 * @return {@link Button} wherein button loads chosen map and starts the game.
+	 */
 	public static Button startGameButton() {
 		Button startGameButton = new Button("Load Map & Play Game");
 		startGameButton.setOnAction(new PlayerDetailsView());

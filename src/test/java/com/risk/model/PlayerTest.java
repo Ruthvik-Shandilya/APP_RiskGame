@@ -6,53 +6,80 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.fxml.FXML;
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.control.TextArea;
 import org.junit.Before;
 import org.junit.Test;
 
 import com.risk.services.MapIO;
 
+import javafx.embed.swing.JFXPanel;
+import javafx.fxml.FXML;
+import javafx.scene.control.TextArea;
+
+/**
+ * Test class for Card.
+ * 
+ * @author Neha Pal
+ *
+ */
 
 public class PlayerTest {
 	
+	/** Object for Player Class */
 	private Player player1;
 	
+	/** Object for Player Class */
 	private Player player2;
 
+	/** Object for Player Class */
 	private static Player player3;
+	
+	/** Object for Player Class */
 	private static Player testPlayer;
 	
+	/** Object for Player Class */
 	private Player playerPlaying;
 	
+	/** List to hold list of players */
 	private List<Player> players;
 	
+	/** Object for Country Class */
 	private Country attackingCountry;
 	
+	/** Object for Country Class */
 	private Country defendingCountry;
 
+	/** Object for Country Class */
 	private Country country1;
 
+	/** Object for Country Class */
 	private Country country2;
 	
+	/** ArrayList to hold list of countries */
 	private ArrayList<Country> myCountries;
 
+	/** ArrayList to hold list of countries */
 	private ArrayList<Country> playercountries;
 	
+	/** Object for Continent Class */
 	private Continent continent1;
 
+	/** Object for Continent Class */
 	private Continent continent2;
 	
+	/** Object for MapIO CLass */
 	private MapIO mapIO;
 
+	/** The @fxPanel */
 	@FXML
 	private JFXPanel jfxPanel;
 
+	/** The @textArea */
 	@FXML
 	private TextArea textArea;
 	
-	
+	/**
+	 * Set up the initial objects for PlayerTest
+	 */
 	@Before
 	public void initialize() {
 		
@@ -108,12 +135,18 @@ public class PlayerTest {
 		
 	}
 	
+	/**
+	 * Test to check if Attack move is valid
+	 */
 	@Test
 	public void isAttackMoveValidTest() {
 		attackingCountry.setNoOfArmies(3);
 		assertTrue(player1.isAttackMoveValid(attackingCountry,defendingCountry));	
 	}
 	
+	/**
+	 * Test to check if player lost the game after attack move
+	 */
 	@Test
 	public void checkPlayerLostTest()  {
 		player1.setMyCountries(myCountries);
@@ -121,6 +154,9 @@ public class PlayerTest {
 		assertEquals(player2.getName(),player1.checkPlayerLost(players).getName());	
 	}
 	
+	/**
+	 * Test to check if player did not lost the game after attack move
+	 */
 	@Test
 	public void checkPlayerNotLostTest() {
 		player1.setMyCountries(myCountries);
@@ -129,11 +165,17 @@ public class PlayerTest {
 		assertNull(player1.checkPlayerLost(players));	
 	}
 	
+	/**
+	 * Test to check calculation of number of reinforcement armies to be allocated to the player
+	 */
 	@Test
 	public void noOfReinforcementArmiesTest() {
-		assertEquals(playerPlaying,player1.noOfReinsforcementArmies(playerPlaying));
+		assertEquals(playerPlaying,player1.noOfReinforcementArmies(playerPlaying));
 	}
 
+	/**
+	 * Test to check invalid of fortification move
+	 */
 	@Test
 	public void isFortificationValidTest(){
 		country1.setPlayer(player1);
@@ -142,6 +184,9 @@ public class PlayerTest {
 		assertEquals(true,player1.isFortificationPhaseValid(mapIO,player1));
 	}
 
+	/**
+	 * Test to check valid fortification move
+	 */
 	@Test
 	public void isFortificationValidFalse(){
 		country1.setPlayer(player1);
@@ -150,6 +195,9 @@ public class PlayerTest {
 		assertEquals(false,player1.isFortificationPhaseValid(mapIO,player1));
 	}
 
+	/**
+	 * Test to check exchange of cards of the player for armies
+	 */
 	@Test
 	public void exchangeCardsTest(){
 		List<Card> listOfCards = new ArrayList<>();
