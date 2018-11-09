@@ -57,47 +57,47 @@ public class DiceController implements Initializable {
 	@FXML
 	private CheckBox dice1_Attacker;
 	
-	/** Checkbox variable for dice 2 attacker*/
+	/** Checkbox variable for dice 2 attacker */
 	@FXML
 	private CheckBox dice2_Attacker;
 	
-	/** Checkbox variable for dice 3 attacker*/
+	/** Checkbox variable for dice 3 attacker */
 	@FXML
 	private CheckBox dice3_Attacker;
 	
-	/** Checkbox variable for dice 1 defender*/ 
+	/** Checkbox variable for dice 1 defender */ 
 	@FXML
 	private CheckBox dice1_Defender;
 	
-	/** Checkbox variable for dice 2 defender*/ 
+	/** Checkbox variable for dice 2 defender */ 
 	@FXML
 	private CheckBox dice2_Defender;	
 	
-	/** Button variable for start roll*/
+	/** Button variable for start roll */
 	@FXML
 	private Button startRoll;
 	
-	/** Button variable for cancel throw*/
+	/** Button variable for cancel throw */
 	@FXML
 	private Button cancelThrow;
 	
-	/** Button variable for continue roll*/
+	/** Button variable for continue roll */
 	@FXML
 	private Button continueRoll;
 	
-	/** Pane variable for after attack view*/
+	/** Pane variable for after attack view */
 	@FXML
 	private Pane afterAttackView;
 	
-	/** Button variable for move armies*/
+	/** Button variable for move armies */
 	@FXML
 	private Button moveArmies;
 	
-	/** Button variable for cancel move*/
+	/** Button variable for cancel move */
 	@FXML
 	private Button cancelMove;
 	
-	/** TextField variable for number of armies to move*/
+	/** TextField variable for number of armies to move */
 	@FXML
 	private TextField numberOfArmiesToMove;
 	
