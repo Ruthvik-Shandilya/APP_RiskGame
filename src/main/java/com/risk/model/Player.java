@@ -54,7 +54,7 @@ public class Player extends Observable implements Observer {
     /**
      * Player constructor
      *
-     * @param name
+     * @param name name
      */
     public Player(String name) {
         armyCount = 0;
@@ -113,7 +113,7 @@ public class Player extends Observable implements Observer {
     /**
      * Setter for list of player's armies.
      *
-     * @param playerCountries
+     * @param playerCountries set player armies
      */
     public void setMyCountries(ArrayList<Country> playerCountries) {
         this.playerCountries = playerCountries;
@@ -612,7 +612,7 @@ public class Player extends Observable implements Observer {
     /**
      * Getter for number of countries won by the player
      *
-     * @return
+     * @return countryWonCount
      */
 
     public int getCountryWon() {

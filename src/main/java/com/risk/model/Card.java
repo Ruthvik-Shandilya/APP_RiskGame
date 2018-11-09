@@ -103,7 +103,7 @@ public class Card extends Observable {
     /**
      * Set cardsToExchange
      *
-     * @param cardsToExchange
+     * @param cardsToExchange cards to exchange
      */
 
     public void setCardsToExchange(List<Card> cardsToExchange) {
@@ -139,8 +139,8 @@ public class Card extends Observable {
      * Method returns a list of cards which
      * are seleted by the current player
      *
-     * @param list
-     * @param checkboxes
+     * @param list list
+     * @param checkboxes checkboxes
      * @return List of cards selected by the player
      */
     public List<Card> retrieveSelectedCardsFromCheckbox(List<Card> list, CheckBox[] checkboxes) {
@@ -157,7 +157,7 @@ public class Card extends Observable {
      * Method is used to verify ,
      * if cards can be exchanged for army or not
      *
-     * @param selectedCards
+     * @param selectedCards selected cards
      * @return true if the exchange is possible; otherwise false
      */
     public boolean checkTradePossible(List<Card> selectedCards) {
