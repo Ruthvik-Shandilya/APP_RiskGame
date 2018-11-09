@@ -73,7 +73,7 @@ public class CardController implements Initializable {
     }
 
     /**
-	 * Method to initialize player attributes for cards.
+	 * Method to initialize player attributes for cards
 	 * 
 	 * @param location
 	 *            URL
@@ -92,11 +92,7 @@ public class CardController implements Initializable {
         }
     }
 
-    /**
-	 * Method to load cards.
-	 * 
-	 * 
-	 */
+    /** Method to load cards */
     public void loadCards() {
         int initialCardsCount = playerOwnedCards.size();
         checkBox = new CheckBox[initialCardsCount];
@@ -106,15 +102,20 @@ public class CardController implements Initializable {
         cardVbox.getChildren().addAll(checkBox);
     }
 
-    /**
-	 * Method for cancel view action.
-	 * 
-	 */
+    /** Method for cancel view action */
     @FXML
     private void cancelView(ActionEvent event) {
         WindowUtil.exitWindow(cancelView);
     }
 
+    /**
+	 * Method for check exchange
+	 * 
+	 * @param location
+	 *            URL
+	 * @param resources
+	 *            ResourceBundle
+	 */
     @FXML
     private void checkExchange(ActionEvent event) {
         exchange.setDisable(false);
