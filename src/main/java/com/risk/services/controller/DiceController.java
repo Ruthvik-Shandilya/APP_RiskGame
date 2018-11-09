@@ -73,15 +73,15 @@ public class DiceController implements Initializable {
 	@FXML
 	private CheckBox dice2_Defender;	
 	
-	/** Button variable for */
+	/** Button variable for start roll*/
 	@FXML
 	private Button startRoll;
 	
-	/** Button variable for */
+	/** Button variable for cancel throw*/
 	@FXML
 	private Button cancelThrow;
 	
-	/** Button variable for */
+	/** Button variable for continue roll*/
 	@FXML
 	private Button continueRoll;
 	
@@ -89,11 +89,11 @@ public class DiceController implements Initializable {
 	@FXML
 	private Pane afterAttackView;
 	
-	/** Button variable for */
+	/** Button variable for move armies*/
 	@FXML
 	private Button moveArmies;
 	
-	/** Button variable for */
+	/** Button variable for cancel move*/
 	@FXML
 	private Button cancelMove;
 	
