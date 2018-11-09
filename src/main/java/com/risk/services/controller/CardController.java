@@ -26,30 +26,40 @@ import javafx.scene.layout.VBox;
 
 public class CardController implements Initializable {
 
+	/** Object for Player class */
     private Player player;
 
+    /** Object for Card class */
     private Card card;
 
+    /** Label variable for the current Player */
     @FXML
     private Label currentPlayer;
 
+    /** Variable for the exchange button */
     @FXML
     private Button exchange;
 
+    /** List of cards owned by the player */
     private ArrayList<Card> playerOwnedCards;
 
+    /** checkbox array */
     @FXML
     private CheckBox[] checkBox;
 
+    /** variable for VBox cardVbox */
     @FXML
     private VBox cardVbox;
 
+    /** Variable for the text */
     @FXML
     private Label text;
 
+    /** variable for the cancel view button */
     @FXML
     private Button cancelView;
 
+    
     public CardController(Player player, Card card) {
         this.player = player;
         this.card = card;
