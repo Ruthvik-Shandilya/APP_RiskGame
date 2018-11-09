@@ -13,21 +13,47 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.util.Optional;
 
+/**
+ * This class provides all the game utilities as to exit window,enable and disable button.
+ *
+ * @author Palash Jain
+ */
 public class WindowUtil {
-
+    /**
+     * This method is used to close the window.
+     *
+     * @param button button
+     */
     public static void exitWindow(Button button) {
         Stage stage = (Stage) button.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * This method is used to disable a complete pane.
+     *
+     * @param pane window
+     */
     public static void disablePane(Pane pane) {
         pane.setVisible(false);
     }
 
+    /**
+     * This method is used to enable a complete pane.
+     *
+     * @param pane window
+     */
     public static void enablePane(Pane pane) {
         pane.setVisible(true);
     }
 
+    /**
+     * This method provides a warning window with a message.
+     *
+     * @param head Head of the window
+     * @param title Title of the window
+     * @param information warning message
+     */
     public static void popUpWindow(String head, String title, String information) {
         Alert popUp = new Alert(AlertType.INFORMATION);
         popUp.setHeaderText(head);
@@ -36,18 +62,33 @@ public class WindowUtil {
         popUp.showAndWait();
     }
 
+    /**
+     * This method helps to hide a button in the pane.
+     *
+     * @param controls Any number of inputs
+     */
     public static void hideButtonControl(Control... controls) {
         for (Control control : controls) {
             control.setVisible(false);
         }
     }
 
+    /**
+     * This method helps to disable button in the pane.
+     *
+     * @param controls Any number of inputs
+     */
     public static void disableButtonControl(Control... controls) {
         for (Control control : controls) {
             control.setDisable(true);
         }
     }
 
+    /**
+     * This method helps to enable button in the pane.
+     *
+     * @param controls Any number of inputs
+     */
     public static void enableButtonControl(Control... controls) {
         for (Control control : controls) {
             control.setDisable(false);
@@ -60,6 +101,13 @@ public class WindowUtil {
         }
     }
 
+    /**
+     * This method helps to create a new pane to include the continents
+     * and its countries and show the ownership of that particular country.
+     *
+     * @param continent Continent Object
+     * @return pane
+     */
     public static TitledPane createNewPane(Continent continent) {
         VBox hbox = new VBox();
         for (Country country : continent.getListOfCountries()) {
@@ -77,8 +125,11 @@ public class WindowUtil {
         return pane;
     }
 
-
-
+    /**
+     * This method helps to select a map file by providing its extension
+     *
+     * @return Selected file
+     */
     public static File showFileChooser() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select a Map File");
@@ -88,13 +139,23 @@ public class WindowUtil {
         return selectedFile;
     }
 
+    /**
+     * This method helps to provide checkboxes using Java FXML
+     *
+     * @param checkBoxes checkBoxes
+     */
     public static void unCheckBoxes(CheckBox... checkBoxes) {
-        for (CheckBox checkBox: checkBoxes) {
+        for (CheckBox checkBox : checkBoxes) {
             checkBox.setText("");
             checkBox.setSelected(false);
         }
     }
 
+    /**
+     * This method helps in taking user input by providing a input box
+     *
+     * @return The value provided by the user
+     */
     public static String userInput() {
 
         TextInputDialog inputBox = new TextInputDialog();
@@ -108,28 +169,34 @@ public class WindowUtil {
         return numberOfArmies;
     }
 
+    /**
+     * This method helps in updating the terminal window by running single thread
+     *
+     * @param information Information
+     * @param terminalWindow Console
+     */
     public static void updateterminalWindow(String information, TextArea terminalWindow) {
 
-        Platform.runLater( new Runnable(){
-            @Override public void run() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
                 terminalWindow.appendText(information);
             }
         });
-
     }
 
+    /**
+     * This method helps in updating the terminal window by running single thread
+     *
+     * @param information Information
+     */
     public static void updateterminalWindow(String information) {
 
-        Platform.runLater( new Runnable(){
-            @Override public void run() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
                 System.out.println(information);
             }
         });
-
-
-
     }
-
-
-
 }

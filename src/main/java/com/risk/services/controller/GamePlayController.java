@@ -36,87 +36,160 @@ import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
+/**
+ * This class provides all the methods to control various activities during the gameplay,
+ * implements Observer.
+ *
+ * @author Karandeep Singh
+ * @author Ruthvik Shandilya
+ */
 public class GamePlayController implements Initializable, Observer {
 
-
+    /**
+     * Array of String to store playernames.
+     */
     private String[] playerNames;
 
+    /**
+     * RoundRobin Object
+     */
     private RoundRobin roundRobin;
 
-
+    /**
+     * Object to load contents of the Map file
+     */
     private MapIO map;
 
+    /**
+     * Object to provide Setup Phase
+     */
     private StartUpPhase startUpPhase;
 
-
+    /**
+     * Card Object
+     */
     private Card card;
 
+    /**
+     * Object to create barChart
+     */
     @FXML
     private BarChart dominationBarChart;
 
-
+    /**
+     * Player Object
+     */
     private Player player;
 
+    /**
+     * WorldDomination Object
+     */
     private PlayerWorldDomination worldDomination;
 
-
+    /**
+     * attack Button
+     */
     @FXML
     private Button attack;
 
+    /**
+     * fortify Button
+     */
     @FXML
     private Button fortify;
 
-
+    /**
+     * endTurn Button
+     */
     @FXML
     private Button endTurn;
 
-
+    /**
+     * reinforcement Button
+     */
     @FXML
     private Button reinforcement;
 
+    /**
+     * cards Button
+     */
     @FXML
     private Button cards;
 
+    /**
+     * VerticalBox for Display
+     */
     @FXML
     private VBox displayBox;
 
-
+    /**
+     * Selected Countries ListView provides scrollable list of items
+     */
     @FXML
     private ListView<Country> selectedCountryList;
 
-
+    /**
+     * Adjacent Countries ListView provides scrollable list of items
+     */
     @FXML
     private ListView<Country> adjacentCountryList;
 
+    /**
+     * Label of selected player
+     */
     @FXML
     private Label playerChosen;
 
-
+    /**
+     * PhaseView Label
+     */
     @FXML
     private Label phaseView;
 
-
+    /**
+     * TextArea to which current game information will be displayed
+     */
     @FXML
     private TextArea terminalWindow;
 
-
+    /**
+     * placeArmy Button
+     */
     @FXML
     private Button placeArmy;
 
-
+    /**
+     * selected number of players who are supposed to play the Game
+     */
     private int numberOfPlayersSelected;
 
-
+    /**
+     * List of Players
+     */
     private ArrayList<Player> gamePlayerList;
 
-
+    /**
+     * The Current Player whose playing
+     */
     private Player playerPlaying;
 
-
+    /**
+     * Stack to store and retrieve the cards
+     */
     private Stack<Card> cardStack;
 
+    /**
+     * Number of card sets exchanged
+     */
     private int numberOfCardSetExchanged;
 
+    /**
+     * Constructor which adds player,card and worldDomination as observers and
+     * creates Objects for the same.
+     *
+     * @param map Map Object
+     * @param names Player Names
+     */
     public GamePlayController(MapIO map, String[] names) {
         this.map = map;
         this.startUpPhase = new StartUpPhase();
@@ -130,6 +203,9 @@ public class GamePlayController implements Initializable, Observer {
         this.setNumberOfCardSetExchanged(0);
     }
 
+    /**
+     * This method helps in player creation.
+     */
     public void playerCreation() {
 
         setNumberOfPlayersSelected(this.playerNames.length);
@@ -150,7 +226,14 @@ public class GamePlayController implements Initializable, Observer {
         WindowUtil.enableButtonControl(cards);
     }
 
-
+    /**
+     * This is the initial method which loads the Game Cards,Map Contents
+     * and helps in assigning the country and adjacent countries to the
+     * player.
+     *
+     * @param location Location
+     * @param resources Resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         gamePlayerList = new ArrayList<>();
@@ -194,6 +277,11 @@ public class GamePlayController implements Initializable, Observer {
         });
     }
 
+    /**
+     * Method to get the adjacent country.
+     *
+     * @param country Country Object
+     */
     private void moveToAdjacentCountry(Country country) {
         this.adjacentCountryList.getItems().clear();
         if (country != null) {
@@ -203,12 +291,20 @@ public class GamePlayController implements Initializable, Observer {
         }
     }
 
+    /**
+     * Method which helps in allocating cards to Countries.
+     */
     private void loadGameCard() {
         cardStack = startUpPhase.assignCardToCountry(map, terminalWindow);
         WindowUtil.updateterminalWindow("Cards loaded\n", terminalWindow);
     }
 
-
+    /**
+     * This is the Complete Attack button event. This button helps the player
+     * to end attack phase and move to next phase.
+     *
+     * @param event End Attack Event
+     */
     @FXML
     private void completeAttack(ActionEvent event) {
         adjacentCountryList.setOnMouseClicked(e -> System.out.print(""));
@@ -219,7 +315,9 @@ public class GamePlayController implements Initializable, Observer {
         isValidFortificationPhase();
     }
 
-
+    /**
+     * Method to allocate cards to player
+     */
     private void allocateCardToPlayer() {
         Card cardToBeAdded = cardStack.pop();
         playerPlaying.getCardList().add(cardToBeAdded);
@@ -227,14 +325,21 @@ public class GamePlayController implements Initializable, Observer {
         WindowUtil.updateterminalWindow(cardToBeAdded.getCardType().toString() + "card is assigned to " + playerPlaying.getName() + " and won country " + cardToBeAdded.getCountry().getName() + "\n");
     }
 
+    /**
+     * Method to assign the attacking and defending country
+     */
     private void attack() {
         Country attackingTerritory = selectedCountryList.getSelectionModel().getSelectedItem();
         Country defendingTerritory = adjacentCountryList.getSelectionModel().getSelectedItem();
 
         player.attackPhase(attackingTerritory, defendingTerritory);
-
     }
 
+    /**
+     * This is the Fortify Button Event
+     *
+     * @param event fortify button
+     */
     @FXML
     private void fortify(ActionEvent event) {
         Country selectedCountry = this.selectedCountryList.getSelectionModel().getSelectedItem();
@@ -246,6 +351,11 @@ public class GamePlayController implements Initializable, Observer {
         loadMapData();
     }
 
+    /**
+     * This is the endTurn Action event.
+     *
+     * @param event endTurn button
+     */
     @FXML
     private void endTurn(ActionEvent event) {
         adjacentCountryList.setOnMouseClicked(e -> System.out.print(""));
@@ -257,13 +367,21 @@ public class GamePlayController implements Initializable, Observer {
         card.openCardWindow(playerPlaying, card);
     }
 
-
+    /**
+     * This is the placeArmy Action event.
+     *
+     * @param event placeArmy button
+     */
     @FXML
     private void placeArmy(ActionEvent event) {
         player.placeArmyOnCountry(playerPlaying, selectedCountryList, gamePlayerList, terminalWindow);
     }
 
-
+    /**
+     * This is the reinforcement Action event.
+     *
+     * @param event reinforcement button
+     */
     @FXML
     private void reinforcement(ActionEvent event) {
         Country country = selectedCountryList.getSelectionModel().getSelectedItem();
@@ -277,7 +395,9 @@ public class GamePlayController implements Initializable, Observer {
         playerChosen.setText(playerPlaying.getName() + ":- " + playerPlaying.getArmyCount() + " armies left.");
     }
 
-
+    /**
+     * Method to load the Map Data in the new Pane.
+     */
     private void loadMapData() {
         displayBox.getChildren().clear();
         for (Continent continent : map.getMapGraph().getContinents().values()) {
@@ -286,11 +406,18 @@ public class GamePlayController implements Initializable, Observer {
         }
     }
 
+    /**
+     * Method which helps to allocate country to the player.
+     */
     private void allocateCountryToPlayerInGamePlay() {
         WindowUtil.updateterminalWindow("Assigning countries to all players\n", terminalWindow);
         startUpPhase.assignCountryToPlayer(map, gamePlayerList, terminalWindow);
     }
 
+    /**
+     * The Game goes in the round robin fashion and loads a player
+     * for the next turn.
+     */
     private void loadCurrentPlayer() {
         playerPlaying = roundRobin.next();
         player.setPlayerPlaying(playerPlaying);
@@ -306,6 +433,9 @@ public class GamePlayController implements Initializable, Observer {
         playerChosen.setText(playerPlaying.getName() + ":- " + playerPlaying.getArmyCount() + " armies left.\n");
     }
 
+    /**
+     * Method which helps to calculate the reinforcement armies.
+     */
     public void calculateReinforcementArmies() {
         if (this.playerPlaying != null) {
             playerPlaying = player.noOfReinsforcementArmies(playerPlaying);
@@ -315,13 +445,19 @@ public class GamePlayController implements Initializable, Observer {
         }
     }
 
-
+    /**
+     * Init card Button to open the card window
+     *
+     * @param event Open card Window Button
+     */
     @FXML
     public void initCardWindow(ActionEvent event) {
         card.openCardWindow(playerPlaying, card);
     }
 
-
+    /**
+     * Method to initialize reinforcement phase after each player's turn.
+     */
     private void initializeReinforcement() {
         loadCurrentPlayer();
 
@@ -333,11 +469,17 @@ public class GamePlayController implements Initializable, Observer {
         calculateReinforcementArmies();
     }
 
+    /**
+     * Method to perform the attack action event after
+     * selection of defending country.
+     */
     private void performAttack() {
         adjacentCountryList.setOnMouseClicked(e -> attack());
     }
 
-
+    /**
+     * Method to initialize attack phase in the game.
+     */
     private void initializeAttack() {
         WindowUtil.updateterminalWindow("\n Attack phase started.\n",terminalWindow);
 
@@ -352,6 +494,9 @@ public class GamePlayController implements Initializable, Observer {
         }
     }
 
+    /**
+     * Method to initialize fortification in the game.
+     */
     private void initializeFortification() {
 
         WindowUtil.disableButtonControl(reinforcement, attack, placeArmy);
@@ -362,7 +507,9 @@ public class GamePlayController implements Initializable, Observer {
 
     }
 
-
+    /**
+     * Method to generate the graph to populate the World Domination Window.
+     */
     private void generateBarGraph() {
         CategoryAxis xAxis = new CategoryAxis();
         NumberAxis yAxis = new NumberAxis();
@@ -385,6 +532,9 @@ public class GamePlayController implements Initializable, Observer {
         dominationBarChart.setData(answer);
     }
 
+    /**
+     * Method to check if any player has lost the game.
+     */
     private void isAnyPlayerLost() {
         Player playerLost = player.checkPlayerLost(gamePlayerList);
         if (playerLost != null) {
@@ -395,7 +545,9 @@ public class GamePlayController implements Initializable, Observer {
         }
     }
 
-
+    /**
+     * Method to End the Game/
+     */
     private void endGame() {
         WindowUtil.disableButtonControl(selectedCountryList, adjacentCountryList, reinforcement, attack, fortify, cards, endTurn);
         phaseView.setText("GAME OVER");
@@ -404,6 +556,11 @@ public class GamePlayController implements Initializable, Observer {
 
     }
 
+    /**
+     * Method to check if any player won the game.
+     *
+     * @return boolean player status
+     */
     private boolean isAnyPlayerWon() {
         boolean playerWon = false;
         if (gamePlayerList.size() == 1) {
@@ -415,6 +572,9 @@ public class GamePlayController implements Initializable, Observer {
         return playerWon;
     }
 
+    /**
+     * Method to reset the window after each phase in the game
+     */
     private void resetWindow() {
         isAnyPlayerLost();
         selectedCountryList.getItems().clear();
@@ -430,17 +590,25 @@ public class GamePlayController implements Initializable, Observer {
         }
     }
 
+    /**
+     * Method to initialize placeArmy view.
+     */
     private void initializePlaceArmy() {
         loadMapData();
         selectedCountryList.refresh();
         loadCurrentPlayer();
     }
 
+    /**
+     * Method to check if fortification phase is valid.
+     */
     private void isValidFortificationPhase() {
         player.isFortificationPhaseValid(map, playerPlaying);
     }
 
-
+    /**
+     * Method to update the player having few or no armies to fortify through the terminal window
+     */
     private void noFortificationPhase() {
         WindowUtil.updateterminalWindow("Fortification phase started\n",terminalWindow);
         WindowUtil.updateterminalWindow(playerPlaying.getName() + " does not have armies to fortify.\n",terminalWindow);
@@ -448,14 +616,29 @@ public class GamePlayController implements Initializable, Observer {
         initializeReinforcement();
     }
 
+    /**
+     * Getter Method to get the number of players selected in the initial window.
+     *
+     * @return number of players playing
+     */
     public int getNumberOfPlayersSelected() {
         return numberOfPlayersSelected;
     }
 
+    /**
+     * Setter Method to set the number of Players.
+     *
+     * @param numberOfPlayersSelected number of players selected
+     */
     public void setNumberOfPlayersSelected(int numberOfPlayersSelected) {
         this.numberOfPlayersSelected = numberOfPlayersSelected;
     }
 
+    /**
+     * Method to exchange the cards to get that number of armies.
+     *
+     * @param exch Object
+     */
     public void exchangeCards(Card exch) {
         List<Card> tradedCards = exch.getCardsToExchange();
         setNumberOfCardSetExchanged(getNumberOfCardSetExchanged() + 1);
@@ -470,6 +653,13 @@ public class GamePlayController implements Initializable, Observer {
         playerChosen.setText(playerPlaying.getName() + ":- " + playerPlaying.getArmyCount() + " armies left.\n");
     }
 
+    /**
+     * This method is called whenever the observed object is changed and
+     * it also notifies all the observers of the change.
+     *
+     * @param o Object
+     * @param arg Object
+     */
     public void update(Observable o, Object arg) {
 
         String view = (String) arg;
@@ -479,7 +669,7 @@ public class GamePlayController implements Initializable, Observer {
         }
         if (view.equals("FirstAttack")) {
             loadCurrentPlayer();
-            initializeAttack();
+            initializeReinforcement();
         }
         if (view.equals("Reinforcement")) {
             initializeReinforcement();
@@ -510,12 +700,20 @@ public class GamePlayController implements Initializable, Observer {
         }
     }
 
-
+    /**
+     * Getter to get the number of card sets exchanged.
+     *
+     * @return number of card sets
+     */
     public int getNumberOfCardSetExchanged() {
         return numberOfCardSetExchanged;
     }
 
-
+    /**
+     * Setter method to set the number of card set exchanged.
+     *
+     * @param numberOfCardSetExchanged numberOfCardSetExchanged
+     */
     public void setNumberOfCardSetExchanged(int numberOfCardSetExchanged) {
         this.numberOfCardSetExchanged = numberOfCardSetExchanged;
     }
