@@ -7,7 +7,7 @@ import com.risk.model.Player;
 
 /**
  * RoundRobin approach to iterate the Player turns.
- * 
+ *
  * @author Karandeep Singh
  * @author Palash Jain
  *
@@ -22,7 +22,7 @@ public class RoundRobin {
 
 	/**
 	 * RoundRobin Constructor
-	 * 
+	 *
 	 * @param listOfPlayers list of Players
 	 */
 	public RoundRobin(ArrayList<Player> listOfPlayers) {
@@ -32,7 +32,7 @@ public class RoundRobin {
 
 	/**
 	 * Method to pass on the turn to next player.
-	 * 
+	 *
 	 * @return Player turn
 	 */
 	public Player next() {
@@ -41,7 +41,7 @@ public class RoundRobin {
 		}
 		return this.iterator.next();
 	}
-	
+
 	public void updateAfterPlayerLost(Player player){
         this.listOfPlayers.remove(player);
         this.iterator = this.listOfPlayers.iterator();

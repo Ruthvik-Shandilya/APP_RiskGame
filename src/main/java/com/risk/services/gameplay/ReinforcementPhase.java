@@ -30,8 +30,7 @@ public class ReinforcementPhase {
 	 * 
 	 * @param player
 	 *            Current Player
-	 * @param continent
-	 *            Continent
+	 *
 	 * @return reinforcement armies
 	 */
 	public int findNoOfArmies(Player player) {
