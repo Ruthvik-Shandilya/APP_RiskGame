@@ -13,8 +13,8 @@
             <VBox fx:id="cardVbox" layoutX="14.0" layoutY="67.0" maxHeight="1.7976931348623157E308" prefHeight="323.0" prefWidth="287.0" style="-fx-spacing: 10; -fx-padding: 10;" />
          </content>
       </ScrollPane>
-      <Button fx:id="exchange" layoutX="379.0" layoutY="98.0" mnemonicParsing="false" onAction="#checkExchange" prefHeight="31.0" prefWidth="64.0" text="Exchange" />
+      <Button fx:id="exchange" layoutX="379.0" layoutY="98.0" mnemonicParsing="false" onAction="#checkExchange" prefHeight="31.0" prefWidth="83.0" text="Exchange" />
       <Label fx:id="text" alignment="CENTER" layoutX="328.0" layoutY="138.0" prefHeight="19.0" prefWidth="163.0" textFill="RED" wrapText="true" />
-      <Button fx:id="cancelView" layoutX="382.0" layoutY="169.0" mnemonicParsing="false" onAction="#cancelView" text="Cancel" />
+      <Button fx:id="cancelView" layoutX="382.0" layoutY="169.0" mnemonicParsing="false" onAction="#cancelView" prefHeight="31.0" prefWidth="83.0" text="Cancel" />
    </children>
 </Pane>
