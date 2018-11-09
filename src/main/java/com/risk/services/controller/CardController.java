@@ -17,37 +17,69 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
+/**
+ * Card Controller Class
+ * 
+ * @author Farhan Shaheen
+ *
+ */
+
 public class CardController implements Initializable {
 
+	/** Object for Player class */
     private Player player;
 
+    /** Object for Card class */
     private Card card;
 
+    /** Label variable for the current Player */
     @FXML
     private Label currentPlayer;
 
+    /** Variable for the exchange button */
     @FXML
     private Button exchange;
 
+    /** List of cards owned by the player */
     private ArrayList<Card> playerOwnedCards;
 
+    /** checkbox array */
     @FXML
     private CheckBox[] checkBox;
 
+    /** variable for VBox cardVbox */
     @FXML
     private VBox cardVbox;
 
+    /** Variable for the text */
     @FXML
     private Label text;
 
+    /** variable for the cancel view button */
     @FXML
     private Button cancelView;
 
+    /**
+	 * Card Controller constructor class
+	 * 
+	 * @param player
+	 *            Current Player
+	 * @param card
+	 *            player card
+	 */
     public CardController(Player player, Card card) {
         this.player = player;
         this.card = card;
     }
 
+    /**
+	 * Method to initialize player attributes for cards
+	 * 
+	 * @param location
+	 *            URL
+	 * @param resources
+	 *            ResourceBundle
+	 */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // TODO Auto-generated method stub
@@ -60,7 +92,7 @@ public class CardController implements Initializable {
         }
     }
 
-
+    /** Method to load cards */
     public void loadCards() {
         int initialCardsCount = playerOwnedCards.size();
         checkBox = new CheckBox[initialCardsCount];
@@ -70,11 +102,19 @@ public class CardController implements Initializable {
         cardVbox.getChildren().addAll(checkBox);
     }
 
+    /** Method for cancel view action */
     @FXML
     private void cancelView(ActionEvent event) {
         WindowUtil.exitWindow(cancelView);
     }
 
+    /**
+	 * Method for check exchange. Checks for the card 
+	 * combination and number of cards selected by the player
+	 * 
+	 * @param event
+	 *            Action Event
+	 */
     @FXML
     private void checkExchange(ActionEvent event) {
         exchange.setDisable(false);
