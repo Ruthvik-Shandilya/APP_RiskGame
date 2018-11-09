@@ -13,6 +13,16 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+/**
+ * 
+ * DiceController class contains the methods used in dice view,
+ * load attack screen, move armies, cancel move, cancel throw,
+ * continue Dice Roll, attack dice value, defence dice value 
+ * and start dice roll.
+ * 
+ * @author Farhan Shaheen
+ *
+ */
 public class DiceController implements Initializable {
 
 	@FXML
