@@ -12,6 +12,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
+
+/**
+ * Card class which represents the card model of the Risk game.
+ * It provides methods for performing operations on the cards
+ * like exchange cards for armies etc.
+ *
+ *
+ * @author Palash
+ * @author Ruthvik Shandilya
+ */
+
 public class Card extends Observable {
 
     /** Type of the card*/
