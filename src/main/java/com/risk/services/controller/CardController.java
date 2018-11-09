@@ -59,7 +59,14 @@ public class CardController implements Initializable {
     @FXML
     private Button cancelView;
 
-    
+    /**
+	 * Card Controller constructor class
+	 * 
+	 * @param player
+	 *            Current Player
+	 * @param card
+	 *            player card
+	 */
     public CardController(Player player, Card card) {
         this.player = player;
         this.card = card;
