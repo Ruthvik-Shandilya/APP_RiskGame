@@ -1,6 +1,7 @@
 package com.risk.model;
 
-import com.risk.services.GameUtil;
+import com.risk.map.util.GameUtil;
+import com.risk.map.util.WindowUtil;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
@@ -123,11 +124,11 @@ public class Dice extends Observable {
     }
 
     public void updateCountryList() {
-        ArrayList<Country> defenderCountries = defendingCountry.getPlayer().getMyCountries();
+        ArrayList<Country> defenderCountries = defendingCountry.getPlayer().getPlayerCountries();
         defenderCountries.remove(defendingCountry);
 
         defendingCountry.setPlayer(attackingCountry.getPlayer());
-        defendingCountry.getPlayer().getMyCountries().add(defendingCountry);
+        defendingCountry.getPlayer().getPlayerCountries().add(defendingCountry);
 
     }
 
@@ -148,7 +149,7 @@ public class Dice extends Observable {
     }
 
     public int generateRandomNumber() {
-        return new Random().nextInt(7);
+        return new Random().nextInt(6) + 1;
     }
 
     public boolean checkDiceThrowPossible() {
