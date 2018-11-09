@@ -171,7 +171,7 @@ public class Player extends Observable implements Observer {
      * @return current Player
      */
 
-    public Player getPlayerPlaying() {
+    public static Player getPlayerPlaying() {
         return Player.currentPlayer;
     }
 
@@ -548,7 +548,7 @@ public class Player extends Observable implements Observer {
             }
         }
         if (!canAttack) {
-            WindowUtil.updateTerminalWindow("Player cannot continue with attck phase, move to fortification phase.\n", terminalWindow);
+            WindowUtil.updateTerminalWindow("Player cannot continue with attack phase, move to fortification phase.\n", terminalWindow);
             WindowUtil.updateTerminalWindow("Attack phase ended\n", terminalWindow);
             setChanged();
             notifyObservers("checkIfFortificationPhaseValid");
@@ -605,7 +605,7 @@ public class Player extends Observable implements Observer {
      *
      * @param playerPlaying current player
      */
-    public void setPlayerPlaying(Player playerPlaying) {
+    public static void setPlayerPlaying(Player playerPlaying) {
         Player.currentPlayer = playerPlaying;
     }
 

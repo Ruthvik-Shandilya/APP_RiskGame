@@ -1,15 +1,8 @@
 package com.risk.services.controller;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.ResourceBundle;
-import java.util.Stack;
 
 import com.risk.services.controller.Util.WindowUtil;
 import com.risk.model.Card;
@@ -164,6 +157,11 @@ public class GamePlayController implements Initializable, Observer {
     private ArrayList<Player> gamePlayerList;
 
     /**
+     * The @playerIterator.
+     */
+    private Iterator<Player> playerIterator;
+
+    /**
      * The Current Player whose playing
      */
     private Player playerPlaying;
@@ -207,7 +205,7 @@ public class GamePlayController implements Initializable, Observer {
         gamePlayerList = Player.generatePlayer(getNumberOfPlayersSelected(), this.playerNames, terminalWindow);
         WindowUtil.updateTerminalWindow("All players generated\n", terminalWindow);
 
-        roundRobin = new RoundRobin(this.gamePlayerList);
+        playerIterator = gamePlayerList.iterator();
 
         playerPlaying.assignArmiesToPlayers(gamePlayerList, terminalWindow);
         allocateCountryToPlayerInGamePlay();
@@ -413,8 +411,17 @@ public class GamePlayController implements Initializable, Observer {
      * for the next turn.
      */
     private void loadCurrentPlayer() {
-        playerPlaying = roundRobin.next();
-        playerPlaying.setPlayerPlaying(playerPlaying);
+        if (!playerIterator.hasNext()) {
+        playerIterator = gamePlayerList.iterator();
+    }
+        Player newPlayer = playerIterator.next();
+        if (newPlayer.equals(playerPlaying)) {
+            if (playerIterator.hasNext()) {
+                newPlayer = playerIterator.next();
+            }
+        }
+        playerPlaying = newPlayer;
+        Player.setPlayerPlaying(playerPlaying);
         playerPlaying.setCountryWon(0);
         playerPlaying.addObserver(this);
         WindowUtil.updateTerminalWindow(playerPlaying.getName() + "'s turn started.\n", terminalWindow);
@@ -525,8 +532,9 @@ public class GamePlayController implements Initializable, Observer {
     private void isAnyPlayerLost() {
         Player playerLost = playerPlaying.checkPlayerLost(gamePlayerList);
         if (playerLost != null) {
+            System.out.println("Player Lost=" + playerLost.getName());
             gamePlayerList.remove(playerLost);
-            roundRobin.updateAfterPlayerLost(playerLost);
+            playerIterator = gamePlayerList.iterator();
             WindowUtil.popUpWindow(playerLost.getName() + " Lost", "Player Lost popup", "Player: " + playerLost.getName() + " lost the game");
             WindowUtil.updateTerminalWindow(playerLost.getName() + " lost the game and hence all the countries.\n\n", terminalWindow);
         }
