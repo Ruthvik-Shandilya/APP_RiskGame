@@ -13,71 +13,118 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+/**
+ * 
+ * DiceController class contains the methods used in dice view,
+ * load attack screen, move armies, cancel move, cancel throw,
+ * continue Dice Roll, attack dice value, defence dice value 
+ * and start dice roll.
+ * 
+ * @author Farhan Shaheen
+ *
+ */
 public class DiceController implements Initializable {
 
+	/** Label variable for attacking player */
 	@FXML
 	private Label attackingPlayer;
 
+	/** Label variable for attacking Country */
 	@FXML
 	private Label attackingCountry;
 	
+	/** Label variable for attacking armies */
 	@FXML
 	private Label attackingArmies;
 	
+	/** Label variable for defending player */
 	@FXML
 	private Label defendingPlayer;
 	
+	/** Label variable for defending country */
 	@FXML
 	private Label defendingCountry;
 	
+	/** Label variable for defending armies */
 	@FXML
 	private Label defendingArmies;
 	
+	/** Label variable for winner name */
 	@FXML
 	private Label winnerName;
 	
+	/** CheckBox variable for dice 1 attacker */
 	@FXML
 	private CheckBox dice1_Attacker;
 	
+	/** CheckBox variable for dice 2 attacker */
 	@FXML
 	private CheckBox dice2_Attacker;
 	
+	/** CheckBox variable for dice 3 attacker */
 	@FXML
 	private CheckBox dice3_Attacker;
 	
+	/** CheckBox variable for dice 1 defender */ 
 	@FXML
 	private CheckBox dice1_Defender;
 	
+	/** CheckBox variable for dice 2 defender */ 
 	@FXML
 	private CheckBox dice2_Defender;	
 	
+	/** Button variable for start roll */
 	@FXML
 	private Button startRoll;
 	
+	/** Button variable for cancel throw */
 	@FXML
 	private Button cancelThrow;
 	
+	/** Button variable for continue roll */
 	@FXML
 	private Button continueRoll;
 	
+	/** Pane variable for after attack view */
 	@FXML
 	private Pane afterAttackView;
 	
+	/** Button variable for move armies */
 	@FXML
 	private Button moveArmies;
 	
+	/** Button variable for cancel move */
 	@FXML
 	private Button cancelMove;
 	
+	/** TextField variable for number of armies to move */
 	@FXML
 	private TextField numberOfArmiesToMove;
 	
+	/** Variable for Dice Object */
 	private Dice dice;
 	
+	/**
+	 * DiceController Constructor
+	 * 
+	 * @param dice
+	 *  	Dice object
+	 *  
+	 */
 	public DiceController(Dice dice) {
 		this.dice = dice;
 	}
 	
+	/**
+	 * Method to call load attack screen and dice view
+	 * 
+	 * @param location
+	 *  	URL
+	 *  
+	 * @param resources
+	 * 		ResourceBundle
+	 * 
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
@@ -86,6 +133,10 @@ public class DiceController implements Initializable {
 		
 	}
 
+	/** 
+	 * Method to load Attack screen 
+	 * 
+	 */
 	public void  loadAttackScreen() {
 		// TODO Auto-generated method stub
 		
@@ -108,7 +159,10 @@ public class DiceController implements Initializable {
 		WindowUtil.disablePane(afterAttackView);
 	}
 	
-	
+	/** 
+	 * Method for dice view 
+	 * 
+	 */
 	public void diceView() {
 		if (dice.getAttackingCountry().getNoOfArmies() >= 4) {
 			WindowUtil.showCheckBox(dice1_Attacker, dice2_Attacker, dice3_Attacker);
@@ -127,6 +181,13 @@ public class DiceController implements Initializable {
 		}
 	}
 	
+	/**
+	 * Method to move armies
+	 * 
+	 * @param event
+	 *  	ActionEvent
+	 *  
+	 */
 	@FXML
 	private void moveArmies(ActionEvent event) {
 		
@@ -142,19 +203,39 @@ public class DiceController implements Initializable {
 		}
 	}
 	
+	/**
+	 * Method to cancel move
+	 * 
+	 * @param event
+	 *  	ActionEvent
+	 *  
+	 */
 	@FXML
 	private void cancelMove(ActionEvent event){
 		dice.skipMoveArmy();
 		WindowUtil.exitWindow(cancelMove);
 	}
 	
+	/**
+	 * Method to cancel throw
+	 * 
+	 * @param event
+	 *  	ActionEvent
+	 *  
+	 */
 	@FXML
 	private void cancelThrow(ActionEvent event) {
 		dice.cancelDiceThrow();
 		WindowUtil.exitWindow(cancelThrow);
 	}
 	
-	
+	/**
+	 * Method to continue dice roll
+	 * 
+	 * @param event
+	 *  	ActionEvent
+	 *  
+	 */
 	@FXML
 	private void continueDiceRoll(ActionEvent event) {
 		dice.setAttackerDiceList(new ArrayList<>());
@@ -163,7 +244,13 @@ public class DiceController implements Initializable {
 		diceView();
 	}
 	
-	
+	/**
+	 * Method to attack dice value
+	 * 
+	 * @param allCheckBoxes
+	 *  	CheckBox
+	 *  
+	 */
 	public void attackDiceValue(CheckBox... allCheckBoxes) {
 		for (CheckBox checkBox : allCheckBoxes) {
 			if (checkBox.isSelected()) {
@@ -174,6 +261,13 @@ public class DiceController implements Initializable {
 		}
 	}
 	
+	/**
+	 * Method to defence dice value
+	 * 
+	 * @param allCheckBoxes
+	 *  	CheckBox
+	 *  
+	 */
 	public void defenceDiceValue(CheckBox... allCheckBoxes) {
 		for (CheckBox checkBox : allCheckBoxes) {
 			if (checkBox.isSelected()) {
@@ -184,6 +278,13 @@ public class DiceController implements Initializable {
 		}
 	}
 	
+	/**
+	 * Method to start roll
+	 * 
+	 * @param event
+	 *  	ActionEvent
+	 *  
+	 */
 	@FXML
 	public void startRoll(ActionEvent event) {
 		if (!dice1_Attacker.isSelected() && !dice2_Attacker.isSelected() && !dice3_Attacker.isSelected()) {
