@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="367.0" prefWidth="542.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox alignment="TOP_CENTER" layoutX="3.0" prefHeight="382.0" prefWidth="542.0">
+         <children>
+            <HBox alignment="TOP_CENTER" prefHeight="42.0" prefWidth="542.0">
+               <children>
+                  <Label fx:id="attackingPlayer" alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="181.0" text="attackerPlayerName" />
+                  <Label fx:id="defendingPlayer" alignment="CENTER" contentDisplay="CENTER" prefHeight="45.0" prefWidth="181.0" text="defenderPlayerName" />
+               </children>
+            </HBox>
+            <HBox alignment="TOP_CENTER" prefHeight="32.0" prefWidth="470.0">
+               <children>
+                  <Label fx:id="attackingCountry" alignment="CENTER" contentDisplay="CENTER" prefHeight="42.0" prefWidth="196.0" text="attackerCountryName" wrapText="true" />
+                  <Label fx:id="defendingCountry" alignment="CENTER" contentDisplay="CENTER" prefHeight="42.0" prefWidth="199.0" text="defenderCountryName" wrapText="true" />
+               </children>
+            </HBox>
+            <HBox alignment="TOP_CENTER" prefHeight="31.0" prefWidth="470.0">
+               <children>
+                  <Label fx:id="attackingArmies" alignment="CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="156.0" text="attackerArmies" />
+                  <Label fx:id="defendingArmies" alignment="CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="146.0" text="defenderArmies" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <Button fx:id="startRoll" layoutX="97.0" layoutY="266.0" mnemonicParsing="false" onAction="#startRoll" prefHeight="31.0" prefWidth="85.0" text="Roll" />
+      <CheckBox fx:id="dice1_Attacker" layoutX="183.0" layoutY="123.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="38.0" />
+      <CheckBox fx:id="dice2_Attacker" layoutX="183.0" layoutY="156.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="38.0" />
+      <CheckBox fx:id="dice3_Attacker" layoutX="183.0" layoutY="192.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="38.0" />
+      <CheckBox fx:id="dice1_Defender" layoutX="323.0" layoutY="123.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="113.0" />
+      <CheckBox fx:id="dice2_Defender" layoutX="323.0" layoutY="157.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="113.0" />
+      <Button fx:id="cancelThrow" layoutX="366.0" layoutY="269.0" mnemonicParsing="false" onAction="#cancelThrow" prefHeight="32.0" prefWidth="76.0" text="Cancel" />
+      <Pane fx:id="afterAttackView" layoutX="8.0" layoutY="306.0" prefHeight="61.0" prefWidth="522.0">
+         <children>
+            <Label fx:id="numberOfArmiesLabel" layoutX="14.0" layoutY="23.0" text="No. Of Armies to Move:" />
+            <TextField fx:id="numberOfArmiesToMove" layoutX="183.0" layoutY="18.0" prefHeight="31.0" prefWidth="52.0" />
+            <Button fx:id="moveArmies" layoutX="251.0" layoutY="18.0" mnemonicParsing="false" onAction="#moveArmies" prefHeight="31.0" prefWidth="64.0" text="Move" />
+            <Button fx:id="cancelMove" layoutX="439.0" layoutY="18.0" mnemonicParsing="false" onAction="#cancelMove" prefHeight="31.0" prefWidth="70.0" text="Cancel" />
+         </children>
+      </Pane>
+      <Label fx:id="winnerName" alignment="CENTER" contentDisplay="CENTER" layoutX="15.0" layoutY="240.0" prefHeight="21.0" prefWidth="522.0" text="Winner Name" wrapText="true" />
+      <Button fx:id="continueRoll" layoutX="230.0" layoutY="268.0" mnemonicParsing="false" onAction="#continueDiceRoll" prefHeight="32.0" prefWidth="92.0" text="Continue" wrapText="true" />
+   </children>
+</Pane>

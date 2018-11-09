@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane id="useSelectedCardSetButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="422.0" prefWidth="534.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="currentPlayer" layoutX="88.0" layoutY="27.0" />
+      <ScrollPane layoutX="14.0" layoutY="67.0" prefViewportHeight="323.0" prefViewportWidth="287.0">
+         <content>
+            <VBox fx:id="cardVbox" layoutX="14.0" layoutY="67.0" maxHeight="1.7976931348623157E308" prefHeight="323.0" prefWidth="287.0" style="-fx-spacing: 10; -fx-padding: 10;" />
+         </content>
+      </ScrollPane>
+      <Button fx:id="exchange" layoutX="379.0" layoutY="98.0" mnemonicParsing="false" onAction="#checkExchange" prefHeight="31.0" prefWidth="64.0" text="Trade" />
+      <Label fx:id="text" alignment="CENTER" layoutX="328.0" layoutY="138.0" prefHeight="19.0" prefWidth="163.0" textFill="RED" wrapText="true" />
+      <Button fx:id="cancelView" layoutX="382.0" layoutY="169.0" mnemonicParsing="false" onAction="#cancelView" text="Cancel" />
+   </children>
+</Pane>

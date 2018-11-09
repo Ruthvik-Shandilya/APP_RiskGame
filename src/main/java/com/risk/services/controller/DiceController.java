@@ -1,34 +1,23 @@
-package com.risk.services.controller;
+package com.risk.controller;
 
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
-
-import com.risk.services.GameUtil;
-import com.risk.services.controller.Util.WindowUtil;
-//import com.risk.entity.Territory;
-//import com.risk.map.util.MapUtil;
+import com.risk.map.util.WindowUtil;
 import com.risk.model.Country;
 import com.risk.model.Dice;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Control;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
+
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 public class DiceController implements Initializable {
 
 	@FXML
 	private Label attackingPlayer;
-	
+
 	@FXML
 	private Label attackingCountry;
 	
@@ -66,7 +55,7 @@ public class DiceController implements Initializable {
 	private Button startRoll;
 	
 	@FXML
-	private Button cancelAttack;
+	private Button cancelThrow;
 	
 	@FXML
 	private Button continueRoll;
@@ -103,19 +92,19 @@ public class DiceController implements Initializable {
 		Country countryAttacking = dice.getAttackingCountry();
 		attackingPlayer.setText(countryAttacking.getPlayer().getName());
 		attackingCountry.setText(countryAttacking.getName());
-		attackingArmies.setText("Availaible armies are: " + countryAttacking.getNoOfArmies());
+		attackingArmies.setText("Armies: " + countryAttacking.getNoOfArmies());
 		
 		Country countryDefending = dice.getDefendingCountry();
 		defendingPlayer.setText(countryDefending.getPlayer().getName());
 		defendingCountry.setText(countryDefending.getName());
-		defendingArmies.setText("Availaible armies are: " + countryDefending.getNoOfArmies());
+		defendingArmies.setText("Armies: " + countryDefending.getNoOfArmies());
 		
 		winnerName.setVisible(false);
 		winnerName.setText("");
 		
-		unCheckBoxes(dice1_Attacker, dice2_Attacker, dice3_Attacker, dice1_Defender, dice2_Defender);
-		enableButton(startRoll);
-		disableControl(winnerName, continueRoll);
+		WindowUtil.unCheckBoxes(dice1_Attacker, dice2_Attacker, dice3_Attacker, dice1_Defender, dice2_Defender);
+		WindowUtil.enableButtonControl(startRoll);
+		WindowUtil.disableButtonControl(winnerName, continueRoll);
 		WindowUtil.disablePane(afterAttackView);
 	}
 	
@@ -138,19 +127,13 @@ public class DiceController implements Initializable {
 		}
 	}
 	
-	
-	
-	
-	
-	
-	
 	@FXML
 	private void moveArmies(ActionEvent event) {
 		
 		String getText = numberOfArmiesToMove.getText();
 		
 		if(getText.length() == 0){
-			WindowUtil.userInfo("Armies Alert", " Title", "Please enter a valid number to move armies.");
+			WindowUtil.popUpWindow("Armies Alert", " Title", "Please enter a valid number to move armies.");
 			return;
 		}
 		else {
@@ -166,9 +149,9 @@ public class DiceController implements Initializable {
 	}
 	
 	@FXML
-	private void cancelAttack(ActionEvent event) {
+	private void cancelThrow(ActionEvent event) {
 		dice.cancelDiceThrow();
-		GameUtil.closeScreen(cancelAttack);
+		WindowUtil.exitWindow(cancelThrow);
 	}
 	
 	
@@ -204,10 +187,10 @@ public class DiceController implements Initializable {
 	@FXML
 	public void startRoll(ActionEvent event) {
 		if (!dice1_Attacker.isSelected() && !dice2_Attacker.isSelected() && !dice3_Attacker.isSelected()) {
-			WindowUtil.userInfo("Head", "Message", "Atleast one attacking dice should be selected");
+			WindowUtil.popUpWindow("Head", "Message", "Atleast one attacking dice should be selected");
 			return;
 		} else if (!dice1_Defender.isSelected() && !dice2_Defender.isSelected()) {
-			WindowUtil.userInfo("Head", "Message", "Atleast one defender dice should be selected");
+			WindowUtil.popUpWindow("Head", "Message", "Atleast one defender dice should be selected");
 			return;
 		}
 		attackDiceValue(dice1_Attacker, dice2_Attacker, dice3_Attacker);
@@ -222,13 +205,12 @@ public class DiceController implements Initializable {
 			diceResult.add(countryAttacking.getPlayer().getName() + " won " + defendingCountry.getName() + " Country");
 			dice.setCountriesWonCount(dice.getCountriesWonCount() + 1);
 			WindowUtil.enablePane(afterAttackView);
-			WindowUtil.hideButtonControl(startRoll, continueRoll, cancelAttack);
+			WindowUtil.hideButtonControl(startRoll, continueRoll, cancelThrow);
 		} else if (countryAttacking.getNoOfArmies() < 2) {
 			diceResult.add(countryAttacking.getPlayer().getName() + " lost the match");
 			WindowUtil.disableButtonControl(startRoll, continueRoll);
 		} else {
 			WindowUtil.disableButtonControl(startRoll);
-//			GameUtil.disableControl(roll);
 			WindowUtil.enableButtonControl(continueRoll);
 			
 		}
@@ -237,23 +219,5 @@ public class DiceController implements Initializable {
 		winnerName.setText(diceResult.toString());
 		winnerName.setVisible(true);
 	}
-	
-	
-	public static void unCheckBoxes(CheckBox... checkBoxes) {
-		for (CheckBox checkBox: checkBoxes) {
-//			checkBox.setText("");
-			checkBox.setSelected(false);
-		}
-	}
-	
-	public static void enableButton(Control button) {
-		button.setDisable(false);
-	}
-	
-	public static void disableControl(Control... controls) {
-		for (Control control : controls) {
-			control.setDisable(true);
-		}
-	}
-	
+
 }
