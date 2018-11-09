@@ -16,20 +16,31 @@ import org.junit.Test;
  */
 public class DiceTest {
 
+	/** Object for Country class for attacking country */
 	private Country attackingCountry;
 	
+	/** Object for Country class for defending country */
 	private Country defendingCountry;
 	
+	/** Object for Dice class */
 	private Dice dice;
 	
+	/** Object for Player class for player 1 */
 	private Player player1;
 	
+	/** Object for Player class for player 2 */
 	private Player player2;
 	
+	/** ArrayList to hold list of players countries */
 	private ArrayList<Country> myCountries;
 	
+	/** ArrayList to hold play result */
 	private ArrayList<String> playResult;
 	
+	/**
+	 * Set up the initial objects for Round Robin Phase
+	 * 
+	 */
 	@Before
 	public void initialize() {
 		
