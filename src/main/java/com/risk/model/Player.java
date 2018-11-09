@@ -13,73 +13,146 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * Class for the player object for the class
+ *
+ *
+ */
 public class Player extends Observable implements Observer {
+
+    /**
+     * Player currently playing.
+     */
 
     static Player currentPlayer;
 
+    /**
+     *  Name of the player
+     */
     private String name;
-    
+
+    /**
+     * Number of armies
+     */
     private int armyCount;
-    
+
+    /**
+     * Player countries
+     */
     private ArrayList<Country> playerCountries;
-    
+
+    /**
+     * Player's cards
+     */
     private ArrayList<Card> cardList;
 
+    /**
+     * Player constructor, initializes initial army count
+     */
     public Player() {
         armyCount = 0;
     }
 
+    /**
+     * Player constructor
+     * @param name
+     */
     public Player(String name) {
         armyCount = 0;
         this.name = name;
         this.playerCountries = new ArrayList<>();
         this.cardList = new ArrayList<>();
     }
-    
+
+    /**
+     * Method to get name of the olayer
+     *
+     * @return player's name
+     */
 
     public String getName() {
         return name;
     }
 
+    /**
+     * Setter got player's name
+     *
+     * @param name of the player
+     */
 
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Getter for player armies
+     *
+     * @return armyCount of the player
+     */
     public int getArmyCount() {
         return armyCount;
     }
 
+    /**
+     * Setter for players army count
+     *
+     * @param armyCount armyCount of the player
+     */
     public void setArmyCount(int armyCount) {
         this.armyCount = armyCount;
     }
 
+    /**
+     * Getter for list of player's armies.
+     *
+     * @return List of playerCountries
+     */
     public ArrayList<Country> getPlayerCountries() {
         return playerCountries;
     }
-    
+
+    /**
+     * Setter for list of player's armies.
+     *
+     * @param playerCountries
+     */
     public void setMyCountries(ArrayList<Country> playerCountries) {
         this.playerCountries = playerCountries;
     }
     
     /**
-     *  Method to add a single country to the player's country list
+     * Method to add a country to the player's country list
      *  
-     * @param country
-     * 				Object of the country
+     * @param country country object
      */
     public void addCountry(Country country){
         this.playerCountries.add(country);
     }
 
+    /**
+     * Method for getting the player's list of card
+     *
+     * @return cardList of player
+     */
     public ArrayList<Card> getCardList() {
         return cardList;
     }
 
+    /**
+     * Method for returning the player's list of card
+     *
+     * @param cardList of player
+     */
     public void setCardList(ArrayList<Card> cardList) {
         this.cardList = cardList;
     }
 
+    /**
+     * Mehtodd for adding armies to a country
+     *
+     * @param country Country to which armies are to be assigned
+     * @param numberOfArmies number for armies to be assigned
+     */
     public void addArmiesToCountry(Country country, int numberOfArmies) {
         if(this.getArmyCount()>0 && this.getArmyCount()>=numberOfArmies) {
             if(!this.getPlayerCountries().contains(country)) {
@@ -95,14 +168,29 @@ public class Player extends Observable implements Observer {
         }
     }
 
+    /**
+     * Getter for current PLayer
+     *
+     * @return current Player
+     */
 
     public Player getPlayerPlaying() {
         return Player.currentPlayer;
     }
 
-
+    /**
+     * Number of countries won by the player
+     */
     private int CountryWon;
 
+    /**
+     * Method for allocating initial armies to the player,
+     * depending upon the total number of players
+     *
+     * @param players List of all the players
+     * @param textArea TeaxtArea for displaying gamed etails
+     * @return true, is armies are succefully assigned,; otherwise false
+     */
 
     public static boolean assignArmiesToPlayers(List<Player> players, TextArea textArea) {
 
@@ -132,6 +220,15 @@ public class Player extends Observable implements Observer {
     }
 
 
+    /**
+     * Mthod for generating players accordin gto the data entered by the user
+     *
+     *
+     * @param noOfPlayer number of players
+     * @param playersList List of all the player names
+     * @param textArea  TeaxtArea for displaying gamed details
+     * @return List of player objects
+     */
     public static ArrayList<Player> generatePlayer(int noOfPlayer, String [] playersList, TextArea textArea) {
         ArrayList<Player> listPlayer = new ArrayList<>();
         for (int i = 0; i < noOfPlayer; i++) {
@@ -140,6 +237,14 @@ public class Player extends Observable implements Observer {
         }
         return listPlayer;
     }
+
+    /**
+     * Mthod for calvulating number of reinforcement armies to be allocated to the player
+     *
+     *
+     * @param currentPlayer Player to which armies are to be aloocated
+     * @return Player, object of the current player
+     */
 
     public Player noOfReinsforcementArmies(Player currentPlayer) {
 
@@ -177,6 +282,12 @@ public class Player extends Observable implements Observer {
     }
 
 
+    /**
+     * Method for getting a list of all the continents of the player
+     *
+     * @param currentPlayer currentPlayer
+     * @return List of continents owned by the player
+     */
     public List<Continent> getContinentsOwnedByPlayer(Player currentPlayer) {
         List<Continent> continents = new ArrayList<>();
         HashSet<Continent> countryInContinent = new HashSet<>();
@@ -205,6 +316,12 @@ public class Player extends Observable implements Observer {
         return continents;
     }
 
+    /**
+     * Method governing the reinforcement phase.
+     *
+     * @param country country to which reinforcement armies are to be assigned
+     * @param textArea TextArea to which current game information will be displayed
+     */
     public void reinforcementPhase(Country country, TextArea textArea) {
 
         if (currentPlayer.getArmyCount() > 0) {
@@ -230,7 +347,12 @@ public class Player extends Observable implements Observer {
         }
     }
 
-
+    /**
+     * Method governing the attack phase
+     *
+     * @param attackingCountry attacking country
+     * @param defendingCountry Country undeer attack
+     */
     public void attackPhase(Country attackingCountry, Country defendingCountry) {
         if (attackingCountry != null && defendingCountry != null) {
 
@@ -266,6 +388,13 @@ public class Player extends Observable implements Observer {
         }
     }
 
+    /**
+     * Method governing the fortification phase
+     *
+     * @param selectedCountry Source country, from which armies would be taken
+     * @param adjCountry Destination country, to which armies would be allocated
+     * @param terminalWindow TextArea to which current game information will be displayed
+     */
 
     public void fortificationPhase(Country selectedCountry, Country adjCountry, TextArea terminalWindow) {
         if (selectedCountry == null) {
@@ -301,6 +430,13 @@ public class Player extends Observable implements Observer {
         }
     }
 
+    /**
+     * Mthod to check if the fortification move taking place in fortification is valid or not
+     *
+     * @param map MapIO object
+     * @param playerPlaying current player
+     * @return true if the move is valid; otherwise false
+     */
     public boolean isFortificationPhaseValid(MapIO map, Player playerPlaying) {
         boolean isFortificationAvaialble = false;
         outer: for (Continent continent : map.getMapGraph().getContinents().values()) {
@@ -327,7 +463,15 @@ public class Player extends Observable implements Observer {
         return isFortificationAvaialble;
     }
 
-
+    /**
+     * Method for placing armies on the countries during the startup phase.
+     *
+     *
+     * @param playerPlaying current Player.
+     * @param selectedCountryList List view for the countries of the current player.
+     * @param gamePlayerList List of all the players of playing the game.
+     * @param terminalWindow TextArea to which current game information will be displayed
+     */
     public void placeArmyOnCountry(Player playerPlaying, ListView<Country> selectedCountryList, List<Player> gamePlayerList, TextArea terminalWindow) {
         int playerArmies = playerPlaying.getArmyCount();
         if (playerArmies > 0) {
@@ -350,6 +494,13 @@ public class Player extends Observable implements Observer {
         }
     }
 
+    /**
+     * Method to check if the player has armies or not.
+     *
+     * @param allPlayers List of all the players of playing the game.
+     * @return true if player has armies left; otherwise false.
+     */
+
 
     public boolean isPlayerArmyLeft(List<Player> allPlayers) {
         int count = 0;
@@ -366,6 +517,13 @@ public class Player extends Observable implements Observer {
         }
     }
 
+    /**
+     * Method to check if the attack move is valid or not
+     *
+     * @param attacking Country attacking
+     * @param defending ountry under attack
+     * @return true if the attack move is valid; other wise false
+     */
 
     public boolean isAttackMoveValid(Country attacking, Country defending)  {
         boolean isValidAttackMove = false;
@@ -381,6 +539,14 @@ public class Player extends Observable implements Observer {
         return isValidAttackMove;
     }
 
+    /**
+     * Method to check if the player can attack or not.
+     *
+     *
+     * @param countries List view of all the countries of the player
+     * @param terminalWindow  TextArea to which current game information will be displayed
+     * @return true if the player can attack; other wise false
+     */
 
     public boolean playerCanAttack(ListView<Country> countries, TextArea terminalWindow) {
 
@@ -400,6 +566,13 @@ public class Player extends Observable implements Observer {
         return canAttack;
     }
 
+    /**
+     *  Mthod to check if any player lost the game after everyattack move
+     *
+     *
+     * @param playersPlaying List containing all the players playing the game
+     * @return Player object of the lost player
+     */
 
     public Player checkPlayerLost(List<Player> playersPlaying) {
         Player playerLost = null;
@@ -413,6 +586,14 @@ public class Player extends Observable implements Observer {
         return playerLost;
     }
 
+    /**
+     * Methods for exchanging cards of the player for armies
+     *
+     * @param selectedCards List of selected cards by the player
+     * @param numberOfCardSetExchanged Number of card sets to be exchanged
+     * @param terminalWindow TextArea to which current game information will be displayed
+     * @return Player object exchanging the cards
+     */
 
     public Player exchangeCards(List<Card> selectedCards, int numberOfCardSetExchanged, TextArea terminalWindow) {
         currentPlayer.setArmyCount(currentPlayer.getArmyCount() + (5 * numberOfCardSetExchanged));
@@ -429,21 +610,42 @@ public class Player extends Observable implements Observer {
         return currentPlayer;
     }
 
-
+    /**
+     * Setter for setting the current player
+     *
+     * @param playerPlaying current player
+     */
     public void setPlayerPlaying(Player playerPlaying) {
         Player.currentPlayer = playerPlaying;
     }
 
+    /**
+     * Getter for number of countries won by the player
+     *
+     * @return
+     */
 
     public int getCountryWon() {
         return CountryWon;
     }
 
+    /**
+     * Setter for countries won by the player
+     *
+     * @param CountryWon number of countries won by the player
+     */
     public void setCountryWon(int CountryWon) {
         this.CountryWon = CountryWon;
     }
 
-
+    /**
+     *
+     * update method for PLayer object
+     *
+     * @param o Observable
+     * @param arg String which is passed t the player object
+     *
+     */
     public void update(Observable o, Object arg) {
         String view = (String) arg;
 
