@@ -14,41 +14,95 @@ import java.util.Observable;
 
 public class Card extends Observable {
 
+    /** Type of the card*/
     String cardType;
 
+    /** Object of country, which is the on the card*/
     private Country country;
 
+    /** Player who is the card Holder*/
     private Player currentPlayer;
 
+    /** List of cards which can be exchanged*/
     private List<Card> cardsToExchange;
 
+    /**
+     * Cards constructor
+     *
+     * */
+
     public Card(){ }
+
+    /**
+     * Cards constructor
+     *
+     * @param cardType  Type of card
+     *
+     * */
 
     public Card(String cardType) {
         this.cardType = cardType;
     }
 
+    /**
+     * Get card type
+     *
+     * @return Type of card
+     *
+     * */
+
     public String getCardType() {
         return cardType;
     }
 
+    /**
+     * get Country of the card
+     *
+     * @return country of the card
+     *
+     * */
     public Country getCountry() {
         return country;
     }
+
+    /**
+     * Set Country
+     *
+     * @param country of the card
+     *
+     * */
 
     public void setCountry(Country country) {
         this.country = country;
     }
 
+    /**
+     * Getter for list of cards for exchange.
+     *
+     * @return  list of cards
+     *
+     * */
+
     public List<Card> getCardsToExchange() {
         return cardsToExchange;
     }
+    /** *
+     * Set cardsToExchange
+     *
+     * @param cardsToExchange
+     */
 
     public void setCardsToExchange(List<Card> cardsToExchange) {
         this.cardsToExchange = cardsToExchange;
     }
 
-
+    /**
+     * Method is used to open the window, for displaying
+     * the cards owned by the player.
+     *
+     * @param player Player having the turn
+     * @param card card to display for the player
+     */
     public void openCardWindow(Player player, Card card) {
         this.currentPlayer = player;
         final Stage newMapStage = new Stage();
@@ -68,10 +122,12 @@ public class Card extends Observable {
     }
 
     /**
-     * This method is used to return selected cards on the basis of checkboxes selected.
-     * @param list list of cards held by currently playing player.
-     * @param checkboxes array of checkboxes depicting each card.
-     * @return selectedCards list of selected cards which is subset of main list.
+     * Method returns a list of cards which
+     * are seleted by the current player
+     *
+     * @param list
+     * @param checkboxes
+     * @return List of cards selected by the player
      */
     public List<Card> retrieveSelectedCardsFromCheckbox(List<Card> list, CheckBox[] checkboxes) {
         List<Card> selectedCards = new ArrayList<>();
@@ -83,7 +139,14 @@ public class Card extends Observable {
         return selectedCards;
     }
 
-    
+    /**
+     * Method is used to verify ,
+     * if cards can be exchanged for army or not
+     *
+     *
+     * @param selectedCards
+     * @return true if the exchange is possible; otherwise false
+     */
     public boolean checkTradePossible(List<Card> selectedCards) {
         boolean returnFlag = false;
         if(selectedCards.size()==3) {
@@ -104,6 +167,12 @@ public class Card extends Observable {
         return returnFlag;
     }
 
+    /**
+     * Method notifies the observers of the card,
+     * Also sets the cards which are selected for exchange.
+     *
+     * @param selectedCards cards which are selected by the user to exchange
+     */
 
     public void setCardsExchangeable(List<Card> selectedCards) {
         setCardsToExchange(selectedCards);

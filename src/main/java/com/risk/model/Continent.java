@@ -131,6 +131,9 @@ public class Continent {
 		return getName().toLowerCase().hashCode();
 	}
 
+	/**
+	 * {@inheritDoc} returns name of the continent in string format.
+	 */
 	@Override
 	public String toString() {
 		return this.getName();
