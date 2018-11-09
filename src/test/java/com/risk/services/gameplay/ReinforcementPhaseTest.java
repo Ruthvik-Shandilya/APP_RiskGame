@@ -78,7 +78,7 @@ public class ReinforcementPhaseTest {
 	@Test
 	public void findNoOfArmiesWhenPlayerOwnContinentTest() {
 		
-		assertEquals(continent.getControlValue(), reinforcementPhase.findNoOfArmies(player));
+		assertEquals(continent.getControlValue()+1, reinforcementPhase.findNoOfArmies(player));
 	}
 
 	
