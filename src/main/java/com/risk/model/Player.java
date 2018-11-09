@@ -15,8 +15,6 @@ import java.util.*;
 
 /**
  * Class for the player object for the class
- *
- *
  */
 public class Player extends Observable implements Observer {
 
@@ -24,10 +22,10 @@ public class Player extends Observable implements Observer {
      * Player currently playing.
      */
 
-    static Player currentPlayer;
+    public static Player currentPlayer;
 
     /**
-     *  Name of the player
+     * Name of the player
      */
     private String name;
 
@@ -55,6 +53,7 @@ public class Player extends Observable implements Observer {
 
     /**
      * Player constructor
+     *
      * @param name
      */
     public Player(String name) {
@@ -119,13 +118,13 @@ public class Player extends Observable implements Observer {
     public void setMyCountries(ArrayList<Country> playerCountries) {
         this.playerCountries = playerCountries;
     }
-    
+
     /**
      * Method to add a country to the player's country list
-     *  
+     *
      * @param country country object
      */
-    public void addCountry(Country country){
+    public void addCountry(Country country) {
         this.playerCountries.add(country);
     }
 
@@ -150,20 +149,18 @@ public class Player extends Observable implements Observer {
     /**
      * Mehtodd for adding armies to a country
      *
-     * @param country Country to which armies are to be assigned
+     * @param country        Country to which armies are to be assigned
      * @param numberOfArmies number for armies to be assigned
      */
     public void addArmiesToCountry(Country country, int numberOfArmies) {
-        if(this.getArmyCount()>0 && this.getArmyCount()>=numberOfArmies) {
-            if(!this.getPlayerCountries().contains(country)) {
+        if (this.getArmyCount() > 0 && this.getArmyCount() >= numberOfArmies) {
+            if (!this.getPlayerCountries().contains(country)) {
                 System.out.println("This country is not under your Ownership.");
-            }
-            else {
+            } else {
                 country.setNoOfArmies(country.getNoOfArmies() + numberOfArmies);
                 this.setArmyCount(this.getArmyCount() - numberOfArmies);
             }
-        }
-        else {
+        } else {
             System.out.println("Sufficient number of armies not available.");
         }
     }
@@ -187,7 +184,7 @@ public class Player extends Observable implements Observer {
      * Method for allocating initial armies to the player,
      * depending upon the total number of players
      *
-     * @param players List of all the players
+     * @param players  List of all the players
      * @param textArea TeaxtArea for displaying gamed etails
      * @return true, is armies are succefully assigned,; otherwise false
      */
@@ -197,22 +194,19 @@ public class Player extends Observable implements Observer {
         boolean isSuccessfulAssignment = false;
         int armiesPerPlayer = 0;
 
-        if (players.size() == 3){
+        if (players.size() == 3) {
             armiesPerPlayer = 5;
-    }
-        else if (players.size() == 4){
+        } else if (players.size() == 4) {
             armiesPerPlayer = 30;
-        }
-        else if (players.size() == 5){
+        } else if (players.size() == 5) {
             armiesPerPlayer = 25;
-        }
-        else if (players.size() == 6){
+        } else if (players.size() == 6) {
             armiesPerPlayer = 20;
         }
 
-        for(int playerNumber = 0; playerNumber < players.size(); playerNumber++){
+        for (int playerNumber = 0; playerNumber < players.size(); playerNumber++) {
             players.get(playerNumber).setArmyCount(armiesPerPlayer);
-            WindowUtil.updateterminalWindow(armiesPerPlayer + " armies assigned to " +players.get(playerNumber).getName()+ ".\n", textArea);
+            WindowUtil.updateTerminalWindow(armiesPerPlayer + " armies assigned to " + players.get(playerNumber).getName() + ".\n", textArea);
             isSuccessfulAssignment = true;
         }
 
@@ -223,17 +217,16 @@ public class Player extends Observable implements Observer {
     /**
      * Mthod for generating players accordin gto the data entered by the user
      *
-     *
-     * @param noOfPlayer number of players
+     * @param noOfPlayer  number of players
      * @param playersList List of all the player names
-     * @param textArea  TeaxtArea for displaying gamed details
+     * @param textArea    TeaxtArea for displaying gamed details
      * @return List of player objects
      */
-    public static ArrayList<Player> generatePlayer(int noOfPlayer, String [] playersList, TextArea textArea) {
+    public static ArrayList<Player> generatePlayer(int noOfPlayer, String[] playersList, TextArea textArea) {
         ArrayList<Player> listPlayer = new ArrayList<>();
         for (int i = 0; i < noOfPlayer; i++) {
             listPlayer.add(new Player(playersList[i].trim()));
-            WindowUtil.updateterminalWindow("Created player " + playersList[i].trim() + ".\n", textArea);
+            WindowUtil.updateTerminalWindow("Created player " + playersList[i].trim() + ".\n", textArea);
         }
         return listPlayer;
     }
@@ -241,12 +234,11 @@ public class Player extends Observable implements Observer {
     /**
      * Mthod for calvulating number of reinforcement armies to be allocated to the player
      *
-     *
      * @param currentPlayer Player to which armies are to be aloocated
      * @return Player, object of the current player
      */
 
-    public Player noOfReinsforcementArmies(Player currentPlayer) {
+    public Player noOfReinforcementArmies(Player currentPlayer) {
 
         int noOfCountrie = currentPlayer.getPlayerCountries().size();
         int numberOfArmies = (int) Math.floor(noOfCountrie / 3);
@@ -255,14 +247,14 @@ public class Player extends Observable implements Observer {
 
         boolean isPlayerOwnedContinent;
 
-        for(Country country : playerOwnedCountries){
+        for (Country country : playerOwnedCountries) {
             countryInContinent.add(country.getPartOfContinent());
         }
 
-        for(Continent continent : countryInContinent){
+        for (Continent continent : countryInContinent) {
             isPlayerOwnedContinent = true;
-            for(Country country: continent.getListOfCountries()){
-                if(!playerOwnedCountries.contains(country)){
+            for (Country country : continent.getListOfCountries()) {
+                if (!playerOwnedCountries.contains(country)) {
                     isPlayerOwnedContinent = false;
                     break;
                 }
@@ -296,12 +288,12 @@ public class Player extends Observable implements Observer {
 
         boolean isPlayerOwnedContinent = true;
 
-        for(Country country : playerOwnedCountries){
+        for (Country country : playerOwnedCountries) {
             countryInContinent.add(country.getPartOfContinent());
         }
 
 
-        for(Continent continent : countryInContinent) {
+        for (Continent continent : countryInContinent) {
             isPlayerOwnedContinent = true;
             for (Country country : continent.getListOfCountries()) {
                 if (!playerOwnedCountries.contains(country)) {
@@ -319,7 +311,7 @@ public class Player extends Observable implements Observer {
     /**
      * Method governing the reinforcement phase.
      *
-     * @param country country to which reinforcement armies are to be assigned
+     * @param country  country to which reinforcement armies are to be assigned
      * @param textArea TextArea to which current game information will be displayed
      */
     public void reinforcementPhase(Country country, TextArea textArea) {
@@ -337,11 +329,11 @@ public class Player extends Observable implements Observer {
             }
             country.setNoOfArmies(country.getNoOfArmies() + reinsforcementArmies);
             currentPlayer.setArmyCount(currentPlayer.getArmyCount() - reinsforcementArmies);
-            WindowUtil.updateterminalWindow(country.getName() + " was assigned " + reinsforcementArmies + " armies \n",textArea);
+            WindowUtil.updateTerminalWindow(country.getName() + " was assigned " + reinsforcementArmies + " armies \n", textArea);
 
         }
         if (currentPlayer.getArmyCount() <= 0) {
-            WindowUtil.updateterminalWindow("Reinsforcement Phase Ended, Fortification started\n",textArea);
+            WindowUtil.updateTerminalWindow("Reinforcement Phase Ended, Fortification started\n", textArea);
             setChanged();
             notifyObservers("Attack");
         }
@@ -351,14 +343,14 @@ public class Player extends Observable implements Observer {
      * Method governing the attack phase
      *
      * @param attackingCountry attacking country
-     * @param defendingCountry Country undeer attack
+     * @param defendingCountry Country under attack
      */
     public void attackPhase(Country attackingCountry, Country defendingCountry) {
         if (attackingCountry != null && defendingCountry != null) {
 
             boolean playerCanAttack = isAttackMoveValid(attackingCountry, defendingCountry);
 
-            if(playerCanAttack){
+            if (playerCanAttack) {
                 Dice dice = new Dice(attackingCountry, defendingCountry);
                 dice.addObserver(this);
                 final Stage newMapStage = new Stage();
@@ -392,8 +384,8 @@ public class Player extends Observable implements Observer {
      * Method governing the fortification phase
      *
      * @param selectedCountry Source country, from which armies would be taken
-     * @param adjCountry Destination country, to which armies would be allocated
-     * @param terminalWindow TextArea to which current game information will be displayed
+     * @param adjCountry      Destination country, to which armies would be allocated
+     * @param terminalWindow  TextArea to which current game information will be displayed
      */
 
     public void fortificationPhase(Country selectedCountry, Country adjCountry, TextArea terminalWindow) {
@@ -419,8 +411,8 @@ public class Player extends Observable implements Observer {
             } else {
                 selectedCountry.setNoOfArmies(selectedCountry.getNoOfArmies() - armies);
                 adjCountry.setNoOfArmies(adjCountry.getNoOfArmies() + armies);
-                WindowUtil.updateterminalWindow(armies + " armies placed on " + adjCountry.getName() + " country.\n", terminalWindow);
-                WindowUtil.updateterminalWindow("Fortification phase ended. \n", terminalWindow);
+                WindowUtil.updateTerminalWindow(armies + " armies placed on " + adjCountry.getName() + " country.\n", terminalWindow);
+                WindowUtil.updateTerminalWindow("Fortification phase ended. \n", terminalWindow);
                 setChanged();
                 notifyObservers("Reinforcement");
             }
@@ -433,13 +425,14 @@ public class Player extends Observable implements Observer {
     /**
      * Mthod to check if the fortification move taking place in fortification is valid or not
      *
-     * @param map MapIO object
+     * @param map           MapIO object
      * @param playerPlaying current player
      * @return true if the move is valid; otherwise false
      */
     public boolean isFortificationPhaseValid(MapIO map, Player playerPlaying) {
         boolean isFortificationAvaialble = false;
-        outer: for (Continent continent : map.getMapGraph().getContinents().values()) {
+        outer:
+        for (Continent continent : map.getMapGraph().getContinents().values()) {
             for (Country Country : continent.getListOfCountries()) {
                 if (Country.getPlayer().equals(playerPlaying)) {
                     if (Country.getNoOfArmies() > 1) {
@@ -466,11 +459,10 @@ public class Player extends Observable implements Observer {
     /**
      * Method for placing armies on the countries during the startup phase.
      *
-     *
-     * @param playerPlaying current Player.
+     * @param playerPlaying       current Player.
      * @param selectedCountryList List view for the countries of the current player.
-     * @param gamePlayerList List of all the players of playing the game.
-     * @param terminalWindow TextArea to which current game information will be displayed
+     * @param gamePlayerList      List of all the players of playing the game.
+     * @param terminalWindow      TextArea to which current game information will be displayed
      */
     public void placeArmyOnCountry(Player playerPlaying, ListView<Country> selectedCountryList, List<Player> gamePlayerList, TextArea terminalWindow) {
         int playerArmies = playerPlaying.getArmyCount();
@@ -485,7 +477,7 @@ public class Player extends Observable implements Observer {
 
         boolean armiesExhausted = isPlayerArmyLeft(gamePlayerList);
         if (armiesExhausted) {
-            WindowUtil.updateterminalWindow("StartUp Phase Completed.\n", terminalWindow);
+            WindowUtil.updateTerminalWindow("StartUp Phase Completed.\n", terminalWindow);
             setChanged();
             notifyObservers("FirstAttack");
         } else {
@@ -521,20 +513,20 @@ public class Player extends Observable implements Observer {
      * Method to check if the attack move is valid or not
      *
      * @param attacking Country attacking
-     * @param defending ountry under attack
+     * @param defending Country under attack
      * @return true if the attack move is valid; other wise false
      */
 
-    public boolean isAttackMoveValid(Country attacking, Country defending)  {
+    public boolean isAttackMoveValid(Country attacking, Country defending) {
         boolean isValidAttackMove = false;
         if (defending.getPlayer() != attacking.getPlayer()) {
             if (attacking.getNoOfArmies() > 1) {
                 isValidAttackMove = true;
             } else {
-                WindowUtil.popUpWindow("Select a country with more armies.", "Invalid game move", "There should be more than one army on the country which is attacking." );
+                WindowUtil.popUpWindow("Select a country with more armies.", "Invalid game move", "There should be more than one army on the country which is attacking.");
             }
         } else {
-            WindowUtil.popUpWindow("You have selected your own country", "Invalid game move", "Select another player's country to attack" );
+            WindowUtil.popUpWindow("You have selected your own country", "Invalid game move", "Select another player's country to attack");
         }
         return isValidAttackMove;
     }
@@ -542,9 +534,8 @@ public class Player extends Observable implements Observer {
     /**
      * Method to check if the player can attack or not.
      *
-     *
-     * @param countries List view of all the countries of the player
-     * @param terminalWindow  TextArea to which current game information will be displayed
+     * @param countries      List view of all the countries of the player
+     * @param terminalWindow TextArea to which current game information will be displayed
      * @return true if the player can attack; other wise false
      */
 
@@ -557,8 +548,8 @@ public class Player extends Observable implements Observer {
             }
         }
         if (!canAttack) {
-            WindowUtil.updateterminalWindow("Player cannot continue with attck phase, move to fortification phase.\n", terminalWindow);
-            WindowUtil.updateterminalWindow("Attack phase ended\n", terminalWindow);
+            WindowUtil.updateTerminalWindow("Player cannot continue with attck phase, move to fortification phase.\n", terminalWindow);
+            WindowUtil.updateTerminalWindow("Attack phase ended\n", terminalWindow);
             setChanged();
             notifyObservers("checkIfFortificationPhaseValid");
             return canAttack;
@@ -567,8 +558,7 @@ public class Player extends Observable implements Observer {
     }
 
     /**
-     *  Mthod to check if any player lost the game after everyattack move
-     *
+     * Method to check if any player lost the game after every attack move
      *
      * @param playersPlaying List containing all the players playing the game
      * @return Player object of the lost player
@@ -589,20 +579,20 @@ public class Player extends Observable implements Observer {
     /**
      * Methods for exchanging cards of the player for armies
      *
-     * @param selectedCards List of selected cards by the player
+     * @param selectedCards            List of selected cards by the player
      * @param numberOfCardSetExchanged Number of card sets to be exchanged
-     * @param terminalWindow TextArea to which current game information will be displayed
+     * @param terminalWindow           TextArea to which current game information will be displayed
      * @return Player object exchanging the cards
      */
 
     public Player exchangeCards(List<Card> selectedCards, int numberOfCardSetExchanged, TextArea terminalWindow) {
         currentPlayer.setArmyCount(currentPlayer.getArmyCount() + (5 * numberOfCardSetExchanged));
-        WindowUtil.updateterminalWindow(currentPlayer.getName() + " successfully exchanged 3 cards for 1 army! \n", terminalWindow);
+        WindowUtil.updateTerminalWindow(currentPlayer.getName() + " successfully exchanged 3 cards for 1 army! \n", terminalWindow);
 
-            for(Card card : selectedCards){
+        for (Card card : selectedCards) {
             if (currentPlayer.getPlayerCountries().contains(card.getCountry())) {
                 card.getCountry().setNoOfArmies(card.getCountry().getNoOfArmies() + 2);
-                WindowUtil.updateterminalWindow(currentPlayer.getName()+ "\" got extra 2 armies on \"" + card.getCountry().getName() + "\n", terminalWindow);
+                WindowUtil.updateTerminalWindow(currentPlayer.getName() + "\" got extra 2 armies on \"" + card.getCountry().getName() + "\n", terminalWindow);
 
                 break;
             }
@@ -639,12 +629,10 @@ public class Player extends Observable implements Observer {
     }
 
     /**
-     *
      * update method for PLayer object
      *
-     * @param o Observable
+     * @param o   Observable
      * @param arg String which is passed t the player object
-     *
      */
     public void update(Observable o, Object arg) {
         String view = (String) arg;
