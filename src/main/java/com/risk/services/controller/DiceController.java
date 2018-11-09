@@ -112,18 +112,18 @@ public class DiceController implements Initializable {
 	public void diceView() {
 		if (dice.getAttackingCountry().getNoOfArmies() >= 4) {
 			WindowUtil.showCheckBox(dice1_Attacker, dice2_Attacker, dice3_Attacker);
-		} else if (dice.getAttackingCountry().getNoOfArmies() >= 3) {
+		} else if (dice.getAttackingCountry().getNoOfArmies() == 3) {
 			WindowUtil.showCheckBox(dice1_Attacker, dice2_Attacker);
-			WindowUtil.hideButtonControl(dice1_Attacker);
-		} else if (dice.getAttackingCountry().getNoOfArmies() >= 2) {
+			WindowUtil.hideButtonControl(dice3_Attacker);
+		} else if (dice.getAttackingCountry().getNoOfArmies() == 2) {
 			WindowUtil.showCheckBox(dice1_Attacker);		
 			WindowUtil.hideButtonControl(dice2_Attacker, dice3_Attacker);
 		}
-		if (dice.getDefendingCountry().getNoOfArmies() > 2) {
+		if (dice.getDefendingCountry().getNoOfArmies() >= 2) {
 			WindowUtil.showCheckBox(dice1_Defender, dice2_Defender);	
-		} else if (dice.getDefendingCountry().getNoOfArmies() >= 1) {
+		} else if (dice.getDefendingCountry().getNoOfArmies() == 1) {
 			WindowUtil.showCheckBox(dice1_Defender);	
-			WindowUtil.hideButtonControl(dice2_Attacker);
+			WindowUtil.hideButtonControl(dice2_Defender);
 		}
 	}
 	
