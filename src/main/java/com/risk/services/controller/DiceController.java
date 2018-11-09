@@ -53,23 +53,23 @@ public class DiceController implements Initializable {
 	@FXML
 	private Label winnerName;
 	
-	/** Checkbox variable for dice 1 attacker */
+	/** CheckBox variable for dice 1 attacker */
 	@FXML
 	private CheckBox dice1_Attacker;
 	
-	/** Checkbox variable for dice 2 attacker */
+	/** CheckBox variable for dice 2 attacker */
 	@FXML
 	private CheckBox dice2_Attacker;
 	
-	/** Checkbox variable for dice 3 attacker */
+	/** CheckBox variable for dice 3 attacker */
 	@FXML
 	private CheckBox dice3_Attacker;
 	
-	/** Checkbox variable for dice 1 defender */ 
+	/** CheckBox variable for dice 1 defender */ 
 	@FXML
 	private CheckBox dice1_Defender;
 	
-	/** Checkbox variable for dice 2 defender */ 
+	/** CheckBox variable for dice 2 defender */ 
 	@FXML
 	private CheckBox dice2_Defender;	
 	
@@ -108,12 +108,23 @@ public class DiceController implements Initializable {
 	 * DiceController Constructor
 	 * 
 	 * @param dice
-	 *  	Dice odject
+	 *  	Dice object
+	 *  
 	 */
 	public DiceController(Dice dice) {
 		this.dice = dice;
 	}
 	
+	/**
+	 * Method to call load attack screen and dice view
+	 * 
+	 * @param location
+	 *  	URL
+	 *  
+	 * @param resources
+	 * 		ResourceBundle
+	 * 
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
@@ -122,6 +133,10 @@ public class DiceController implements Initializable {
 		
 	}
 
+	/** 
+	 * Method to load Attack screen 
+	 * 
+	 */
 	public void  loadAttackScreen() {
 		// TODO Auto-generated method stub
 		
@@ -144,7 +159,10 @@ public class DiceController implements Initializable {
 		WindowUtil.disablePane(afterAttackView);
 	}
 	
-	
+	/** 
+	 * Method for dice view 
+	 * 
+	 */
 	public void diceView() {
 		if (dice.getAttackingCountry().getNoOfArmies() >= 4) {
 			WindowUtil.showCheckBox(dice1_Attacker, dice2_Attacker, dice3_Attacker);
@@ -163,6 +181,12 @@ public class DiceController implements Initializable {
 		}
 	}
 	
+	/**
+	 * Method to move armies
+	 * 
+	 * @param event
+	 *  	ActionEvent
+	 */
 	@FXML
 	private void moveArmies(ActionEvent event) {
 		
@@ -178,19 +202,36 @@ public class DiceController implements Initializable {
 		}
 	}
 	
+	/**
+	 * Method to cancel move
+	 * 
+	 * @param event
+	 *  	ActionEvent
+	 */
 	@FXML
 	private void cancelMove(ActionEvent event){
 		dice.skipMoveArmy();
 		WindowUtil.exitWindow(cancelMove);
 	}
 	
+	/**
+	 * Method to cancel throw
+	 * 
+	 * @param event
+	 *  	ActionEvent
+	 */
 	@FXML
 	private void cancelThrow(ActionEvent event) {
 		dice.cancelDiceThrow();
 		WindowUtil.exitWindow(cancelThrow);
 	}
 	
-	
+	/**
+	 * Method to continue dice roll
+	 * 
+	 * @param event
+	 *  	ActionEvent
+	 */
 	@FXML
 	private void continueDiceRoll(ActionEvent event) {
 		dice.setAttackerDiceList(new ArrayList<>());
@@ -199,7 +240,12 @@ public class DiceController implements Initializable {
 		diceView();
 	}
 	
-	
+	/**
+	 * Method to attack dice value
+	 * 
+	 * @param allCheckBoxes
+	 *  	CheckBox
+	 */
 	public void attackDiceValue(CheckBox... allCheckBoxes) {
 		for (CheckBox checkBox : allCheckBoxes) {
 			if (checkBox.isSelected()) {
@@ -210,6 +256,12 @@ public class DiceController implements Initializable {
 		}
 	}
 	
+	/**
+	 * Method to defence dice value
+	 * 
+	 * @param allCheckBoxes
+	 *  	CheckBox
+	 */
 	public void defenceDiceValue(CheckBox... allCheckBoxes) {
 		for (CheckBox checkBox : allCheckBoxes) {
 			if (checkBox.isSelected()) {
@@ -220,6 +272,12 @@ public class DiceController implements Initializable {
 		}
 	}
 	
+	/**
+	 * Method to start roll
+	 * 
+	 * @param event
+	 *  	ActionEvent
+	 */
 	@FXML
 	public void startRoll(ActionEvent event) {
 		if (!dice1_Attacker.isSelected() && !dice2_Attacker.isSelected() && !dice3_Attacker.isSelected()) {
