@@ -95,6 +95,12 @@ public class WindowUtil {
         }
     }
 
+    /**
+     * Method for making checkbox visible.
+     *
+     * @param controls
+     */
+
     public static void showCheckBox(Control... controls) {
         for (Control control : controls) {
             control.setVisible(true);

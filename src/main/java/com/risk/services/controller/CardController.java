@@ -136,13 +136,13 @@ public class CardController implements Initializable {
     private void checkExchange(ActionEvent event) {
         exchange.setDisable(false);
         text.setText(null);
-        List<Card> selectedCards = card.retrieveSelectedCardsFromCheckbox(playerOwnedCards, checkBox);
+        List<Card> selectedCards = card.chooseCards(playerOwnedCards, checkBox);
 
         if (selectedCards.size() == 3) {
-            boolean flag = card.checkTradePossible(selectedCards);
+            boolean flag = card.isExchangePossible(selectedCards);
 
             if (flag) {
-                card.setCardsExchangeable(selectedCards);
+                card.cardsToBeExchanged(selectedCards);
                 WindowUtil.exitWindow(exchange);
             } else {
                 text.setText("This Combination is not Valid");

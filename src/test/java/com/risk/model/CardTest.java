@@ -43,7 +43,7 @@ public class CardTest {
         listOfCards.add(new Card(ICardType.ARTILLERY));
         listOfCards.add(new Card(ICardType.CAVALRY));
 
-        assertEquals(true,card.checkTradePossible(listOfCards));
+        assertEquals(true,card.isExchangePossible(listOfCards));
         }
     
 	/**
@@ -57,19 +57,19 @@ public class CardTest {
         listOfCards.add(new Card(ICardType.CAVALRY));
         listOfCards.add(new Card(ICardType.CAVALRY));
 
-        assertEquals(true,card.checkTradePossible(listOfCards));
+        assertEquals(true,card.isExchangePossible(listOfCards));
         listOfCards.clear();
 
         listOfCards.add(new Card(ICardType.INFANTRY));
         listOfCards.add(new Card(ICardType.INFANTRY));
         listOfCards.add(new Card(ICardType.INFANTRY));
-        assertEquals(true,card.checkTradePossible(listOfCards));
+        assertEquals(true,card.isExchangePossible(listOfCards));
         listOfCards.clear();
 
         listOfCards.add(new Card(ICardType.ARTILLERY));
         listOfCards.add(new Card(ICardType.ARTILLERY));
         listOfCards.add(new Card(ICardType.ARTILLERY));
-        assertEquals(true,card.checkTradePossible(listOfCards));
+        assertEquals(true,card.isExchangePossible(listOfCards));
         listOfCards.clear();
         }
     }

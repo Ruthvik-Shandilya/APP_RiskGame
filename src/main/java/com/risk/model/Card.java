@@ -143,7 +143,7 @@ public class Card extends Observable {
      * @param checkboxes checkboxes
      * @return List of cards selected by the player
      */
-    public List<Card> retrieveSelectedCardsFromCheckbox(List<Card> list, CheckBox[] checkboxes) {
+    public List<Card> chooseCards(List<Card> list, CheckBox[] checkboxes) {
         List<Card> selectedCards = new ArrayList<>();
         for (int i = 0; i < checkboxes.length; ++i) {
             if (checkboxes[i].isSelected()) {
@@ -160,8 +160,8 @@ public class Card extends Observable {
      * @param selectedCards selected cards
      * @return true if the exchange is possible; otherwise false
      */
-    public boolean checkTradePossible(List<Card> selectedCards) {
-        boolean returnFlag = false;
+    public boolean isExchangePossible(List<Card> selectedCards) {
+        boolean isPossible = false;
         if (selectedCards.size() == 3) {
             int infantry = 0, cavalry = 0, artillery = 0;
             for (Card card : selectedCards) {
@@ -174,10 +174,10 @@ public class Card extends Observable {
                 }
             }
             if ((infantry == 1 && cavalry == 1 && artillery == 1) || infantry == 3 || cavalry == 3 || artillery == 3) {
-                returnFlag = true;
+                isPossible = true;
             }
         }
-        return returnFlag;
+        return isPossible;
     }
 
     /**
@@ -187,7 +187,7 @@ public class Card extends Observable {
      * @param selectedCards cards which are selected by the user to exchange
      */
 
-    public void setCardsExchangeable(List<Card> selectedCards) {
+    public void cardsToBeExchanged(List<Card> selectedCards) {
         setCardsToExchange(selectedCards);
         setChanged();
         notifyObservers("cardsExchange");
