@@ -85,7 +85,7 @@ public class DiceController implements Initializable {
 	@FXML
 	private Button continueRoll;
 	
-	/** Pane variable for */
+	/** Pane variable for after attack view*/
 	@FXML
 	private Pane afterAttackView;
 	
