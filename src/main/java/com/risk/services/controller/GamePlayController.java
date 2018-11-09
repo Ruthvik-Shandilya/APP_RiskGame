@@ -465,7 +465,7 @@ public class GamePlayController implements Initializable, Observer {
 
         phaseView.setText("Phase: Reinforcement");
         WindowUtil.disableButtonControl(placeArmy, fortify, attack);
-        WindowUtil.enableButtonControl(reinforcement);
+        WindowUtil.enableButtonControl(reinforcement,cards);
         reinforcement.requestFocus();
         WindowUtil.updateTerminalWindow("\nReinforcement phase started\n", terminalWindow);
         calculateReinforcementArmies();
