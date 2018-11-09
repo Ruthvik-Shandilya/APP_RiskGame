@@ -50,8 +50,8 @@ public class WindowUtil {
     /**
      * This method provides a warning window with a message.
      *
-     * @param head Head of the window
-     * @param title Title of the window
+     * @param head        Head of the window
+     * @param title       Title of the window
      * @param information warning message
      */
     public static void popUpWindow(String head, String title, String information) {
@@ -157,7 +157,6 @@ public class WindowUtil {
      * @return The value provided by the user
      */
     public static String userInput() {
-
         TextInputDialog inputBox = new TextInputDialog();
         String numberOfArmies = "0";
         inputBox.setTitle("User Input");
@@ -172,31 +171,17 @@ public class WindowUtil {
     /**
      * This method helps in updating the terminal window by running single thread
      *
-     * @param information Information
+     * @param information    Information
      * @param terminalWindow Console
      */
-    public static void updateterminalWindow(String information, TextArea terminalWindow) {
-
+    public static void updateTerminalWindow(String information, TextArea terminalWindow) {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                terminalWindow.appendText(information);
+                if (terminalWindow != null)
+                    terminalWindow.appendText(information);
             }
         });
     }
 
-    /**
-     * This method helps in updating the terminal window by running single thread
-     *
-     * @param information Information
-     */
-    public static void updateterminalWindow(String information) {
-
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                System.out.println(information);
-            }
-        });
-    }
 }

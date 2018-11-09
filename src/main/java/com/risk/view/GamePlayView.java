@@ -31,7 +31,6 @@ public class GamePlayView implements EventHandler<ActionEvent> {
 
         final Stage gamePlayStage = new Stage();
         gamePlayStage.setTitle("Game Screen");
-        gamePlayStage.initModality(Modality.APPLICATION_MODAL);
 
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("MapSelectorLayout.fxml"));
         loader.setController(controller);
@@ -45,6 +44,23 @@ public class GamePlayView implements EventHandler<ActionEvent> {
         Scene scene = new Scene(root);
         gamePlayStage.setScene(scene);
         gamePlayStage.show();
+
+        final Stage terminalStage = new Stage();
+        terminalStage.setTitle("Terminal Window");
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("TerminalWindow.fxml"));
+        fxmlLoader.setController(controller);
+
+        Parent myRoot = null;
+        try {
+            myRoot = (Parent) fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Scene myScene = new Scene(myRoot);
+        terminalStage.setScene(myScene);
+        terminalStage.show();
     }
 
 }

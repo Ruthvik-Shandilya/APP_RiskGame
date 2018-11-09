@@ -48,14 +48,14 @@ public class StartUpPhase {
 					players.get(i).addCountry(countries.get(assignCountryIndex));
 					countries.get(assignCountryIndex).setPlayer(players.get(i));
 					countries.get(assignCountryIndex).setNoOfArmies(1);
-					WindowUtil.updateterminalWindow(countries.get(assignCountryIndex).getName() + " assigned to " +
+					WindowUtil.updateTerminalWindow(countries.get(assignCountryIndex).getName() + " assigned to " +
 							players.get(i).getName() + " ! \n", textArea);
 					countries.remove(assignCountryIndex);
 				} else if (countries.size() == 1) {
 					players.get(i).addCountry(countries.get(0));
 					countries.get(0).setPlayer(players.get(i));
 					countries.get(0).setNoOfArmies(1);
-					WindowUtil.updateterminalWindow(countries.get(0).getName() + " assigned to " +
+					WindowUtil.updateTerminalWindow(countries.get(0).getName() + " assigned to " +
 									players.get(i).getName() + " ! \n", textArea);
 					countries.remove(0);
 					break;

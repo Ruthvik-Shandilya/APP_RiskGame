@@ -19,24 +19,34 @@ import java.util.ResourceBundle;
  *
  * @author Palash Jain
  */
-public class PlayerDetailsController implements Initializable{
+public class PlayerDetailsController implements Initializable {
 
-    /** Map Object */
+    /**
+     * Map Object
+     */
     private MapIO mapIO;
 
-    /** PlayerDetails terminalWindow */
+    /**
+     * PlayerDetails terminalWindow
+     */
     @FXML
     private TextArea playerDetails;
 
-    /** Button to start the Game */
+    /**
+     * Button to start the Game
+     */
     @FXML
     private Button startGame;
 
-    /** A JAVA FX feature which provides choice boxes to select the number of players. */
+    /**
+     * A JAVA FX feature which provides choice boxes to select the number of players.
+     */
     @FXML
     private ChoiceBox<Integer> playerCount;
 
-    /** Initial Selected Players */
+    /**
+     * Initial Selected Players
+     */
     private int numOfPlayersSelected;
 
     /**
@@ -44,14 +54,14 @@ public class PlayerDetailsController implements Initializable{
      *
      * @param mapIO Map Object
      */
-    public PlayerDetailsController(MapIO mapIO){
+    public PlayerDetailsController(MapIO mapIO) {
         this.mapIO = mapIO;
     }
 
     /**
      * This method is called to initialize the player detail controller.
      *
-     * @param location Location
+     * @param location  Location
      * @param resources resources
      */
     @Override
@@ -63,7 +73,6 @@ public class PlayerDetailsController implements Initializable{
      * Choice Box to select the number of players
      *
      * @param playerCount number of players
-     *
      * @return player count
      */
     public static ChoiceBox<Integer> initializePlayerCountValues(ChoiceBox<Integer> playerCount) {
@@ -79,11 +88,10 @@ public class PlayerDetailsController implements Initializable{
      * @param event StartPlay Action Event
      */
     @FXML
-    private void startPlay(ActionEvent event){
+    private void startPlay(ActionEvent event) {
         numOfPlayersSelected = playerCount.getSelectionModel().getSelectedItem();
         String players[] = playerDetails.getText().split("\n");
-        System.out.println("Player list=" + Arrays.asList(players).toString());
-        if(players.length!=numOfPlayersSelected){
+        if (players.length != numOfPlayersSelected) {
             WindowUtil.popUpWindow("Player names warning", "Alert", "Please enter appropriate player names.");
         }
         startGame.setOnAction(new GamePlayView(this.mapIO, players));

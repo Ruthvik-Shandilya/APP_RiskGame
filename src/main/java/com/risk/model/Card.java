@@ -18,38 +18,44 @@ import java.util.Observable;
  * It provides methods for performing operations on the cards
  * like exchange cards for armies etc.
  *
- *
  * @author Palash
  * @author Ruthvik Shandilya
  */
 
 public class Card extends Observable {
 
-    /** Type of the card*/
+    /**
+     * Type of the card
+     */
     String cardType;
 
-    /** Object of country, which is the on the card*/
+    /**
+     * Object of country, which is the on the card
+     */
     private Country country;
 
-    /** Player who is the card Holder*/
+    /**
+     * Player who is the card Holder
+     */
     private Player currentPlayer;
 
-    /** List of cards which can be exchanged*/
+    /**
+     * List of cards which can be exchanged
+     */
     private List<Card> cardsToExchange;
 
     /**
      * Cards constructor
-     *
-     * */
+     */
 
-    public Card(){ }
+    public Card() {
+    }
 
     /**
      * Cards constructor
      *
-     * @param cardType  Type of card
-     *
-     * */
+     * @param cardType Type of card
+     */
 
     public Card(String cardType) {
         this.cardType = cardType;
@@ -59,8 +65,7 @@ public class Card extends Observable {
      * Get card type
      *
      * @return Type of card
-     *
-     * */
+     */
 
     public String getCardType() {
         return cardType;
@@ -70,8 +75,7 @@ public class Card extends Observable {
      * get Country of the card
      *
      * @return country of the card
-     *
-     * */
+     */
     public Country getCountry() {
         return country;
     }
@@ -80,8 +84,7 @@ public class Card extends Observable {
      * Set Country
      *
      * @param country of the card
-     *
-     * */
+     */
 
     public void setCountry(Country country) {
         this.country = country;
@@ -90,14 +93,14 @@ public class Card extends Observable {
     /**
      * Getter for list of cards for exchange.
      *
-     * @return  list of cards
-     *
-     * */
+     * @return list of cards
+     */
 
     public List<Card> getCardsToExchange() {
         return cardsToExchange;
     }
-    /** *
+
+    /**
      * Set cardsToExchange
      *
      * @param cardsToExchange
@@ -112,12 +115,12 @@ public class Card extends Observable {
      * the cards owned by the player.
      *
      * @param player Player having the turn
-     * @param card card to display for the player
+     * @param card   card to display for the player
      */
     public void openCardWindow(Player player, Card card) {
         this.currentPlayer = player;
-        final Stage newMapStage = new Stage();
-        newMapStage.setTitle("Card Window");
+        final Stage newCardStage = new Stage();
+        newCardStage.setTitle("Card Window");
         CardController cardController = new CardController(this.currentPlayer, card);
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Cards.fxml"));
         loader.setController(cardController);
@@ -128,8 +131,8 @@ public class Card extends Observable {
             e.printStackTrace();
         }
         Scene scene = new Scene(root);
-        newMapStage.setScene(scene);
-        newMapStage.show();
+        newCardStage.setScene(scene);
+        newCardStage.show();
     }
 
     /**
@@ -142,8 +145,8 @@ public class Card extends Observable {
      */
     public List<Card> retrieveSelectedCardsFromCheckbox(List<Card> list, CheckBox[] checkboxes) {
         List<Card> selectedCards = new ArrayList<>();
-        for (int i=0;i<checkboxes.length;++i){
-            if(checkboxes[i].isSelected()) {
+        for (int i = 0; i < checkboxes.length; ++i) {
+            if (checkboxes[i].isSelected()) {
                 selectedCards.add(list.get(i));
             }
         }
@@ -154,24 +157,23 @@ public class Card extends Observable {
      * Method is used to verify ,
      * if cards can be exchanged for army or not
      *
-     *
      * @param selectedCards
      * @return true if the exchange is possible; otherwise false
      */
     public boolean checkTradePossible(List<Card> selectedCards) {
         boolean returnFlag = false;
-        if(selectedCards.size()==3) {
+        if (selectedCards.size() == 3) {
             int infantry = 0, cavalry = 0, artillery = 0;
-                for (Card card : selectedCards) {
-                    if (card.getCardType().equals(ICardType.INFANTRY)) {
-                        infantry++;
-                    } else if (card.getCardType().equals(ICardType.CAVALRY)) {
-                        cavalry++;
-                    } else if (card.getCardType().equals(ICardType.ARTILLERY)) {
-                        artillery++;
-                    }
+            for (Card card : selectedCards) {
+                if (card.getCardType().equals(ICardType.INFANTRY)) {
+                    infantry++;
+                } else if (card.getCardType().equals(ICardType.CAVALRY)) {
+                    cavalry++;
+                } else if (card.getCardType().equals(ICardType.ARTILLERY)) {
+                    artillery++;
                 }
-            if((infantry==1 && cavalry==1 && artillery==1) || infantry==3 || cavalry==3 || artillery==3) {
+            }
+            if ((infantry == 1 && cavalry == 1 && artillery == 1) || infantry == 3 || cavalry == 3 || artillery == 3) {
                 returnFlag = true;
             }
         }

@@ -77,11 +77,6 @@ public class GamePlayController implements Initializable, Observer {
     private BarChart dominationBarChart;
 
     /**
-     * Player Object
-     */
-    private Player player;
-
-    /**
      * WorldDomination Object
      */
     private PlayerWorldDomination worldDomination;
@@ -187,16 +182,14 @@ public class GamePlayController implements Initializable, Observer {
      * Constructor which adds player,card and worldDomination as observers and
      * creates Objects for the same.
      *
-     * @param map Map Object
+     * @param map   Map Object
      * @param names Player Names
      */
     public GamePlayController(MapIO map, String[] names) {
         this.map = map;
         this.startUpPhase = new StartUpPhase();
-        this.player = new Player();
         this.card = new Card();
         this.playerNames = names;
-        player.addObserver(this);
         card.addObserver(this);
         worldDomination = new PlayerWorldDomination();
         worldDomination.addObserver(this);
@@ -210,15 +203,15 @@ public class GamePlayController implements Initializable, Observer {
 
         setNumberOfPlayersSelected(this.playerNames.length);
         gamePlayerList.clear();
-        WindowUtil.updateterminalWindow("Set up phase started\n", terminalWindow );
-        gamePlayerList = player.generatePlayer(getNumberOfPlayersSelected(), this.playerNames, terminalWindow);
-        WindowUtil.updateterminalWindow("All players generated\n", terminalWindow );
+        WindowUtil.updateTerminalWindow("Set up phase started\n", terminalWindow);
+        gamePlayerList = Player.generatePlayer(getNumberOfPlayersSelected(), this.playerNames, terminalWindow);
+        WindowUtil.updateTerminalWindow("All players generated\n", terminalWindow);
 
         roundRobin = new RoundRobin(this.gamePlayerList);
 
-        player.assignArmiesToPlayers(gamePlayerList, terminalWindow);
+        playerPlaying.assignArmiesToPlayers(gamePlayerList, terminalWindow);
         allocateCountryToPlayerInGamePlay();
-        WindowUtil.updateterminalWindow("All countries assigned\n", terminalWindow );
+        WindowUtil.updateTerminalWindow("All countries assigned\n", terminalWindow);
 
         loadMapData();
         loadCurrentPlayer();
@@ -231,7 +224,7 @@ public class GamePlayController implements Initializable, Observer {
      * and helps in assigning the country and adjacent countries to the
      * player.
      *
-     * @param location Location
+     * @param location  Location
      * @param resources Resources
      */
     @Override
@@ -296,7 +289,7 @@ public class GamePlayController implements Initializable, Observer {
      */
     private void loadGameCard() {
         cardStack = startUpPhase.assignCardToCountry(map, terminalWindow);
-        WindowUtil.updateterminalWindow("Cards loaded\n", terminalWindow);
+        WindowUtil.updateTerminalWindow("Cards loaded\n", terminalWindow);
     }
 
     /**
@@ -308,10 +301,10 @@ public class GamePlayController implements Initializable, Observer {
     @FXML
     private void completeAttack(ActionEvent event) {
         adjacentCountryList.setOnMouseClicked(e -> System.out.print(""));
-        if (player.getCountryWon() > 0) {
+        if (playerPlaying.getCountryWon() > 0) {
             allocateCardToPlayer();
         }
-        WindowUtil.updateterminalWindow("Attack phase ended\n", terminalWindow);
+        WindowUtil.updateTerminalWindow("Attack phase ended\n", terminalWindow);
         isValidFortificationPhase();
     }
 
@@ -321,8 +314,9 @@ public class GamePlayController implements Initializable, Observer {
     private void allocateCardToPlayer() {
         Card cardToBeAdded = cardStack.pop();
         playerPlaying.getCardList().add(cardToBeAdded);
-        player.setCountryWon(0);
-        WindowUtil.updateterminalWindow(cardToBeAdded.getCardType().toString() + "card is assigned to " + playerPlaying.getName() + " and won country " + cardToBeAdded.getCountry().getName() + "\n");
+        playerPlaying.setCountryWon(0);
+        WindowUtil.updateTerminalWindow(cardToBeAdded.getCardType().toString() + " card is assigned to " +
+                playerPlaying.getName() + " and won country " + cardToBeAdded.getCountry().getName() + "\n", terminalWindow);
     }
 
     /**
@@ -332,7 +326,7 @@ public class GamePlayController implements Initializable, Observer {
         Country attackingTerritory = selectedCountryList.getSelectionModel().getSelectedItem();
         Country defendingTerritory = adjacentCountryList.getSelectionModel().getSelectedItem();
 
-        player.attackPhase(attackingTerritory, defendingTerritory);
+        playerPlaying.attackPhase(attackingTerritory, defendingTerritory);
     }
 
     /**
@@ -345,7 +339,7 @@ public class GamePlayController implements Initializable, Observer {
         Country selectedCountry = this.selectedCountryList.getSelectionModel().getSelectedItem();
         Country adjacentCountry = this.adjacentCountryList.getSelectionModel().getSelectedItem();
 
-        player.fortificationPhase(selectedCountry, adjacentCountry, terminalWindow);
+        playerPlaying.fortificationPhase(selectedCountry, adjacentCountry, terminalWindow);
         selectedCountryList.refresh();
         adjacentCountryList.refresh();
         loadMapData();
@@ -359,8 +353,8 @@ public class GamePlayController implements Initializable, Observer {
     @FXML
     private void endTurn(ActionEvent event) {
         adjacentCountryList.setOnMouseClicked(e -> System.out.print(""));
-        WindowUtil.updateterminalWindow("Player " + playerPlaying.getName() + " ended his turn.\n", terminalWindow);
-        if (player.getCountryWon() > 0) {
+        WindowUtil.updateTerminalWindow("Player " + playerPlaying.getName() + " ended his turn.\n", terminalWindow);
+        if (playerPlaying.getCountryWon() > 0) {
             allocateCardToPlayer();
         }
         initializeReinforcement();
@@ -374,7 +368,7 @@ public class GamePlayController implements Initializable, Observer {
      */
     @FXML
     private void placeArmy(ActionEvent event) {
-        player.placeArmyOnCountry(playerPlaying, selectedCountryList, gamePlayerList, terminalWindow);
+        playerPlaying.placeArmyOnCountry(playerPlaying, selectedCountryList, gamePlayerList, terminalWindow);
     }
 
     /**
@@ -389,7 +383,7 @@ public class GamePlayController implements Initializable, Observer {
             WindowUtil.popUpWindow("Exchange Card", "Card exchange popup", "You have at least 5 cards please exchange for armies");
             return;
         }
-        player.reinforcementPhase(country, terminalWindow);
+        playerPlaying.reinforcementPhase(country, terminalWindow);
         selectedCountryList.refresh();
         loadMapData();
         playerChosen.setText(playerPlaying.getName() + ":- " + playerPlaying.getArmyCount() + " armies left.");
@@ -410,7 +404,7 @@ public class GamePlayController implements Initializable, Observer {
      * Method which helps to allocate country to the player.
      */
     private void allocateCountryToPlayerInGamePlay() {
-        WindowUtil.updateterminalWindow("Assigning countries to all players\n", terminalWindow);
+        WindowUtil.updateTerminalWindow("Assigning countries to all players\n", terminalWindow);
         startUpPhase.assignCountryToPlayer(map, gamePlayerList, terminalWindow);
     }
 
@@ -420,9 +414,10 @@ public class GamePlayController implements Initializable, Observer {
      */
     private void loadCurrentPlayer() {
         playerPlaying = roundRobin.next();
-        player.setPlayerPlaying(playerPlaying);
-        player.setCountryWon(0);
-        WindowUtil.updateterminalWindow(playerPlaying.getName() + "'s turn started.\n", terminalWindow);
+        playerPlaying.setPlayerPlaying(playerPlaying);
+        playerPlaying.setCountryWon(0);
+        playerPlaying.addObserver(this);
+        WindowUtil.updateTerminalWindow(playerPlaying.getName() + "'s turn started.\n", terminalWindow);
 
         selectedCountryList.getItems().clear();
         adjacentCountryList.getItems().clear();
@@ -438,10 +433,10 @@ public class GamePlayController implements Initializable, Observer {
      */
     public void calculateReinforcementArmies() {
         if (this.playerPlaying != null) {
-            playerPlaying = player.noOfReinsforcementArmies(playerPlaying);
+            playerPlaying = playerPlaying.noOfReinforcementArmies(playerPlaying);
             playerChosen.setText(playerPlaying.getName() + ":- " + playerPlaying.getArmyCount() + " armies left.");
         } else {
-            WindowUtil.updateterminalWindow("Wait, no player is assigned the position of current player\n", terminalWindow);
+            WindowUtil.updateTerminalWindow("Wait, no player is assigned the position of current player\n", terminalWindow);
         }
     }
 
@@ -465,7 +460,7 @@ public class GamePlayController implements Initializable, Observer {
         WindowUtil.disableButtonControl(placeArmy, fortify, attack);
         WindowUtil.enableButtonControl(reinforcement);
         reinforcement.requestFocus();
-        WindowUtil.updateterminalWindow("\nReinforcement phase started\n",terminalWindow);
+        WindowUtil.updateTerminalWindow("\nReinforcement phase started\n", terminalWindow);
         calculateReinforcementArmies();
     }
 
@@ -481,9 +476,9 @@ public class GamePlayController implements Initializable, Observer {
      * Method to initialize attack phase in the game.
      */
     private void initializeAttack() {
-        WindowUtil.updateterminalWindow("\n Attack phase started.\n",terminalWindow);
+        WindowUtil.updateTerminalWindow("\n Attack phase started.\n", terminalWindow);
 
-        if (player.playerCanAttack(selectedCountryList, terminalWindow)) {
+        if (playerPlaying.playerCanAttack(selectedCountryList, terminalWindow)) {
             phaseView.setText("Phase: Attack");
 
             WindowUtil.disableButtonControl(reinforcement, placeArmy);
@@ -503,7 +498,7 @@ public class GamePlayController implements Initializable, Observer {
         WindowUtil.enableButtonControl(fortify);
         phaseView.setText("Phase: Fortification");
         fortify.requestFocus();
-        WindowUtil.updateterminalWindow("\nFortification phase started.\n",terminalWindow);
+        WindowUtil.updateTerminalWindow("\nFortification phase started.\n", terminalWindow);
 
     }
 
@@ -511,23 +506,15 @@ public class GamePlayController implements Initializable, Observer {
      * Method to generate the graph to populate the World Domination Window.
      */
     private void generateBarGraph() {
-        CategoryAxis xAxis = new CategoryAxis();
-        NumberAxis yAxis = new NumberAxis();
-        xAxis.setLabel("Player");
-        yAxis.setLabel("Percentage");
-        //xAxis.setTickLabelRotation(90);
         HashMap<Player, Double> playerTerPercent = worldDomination.generateWorldDominationData(map);
-        System.out.println(playerTerPercent.toString());
         ObservableList<XYChart.Series<String, Double>> answer = FXCollections.observableArrayList();
         ArrayList<XYChart.Series<String, Double>> chartData = new ArrayList<>();
         for (Entry<Player, Double> entry : playerTerPercent.entrySet()) {
             XYChart.Series<String, Double> aSeries = new XYChart.Series<>();
             aSeries.setName(entry.getKey().getName());
             aSeries.getData().add(new XYChart.Data(entry.getKey().getName(), entry.getValue()));
-            System.out.println("aSeries=" + aSeries.getData().toString());
             chartData.add(aSeries);
         }
-        System.out.println("charData=" + chartData.toString());
         answer.addAll(chartData);
         dominationBarChart.setData(answer);
     }
@@ -536,12 +523,12 @@ public class GamePlayController implements Initializable, Observer {
      * Method to check if any player has lost the game.
      */
     private void isAnyPlayerLost() {
-        Player playerLost = player.checkPlayerLost(gamePlayerList);
+        Player playerLost = playerPlaying.checkPlayerLost(gamePlayerList);
         if (playerLost != null) {
             gamePlayerList.remove(playerLost);
             roundRobin.updateAfterPlayerLost(playerLost);
             WindowUtil.popUpWindow(playerLost.getName() + " Lost", "Player Lost popup", "Player: " + playerLost.getName() + " lost the game");
-            WindowUtil.updateterminalWindow(playerLost.getName() +" loast the game and hence all the countries.\n\n", terminalWindow);
+            WindowUtil.updateTerminalWindow(playerLost.getName() + " lost the game and hence all the countries.\n\n", terminalWindow);
         }
     }
 
@@ -552,7 +539,7 @@ public class GamePlayController implements Initializable, Observer {
         WindowUtil.disableButtonControl(selectedCountryList, adjacentCountryList, reinforcement, attack, fortify, cards, endTurn);
         phaseView.setText("GAME OVER");
         playerChosen.setText(playerPlaying.getName().toUpperCase() + " WON.");
-        WindowUtil.updateterminalWindow("\n " + playerPlaying.getName().toUpperCase() + " WON.\n\n");
+        WindowUtil.updateTerminalWindow("\n " + playerPlaying.getName().toUpperCase() + " WON.\n\n", terminalWindow);
 
     }
 
@@ -586,7 +573,7 @@ public class GamePlayController implements Initializable, Observer {
         generateBarGraph();
         playerChosen.setText(playerPlaying.getName() + ": " + playerPlaying.getArmyCount() + " armies left.\n");
         if (!isAnyPlayerWon()) {
-            player.playerCanAttack(selectedCountryList, terminalWindow);
+            playerPlaying.playerCanAttack(selectedCountryList, terminalWindow);
         }
     }
 
@@ -603,16 +590,16 @@ public class GamePlayController implements Initializable, Observer {
      * Method to check if fortification phase is valid.
      */
     private void isValidFortificationPhase() {
-        player.isFortificationPhaseValid(map, playerPlaying);
+        playerPlaying.isFortificationPhaseValid(map, playerPlaying);
     }
 
     /**
      * Method to update the player having few or no armies to fortify through the terminal window
      */
     private void noFortificationPhase() {
-        WindowUtil.updateterminalWindow("Fortification phase started\n",terminalWindow);
-        WindowUtil.updateterminalWindow(playerPlaying.getName() + " does not have armies to fortify.\n",terminalWindow);
-        WindowUtil.updateterminalWindow("Fortification phase ended\n",terminalWindow);
+        WindowUtil.updateTerminalWindow("Fortification phase started\n", terminalWindow);
+        WindowUtil.updateTerminalWindow(playerPlaying.getName() + " does not have armies to fortify.\n", terminalWindow);
+        WindowUtil.updateTerminalWindow("Fortification phase ended\n", terminalWindow);
         initializeReinforcement();
     }
 
@@ -642,7 +629,7 @@ public class GamePlayController implements Initializable, Observer {
     public void exchangeCards(Card exch) {
         List<Card> tradedCards = exch.getCardsToExchange();
         setNumberOfCardSetExchanged(getNumberOfCardSetExchanged() + 1);
-        player.exchangeCards(tradedCards, getNumberOfCardSetExchanged(), terminalWindow);
+        playerPlaying.exchangeCards(tradedCards, getNumberOfCardSetExchanged(), terminalWindow);
         playerPlaying.getCardList().removeAll(tradedCards);
         cardStack.addAll(tradedCards);
         Collections.shuffle(cardStack);
@@ -657,7 +644,7 @@ public class GamePlayController implements Initializable, Observer {
      * This method is called whenever the observed object is changed and
      * it also notifies all the observers of the change.
      *
-     * @param o Object
+     * @param o   Object
      * @param arg Object
      */
     public void update(Observable o, Object arg) {
