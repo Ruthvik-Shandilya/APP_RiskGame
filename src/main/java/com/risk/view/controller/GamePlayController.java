@@ -1,10 +1,10 @@
-package com.risk.services.controller;
+package com.risk.view.controller;
 
 import java.net.URL;
 import java.util.*;
 import java.util.Map.Entry;
 
-import com.risk.services.controller.Util.WindowUtil;
+import com.risk.view.Util.WindowUtil;
 import com.risk.model.Card;
 import com.risk.model.Continent;
 import com.risk.services.MapIO;

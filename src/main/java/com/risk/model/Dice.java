@@ -1,6 +1,6 @@
 package com.risk.model;
 
-import com.risk.services.controller.Util.WindowUtil;
+import com.risk.view.Util.WindowUtil;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
