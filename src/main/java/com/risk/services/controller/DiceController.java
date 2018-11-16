@@ -60,7 +60,7 @@ public class DiceController implements Initializable {
 	/** CheckBox variable for dice 2 attacker */
 	@FXML
 	private CheckBox dice2_Attacker;
-	
+
 	/** CheckBox variable for dice 3 attacker */
 	@FXML
 	private CheckBox dice3_Attacker;
@@ -154,8 +154,8 @@ public class DiceController implements Initializable {
 		winnerName.setText("");
 		
 		WindowUtil.unCheckBoxes(dice1_Attacker, dice2_Attacker, dice3_Attacker, dice1_Defender, dice2_Defender);
-		WindowUtil.enableButtonControl(startRoll);
-		WindowUtil.disableButtonControl(winnerName, continueRoll);
+		WindowUtil.enableButtonControl(startRoll, continueRoll);
+		WindowUtil.disableButtonControl(winnerName);
 		WindowUtil.disablePane(afterAttackView);
 	}
 	
@@ -238,10 +238,76 @@ public class DiceController implements Initializable {
 	 */
 	@FXML
 	private void continueDiceRoll(ActionEvent event) {
+
 		dice.setAttackerDiceList(new ArrayList<>());
 		dice.setDefenderDiceList(new ArrayList<>());
 		loadAttackScreen();
-		diceView();
+//		diceView();
+
+
+		Country countryAttacking = dice.getAttackingCountry();
+		Country defendingCountry = dice.getDefendingCountry();
+		ArrayList<String> diceResult =  new ArrayList<>();
+
+		while(dice.getAttackingCountry().getNoOfArmies() > 1 && dice.getDefendingCountry().getNoOfArmies() > 0 ) {
+			// Refreshing a the dices
+			dice.getAttackerDiceList().clear();
+			dice.getDefenderDiceList().clear();
+			if (countryAttacking.getNoOfArmies() >= 4) {
+
+				WindowUtil.showCheckBox(dice1_Attacker, dice2_Attacker, dice3_Attacker);
+				WindowUtil.checkCheckBoxes(dice1_Attacker, dice2_Attacker, dice3_Attacker);
+				attackDiceValue(dice1_Attacker, dice2_Attacker, dice3_Attacker);
+
+			} else if (countryAttacking.getNoOfArmies() == 3) {
+
+				WindowUtil.showCheckBox(dice1_Attacker, dice2_Attacker);
+				WindowUtil.hideButtonControl(dice3_Attacker);
+				WindowUtil.checkCheckBoxes(dice1_Attacker, dice2_Attacker);
+				attackDiceValue(dice1_Attacker, dice2_Attacker);
+
+			} else if (countryAttacking.getNoOfArmies() == 2) {
+
+				WindowUtil.showCheckBox(dice1_Attacker);
+				WindowUtil.checkCheckBoxes(dice1_Attacker);
+				WindowUtil.hideButtonControl(dice2_Attacker, dice3_Attacker);
+				attackDiceValue(dice1_Attacker);
+			}
+
+			if (defendingCountry.getNoOfArmies() >= 2) {
+
+				WindowUtil.showCheckBox(dice1_Defender, dice2_Defender);
+				WindowUtil.checkCheckBoxes(dice1_Defender, dice2_Defender);
+				defenceDiceValue(dice1_Defender, dice2_Defender);
+
+			} else if (defendingCountry.getNoOfArmies() == 1) {
+
+				WindowUtil.showCheckBox(dice1_Defender);
+				WindowUtil.checkCheckBoxes(dice1_Defender);
+				WindowUtil.hideButtonControl(dice2_Defender);
+				defenceDiceValue(dice1_Defender);
+			}
+			diceResult = dice.getDicePlayResult();
+			defendingArmies.setText("Armies: " + String.valueOf(defendingCountry.getNoOfArmies()));
+			attackingArmies.setText("Armies: " + String.valueOf(countryAttacking.getNoOfArmies()));
+		}
+
+		if (defendingCountry.getNoOfArmies() <= 0) {
+			diceResult.add(countryAttacking.getPlayer().getName() + " won " + defendingCountry.getName() + " Country");
+			dice.setCountriesWonCount(dice.getCountriesWonCount() + 1);
+			WindowUtil.enablePane(afterAttackView);
+			WindowUtil.hideButtonControl(startRoll, continueRoll, cancelThrow);
+		} else if (countryAttacking.getNoOfArmies() < 2) {
+			diceResult.add(countryAttacking.getPlayer().getName() + " lost the match");
+			WindowUtil.disableButtonControl(startRoll, continueRoll);
+		} else {
+			WindowUtil.disableButtonControl(startRoll);
+//			WindowUtil.enableButtonControl(continueRoll);
+		}
+//		defendingArmies.setText("Armies: " + String.valueOf(defendingCountry.getNoOfArmies()));
+//		attackingArmies.setText("Armies: " + String.valueOf(countryAttacking.getNoOfArmies()));
+		winnerName.setText(diceResult.toString());
+		winnerName.setVisible(true);
 	}
 	
 	/**

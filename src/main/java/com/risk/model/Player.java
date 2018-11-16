@@ -198,7 +198,7 @@ public class Player extends Observable implements Observer {
         int armiesPerPlayer = 0;
 
         if (players.size() == 3) {
-            armiesPerPlayer = 35;
+            armiesPerPlayer = 5;
         } else if (players.size() == 4) {
             armiesPerPlayer = 30;
         } else if (players.size() == 5) {

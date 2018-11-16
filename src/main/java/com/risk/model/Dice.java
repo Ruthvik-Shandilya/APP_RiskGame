@@ -15,7 +15,7 @@ import java.util.Random;
  * and the defender can have a maximum of 2 dices. It has methods for
  * simulating the dice rolls for the attack phase
  *
- * @author Plash Jain
+ * @author Palash Jain
  * @author Karandeep Singh
  */
 public class Dice extends Observable {
@@ -185,7 +185,7 @@ public class Dice extends Observable {
      * @param playResult List of attack results
      */
     public void updateArmiesAfterAttack(Integer defenderValue, Integer attackerValue, ArrayList<String> playResult) {
-        if (attackerValue.compareTo(defenderValue) > 0) {
+        if (attackerValue - defenderValue > 0) {
             playResult.add("Defender has lost one army.");
             if (defendingCountry.getNoOfArmies() > 0) {
                 defendingCountry.setNoOfArmies(defendingCountry.getNoOfArmies() - 1);

@@ -157,6 +157,17 @@ public class WindowUtil {
         }
     }
 
+    public static void checkCheckBoxes(CheckBox... checkBoxes) {
+//        System.out.println("n check");
+        for (CheckBox checkBox : checkBoxes) {
+//            System.out.println("n for check");
+
+            checkBox.setText("");
+            checkBox.setIndeterminate(false);
+            checkBox.setSelected(true);
+        }
+    }
+
     /**
      * This method helps in taking user input by providing a input box
      *
