@@ -254,7 +254,10 @@ public class GamePlayController implements Initializable, Observer {
             @Override
             public void handle(MouseEvent event) {
                 Country country = selectedCountryList.getSelectionModel().getSelectedItem();
-                moveToAdjacentCountry(country);
+                if(phaseView.getText().equals("Phase: Fortification"))
+                    moveToAdjacentCountryFortification(country);
+                else
+                    moveToAdjacentCountry(country);
             }
         });
 
@@ -277,26 +280,38 @@ public class GamePlayController implements Initializable, Observer {
      *
      * @param country Country Object
      */
-    private void moveToAdjacentCountry(Country country) {
+    private void moveToAdjacentCountryFortification(Country country) {
         this.adjacentCountryList.getItems().clear();
         GamePlayController.allAdjacentCountries.clear();
         for (Country country1 : this.map.getMapGraph().getCountrySet().values()) {
             GamePlayController.visited.put(country1, false);
         }
-        this.findAdjacentCountries(country);
+        this.findAdjacentCountriesFortification(country);
         this.adjacentCountryList.getItems().addAll(GamePlayController.allAdjacentCountries);
     }
 
-    private void findAdjacentCountries(Country country) {
+    /**
+     * Method to get the adjacent country.
+     *
+     * @param country Country Object
+     */
+    private void moveToAdjacentCountry(Country country) {
+        this.adjacentCountryList.getItems().clear();
+        if (country != null) {
+            for (Country adjTerr : country.getAdjacentCountries()) {
+                this.adjacentCountryList.getItems().add(adjTerr);
+            }
+        }
+    }
+
+    private void findAdjacentCountriesFortification(Country country) {
         if (country != null) {
             GamePlayController.visited.put(country, true);
-            System.out.println(GamePlayController.visited.toString());
             for (Country adjCountry : country.getAdjacentCountries()) {
                 if (!GamePlayController.visited.get(adjCountry) && !GamePlayController.allAdjacentCountries.contains(adjCountry)
                     && playerPlaying.getPlayerCountries().contains(adjCountry)) {
                     GamePlayController.allAdjacentCountries.add(adjCountry);
-                    System.out.println(GamePlayController.allAdjacentCountries.toString());
-                    findAdjacentCountries(adjCountry);
+                    findAdjacentCountriesFortification(adjCountry);
                 }
             }
         }
