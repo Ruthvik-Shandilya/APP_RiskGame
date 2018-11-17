@@ -38,6 +38,10 @@ import javafx.scene.layout.VBox;
  */
 public class GamePlayController implements Initializable, Observer {
 
+    private static HashSet<Country> allAdjacentCountries = new HashSet<>();
+
+    private static HashMap<Country, Boolean> visited = new HashMap<>();
+
     /**
      * Array of String to store playernames.
      */
@@ -275,12 +279,29 @@ public class GamePlayController implements Initializable, Observer {
      */
     private void moveToAdjacentCountry(Country country) {
         this.adjacentCountryList.getItems().clear();
+        GamePlayController.allAdjacentCountries.clear();
+        for (Country country1 : this.map.getMapGraph().getCountrySet().values()) {
+            GamePlayController.visited.put(country1, false);
+        }
+        this.findAdjacentCountries(country);
+        this.adjacentCountryList.getItems().addAll(GamePlayController.allAdjacentCountries);
+    }
+
+    private void findAdjacentCountries(Country country) {
         if (country != null) {
-            for (Country adjTerr : country.getAdjacentCountries()) {
-                this.adjacentCountryList.getItems().add(adjTerr);
+            GamePlayController.visited.put(country, true);
+            System.out.println(GamePlayController.visited.toString());
+            for (Country adjCountry : country.getAdjacentCountries()) {
+                if (!GamePlayController.visited.get(adjCountry) && !GamePlayController.allAdjacentCountries.contains(adjCountry)
+                    && playerPlaying.getPlayerCountries().contains(adjCountry)) {
+                    GamePlayController.allAdjacentCountries.add(adjCountry);
+                    System.out.println(GamePlayController.allAdjacentCountries.toString());
+                    findAdjacentCountries(adjCountry);
+                }
             }
         }
     }
+
 
     /**
      * Method which helps in allocating cards to Countries.
@@ -412,8 +433,8 @@ public class GamePlayController implements Initializable, Observer {
      */
     private void loadCurrentPlayer() {
         if (!playerIterator.hasNext()) {
-        playerIterator = gamePlayerList.iterator();
-    }
+            playerIterator = gamePlayerList.iterator();
+        }
         Player newPlayer = playerIterator.next();
         if (newPlayer.equals(playerPlaying)) {
             if (playerIterator.hasNext()) {
@@ -465,7 +486,7 @@ public class GamePlayController implements Initializable, Observer {
 
         phaseView.setText("Phase: Reinforcement");
         WindowUtil.disableButtonControl(placeArmy, fortify, attack);
-        WindowUtil.enableButtonControl(reinforcement,cards);
+        WindowUtil.enableButtonControl(reinforcement, cards);
         reinforcement.requestFocus();
         WindowUtil.updateTerminalWindow("\nReinforcement phase started\n", terminalWindow);
         calculateReinforcementArmies();
