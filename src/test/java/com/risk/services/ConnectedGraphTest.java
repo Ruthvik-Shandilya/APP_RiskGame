@@ -28,7 +28,9 @@ public class ConnectedGraphTest {
 	private Set<Country> countrySet;
 
 	/** ArrayList to store adjacent countries */
-	private ArrayList<Country> adjacentCountries;
+	private ArrayList<Country> adjacentCountries1;
+	private ArrayList<Country> adjacentCountries2;
+	private ArrayList<Country> adjacentCountries3;
 
 	/**
 	 * Set up the initial objects for ConnectedGraph
@@ -46,15 +48,25 @@ public class ConnectedGraphTest {
 		countrySet.add(country2);
 		countrySet.add(country3);
 
-		adjacentCountries = new ArrayList<>();
-		adjacentCountries.add(country1);
-		adjacentCountries.add(country2);
-		adjacentCountries.add(country3);
+		adjacentCountries1 = new ArrayList<>();
+		adjacentCountries2 = new ArrayList<>();
+		adjacentCountries3 = new ArrayList<>();
+
+		adjacentCountries1.add(country2);
+		adjacentCountries1.add(country3);
+
+		adjacentCountries2.add(country1);
+		adjacentCountries2.add(country3);
+
+		adjacentCountries3.add(country1);
+		adjacentCountries3.add(country2);
 
 		connectedGraph = new ConnectedGraph(countrySet);
-		country1.setAdjacentCountries(adjacentCountries);
-		country2.setAdjacentCountries(adjacentCountries);
-		country3.setAdjacentCountries(adjacentCountries);
+		country1.setAdjacentCountries(adjacentCountries1);
+		country2.setAdjacentCountries(adjacentCountries2);
+		country3.setAdjacentCountries(adjacentCountries3);
+
+		System.out.println(country1.getAdjacentCountries());
 	}
 
 	/**
@@ -65,6 +77,12 @@ public class ConnectedGraphTest {
 
 		assertTrue(connectedGraph.isConnected());
 
+	}
+
+	@Test
+	public void isConnectedSubGraphTest(){
+
+		assertTrue(connectedGraph.isConnectedSubGraph());
 	}
 
 }

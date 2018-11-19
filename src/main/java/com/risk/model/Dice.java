@@ -207,19 +207,19 @@ public class Dice extends Observable {
         notifyObservers("rollDiceComplete");
     }
 
-    /**
-     * Method for moving all the armies,
-     * after attacker has won a country.
-     */
+//    /**
+//     * Method for moving all the armies,
+//     * after attacker has won a country.
+//     */
 
-    public void moveAllArmies() {
-        int attackingArmyCount = getAttackingCountry().getNoOfArmies();
-        getAttackingCountry().setNoOfArmies(1);
-        getDefendingCountry().setNoOfArmies(attackingArmyCount - 1);
-        updateCountryList();
-        setChanged();
-        notifyObservers("rollDiceComplete");
-    }
+//    public void moveAllArmies() {
+//        int attackingArmyCount = getAttackingCountry().getNoOfArmies();
+//        getAttackingCountry().setNoOfArmies(1);
+//        getDefendingCountry().setNoOfArmies(attackingArmyCount - 1);
+//        updateCountryList();
+//        setChanged();
+//        notifyObservers("rollDiceComplete");
+//    }
 
     /**
      * Method for skipping the army move after attacke has won the attack.

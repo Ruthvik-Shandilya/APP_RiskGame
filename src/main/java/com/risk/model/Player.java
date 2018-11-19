@@ -145,38 +145,38 @@ public class Player extends Observable implements Observer {
      *
      * @param cardList of player
      */
-    public void setCardList(ArrayList<Card> cardList) {
-        this.cardList = cardList;
-    }
+//    public void setCardList(ArrayList<Card> cardList) {
+//        this.cardList = cardList;
+//    }
 
-    /**
-     * Method for adding armies to a country
-     *
-     * @param country        Country to which armies are to be assigned
-     * @param numberOfArmies number for armies to be assigned
-     */
-    public void addArmiesToCountry(Country country, int numberOfArmies) {
-        if (this.getArmyCount() > 0 && this.getArmyCount() >= numberOfArmies) {
-            if (!this.getPlayerCountries().contains(country)) {
-                System.out.println("This country is not under your Ownership.");
-            } else {
-                country.setNoOfArmies(country.getNoOfArmies() + numberOfArmies);
-                this.setArmyCount(this.getArmyCount() - numberOfArmies);
-            }
-        } else {
-            System.out.println("Sufficient number of armies not available.");
-        }
-    }
+//    /**
+//     * Method for adding armies to a country
+//     *
+//     * @param country        Country to which armies are to be assigned
+//     * @param numberOfArmies number for armies to be assigned
+//     */
+//    public void addArmiesToCountry(Country country, int numberOfArmies) {
+//        if (this.getArmyCount() > 0 && this.getArmyCount() >= numberOfArmies) {
+//            if (!this.getPlayerCountries().contains(country)) {
+//                System.out.println("This country is not under your Ownership.");
+//            } else {
+//                country.setNoOfArmies(country.getNoOfArmies() + numberOfArmies);
+//                this.setArmyCount(this.getArmyCount() - numberOfArmies);
+//            }
+//        } else {
+//            System.out.println("Sufficient number of armies not available.");
+//        }
+//    }
 
-    /**
-     * Getter for current PLayer
-     *
-     * @return current Player
-     */
-
-    public static Player getPlayerPlaying() {
-        return Player.currentPlayer;
-    }
+//    /**
+//     * Getter for current PLayer
+//     *
+//     * @return current Player
+//     */
+//
+//    public static Player getPlayerPlaying() {
+//        return Player.currentPlayer;
+//    }
 
     /**
      * Number of countries won by the player
@@ -243,72 +243,89 @@ public class Player extends Observable implements Observer {
 
     public Player noOfReinforcementArmies(Player currentPlayer) {
 
-        int noOfCountrie = currentPlayer.getPlayerCountries().size();
-        int numberOfArmies = (int) Math.floor(noOfCountrie / 3);
-        HashSet<Continent> countryInContinent = new HashSet<>();
-        ArrayList<Country> playerOwnedCountries = currentPlayer.getPlayerCountries();
+//        int noOfCountrie = currentPlayer.getPlayerCountries().size();
+//        int numberOfArmies = (int) Math.floor(noOfCountrie / 3);
+//        HashSet<Continent> countryInContinent = new HashSet<>();
+//        ArrayList<Country> playerOwnedCountries = currentPlayer.getPlayerCountries();
+//
+//        boolean isPlayerOwnedContinent;
+//
+//        for (Country country : playerOwnedCountries) {
+//            countryInContinent.add(country.getPartOfContinent());
+//        }
+//
+//        for (Continent continent : countryInContinent) {
+//            isPlayerOwnedContinent = true;
+//            for (Country country : continent.getListOfCountries()) {
+//                if (!playerOwnedCountries.contains(country)) {
+//                    isPlayerOwnedContinent = false;
+//                    break;
+//                }
+//            }
+//            if (isPlayerOwnedContinent) {
+//                numberOfArmies += continent.getControlValue();
+//            }
+//        }
+//
+//        if (numberOfArmies < 3) {
+//            numberOfArmies = 3;
+//        }
 
-        boolean isPlayerOwnedContinent;
 
-        for (Country country : playerOwnedCountries) {
-            countryInContinent.add(country.getPartOfContinent());
-        }
 
-        for (Continent continent : countryInContinent) {
-            isPlayerOwnedContinent = true;
-            for (Country country : continent.getListOfCountries()) {
-                if (!playerOwnedCountries.contains(country)) {
-                    isPlayerOwnedContinent = false;
-                    break;
-                }
-            }
-            if (isPlayerOwnedContinent) {
-                numberOfArmies += continent.getControlValue();
-            }
-        }
-
-        if (numberOfArmies < 3) {
-            numberOfArmies = 3;
-        }
-
-        currentPlayer.setArmyCount(currentPlayer.getArmyCount() + numberOfArmies);
+        currentPlayer.setArmyCount(currentPlayer.getArmyCount() + currentPlayer.findNoOfArmies(currentPlayer));
 
         return currentPlayer;
     }
 
+    boolean isPlayerOwnedContinent = true;
+    ArrayList<Country> playerOwnedContries;
+    Set<Continent> countryInContinent;
 
     /**
-     * Method for getting a list of all the continents of the player
+     * Method to find the number of countries owned by the player and to assign
+     * the armies based on the countries list.
      *
-     * @param currentPlayer currentPlayer
-     * @return List of continents owned by the player
+     * @param player
+     *            Current Player
+     *
+     * @return reinforcement armies
      */
-    public List<Continent> getContinentsOwnedByPlayer(Player currentPlayer) {
-        List<Continent> continents = new ArrayList<>();
-        HashSet<Continent> countryInContinent = new HashSet<>();
-        ArrayList<Country> playerOwnedCountries = currentPlayer.getPlayerCountries();
+    public int findNoOfArmies(Player player) {
+        int myCountries = player.getPlayerCountries().size();
+        int armiesCount = (int) Math.floor(myCountries / 3);
+        countryInContinent = new HashSet<>();
+        playerOwnedContries = player.getPlayerCountries();
 
-
-        boolean isPlayerOwnedContinent = true;
-
-        for (Country country : playerOwnedCountries) {
+        for(Country country : playerOwnedContries){
             countryInContinent.add(country.getPartOfContinent());
         }
 
+        System.out.println(countryInContinent);
 
-        for (Continent continent : countryInContinent) {
+        // If a player owns all the countries in a continent, then armies count
+        // will be equal
+        // to the control value of the continent.
+        for(Continent continent : countryInContinent){
             isPlayerOwnedContinent = true;
-            for (Country country : continent.getListOfCountries()) {
-                if (!playerOwnedCountries.contains(country)) {
+            for(Country country: continent.getListOfCountries()){
+                if(!playerOwnedContries.contains(country)){
                     isPlayerOwnedContinent = false;
                     break;
                 }
             }
             if (isPlayerOwnedContinent) {
-                continents.add(continent);
+                armiesCount += continent.getControlValue();
             }
         }
-        return continents;
+
+        // Minimum number of armies for a player in case armies count is less
+        // than 3.
+        if (armiesCount < 3) {
+            armiesCount = 3;
+        }
+
+        return armiesCount;
     }
 
     /**
