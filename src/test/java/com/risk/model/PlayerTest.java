@@ -1,7 +1,4 @@
 package com.risk.model;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +12,10 @@ import javafx.embed.swing.JFXPanel;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 
+import static org.junit.Assert.*;
+
 /**
- * Test class for Card.
+ * Test class for Player.
  * 
  * @author Neha Pal
  *
