@@ -1,6 +1,6 @@
-package com.risk.services.controller;
+package com.risk.view.controller;
 
-import com.risk.services.controller.Util.WindowUtil;
+import com.risk.view.Util.WindowUtil;
 import com.risk.model.Country;
 import com.risk.model.Dice;
 import javafx.event.ActionEvent;

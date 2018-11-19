@@ -1,4 +1,4 @@
-package com.risk.services.controller.Util;
+package com.risk.view.Util;
 
 import com.risk.model.Continent;
 import com.risk.model.Country;
