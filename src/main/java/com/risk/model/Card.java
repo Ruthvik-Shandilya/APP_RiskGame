@@ -1,13 +1,7 @@
 package com.risk.model;
 
-import com.risk.services.controller.CardController;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
-import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -110,30 +104,6 @@ public class Card extends Observable {
         this.cardsToExchange = cardsToExchange;
     }
 
-    /**
-     * Method is used to open the window, for displaying
-     * the cards owned by the player.
-     *
-     * @param player Player having the turn
-     * @param card   card to display for the player
-     */
-    public void openCardWindow(Player player, Card card) {
-        this.currentPlayer = player;
-        final Stage newCardStage = new Stage();
-        newCardStage.setTitle("Card Window");
-        CardController cardController = new CardController(this.currentPlayer, card);
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Cards.fxml"));
-        loader.setController(cardController);
-        Parent root = null;
-        try {
-            root = (Parent) loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Scene scene = new Scene(root);
-        newCardStage.setScene(scene);
-        newCardStage.show();
-    }
 
     /**
      * Method returns a list of cards which

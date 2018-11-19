@@ -2,15 +2,14 @@ package com.risk.view;
 
 import java.io.IOException;
 
-import com.risk.services.controller.GamePlayController;
 import com.risk.services.MapIO;
 
+import com.risk.services.controller.GamePlayController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**

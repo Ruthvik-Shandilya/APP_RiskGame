@@ -1,8 +1,8 @@
 package com.risk.model;
 
-import com.risk.services.controller.Util.WindowUtil;
-import com.risk.services.controller.DiceController;
 import com.risk.services.MapIO;
+import com.risk.services.controller.DiceController;
+import com.risk.services.controller.Util.WindowUtil;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -47,11 +47,18 @@ public class Player extends Observable implements Observer {
      */
     private ArrayList<Card> cardList;
 
+    private TextArea terminalWindow;
+
+    public TextArea getTerminalWindow() {
+        return terminalWindow;
+    }
+
     /**
      * Player constructor, initializes initial army count
      */
     public Player() {
         armyCount = 0;
+        new WindowUtil(this);
     }
 
     /**
@@ -64,6 +71,7 @@ public class Player extends Observable implements Observer {
         this.name = name;
         this.playerCountries = new ArrayList<>();
         this.cardList = new ArrayList<>();
+        new WindowUtil(this);
     }
 
     /**
@@ -192,13 +200,14 @@ public class Player extends Observable implements Observer {
      * @return true, is armies are successfully assigned,; otherwise false
      */
 
-    public static boolean assignArmiesToPlayers(List<Player> players, TextArea textArea) {
+    public boolean assignArmiesToPlayers(List<Player> players, TextArea textArea) {
 
+        this.terminalWindow = textArea;
         boolean isSuccessfulAssignment = false;
         int armiesPerPlayer = 0;
 
         if (players.size() == 3) {
-            armiesPerPlayer = 35;
+            armiesPerPlayer = 7;
         } else if (players.size() == 4) {
             armiesPerPlayer = 30;
         } else if (players.size() == 5) {
@@ -209,7 +218,9 @@ public class Player extends Observable implements Observer {
 
         for (int playerNumber = 0; playerNumber < players.size(); playerNumber++) {
             players.get(playerNumber).setArmyCount(armiesPerPlayer);
-            WindowUtil.updateTerminalWindow(armiesPerPlayer + " armies assigned to " + players.get(playerNumber).getName() + ".\n", textArea);
+            setChanged();
+            notifyObservers(armiesPerPlayer + " armies assigned to " + players.get(playerNumber).getName() + ".\n");
+            //WindowUtil.updateTerminalWindow(armiesPerPlayer + " armies assigned to " + players.get(playerNumber).getName() + ".\n", textArea);
             isSuccessfulAssignment = true;
         }
 
@@ -225,11 +236,14 @@ public class Player extends Observable implements Observer {
      * @param textArea    TeaxtArea for displaying gamed details
      * @return List of player objects
      */
-    public static ArrayList<Player> generatePlayer(int noOfPlayer, String[] playersList, TextArea textArea) {
+    public ArrayList<Player> generatePlayer(int noOfPlayer, String[] playersList, TextArea textArea) {
+        this.terminalWindow = textArea;
         ArrayList<Player> listPlayer = new ArrayList<>();
         for (int i = 0; i < noOfPlayer; i++) {
             listPlayer.add(new Player(playersList[i].trim()));
-            WindowUtil.updateTerminalWindow("Created player " + playersList[i].trim() + ".\n", textArea);
+            setChanged();
+            notifyObservers("Created player " + playersList[i].trim() + ".\n");
+            //WindowUtil.updateTerminalWindow("Created player " + playersList[i].trim() + ".\n", textArea);
         }
         return listPlayer;
     }
@@ -318,7 +332,7 @@ public class Player extends Observable implements Observer {
      * @param textArea TextArea to which current game information will be displayed
      */
     public void reinforcementPhase(Country country, TextArea textArea) {
-
+        this.terminalWindow = textArea;
         if (currentPlayer.getArmyCount() > 0) {
             if (country == null) {
                 WindowUtil.popUpWindow("No Country Selected", "popUp", "Please select a country");
@@ -332,11 +346,15 @@ public class Player extends Observable implements Observer {
             }
             country.setNoOfArmies(country.getNoOfArmies() + reinforcementArmies);
             currentPlayer.setArmyCount(currentPlayer.getArmyCount() - reinforcementArmies);
-            WindowUtil.updateTerminalWindow(country.getName() + " was assigned " + reinforcementArmies + " armies \n", textArea);
+            setChanged();
+            notifyObservers(country.getName() + " was assigned " + reinforcementArmies + " armies \n");
+            //WindowUtil.updateTerminalWindow(country.getName() + " was assigned " + reinforcementArmies + " armies \n", textArea);
 
         }
         if (currentPlayer.getArmyCount() <= 0) {
-            WindowUtil.updateTerminalWindow("Reinforcement Phase Ended, Fortification started\n", textArea);
+            setChanged();
+            notifyObservers("Reinforcement Phase Ended, Fortification started\n");
+            //WindowUtil.updateTerminalWindow("Reinforcement Phase Ended, Fortification started\n", textArea);
             setChanged();
             notifyObservers("Attack");
         }
@@ -392,6 +410,7 @@ public class Player extends Observable implements Observer {
      */
 
     public void fortificationPhase(Country selectedCountry, Country adjCountry, TextArea terminalWindow) {
+        this.terminalWindow = terminalWindow;
         if (selectedCountry == null) {
             WindowUtil.popUpWindow("No country selected", "Fortification Phase popup", "Please select a source country");
             return;
@@ -414,8 +433,12 @@ public class Player extends Observable implements Observer {
             } else {
                 selectedCountry.setNoOfArmies(selectedCountry.getNoOfArmies() - armies);
                 adjCountry.setNoOfArmies(adjCountry.getNoOfArmies() + armies);
-                WindowUtil.updateTerminalWindow(armies + " armies placed on " + adjCountry.getName() + " country.\n", terminalWindow);
-                WindowUtil.updateTerminalWindow("Fortification phase ended. \n", terminalWindow);
+                setChanged();
+                notifyObservers(armies + " armies placed on " + adjCountry.getName() + " country.\n");
+                //WindowUtil.updateTerminalWindow(armies + " armies placed on " + adjCountry.getName() + " country.\n", terminalWindow);
+                setChanged();
+                notifyObservers("Fortification phase ended. \n");
+                //WindowUtil.updateTerminalWindow("Fortification phase ended. \n", terminalWindow);
                 setChanged();
                 notifyObservers("Reinforcement");
             }
@@ -468,6 +491,7 @@ public class Player extends Observable implements Observer {
      * @param terminalWindow      TextArea to which current game information will be displayed
      */
     public void placeArmyOnCountry(Player playerPlaying, ListView<Country> selectedCountryList, List<Player> gamePlayerList, TextArea terminalWindow) {
+        this.terminalWindow = terminalWindow;
         int playerArmies = playerPlaying.getArmyCount();
         if (playerArmies > 0) {
             Country Country = selectedCountryList.getSelectionModel().getSelectedItem();
@@ -480,7 +504,9 @@ public class Player extends Observable implements Observer {
 
         boolean armiesExhausted = isPlayerArmyLeft(gamePlayerList);
         if (armiesExhausted) {
-            WindowUtil.updateTerminalWindow("StartUp Phase Completed.\n", terminalWindow);
+            setChanged();
+            notifyObservers("StartUp Phase Completed.\n");
+            //WindowUtil.updateTerminalWindow("StartUp Phase Completed.\n", terminalWindow);
             setChanged();
             notifyObservers("FirstAttack");
         } else {
@@ -543,7 +569,7 @@ public class Player extends Observable implements Observer {
      */
 
     public boolean playerCanAttack(ListView<Country> countries, TextArea terminalWindow) {
-
+        this.terminalWindow = terminalWindow;
         boolean canAttack = false;
         for (Country Country : countries.getItems()) {
             if (Country.getNoOfArmies() > 1) {
@@ -551,8 +577,12 @@ public class Player extends Observable implements Observer {
             }
         }
         if (!canAttack) {
-            WindowUtil.updateTerminalWindow("Player cannot continue with attack phase, move to fortification phase.\n", terminalWindow);
-            WindowUtil.updateTerminalWindow("Attack phase ended\n", terminalWindow);
+            setChanged();
+            notifyObservers("Player cannot continue with attack phase, move to fortification phase.\n");
+            //WindowUtil.updateTerminalWindow("Player cannot continue with attack phase, move to fortification phase.\n", terminalWindow);
+            setChanged();
+            notifyObservers("Attack phase ended\n");
+            //WindowUtil.updateTerminalWindow("Attack phase ended\n", terminalWindow);
             setChanged();
             notifyObservers("checkIfFortificationPhaseValid");
             return canAttack;
@@ -589,14 +619,18 @@ public class Player extends Observable implements Observer {
      */
 
     public Player exchangeCards(List<Card> selectedCards, int numberOfCardSetExchanged, TextArea terminalWindow) {
+        this.terminalWindow = terminalWindow;
         currentPlayer.setArmyCount(currentPlayer.getArmyCount() + (5 * numberOfCardSetExchanged));
-        WindowUtil.updateTerminalWindow(currentPlayer.getName() + " successfully exchanged 3 cards for 1 army! \n", terminalWindow);
+        setChanged();
+        notifyObservers(currentPlayer.getName() + " successfully exchanged 3 cards for 1 army! \n");
+        //WindowUtil.updateTerminalWindow(currentPlayer.getName() + " successfully exchanged 3 cards for 1 army! \n", terminalWindow);
 
         for (Card card : selectedCards) {
             if (currentPlayer.getPlayerCountries().contains(card.getCountry())) {
                 card.getCountry().setNoOfArmies(card.getCountry().getNoOfArmies() + 2);
-                WindowUtil.updateTerminalWindow(currentPlayer.getName() + "\" got extra 2 armies on \"" + card.getCountry().getName() + "\n", terminalWindow);
-
+                setChanged();
+                notifyObservers(currentPlayer.getName() + "\" got extra 2 armies on \"" + card.getCountry().getName() + "\n");
+                //WindowUtil.updateTerminalWindow(currentPlayer.getName() + "\" got extra 2 armies on \"" + card.getCountry().getName() + "\n", terminalWindow);
                 break;
             }
         }

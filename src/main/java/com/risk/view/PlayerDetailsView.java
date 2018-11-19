@@ -1,9 +1,9 @@
 package com.risk.view;
 
 import com.risk.services.controller.PlayerDetailsController;
-import com.risk.services.controller.Util.WindowUtil;
 import com.risk.services.MapIO;
 import com.risk.services.MapValidate;
+import com.risk.services.controller.Util.WindowUtil;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
