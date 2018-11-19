@@ -3,7 +3,7 @@ package com.risk.services;
 import java.util.*;
 
 import com.risk.model.*;
-import com.risk.services.controller.Util.WindowUtil;
+import com.risk.view.Util.WindowUtil;
 
 import javafx.scene.control.TextArea;
 

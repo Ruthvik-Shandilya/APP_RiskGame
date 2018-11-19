@@ -1,6 +1,6 @@
 package com.risk.model;
 
-import com.risk.services.controller.CardController;
+import com.risk.view.controller.CardController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

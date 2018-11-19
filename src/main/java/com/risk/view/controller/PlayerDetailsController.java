@@ -1,6 +1,6 @@
-package com.risk.services.controller;
+package com.risk.view.controller;
 
-import com.risk.services.controller.Util.WindowUtil;
+import com.risk.view.Util.WindowUtil;
 import com.risk.services.MapIO;
 import com.risk.view.GamePlayView;
 import javafx.event.ActionEvent;

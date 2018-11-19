@@ -1,0 +1,17 @@
+[Map]
+author=Sean O'Connor
+warn=yes
+image=Africa.bmp
+wrap=no
+scroll=horizontal
+
+
+[Continents]
+Northern Africa=
+
+[Territories]
+Egypt,415,99,Northern Africa,Libya
+Libya,314,94,Northern Africa,Tunisia,Algeria,Egypt
+Morocco,127,46,Northern Africa,Algeria
+Algeria,193,85,Northern Africa,Morocco,Libya,Tunisia
+Tunisia,252,33,Northern Africa,Algeria,Libya

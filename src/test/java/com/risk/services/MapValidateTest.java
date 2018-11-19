@@ -29,6 +29,12 @@ public class MapValidateTest {
 	/** String to hold an Invalid Map File */
 	private String invalidMapFile;
 
+	private String invalidContinentConfigFile;
+
+	private String countriesNotAdjacentFile;
+
+	private String notAConnectedGraph;
+
 	/**
 	 * Set up the initial objects for Map Validation
 	 * 
@@ -41,6 +47,9 @@ public class MapValidateTest {
 		validTag = "[Map] [Continents] [Territories]";
 		validMapFile = "src/main/maps/Europe.map";
 		invalidMapFile = "src/main/maps/Africa.map";
+		invalidContinentConfigFile = "src/test/maps/IndiaNC.map";
+		countriesNotAdjacentFile = "src/test/maps/IndiaNA.map";
+		notAConnectedGraph = "src/test/maps/India.map";
 	}
 
 	/**
@@ -61,6 +70,24 @@ public class MapValidateTest {
 	public void validateFileInValidFileTest() {
 
 		assertFalse(mapValidation.validateMapFile(invalidMapFile));
+	}
+
+	@Test
+	public void validateFileConfigTest() {
+
+		assertFalse(mapValidation.validateMapFile(invalidContinentConfigFile));
+	}
+
+	@Test
+	public void validateCountryAdjacencyTest() {
+
+		assertFalse(mapValidation.validateMapFile(countriesNotAdjacentFile));
+	}
+
+	@Test
+	public void validateFileConnectedTest() {
+
+		assertFalse(mapValidation.validateMapFile(notAConnectedGraph));
 	}
 
 	/**

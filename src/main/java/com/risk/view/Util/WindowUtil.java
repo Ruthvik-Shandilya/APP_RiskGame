@@ -1,4 +1,4 @@
-package com.risk.services.controller.Util;
+package com.risk.view.Util;
 
 import com.risk.model.Continent;
 import com.risk.model.Country;
@@ -154,6 +154,17 @@ public class WindowUtil {
         for (CheckBox checkBox : checkBoxes) {
             checkBox.setText("");
             checkBox.setSelected(false);
+        }
+    }
+
+    public static void checkCheckBoxes(CheckBox... checkBoxes) {
+//        System.out.println("n check");
+        for (CheckBox checkBox : checkBoxes) {
+//            System.out.println("n for check");
+
+            checkBox.setText("");
+            checkBox.setIndeterminate(false);
+            checkBox.setSelected(true);
         }
     }
 

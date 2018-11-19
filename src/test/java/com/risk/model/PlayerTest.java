@@ -1,7 +1,4 @@
 package com.risk.model;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,14 +12,20 @@ import javafx.embed.swing.JFXPanel;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 
+import static org.junit.Assert.*;
+
 /**
- * Test class for Card.
+ * Test class for Player.
  * 
  * @author Neha Pal
  *
  */
 
 public class PlayerTest {
+
+	private Player player;
+
+	public static Player playerArmy;
 	
 	/** Object for Player Class */
 	private Player player1;
@@ -41,12 +44,16 @@ public class PlayerTest {
 	
 	/** List to hold list of players */
 	private List<Player> players;
+
+	static List<Player> playersList;
 	
 	/** Object for Country Class */
 	private Country attackingCountry;
 	
 	/** Object for Country Class */
 	private Country defendingCountry;
+
+	private Country country;
 
 	/** Object for Country Class */
 	private Country country1;
@@ -59,6 +66,12 @@ public class PlayerTest {
 
 	/** ArrayList to hold list of countries */
 	private ArrayList<Country> playercountries;
+
+	private ArrayList<Country> playerOwnedCountries;
+
+	private ArrayList<Country> continentListOfCountries;
+
+	private Continent continent;
 	
 	/** Object for Continent Class */
 	private Continent continent1;
@@ -84,7 +97,9 @@ public class PlayerTest {
 	public void initialize() {
 		
 		mapIO = new MapIO();
-		
+
+		player = new Player();
+		playerArmy = new Player();
 		player1 = new Player("player1");
 		player2 = new Player("player2");
 		playerPlaying = new Player("playerPlaying");
@@ -132,7 +147,44 @@ public class PlayerTest {
 
 		jfxPanel = new JFXPanel();
 		textArea= new TextArea();
+
+		playerOwnedCountries = new ArrayList<Country>();
+		continentListOfCountries = new ArrayList<Country>();
+
+		continent = new Continent("Europe", 2);
+
+		country = new Country("C1");
+		playerOwnedCountries.add(country);
+		country.setPartOfContinent(continent);
+		continentListOfCountries.add(country);
+
+		country = new Country("C2");
+		playerOwnedCountries.add(country);
+		country.setPartOfContinent(continent);
+		continentListOfCountries.add(country);
+
+		country = new Country("C3");
+		playerOwnedCountries.add(country);
+		country.setPartOfContinent(continent);
+		continentListOfCountries.add(country);
+
+		player = new Player();
+		player.setMyCountries(playerOwnedCountries);
+
+
+		continent.setListOfCountries(continentListOfCountries);
 		
+	}
+
+	@Test
+	public void assignArmiesToPlayerTest(){
+
+		playersList = new ArrayList<>();
+		playersList.add(new Player("Karan"));
+		playersList.add(new Player("Pal"));
+		playersList.add(new Player("sharma"));
+
+		assertTrue(playerArmy.assignArmiesToPlayers(playersList,textArea));
 	}
 	
 	/**
@@ -171,6 +223,27 @@ public class PlayerTest {
 	@Test
 	public void noOfReinforcementArmiesTest() {
 		assertEquals(playerPlaying,player1.noOfReinforcementArmies(playerPlaying));
+	}
+
+	/**
+	 * Test to validate number of armies when the whole continent is owned by the player
+	 */
+	@Test
+	public void findNoOfArmiesWhenPlayerOwnContinentTest() {
+
+		assertEquals(continent.getControlValue()+1, player.findNoOfArmies(player));
+	}
+
+
+	/**
+	 * Test to validate number of armies when player does not owns the continent
+	 */
+	@Test
+	public void findNoOfArmiesWhenPlayerDoesNotOwnContinentTest() {
+
+		country = new Country("C4");
+		continentListOfCountries.add(country);
+		assertEquals(3, player.findNoOfArmies(player));
 	}
 
 	/**

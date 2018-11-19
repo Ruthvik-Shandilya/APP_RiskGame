@@ -2,7 +2,7 @@ package com.risk.view;
 
 import java.io.IOException;
 
-import com.risk.services.controller.GamePlayController;
+import com.risk.view.controller.GamePlayController;
 import com.risk.services.MapIO;
 
 import javafx.event.ActionEvent;

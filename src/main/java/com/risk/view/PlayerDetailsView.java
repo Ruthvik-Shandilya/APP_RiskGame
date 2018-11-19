@@ -1,7 +1,7 @@
 package com.risk.view;
 
-import com.risk.services.controller.PlayerDetailsController;
-import com.risk.services.controller.Util.WindowUtil;
+import com.risk.view.controller.PlayerDetailsController;
+import com.risk.view.Util.WindowUtil;
 import com.risk.services.MapIO;
 import com.risk.services.MapValidate;
 import javafx.event.ActionEvent;

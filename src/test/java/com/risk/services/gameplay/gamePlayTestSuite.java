@@ -7,7 +7,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 
 @RunWith(Suite.class)
-@SuiteClasses({FortificationPhaseTest.class,ReinforcementPhaseTest.class,RoundRobinTest.class})
+@SuiteClasses({RoundRobinTest.class})
 
 /**
  * TestSuite Class for all GamePlay test classes
