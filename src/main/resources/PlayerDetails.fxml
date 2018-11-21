@@ -4,7 +4,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane  maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -17,8 +17,8 @@
    <children>
       <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="21.0" prefWidth="297.0" text="Select number of players" />
       <ChoiceBox fx:id="playerCount" prefHeight="31.0" prefWidth="75.0" GridPane.columnIndex="1" />
-      <TextArea fx:id="playerDetails" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <Label alignment="CENTER_RIGHT" prefHeight="21.0" prefWidth="303.0" text="Player Names" GridPane.rowIndex="1" />
-      <Button fx:id="startGame" mnemonicParsing="false" text="Start Game" onAction="#startPlay" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Button fx:id="startGame" mnemonicParsing="false" onAction="#startPlay" text="Start Game" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <VBox fx:id="playerDetails" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1" />
+      <VBox fx:id="playerTypes" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
    </children>
 </GridPane>
