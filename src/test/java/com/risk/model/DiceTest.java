@@ -44,12 +44,12 @@ public class DiceTest {
 	@Before
 	public void initialize() {
 		
-		player1 = new Player("Player1");
+		player1 = new Player("Player1","TestPlayer");
 		attackingCountry = new Country("India");
 		attackingCountry.setPlayer(player1);
 		attackingCountry.setNoOfArmies(3);
 		
-		player2 = new Player("Player2");
+		player2 = new Player("Player2","TestPlayer");
 		defendingCountry = new Country("China");
 		
 		myCountries = new ArrayList<>();

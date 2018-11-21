@@ -100,9 +100,9 @@ public class PlayerTest {
 
 		player = new Player();
 		playerArmy = new Player();
-		player1 = new Player("player1");
-		player2 = new Player("player2");
-		playerPlaying = new Player("playerPlaying");
+		player1 = new Player("player1","TestPlayer");
+		player2 = new Player("player2","TestPlayer");
+		playerPlaying = new Player("playerPlaying","TestPlayer");
 		player3 = new Player();
 		
 		players = new ArrayList<Player>();
@@ -180,9 +180,9 @@ public class PlayerTest {
 	public void assignArmiesToPlayerTest(){
 
 		playersList = new ArrayList<>();
-		playersList.add(new Player("Karan"));
-		playersList.add(new Player("Pal"));
-		playersList.add(new Player("sharma"));
+		playersList.add(new Player("Karan","TestPlayer"));
+		playersList.add(new Player("Pal","TestPlayer"));
+		playersList.add(new Player("sharma","TestPlayer"));
 
 		assertTrue(playerArmy.assignArmiesToPlayers(playersList,textArea));
 	}

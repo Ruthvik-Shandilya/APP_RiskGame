@@ -258,10 +258,16 @@ public class Player extends Observable implements Observer {
 
     public Player noOfReinforcementArmies(Player currentPlayer) {
 
-        int noOfCountrie = currentPlayer.getPlayerCountries().size();
+        currentPlayer.setArmyCount(currentPlayer.getArmyCount() + currentPlayer.findNoOfArmies(currentPlayer));
+
+        return currentPlayer;
+    }
+
+    public int findNoOfArmies(Player player) {
+        int noOfCountrie = player.getPlayerCountries().size();
         int numberOfArmies = (int) Math.floor(noOfCountrie / 3);
         HashSet<Continent> countryInContinent = new HashSet<>();
-        ArrayList<Country> playerOwnedCountries = currentPlayer.getPlayerCountries();
+        ArrayList<Country> playerOwnedCountries = player.getPlayerCountries();
 
         boolean isPlayerOwnedContinent;
 
@@ -286,45 +292,43 @@ public class Player extends Observable implements Observer {
             numberOfArmies = 3;
         }
 
-        currentPlayer.setArmyCount(currentPlayer.getArmyCount() + numberOfArmies);
-
-        return currentPlayer;
+        return numberOfArmies;
     }
 
 
-    /**
-     * Method for getting a list of all the continents of the player
-     *
-     * @param currentPlayer currentPlayer
-     * @return List of continents owned by the player
-     */
-    public List<Continent> getContinentsOwnedByPlayer(Player currentPlayer) {
-        List<Continent> continents = new ArrayList<>();
-        HashSet<Continent> countryInContinent = new HashSet<>();
-        ArrayList<Country> playerOwnedCountries = currentPlayer.getPlayerCountries();
-
-
-        boolean isPlayerOwnedContinent = true;
-
-        for (Country country : playerOwnedCountries) {
-            countryInContinent.add(country.getPartOfContinent());
-        }
-
-
-        for (Continent continent : countryInContinent) {
-            isPlayerOwnedContinent = true;
-            for (Country country : continent.getListOfCountries()) {
-                if (!playerOwnedCountries.contains(country)) {
-                    isPlayerOwnedContinent = false;
-                    break;
-                }
-            }
-            if (isPlayerOwnedContinent) {
-                continents.add(continent);
-            }
-        }
-        return continents;
-    }
+//    /**
+//     * Method for getting a list of all the continents of the player
+//     *
+//     * @param currentPlayer currentPlayer
+//     * @return List of continents owned by the player
+//     */
+//    public List<Continent> getContinentsOwnedByPlayer(Player currentPlayer) {
+//        List<Continent> continents = new ArrayList<>();
+//        HashSet<Continent> countryInContinent = new HashSet<>();
+//        ArrayList<Country> playerOwnedCountries = currentPlayer.getPlayerCountries();
+//
+//
+//        boolean isPlayerOwnedContinent = true;
+//
+//        for (Country country : playerOwnedCountries) {
+//            countryInContinent.add(country.getPartOfContinent());
+//        }
+//
+//
+//        for (Continent continent : countryInContinent) {
+//            isPlayerOwnedContinent = true;
+//            for (Country country : continent.getListOfCountries()) {
+//                if (!playerOwnedCountries.contains(country)) {
+//                    isPlayerOwnedContinent = false;
+//                    break;
+//                }
+//            }
+//            if (isPlayerOwnedContinent) {
+//                continents.add(continent);
+//            }
+//        }
+//        return continents;
+//    }
 
     /**
      * Method governing the reinforcement phase.
