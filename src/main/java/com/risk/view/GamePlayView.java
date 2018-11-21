@@ -1,17 +1,16 @@
 package com.risk.view;
 
-import java.io.IOException;
-
-import com.risk.view.controller.GamePlayController;
 import com.risk.services.MapIO;
-
+import com.risk.view.controller.GamePlayController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * This class provides the view for the user showing game screen.
@@ -24,17 +23,12 @@ public class GamePlayView implements EventHandler<ActionEvent> {
 	/** Object for MapIO Class */
     private MapIO mapIO;
 
-    /** Array of String to hold names of players */
-    private String[] names;
+    private HashMap<String,String> playerNamesAndTypes;
 
-    /**
-     * Constructor to load contents of map 
-     * @param mapIO		MapIO Object
-     * @param names		names of players
-     */
-    public GamePlayView(MapIO mapIO, String[] names) {
+
+    public GamePlayView(MapIO mapIO, HashMap<String,String> hm) {
         this.mapIO = mapIO;
-        this.names = names;
+        this.playerNamesAndTypes = hm;
     }
 
     /*
@@ -45,7 +39,7 @@ public class GamePlayView implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent event) {
 
-        GamePlayController controller = new GamePlayController(this.mapIO, this.names);
+        GamePlayController controller = new GamePlayController(this.mapIO, this.playerNamesAndTypes);
 
 
         final Stage gamePlayStage = new Stage();
