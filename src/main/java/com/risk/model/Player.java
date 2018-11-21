@@ -1,8 +1,8 @@
 package com.risk.model;
 
+import com.risk.services.MapIO;
 import com.risk.view.Util.WindowUtil;
 import com.risk.view.controller.DiceController;
-import com.risk.services.MapIO;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -47,11 +47,20 @@ public class Player extends Observable implements Observer {
      */
     private ArrayList<Card> cardList;
 
+    private TextArea terminalWindow;
+
+    private String playerType;
+
+    public TextArea getTerminalWindow() {
+        return terminalWindow;
+    }
+
     /**
      * Player constructor, initializes initial army count
      */
     public Player() {
         armyCount = 0;
+        new WindowUtil(this);
     }
 
     /**
@@ -59,11 +68,13 @@ public class Player extends Observable implements Observer {
      *
      * @param name name
      */
-    public Player(String name) {
+    public Player(String name, String playerType) {
         armyCount = 0;
         this.name = name;
+        this.playerType = playerType;
         this.playerCountries = new ArrayList<>();
         this.cardList = new ArrayList<>();
+        new WindowUtil(this);
     }
 
     /**
@@ -145,38 +156,38 @@ public class Player extends Observable implements Observer {
      *
      * @param cardList of player
      */
-//    public void setCardList(ArrayList<Card> cardList) {
-//        this.cardList = cardList;
-//    }
+    public void setCardList(ArrayList<Card> cardList) {
+        this.cardList = cardList;
+    }
 
-//    /**
-//     * Method for adding armies to a country
-//     *
-//     * @param country        Country to which armies are to be assigned
-//     * @param numberOfArmies number for armies to be assigned
-//     */
-//    public void addArmiesToCountry(Country country, int numberOfArmies) {
-//        if (this.getArmyCount() > 0 && this.getArmyCount() >= numberOfArmies) {
-//            if (!this.getPlayerCountries().contains(country)) {
-//                System.out.println("This country is not under your Ownership.");
-//            } else {
-//                country.setNoOfArmies(country.getNoOfArmies() + numberOfArmies);
-//                this.setArmyCount(this.getArmyCount() - numberOfArmies);
-//            }
-//        } else {
-//            System.out.println("Sufficient number of armies not available.");
-//        }
-//    }
+    /**
+     * Method for adding armies to a country
+     *
+     * @param country        Country to which armies are to be assigned
+     * @param numberOfArmies number for armies to be assigned
+     */
+    public void addArmiesToCountry(Country country, int numberOfArmies) {
+        if (this.getArmyCount() > 0 && this.getArmyCount() >= numberOfArmies) {
+            if (!this.getPlayerCountries().contains(country)) {
+                System.out.println("This country is not under your Ownership.");
+            } else {
+                country.setNoOfArmies(country.getNoOfArmies() + numberOfArmies);
+                this.setArmyCount(this.getArmyCount() - numberOfArmies);
+            }
+        } else {
+            System.out.println("Sufficient number of armies not available.");
+        }
+    }
 
-//    /**
-//     * Getter for current PLayer
-//     *
-//     * @return current Player
-//     */
-//
-//    public static Player getPlayerPlaying() {
-//        return Player.currentPlayer;
-//    }
+    /**
+     * Getter for current PLayer
+     *
+     * @return current Player
+     */
+
+    public static Player getPlayerPlaying() {
+        return Player.currentPlayer;
+    }
 
     /**
      * Number of countries won by the player
@@ -192,13 +203,14 @@ public class Player extends Observable implements Observer {
      * @return true, is armies are successfully assigned,; otherwise false
      */
 
-    public static boolean assignArmiesToPlayers(List<Player> players, TextArea textArea) {
+    public boolean assignArmiesToPlayers(List<Player> players, TextArea textArea) {
 
+        this.terminalWindow = textArea;
         boolean isSuccessfulAssignment = false;
         int armiesPerPlayer = 0;
 
         if (players.size() == 3) {
-            armiesPerPlayer = 35;
+            armiesPerPlayer = 7;
         } else if (players.size() == 4) {
             armiesPerPlayer = 30;
         } else if (players.size() == 5) {
@@ -209,7 +221,9 @@ public class Player extends Observable implements Observer {
 
         for (int playerNumber = 0; playerNumber < players.size(); playerNumber++) {
             players.get(playerNumber).setArmyCount(armiesPerPlayer);
-            WindowUtil.updateTerminalWindow(armiesPerPlayer + " armies assigned to " + players.get(playerNumber).getName() + ".\n", textArea);
+            setChanged();
+            notifyObservers(armiesPerPlayer + " armies assigned to " + players.get(playerNumber).getName() + ".\n");
+            //WindowUtil.updateTerminalWindow(armiesPerPlayer + " armies assigned to " + players.get(playerNumber).getName() + ".\n", textArea);
             isSuccessfulAssignment = true;
         }
 
@@ -220,16 +234,17 @@ public class Player extends Observable implements Observer {
     /**
      * Method for generating players according to the data entered by the user
      *
-     * @param noOfPlayer  number of players
-     * @param playersList List of all the player names
-     * @param textArea    TeaxtArea for displaying gamed details
+     * @param hm Map of all the player details
+     * @param textArea    TextArea for displaying gamed details
      * @return List of player objects
      */
-    public static ArrayList<Player> generatePlayer(int noOfPlayer, String[] playersList, TextArea textArea) {
+    public ArrayList<Player> generatePlayer(HashMap<String,String> hm, TextArea textArea) {
+        this.terminalWindow = textArea;
         ArrayList<Player> listPlayer = new ArrayList<>();
-        for (int i = 0; i < noOfPlayer; i++) {
-            listPlayer.add(new Player(playersList[i].trim()));
-            WindowUtil.updateTerminalWindow("Created player " + playersList[i].trim() + ".\n", textArea);
+        for(Map.Entry<String,String> playerEntry : hm.entrySet()){
+            listPlayer.add(new Player(playerEntry.getKey().trim(), playerEntry.getValue()));
+            setChanged();
+            notifyObservers("Created player " + playerEntry.getKey().trim() + ".\n");
         }
         return listPlayer;
     }
@@ -243,89 +258,72 @@ public class Player extends Observable implements Observer {
 
     public Player noOfReinforcementArmies(Player currentPlayer) {
 
-//        int noOfCountrie = currentPlayer.getPlayerCountries().size();
-//        int numberOfArmies = (int) Math.floor(noOfCountrie / 3);
-//        HashSet<Continent> countryInContinent = new HashSet<>();
-//        ArrayList<Country> playerOwnedCountries = currentPlayer.getPlayerCountries();
-//
-//        boolean isPlayerOwnedContinent;
-//
-//        for (Country country : playerOwnedCountries) {
-//            countryInContinent.add(country.getPartOfContinent());
-//        }
-//
-//        for (Continent continent : countryInContinent) {
-//            isPlayerOwnedContinent = true;
-//            for (Country country : continent.getListOfCountries()) {
-//                if (!playerOwnedCountries.contains(country)) {
-//                    isPlayerOwnedContinent = false;
-//                    break;
-//                }
-//            }
-//            if (isPlayerOwnedContinent) {
-//                numberOfArmies += continent.getControlValue();
-//            }
-//        }
-//
-//        if (numberOfArmies < 3) {
-//            numberOfArmies = 3;
-//        }
+        int noOfCountrie = currentPlayer.getPlayerCountries().size();
+        int numberOfArmies = (int) Math.floor(noOfCountrie / 3);
+        HashSet<Continent> countryInContinent = new HashSet<>();
+        ArrayList<Country> playerOwnedCountries = currentPlayer.getPlayerCountries();
 
+        boolean isPlayerOwnedContinent;
 
-
-        currentPlayer.setArmyCount(currentPlayer.getArmyCount() + currentPlayer.findNoOfArmies(currentPlayer));
-
-        return currentPlayer;
-    }
-
-    boolean isPlayerOwnedContinent = true;
-    ArrayList<Country> playerOwnedContries;
-    Set<Continent> countryInContinent;
-
-    /**
-     * Method to find the number of countries owned by the player and to assign
-     * the armies based on the countries list.
-     *
-     * @param player
-     *            Current Player
-     *
-     * @return reinforcement armies
-     */
-    public int findNoOfArmies(Player player) {
-        int myCountries = player.getPlayerCountries().size();
-        int armiesCount = (int) Math.floor(myCountries / 3);
-        countryInContinent = new HashSet<>();
-        playerOwnedContries = player.getPlayerCountries();
-
-        for(Country country : playerOwnedContries){
+        for (Country country : playerOwnedCountries) {
             countryInContinent.add(country.getPartOfContinent());
         }
 
-        System.out.println(countryInContinent);
-
-        // If a player owns all the countries in a continent, then armies count
-        // will be equal
-        // to the control value of the continent.
-        for(Continent continent : countryInContinent){
+        for (Continent continent : countryInContinent) {
             isPlayerOwnedContinent = true;
-            for(Country country: continent.getListOfCountries()){
-                if(!playerOwnedContries.contains(country)){
+            for (Country country : continent.getListOfCountries()) {
+                if (!playerOwnedCountries.contains(country)) {
                     isPlayerOwnedContinent = false;
                     break;
                 }
             }
             if (isPlayerOwnedContinent) {
-                armiesCount += continent.getControlValue();
+                numberOfArmies += continent.getControlValue();
             }
         }
 
-        // Minimum number of armies for a player in case armies count is less
-        // than 3.
-        if (armiesCount < 3) {
-            armiesCount = 3;
+        if (numberOfArmies < 3) {
+            numberOfArmies = 3;
         }
 
-        return armiesCount;
+        currentPlayer.setArmyCount(currentPlayer.getArmyCount() + numberOfArmies);
+
+        return currentPlayer;
+    }
+
+
+    /**
+     * Method for getting a list of all the continents of the player
+     *
+     * @param currentPlayer currentPlayer
+     * @return List of continents owned by the player
+     */
+    public List<Continent> getContinentsOwnedByPlayer(Player currentPlayer) {
+        List<Continent> continents = new ArrayList<>();
+        HashSet<Continent> countryInContinent = new HashSet<>();
+        ArrayList<Country> playerOwnedCountries = currentPlayer.getPlayerCountries();
+
+
+        boolean isPlayerOwnedContinent = true;
+
+        for (Country country : playerOwnedCountries) {
+            countryInContinent.add(country.getPartOfContinent());
+        }
+
+
+        for (Continent continent : countryInContinent) {
+            isPlayerOwnedContinent = true;
+            for (Country country : continent.getListOfCountries()) {
+                if (!playerOwnedCountries.contains(country)) {
+                    isPlayerOwnedContinent = false;
+                    break;
+                }
+            }
+            if (isPlayerOwnedContinent) {
+                continents.add(continent);
+            }
+        }
+        return continents;
     }
 
     /**
@@ -335,7 +333,7 @@ public class Player extends Observable implements Observer {
      * @param textArea TextArea to which current game information will be displayed
      */
     public void reinforcementPhase(Country country, TextArea textArea) {
-
+        this.terminalWindow = textArea;
         if (currentPlayer.getArmyCount() > 0) {
             if (country == null) {
                 WindowUtil.popUpWindow("No Country Selected", "popUp", "Please select a country");
@@ -349,11 +347,15 @@ public class Player extends Observable implements Observer {
             }
             country.setNoOfArmies(country.getNoOfArmies() + reinforcementArmies);
             currentPlayer.setArmyCount(currentPlayer.getArmyCount() - reinforcementArmies);
-            WindowUtil.updateTerminalWindow(country.getName() + " was assigned " + reinforcementArmies + " armies \n", textArea);
+            setChanged();
+            notifyObservers(country.getName() + " was assigned " + reinforcementArmies + " armies \n");
+            //WindowUtil.updateTerminalWindow(country.getName() + " was assigned " + reinforcementArmies + " armies \n", textArea);
 
         }
         if (currentPlayer.getArmyCount() <= 0) {
-            WindowUtil.updateTerminalWindow("Reinforcement Phase Ended, Fortification started\n", textArea);
+            setChanged();
+            notifyObservers("Reinforcement Phase Ended, Fortification started\n");
+            //WindowUtil.updateTerminalWindow("Reinforcement Phase Ended, Fortification started\n", textArea);
             setChanged();
             notifyObservers("Attack");
         }
@@ -409,6 +411,7 @@ public class Player extends Observable implements Observer {
      */
 
     public void fortificationPhase(Country selectedCountry, Country adjCountry, TextArea terminalWindow) {
+        this.terminalWindow = terminalWindow;
         if (selectedCountry == null) {
             WindowUtil.popUpWindow("No country selected", "Fortification Phase popup", "Please select a source country");
             return;
@@ -431,8 +434,12 @@ public class Player extends Observable implements Observer {
             } else {
                 selectedCountry.setNoOfArmies(selectedCountry.getNoOfArmies() - armies);
                 adjCountry.setNoOfArmies(adjCountry.getNoOfArmies() + armies);
-                WindowUtil.updateTerminalWindow(armies + " armies placed on " + adjCountry.getName() + " country.\n", terminalWindow);
-                WindowUtil.updateTerminalWindow("Fortification phase ended. \n", terminalWindow);
+                setChanged();
+                notifyObservers(armies + " armies placed on " + adjCountry.getName() + " country.\n");
+                //WindowUtil.updateTerminalWindow(armies + " armies placed on " + adjCountry.getName() + " country.\n", terminalWindow);
+                setChanged();
+                notifyObservers("Fortification phase ended. \n");
+                //WindowUtil.updateTerminalWindow("Fortification phase ended. \n", terminalWindow);
                 setChanged();
                 notifyObservers("Reinforcement");
             }
@@ -453,10 +460,10 @@ public class Player extends Observable implements Observer {
         boolean isFortificationAvaialble = false;
         outer:
         for (Continent continent : map.getMapGraph().getContinents().values()) {
-            for (Country Country : continent.getListOfCountries()) {
+            for (com.risk.model.Country Country : continent.getListOfCountries()) {
                 if (Country.getPlayer().equals(playerPlaying)) {
                     if (Country.getNoOfArmies() > 1) {
-                        for (Country adjCountry : Country.getAdjacentCountries()) {
+                        for (com.risk.model.Country adjCountry : Country.getAdjacentCountries()) {
                             if (adjCountry.getPlayer().equals(playerPlaying)) {
                                 isFortificationAvaialble = true;
                                 break outer;
@@ -485,6 +492,7 @@ public class Player extends Observable implements Observer {
      * @param terminalWindow      TextArea to which current game information will be displayed
      */
     public void placeArmyOnCountry(Player playerPlaying, ListView<Country> selectedCountryList, List<Player> gamePlayerList, TextArea terminalWindow) {
+        this.terminalWindow = terminalWindow;
         int playerArmies = playerPlaying.getArmyCount();
         if (playerArmies > 0) {
             Country Country = selectedCountryList.getSelectionModel().getSelectedItem();
@@ -497,7 +505,9 @@ public class Player extends Observable implements Observer {
 
         boolean armiesExhausted = isPlayerArmyLeft(gamePlayerList);
         if (armiesExhausted) {
-            WindowUtil.updateTerminalWindow("StartUp Phase Completed.\n", terminalWindow);
+            setChanged();
+            notifyObservers("StartUp Phase Completed.\n");
+            //WindowUtil.updateTerminalWindow("StartUp Phase Completed.\n", terminalWindow);
             setChanged();
             notifyObservers("FirstAttack");
         } else {
@@ -560,16 +570,20 @@ public class Player extends Observable implements Observer {
      */
 
     public boolean playerCanAttack(ListView<Country> countries, TextArea terminalWindow) {
-
+        this.terminalWindow = terminalWindow;
         boolean canAttack = false;
-        for (Country Country : countries.getItems()) {
+        for (com.risk.model.Country Country : countries.getItems()) {
             if (Country.getNoOfArmies() > 1) {
                 canAttack = true;
             }
         }
         if (!canAttack) {
-            WindowUtil.updateTerminalWindow("Player cannot continue with attack phase, move to fortification phase.\n", terminalWindow);
-            WindowUtil.updateTerminalWindow("Attack phase ended\n", terminalWindow);
+            setChanged();
+            notifyObservers("Player cannot continue with attack phase, move to fortification phase.\n");
+            //WindowUtil.updateTerminalWindow("Player cannot continue with attack phase, move to fortification phase.\n", terminalWindow);
+            setChanged();
+            notifyObservers("Attack phase ended\n");
+            //WindowUtil.updateTerminalWindow("Attack phase ended\n", terminalWindow);
             setChanged();
             notifyObservers("checkIfFortificationPhaseValid");
             return canAttack;
@@ -606,14 +620,18 @@ public class Player extends Observable implements Observer {
      */
 
     public Player exchangeCards(List<Card> selectedCards, int numberOfCardSetExchanged, TextArea terminalWindow) {
+        this.terminalWindow = terminalWindow;
         currentPlayer.setArmyCount(currentPlayer.getArmyCount() + (5 * numberOfCardSetExchanged));
-        WindowUtil.updateTerminalWindow(currentPlayer.getName() + " successfully exchanged 3 cards for 1 army! \n", terminalWindow);
+        setChanged();
+        notifyObservers(currentPlayer.getName() + " successfully exchanged 3 cards for 1 army! \n");
+        //WindowUtil.updateTerminalWindow(currentPlayer.getName() + " successfully exchanged 3 cards for 1 army! \n", terminalWindow);
 
         for (Card card : selectedCards) {
             if (currentPlayer.getPlayerCountries().contains(card.getCountry())) {
                 card.getCountry().setNoOfArmies(card.getCountry().getNoOfArmies() + 2);
-                WindowUtil.updateTerminalWindow(currentPlayer.getName() + "\" got extra 2 armies on \"" + card.getCountry().getName() + "\n", terminalWindow);
-
+                setChanged();
+                notifyObservers(currentPlayer.getName() + "\" got extra 2 armies on \"" + card.getCountry().getName() + "\n");
+                //WindowUtil.updateTerminalWindow(currentPlayer.getName() + "\" got extra 2 armies on \"" + card.getCountry().getName() + "\n", terminalWindow);
                 break;
             }
         }
