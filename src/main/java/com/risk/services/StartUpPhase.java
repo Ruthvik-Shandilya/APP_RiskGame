@@ -1,11 +1,13 @@
 package com.risk.services;
 
-import java.util.*;
-
-import com.risk.model.*;
+import com.risk.model.Card;
+import com.risk.model.Country;
+import com.risk.model.ICardType;
+import com.risk.model.Player;
 import com.risk.view.Util.WindowUtil;
-
 import javafx.scene.control.TextArea;
+
+import java.util.*;
 
 /**
  * Class for governing the startup phase of the game. It sets up the game by
@@ -15,7 +17,16 @@ import javafx.scene.control.TextArea;
  * @author Karandeep Singh
  * @author Neha Pal
  */
-public class StartUpPhase {
+public class StartUpPhase extends Observable{
+    private TextArea terminalWindow;
+
+    public TextArea getTerminalWindow() {
+        return terminalWindow;
+    }
+
+    public StartUpPhase(){
+        new WindowUtil(this);
+    }
 
     /**
      * Method to assign countries to a player
@@ -25,6 +36,7 @@ public class StartUpPhase {
      * @return stackOfCards
      */
     public Stack<Card> assignCardToCountry(MapIO map, TextArea textArea) {
+        this.terminalWindow = textArea;
         Stack<Card> stackOfCards = new Stack<>();
 
         List<Country> allCountries = new ArrayList<>(map.getMapGraph().getCountrySet().values());
@@ -52,7 +64,7 @@ public class StartUpPhase {
      */
 
     public List<Player> assignCountryToPlayer(MapIO map, List<Player> players, TextArea textArea) {
-
+        this.terminalWindow = textArea;
         ArrayList<Country> countries = new ArrayList<>(map.getMapGraph().getCountrySet().values());
         while (countries.size() > 0) {
             for (int i = 0; i < players.size(); ++i) {
@@ -61,15 +73,17 @@ public class StartUpPhase {
                     players.get(i).addCountry(countries.get(assignCountryIndex));
                     countries.get(assignCountryIndex).setPlayer(players.get(i));
                     countries.get(assignCountryIndex).setNoOfArmies(1);
-                    WindowUtil.updateTerminalWindow(countries.get(assignCountryIndex).getName() + " assigned to " +
-                            players.get(i).getName() + " ! \n", textArea);
+                    setChanged();
+                    notifyObservers(countries.get(assignCountryIndex).getName() + " assigned to " +
+                            players.get(i).getName() + " ! \n");
                     countries.remove(assignCountryIndex);
                 } else if (countries.size() == 1) {
                     players.get(i).addCountry(countries.get(0));
                     countries.get(0).setPlayer(players.get(i));
                     countries.get(0).setNoOfArmies(1);
-                    WindowUtil.updateTerminalWindow(countries.get(0).getName() + " assigned to " +
-                            players.get(i).getName() + " ! \n", textArea);
+                    setChanged();
+                    notifyObservers(countries.get(0).getName() + " assigned to " +
+                            players.get(i).getName() + " ! \n");
                     countries.remove(0);
                     break;
                 }

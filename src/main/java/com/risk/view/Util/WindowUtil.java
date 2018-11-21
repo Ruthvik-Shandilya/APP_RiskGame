@@ -2,6 +2,9 @@ package com.risk.view.Util;
 
 import com.risk.model.Continent;
 import com.risk.model.Country;
+import com.risk.model.Player;
+import com.risk.services.StartUpPhase;
+import com.risk.view.controller.GamePlayController;
 import javafx.application.Platform;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
@@ -11,6 +14,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Optional;
 
 /**
@@ -18,7 +23,20 @@ import java.util.Optional;
  *
  * @author Palash Jain
  */
-public class WindowUtil {
+public class WindowUtil implements Observer {
+
+    public WindowUtil(GamePlayController gamePlayController) {
+        gamePlayController.addObserver(this);
+    }
+
+    public WindowUtil(Player player){
+        player.addObserver(this);
+    }
+
+    public WindowUtil(StartUpPhase startUpPhase){
+        startUpPhase.addObserver(this);
+    }
+
     /**
      * This method is used to close the window.
      *
@@ -157,17 +175,6 @@ public class WindowUtil {
         }
     }
 
-    public static void checkCheckBoxes(CheckBox... checkBoxes) {
-//        System.out.println("n check");
-        for (CheckBox checkBox : checkBoxes) {
-//            System.out.println("n for check");
-
-            checkBox.setText("");
-            checkBox.setIndeterminate(false);
-            checkBox.setSelected(true);
-        }
-    }
-
     /**
      * This method helps in taking user input by providing a input box
      *
@@ -191,7 +198,7 @@ public class WindowUtil {
      * @param information    Information
      * @param terminalWindow Console
      */
-    public static void updateTerminalWindow(String information, TextArea terminalWindow) {
+    public void updateTerminalWindow(String information, TextArea terminalWindow) {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -201,4 +208,20 @@ public class WindowUtil {
         });
     }
 
+    @Override
+    public void update(Observable o, Object arg) {
+        String information = (String) arg;
+        TextArea terminalWindow;
+        if(o instanceof  GamePlayController)
+            terminalWindow = ((GamePlayController) o).getTerminalWindow();
+        else if(o instanceof Player)
+            terminalWindow = ((Player) o).getTerminalWindow();
+        else
+            terminalWindow = ((StartUpPhase) o).getTerminalWindow();
+        if(information.equals("Attack")  || information.equals("Fortification") || information.equals("noFortificationMove")
+            || information.equals("FirstAttack") || information.equals("placeArmyOnCountry") || information.equals("checkIfFortificationPhaseValid")
+                || information.equals("rollDiceComplete"))
+            return;
+        updateTerminalWindow(information, terminalWindow);
+    }
 }
