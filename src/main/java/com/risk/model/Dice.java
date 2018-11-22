@@ -15,7 +15,7 @@ import java.util.Random;
  * and the defender can have a maximum of 2 dices. It has methods for
  * simulating the dice rolls for the attack phase
  *
- * @author Plash Jain
+ * @author Palash Jain
  * @author Karandeep Singh
  */
 public class Dice extends Observable {
@@ -32,7 +32,7 @@ public class Dice extends Observable {
     private ArrayList<Integer> attackerDiceList;
 
     /**
-     * Country is is under attcked
+     * Country is is under attack
      */
     private Country defendingCountry;
 
@@ -50,7 +50,7 @@ public class Dice extends Observable {
      * Constructor for the dice class. It initializes the
      * value of the attacking and defending countries.
      *
-     * @param attackingCountry Country which is attcking currently
+     * @param attackingCountry Country which is attacking currently
      * @param defendingCountry Country under attack
      */
     public Dice(Country attackingCountry, Country defendingCountry) {
@@ -185,7 +185,7 @@ public class Dice extends Observable {
      * @param playResult List of attack results
      */
     public void updateArmiesAfterAttack(Integer defenderValue, Integer attackerValue, ArrayList<String> playResult) {
-        if (attackerValue.compareTo(defenderValue) > 0) {
+        if (attackerValue - defenderValue > 0) {
             playResult.add("Defender has lost one army.");
             if (defendingCountry.getNoOfArmies() > 0) {
                 defendingCountry.setNoOfArmies(defendingCountry.getNoOfArmies() - 1);
@@ -207,19 +207,6 @@ public class Dice extends Observable {
         notifyObservers("rollDiceComplete");
     }
 
-//    /**
-//     * Method for moving all the armies,
-//     * after attacker has won a country.
-//     */
-
-//    public void moveAllArmies() {
-//        int attackingArmyCount = getAttackingCountry().getNoOfArmies();
-//        getAttackingCountry().setNoOfArmies(1);
-//        getDefendingCountry().setNoOfArmies(attackingArmyCount - 1);
-//        updateCountryList();
-//        setChanged();
-//        notifyObservers("rollDiceComplete");
-//    }
 
     /**
      * Method for skipping the army move after attacke has won the attack.
@@ -249,7 +236,7 @@ public class Dice extends Observable {
 
     /**
      * Method for moving armies from attacker's country to the defending country,
-     * if attckes won the country.
+     * if attacks won the country.
      *
      *
      * @param armiesToMove Number aries to move

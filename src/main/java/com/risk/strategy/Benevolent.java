@@ -1,4 +1,5 @@
 package com.risk.strategy;
 
-public class Benevolent {
+public class Benevolent extends PlayerBehaviour{
+
 }

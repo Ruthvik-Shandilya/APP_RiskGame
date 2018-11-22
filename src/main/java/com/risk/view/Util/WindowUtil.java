@@ -2,8 +2,10 @@ package com.risk.view.Util;
 
 import com.risk.model.Continent;
 import com.risk.model.Country;
+import com.risk.model.Dice;
 import com.risk.model.Player;
 import com.risk.services.StartUpPhase;
+import com.risk.view.controller.DiceController;
 import com.risk.view.controller.GamePlayController;
 import javafx.application.Platform;
 import javafx.scene.control.*;
@@ -35,6 +37,10 @@ public class WindowUtil implements Observer {
 
     public WindowUtil(StartUpPhase startUpPhase){
         startUpPhase.addObserver(this);
+    }
+
+    public WindowUtil(DiceController diceController){
+        diceController.addObserver(this);
     }
 
     /**
@@ -175,6 +181,22 @@ public class WindowUtil implements Observer {
         }
     }
 
+    public static void checkCheckBoxes(CheckBox... checkBoxes) {
+        for (CheckBox checkBox : checkBoxes) {
+            checkBox.setText("");
+            checkBox.setIndeterminate(false);
+            checkBox.setSelected(true);
+        }
+    }
+
+    public static void selectVisibleDice(Control... controls) {
+        for (Control control : controls) {
+            if (control.isVisible()) {
+                ((CheckBox) control).setSelected(true);
+            }
+        }
+    }
+
     /**
      * This method helps in taking user input by providing a input box
      *
@@ -199,12 +221,9 @@ public class WindowUtil implements Observer {
      * @param terminalWindow Console
      */
     public void updateTerminalWindow(String information, TextArea terminalWindow) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                if (terminalWindow != null)
-                    terminalWindow.appendText(information);
-            }
+        Platform.runLater(() -> {
+            if (terminalWindow != null)
+                terminalWindow.appendText(information);
         });
     }
 

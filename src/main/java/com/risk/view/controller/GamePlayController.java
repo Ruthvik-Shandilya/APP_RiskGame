@@ -23,7 +23,7 @@ import java.util.*;
 import java.util.Map.Entry;
 
 /**
- * This class provides all the methods to control various activities during the gameplay,
+ * This class provides all the methods to control various activities during the game play,
  * implements Observer.
  *
  * @author Karandeep Singh
@@ -201,11 +201,9 @@ public class GamePlayController extends Observable implements Initializable, Obs
         gamePlayerList.clear();
         setChanged();
         notifyObservers("Set up phase started\n");
-       // WindowUtil.updateTerminalWindow("Set up phase started\n", terminalWindow);
         gamePlayerList = new Player().generatePlayer( this.playerNamesAndTypes, terminalWindow);
         setChanged();
         notifyObservers("All players generated\n");
-        //WindowUtil.updateTerminalWindow("All players generated\n", terminalWindow);
 
         playerIterator = gamePlayerList.iterator();
 
@@ -213,7 +211,6 @@ public class GamePlayController extends Observable implements Initializable, Obs
         allocateCountryToPlayerInGamePlay();
         setChanged();
         notifyObservers("All countries assigned\n");
-        //WindowUtil.updateTerminalWindow("All countries assigned\n", terminalWindow);
 
         loadMapData();
         loadCurrentPlayer();
@@ -334,7 +331,6 @@ public class GamePlayController extends Observable implements Initializable, Obs
         cardStack = startUpPhase.assignCardToCountry(map, terminalWindow);
         setChanged();
         notifyObservers("Cards loaded\n");
-        //WindowUtil.updateTerminalWindow("Cards loaded\n", terminalWindow);
     }
 
     /**
@@ -351,7 +347,6 @@ public class GamePlayController extends Observable implements Initializable, Obs
         }
         setChanged();
         notifyObservers("Attack phase ended\n");
-        //WindowUtil.updateTerminalWindow("Attack phase ended\n", terminalWindow);
         isValidFortificationPhase();
     }
 
@@ -365,8 +360,6 @@ public class GamePlayController extends Observable implements Initializable, Obs
         setChanged();
         notifyObservers(cardToBeAdded.getCardType() + " card is assigned to " +
                 playerPlaying.getName() + " and won country " + cardToBeAdded.getCountry().getName() + "\n");
-        //WindowUtil.updateTerminalWindow(cardToBeAdded.getCardType().toString() + " card is assigned to " +
-          //      playerPlaying.getName() + " and won country " + cardToBeAdded.getCountry().getName() + "\n", terminalWindow);
     }
 
     /**
@@ -376,7 +369,7 @@ public class GamePlayController extends Observable implements Initializable, Obs
         Country attackingTerritory = selectedCountryList.getSelectionModel().getSelectedItem();
         Country defendingTerritory = adjacentCountryList.getSelectionModel().getSelectedItem();
 
-        playerPlaying.attackPhase(attackingTerritory, defendingTerritory);
+        playerPlaying.attackPhase(attackingTerritory, defendingTerritory, terminalWindow);
     }
 
     /**
@@ -405,7 +398,6 @@ public class GamePlayController extends Observable implements Initializable, Obs
         adjacentCountryList.setOnMouseClicked(e -> System.out.print(""));
         setChanged();
         notifyObservers("Player " + playerPlaying.getName() + " ended his turn.\n");
-        //WindowUtil.updateTerminalWindow("Player " + playerPlaying.getName() + " ended his turn.\n", terminalWindow);
         if (playerPlaying.getCountryWon() > 0) {
             allocateCardToPlayer();
         }
@@ -458,7 +450,6 @@ public class GamePlayController extends Observable implements Initializable, Obs
     private void allocateCountryToPlayerInGamePlay() {
         setChanged();
         notifyObservers("Assigning countries to all players\n");
-        //WindowUtil.updateTerminalWindow("Assigning countries to all players\n", terminalWindow);
         startUpPhase.assignCountryToPlayer(map, gamePlayerList, terminalWindow);
     }
 
@@ -482,7 +473,6 @@ public class GamePlayController extends Observable implements Initializable, Obs
         playerPlaying.addObserver(this);
         setChanged();
         notifyObservers(playerPlaying.getName() + "'s turn started.\n");
-        //WindowUtil.updateTerminalWindow(playerPlaying.getName() + "'s turn started.\n", terminalWindow);
 
         selectedCountryList.getItems().clear();
         adjacentCountryList.getItems().clear();
@@ -503,7 +493,6 @@ public class GamePlayController extends Observable implements Initializable, Obs
         } else {
             setChanged();
             notifyObservers("Wait, no player is assigned the position of current player\n");
-            //WindowUtil.updateTerminalWindow("Wait, no player is assigned the position of current player\n", terminalWindow);
         }
     }
 
@@ -529,7 +518,6 @@ public class GamePlayController extends Observable implements Initializable, Obs
         reinforcement.requestFocus();
         setChanged();
         notifyObservers("\nReinforcement phase started\n");
-        //WindowUtil.updateTerminalWindow("\nReinforcement phase started\n", terminalWindow);
         calculateReinforcementArmies();
     }
 
@@ -547,7 +535,6 @@ public class GamePlayController extends Observable implements Initializable, Obs
     private void initializeAttack() {
         setChanged();
         notifyObservers("\n Attack phase started.\n");
-        //WindowUtil.updateTerminalWindow("\n Attack phase started.\n", terminalWindow);
 
         if (playerPlaying.playerCanAttack(selectedCountryList, terminalWindow)) {
             phaseView.setText("Phase: Attack");
@@ -571,7 +558,6 @@ public class GamePlayController extends Observable implements Initializable, Obs
         fortify.requestFocus();
         setChanged();
         notifyObservers("\nFortification phase started.\n");
-        //WindowUtil.updateTerminalWindow("\nFortification phase started.\n", terminalWindow);
 
     }
 
@@ -604,7 +590,6 @@ public class GamePlayController extends Observable implements Initializable, Obs
             WindowUtil.popUpWindow(playerLost.getName() + " Lost", "Player Lost popup", "Player: " + playerLost.getName() + " lost the game");
             setChanged();
             notifyObservers(playerLost.getName() + " lost the game and hence all the countries.\n\n");
-            //WindowUtil.updateTerminalWindow(playerLost.getName() + " lost the game and hence all the countries.\n\n", terminalWindow);
         }
     }
 
@@ -617,7 +602,6 @@ public class GamePlayController extends Observable implements Initializable, Obs
         playerChosen.setText(playerPlaying.getName().toUpperCase() + " WON.");
         setChanged();
         notifyObservers("\n " + playerPlaying.getName().toUpperCase() + " WON.\n\n");
-        //WindowUtil.updateTerminalWindow("\n " + playerPlaying.getName().toUpperCase() + " WON.\n\n", terminalWindow);
     }
 
     /**
@@ -676,13 +660,10 @@ public class GamePlayController extends Observable implements Initializable, Obs
     private void noFortificationPhase() {
         setChanged();
         notifyObservers("Fortification phase started\n");
-        //WindowUtil.updateTerminalWindow("Fortification phase started\n", terminalWindow);
         setChanged();
         notifyObservers(playerPlaying.getName() + " does not have armies to fortify.\n");
-        //WindowUtil.updateTerminalWindow(playerPlaying.getName() + " does not have armies to fortify.\n", terminalWindow);
         setChanged();
         notifyObservers("Fortification phase ended\n");
-        //WindowUtil.updateTerminalWindow("Fortification phase ended\n", terminalWindow);
         initializeReinforcement();
     }
 
