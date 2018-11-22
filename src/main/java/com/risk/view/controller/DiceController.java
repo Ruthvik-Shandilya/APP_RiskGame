@@ -286,8 +286,8 @@ public class DiceController extends Observable implements Initializable {
         Country defendingCountry = dice.getDefendingCountry();
         ArrayList<String> diceResult =  new ArrayList<>();
 
-        int bufferNoOfAttackingArmies = countryAttacking.getNoOfArmies();
-        int bufferNoOfDefendingArmies = defendingCountry.getNoOfArmies();
+        int bufferAttackingArmies = countryAttacking.getNoOfArmies();
+        int bufferDefendingArmies = defendingCountry.getNoOfArmies();
 
 
         while(dice.getAttackingCountry().getNoOfArmies() > 1 && dice.getDefendingCountry().getNoOfArmies() > 0 ) {
@@ -330,13 +330,13 @@ public class DiceController extends Observable implements Initializable {
             }
             diceResult = dice.getDicePlayResult();
 
-            if(countryAttacking.getNoOfArmies() != bufferNoOfAttackingArmies){
+            if(countryAttacking.getNoOfArmies() != bufferAttackingArmies){
             	setChanged();
-            	notifyObservers(countryAttacking.getPlayer().getName() + " lost: " + (countryAttacking.getNoOfArmies() - bufferNoOfAttackingArmies) + " armies\n");
+            	notifyObservers(countryAttacking.getPlayer().getName() + " lost: " + (countryAttacking.getNoOfArmies() - bufferAttackingArmies) + " armies\n");
             }
-			if(defendingCountry.getNoOfArmies() != bufferNoOfDefendingArmies){
+			if(defendingCountry.getNoOfArmies() != bufferDefendingArmies){
 				setChanged();
-				notifyObservers(defendingCountry.getPlayer().getName() + " lost: " + (defendingCountry.getNoOfArmies() - bufferNoOfDefendingArmies) + " armies\n");
+				notifyObservers(defendingCountry.getPlayer().getName() + " lost: " + (defendingCountry.getNoOfArmies() - bufferDefendingArmies) + " armies\n");
 			}
 
             defendingArmies.setText("Armies: " + String.valueOf(defendingCountry.getNoOfArmies()));
