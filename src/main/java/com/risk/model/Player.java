@@ -278,7 +278,7 @@ public class Player extends Observable implements Observer {
         return currentPlayer;
     }
 
-    public int findNoOfArmies(Player player) {
+public int findNoOfArmies(Player player) {
         int noOfCountries = player.getPlayerCountries().size();
         int numberOfArmies = (int) Math.floor(noOfCountries / 3);
         HashSet<Continent> countryInContinent = new HashSet<>();
@@ -309,8 +309,7 @@ public class Player extends Observable implements Observer {
 
         return numberOfArmies;
     }
-
-
+            
     /**
      * Method governing the reinforcement phase.
      *

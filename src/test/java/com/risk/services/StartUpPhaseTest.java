@@ -80,7 +80,7 @@ public class StartUpPhaseTest {
         country2.setAdjacentCountries(country1.getAdjacentCountries());
 
         map = new MapIO();
-        player = new Player("Karan");
+        player = new Player("Karan","TestPlayer");
 
         listOfContinents= new ArrayList<>();
         listOfContinents.add(continent);
