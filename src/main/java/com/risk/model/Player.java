@@ -1,16 +1,13 @@
 package com.risk.model;
 
 import com.risk.services.MapIO;
+import com.risk.strategy.*;
+import com.risk.strategy.Random;
+import com.risk.view.DiceView;
 import com.risk.view.Util.WindowUtil;
-import com.risk.view.controller.DiceController;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
-import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.*;
 
 /**
@@ -51,6 +48,8 @@ public class Player extends Observable implements Observer {
 
     private String playerType;
 
+    private PlayerBehaviour playerBehaviour;
+
     public TextArea getTerminalWindow() {
         return terminalWindow;
     }
@@ -74,6 +73,16 @@ public class Player extends Observable implements Observer {
         this.playerType = playerType;
         this.playerCountries = new ArrayList<>();
         this.cardList = new ArrayList<>();
+        if(playerType.equals(IPlayerType.AGGRESSIVE))
+            this.playerBehaviour = new Aggressive();
+        else if(playerType.equals(IPlayerType.BENEVOLENT))
+            this.playerBehaviour = new Benevolent();
+        else if(playerType.equals(IPlayerType.CHEATER))
+            this.playerBehaviour = new Cheater();
+        else if(playerType.equals(IPlayerType.HUMAN))
+            this.playerBehaviour = new Human();
+        else if(playerType.equals(IPlayerType.RANDOM))
+            this.playerBehaviour = new Random();
         new WindowUtil(this);
     }
 
@@ -160,6 +169,14 @@ public class Player extends Observable implements Observer {
         this.cardList = cardList;
     }
 
+    public String getPlayerType() {
+        return playerType;
+    }
+
+    public PlayerBehaviour getPlayerBehaviour() {
+        return playerBehaviour;
+    }
+
     /**
      * Method for adding armies to a country
      *
@@ -210,7 +227,7 @@ public class Player extends Observable implements Observer {
         int armiesPerPlayer = 0;
 
         if (players.size() == 3) {
-            armiesPerPlayer = 7;
+            armiesPerPlayer = 35;
         } else if (players.size() == 4) {
             armiesPerPlayer = 30;
         } else if (players.size() == 5) {
@@ -257,15 +274,13 @@ public class Player extends Observable implements Observer {
      */
 
     public Player noOfReinforcementArmies(Player currentPlayer) {
-
         currentPlayer.setArmyCount(currentPlayer.getArmyCount() + currentPlayer.findNoOfArmies(currentPlayer));
-
         return currentPlayer;
     }
 
-    public int findNoOfArmies(Player player) {
-        int noOfCountrie = player.getPlayerCountries().size();
-        int numberOfArmies = (int) Math.floor(noOfCountrie / 3);
+public int findNoOfArmies(Player player) {
+        int noOfCountries = player.getPlayerCountries().size();
+        int numberOfArmies = (int) Math.floor(noOfCountries / 3);
         HashSet<Continent> countryInContinent = new HashSet<>();
         ArrayList<Country> playerOwnedCountries = player.getPlayerCountries();
 
@@ -294,42 +309,7 @@ public class Player extends Observable implements Observer {
 
         return numberOfArmies;
     }
-
-
-//    /**
-//     * Method for getting a list of all the continents of the player
-//     *
-//     * @param currentPlayer currentPlayer
-//     * @return List of continents owned by the player
-//     */
-//    public List<Continent> getContinentsOwnedByPlayer(Player currentPlayer) {
-//        List<Continent> continents = new ArrayList<>();
-//        HashSet<Continent> countryInContinent = new HashSet<>();
-//        ArrayList<Country> playerOwnedCountries = currentPlayer.getPlayerCountries();
-//
-//
-//        boolean isPlayerOwnedContinent = true;
-//
-//        for (Country country : playerOwnedCountries) {
-//            countryInContinent.add(country.getPartOfContinent());
-//        }
-//
-//
-//        for (Continent continent : countryInContinent) {
-//            isPlayerOwnedContinent = true;
-//            for (Country country : continent.getListOfCountries()) {
-//                if (!playerOwnedCountries.contains(country)) {
-//                    isPlayerOwnedContinent = false;
-//                    break;
-//                }
-//            }
-//            if (isPlayerOwnedContinent) {
-//                continents.add(continent);
-//            }
-//        }
-//        return continents;
-//    }
-
+            
     /**
      * Method governing the reinforcement phase.
      *
@@ -353,13 +333,11 @@ public class Player extends Observable implements Observer {
             currentPlayer.setArmyCount(currentPlayer.getArmyCount() - reinforcementArmies);
             setChanged();
             notifyObservers(country.getName() + " was assigned " + reinforcementArmies + " armies \n");
-            //WindowUtil.updateTerminalWindow(country.getName() + " was assigned " + reinforcementArmies + " armies \n", textArea);
 
         }
         if (currentPlayer.getArmyCount() <= 0) {
             setChanged();
             notifyObservers("Reinforcement Phase Ended, Fortification started\n");
-            //WindowUtil.updateTerminalWindow("Reinforcement Phase Ended, Fortification started\n", textArea);
             setChanged();
             notifyObservers("Attack");
         }
@@ -371,7 +349,7 @@ public class Player extends Observable implements Observer {
      * @param attackingCountry attacking country
      * @param defendingCountry Country under attack
      */
-    public void attackPhase(Country attackingCountry, Country defendingCountry) {
+    public void attackPhase(Country attackingCountry, Country defendingCountry, TextArea terminalWindow) {
         if (attackingCountry != null && defendingCountry != null) {
 
             boolean playerCanAttack = isAttackMoveValid(attackingCountry, defendingCountry);
@@ -379,25 +357,7 @@ public class Player extends Observable implements Observer {
             if (playerCanAttack) {
                 Dice dice = new Dice(attackingCountry, defendingCountry);
                 dice.addObserver(this);
-                final Stage newMapStage = new Stage();
-                newMapStage.setTitle("Attack Window");
-
-                DiceController diceController = new DiceController(dice);
-
-                FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("DiceView.fxml"));
-                loader.setController(diceController);
-
-                Parent root = null;
-                try {
-                    root = (Parent) loader.load();
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-
-                Scene scene = new Scene(root);
-                newMapStage.setScene(scene);
-                newMapStage.show();
+                DiceView.openDiceWindow(dice, currentPlayer, terminalWindow);
             }
 
         } else {
@@ -440,10 +400,8 @@ public class Player extends Observable implements Observer {
                 adjCountry.setNoOfArmies(adjCountry.getNoOfArmies() + armies);
                 setChanged();
                 notifyObservers(armies + " armies placed on " + adjCountry.getName() + " country.\n");
-                //WindowUtil.updateTerminalWindow(armies + " armies placed on " + adjCountry.getName() + " country.\n", terminalWindow);
                 setChanged();
                 notifyObservers("Fortification phase ended. \n");
-                //WindowUtil.updateTerminalWindow("Fortification phase ended. \n", terminalWindow);
                 setChanged();
                 notifyObservers("Reinforcement");
             }

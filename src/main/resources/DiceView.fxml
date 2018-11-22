@@ -47,6 +47,6 @@
          </children>
       </Pane>
       <Label fx:id="winnerName" alignment="CENTER" contentDisplay="CENTER" layoutX="15.0" layoutY="240.0" prefHeight="21.0" prefWidth="522.0" text="Winner Name" wrapText="true" />
-      <Button fx:id="continueRoll" layoutX="230.0" layoutY="268.0" mnemonicParsing="false" onAction="#continueDiceRoll" prefHeight="32.0" prefWidth="92.0" text="Continue" wrapText="true" />
+      <Button fx:id="continueRoll" layoutX="230.0" layoutY="268.0" mnemonicParsing="false" onAction="#continueDiceRoll" prefHeight="32.0" prefWidth="92.0" text="All Out" wrapText="true" />
    </children>
 </Pane>

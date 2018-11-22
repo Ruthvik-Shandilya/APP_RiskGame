@@ -1,4 +1,5 @@
 package com.risk.strategy;
 
-public class Cheater {
+public class Cheater extends PlayerBehaviour{
+
 }

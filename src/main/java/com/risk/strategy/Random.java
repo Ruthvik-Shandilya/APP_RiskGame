@@ -1,4 +1,5 @@
 package com.risk.strategy;
 
-public class Random {
+public class Random extends PlayerBehaviour{
+
 }

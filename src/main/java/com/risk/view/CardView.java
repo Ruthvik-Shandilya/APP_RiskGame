@@ -1,5 +1,6 @@
 package com.risk.view;
 
+import com.risk.model.Card;
 import com.risk.model.Player;
 import com.risk.view.controller.CardController;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +12,7 @@ import java.io.IOException;
 
 public class CardView {
 
-    public static void openCardWindow(Player currentPlayer, com.risk.model.Card card) {
+    public static void openCardWindow(Player currentPlayer, Card card) {
         final Stage newCardStage = new Stage();
         newCardStage.setTitle("Card Window");
         CardController cardController = new CardController(currentPlayer, card);
