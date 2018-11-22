@@ -235,6 +235,8 @@ public class WindowUtil implements Observer {
             terminalWindow = ((GamePlayController) o).getTerminalWindow();
         else if(o instanceof Player)
             terminalWindow = ((Player) o).getTerminalWindow();
+        else if(o instanceof DiceController)
+            terminalWindow = ((DiceController) o).getTerminalWindow();
         else
             terminalWindow = ((StartUpPhase) o).getTerminalWindow();
         if(information.equals("Attack")  || information.equals("Fortification") || information.equals("noFortificationMove")
