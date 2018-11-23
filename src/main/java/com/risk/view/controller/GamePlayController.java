@@ -4,6 +4,7 @@ import com.risk.model.*;
 import com.risk.services.MapIO;
 import com.risk.services.StartUpPhase;
 import com.risk.services.gameplay.RoundRobin;
+import com.risk.services.saveload.SaveData;
 import com.risk.view.CardView;
 import com.risk.view.Util.WindowUtil;
 import javafx.collections.FXCollections;
@@ -767,5 +768,14 @@ public class GamePlayController extends Observable implements Initializable, Obs
      */
     public void setNumberOfCardSetExchanged(int numberOfCardSetExchanged) {
         this.numberOfCardSetExchanged = numberOfCardSetExchanged;
+    }
+
+    private void saveFile(GamePlayController gamePlayController){
+
+        SaveData data = new SaveData();
+
+        data.mapIO = map;
+        data.startUpPhase=startUpPhase;
+        data.playingPlayer=playerPlaying;
     }
 }

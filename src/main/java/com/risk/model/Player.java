@@ -8,6 +8,7 @@ import com.risk.view.Util.WindowUtil;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -16,7 +17,7 @@ import java.util.*;
  * @author KaranDeep Singh
  * @author Palash Jain
  */
-public class Player extends Observable implements Observer {
+public class Player extends Observable implements Observer,Serializable {
 
     /**
      * Player currently playing.
