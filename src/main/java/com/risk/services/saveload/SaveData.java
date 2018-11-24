@@ -6,10 +6,12 @@ import com.risk.model.PlayerWorldDomination;
 import com.risk.services.MapIO;
 import com.risk.services.StartUpPhase;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 
-import java.awt.*;
+
 import java.io.Serializable;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Stack;
 
 public class SaveData implements Serializable {
@@ -20,19 +22,19 @@ public class SaveData implements Serializable {
 
     public Player playingPlayer;
 
-    public Player playerGamePhase;
+   // public Player playerGamePhase;
 
     public Card card;
 
     public Stack<Card> cardStack;
 
-    public List<Player> gamePlayerList;
+    public ArrayList<Player> gamePlayerList;
+
 
     @FXML
     public TextArea terminalWindow;
 
-    @FXML
-    public Label phaseView;
+    public String phaseView;
 
     public PlayerWorldDomination playerWorldDomination;
 
@@ -41,5 +43,5 @@ public class SaveData implements Serializable {
     public int attackCount = 5;
 
     @FXML
-    public Label currentPlayer;
+    public Label playerChosen;
 }

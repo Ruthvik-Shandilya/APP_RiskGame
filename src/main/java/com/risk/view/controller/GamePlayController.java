@@ -7,6 +7,7 @@ import com.risk.services.gameplay.RoundRobin;
 import com.risk.services.saveload.SaveData;
 import com.risk.view.CardView;
 import com.risk.view.Util.WindowUtil;
+import com.risk.services.saveload.ResourceManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,7 +19,9 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.net.URL;
 import java.util.*;
 import java.util.Map.Entry;
@@ -142,10 +145,14 @@ public class GamePlayController extends Observable implements Initializable, Obs
     @FXML
     private Button placeArmy;
 
+    private String phaseViewString;
+
     /**
      * selected number of players who are supposed to play the Game
      */
     private int numberOfPlayersSelected;
+
+    private boolean isGameSaved = false;
 
     /**
      * List of Players
@@ -770,12 +777,66 @@ public class GamePlayController extends Observable implements Initializable, Obs
         this.numberOfCardSetExchanged = numberOfCardSetExchanged;
     }
 
-    private void saveFile(GamePlayController gamePlayController){
+    @FXML
+    private void saveGame(ActionEvent event){
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Game");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Game file extensions(*.save or *.S)","*.SAVE"));
+        File selectedFile = fileChooser.showOpenDialog(null);
+
+        if(selectedFile != null){
+            saveFile(this,selectedFile);
+        }
+    }
+
+    private void saveFile(GamePlayController gamePlayController,File file){
 
         SaveData data = new SaveData();
 
         data.mapIO = map;
         data.startUpPhase=startUpPhase;
         data.playingPlayer=playerPlaying;
+        //playergamephase
+        data.card=card;
+        data.cardStack=cardStack;
+        data.gamePlayerList=gamePlayerList;
+
+        data.terminalWindow=terminalWindow;
+        data.phaseView=phaseView.getText();
+        data.playerWorldDomination=worldDomination;
+
+        data.numberOfCardsExchanged=numberOfCardSetExchanged;
+        data.attackCount=5;
+        data.playerChosen=playerChosen;
+
+        try{
+            ResourceManager.save(data,"game.save");
+        }catch(Exception e){
+            System.out.println("Couldn't save: " + e.getMessage());
+        }
+    }
+
+    public GamePlayController loadFile(){
+        isGameSaved = true;
+        GamePlayController controller = new GamePlayController();
+        try{
+            SaveData data = (SaveData) ResourceManager.load("game.save");
+            controller.map=data.mapIO;
+            controller.startUpPhase=data.startUpPhase;
+            controller.playerPlaying=data.playingPlayer;
+            controller.card=data.card;
+            controller.cardStack=data.cardStack;
+            controller.gamePlayerList=data.gamePlayerList;
+            controller.terminalWindow=data.terminalWindow;
+            controller.phaseViewString=data.phaseView;
+            controller.worldDomination=data.playerWorldDomination;
+            controller.numberOfCardSetExchanged=data.numberOfCardsExchanged;
+            controller.playerChosen=data.playerChosen;
+            //attackcount
+        }catch (Exception e){
+            System.out.println("Couldn't load save data: "+e.getMessage());
+        }
+        return controller;
     }
 }
