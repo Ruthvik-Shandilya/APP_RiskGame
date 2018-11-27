@@ -14,7 +14,7 @@ public class LoadGame implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent event) {
 
-        GamePlayController controller = new GamePlayController().loadFile();
+        GamePlayController controller = new GamePlayController().loadGame();
 
         final Stage gamePlayStage = new Stage();
         gamePlayStage.setTitle("Game Screen");
@@ -33,4 +33,6 @@ public class LoadGame implements EventHandler<ActionEvent> {
         gamePlayStage.show();
 
     }
+
+
 }

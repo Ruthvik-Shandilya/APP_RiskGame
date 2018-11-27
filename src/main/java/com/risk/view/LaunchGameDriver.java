@@ -68,7 +68,7 @@ public class LaunchGameDriver extends Application {
 			vbox.setSpacing(20);
 			vbox.setAlignment(Pos.CENTER);
 
-			vbox.getChildren().addAll(gameLabel, optionLabel, loadMapButton(), createMapButton(), startGameButton(), startTournamentButton());
+			vbox.getChildren().addAll(gameLabel, optionLabel, loadMapButton(), createMapButton(), startGameButton(),startSavedGameButton(), startTournamentButton());
 			Scene scene = new Scene(vbox, 500, 500);
 			scene.getStylesheets().add("application.css");
 
@@ -135,6 +135,13 @@ public class LaunchGameDriver extends Application {
 		return startGameButton;
 	}
 
+	public static Button startSavedGameButton(){
+		Button startSavedGameButton = new Button("Load Saved Game");
+		startSavedGameButton.setOnAction(new LoadGame());
+		startSavedGameButton.setMaxWidth(200);
+		return startSavedGameButton;
+  }
+  
 	public static Button startTournamentButton() {
 		Button startTournamentButton = new Button("Start Tournament");
 		startTournamentButton.setOnAction(new TournamentView());

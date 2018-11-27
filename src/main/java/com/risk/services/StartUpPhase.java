@@ -7,7 +7,6 @@ import com.risk.model.Player;
 import com.risk.view.Util.WindowUtil;
 import javafx.scene.control.TextArea;
 
-import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -18,7 +17,7 @@ import java.util.*;
  * @author Karandeep Singh
  * @author Neha Pal
  */
-public class StartUpPhase extends Observable implements Serializable {
+public class StartUpPhase extends Observable {
     private TextArea terminalWindow;
 
     public TextArea getTerminalWindow() {
