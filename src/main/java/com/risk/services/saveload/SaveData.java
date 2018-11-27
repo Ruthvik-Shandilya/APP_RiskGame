@@ -10,7 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
 
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -23,6 +23,8 @@ public class SaveData implements Serializable {
     public Player playingPlayer;
 
    // public Player playerGamePhase;
+
+    public String gameDataString;
 
     public Card card;
 
@@ -44,4 +46,14 @@ public class SaveData implements Serializable {
 
     @FXML
     public Label playerChosen;
+
+//    @Override
+//    public void writeExternal(ObjectOutput out) throws IOException {
+//
+//    }
+//
+//    @Override
+//    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+//
+//    }
 }

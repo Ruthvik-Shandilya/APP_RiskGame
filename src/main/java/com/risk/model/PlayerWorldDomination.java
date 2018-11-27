@@ -1,12 +1,13 @@
 package com.risk.model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Observable;
 
 import com.risk.services.MapIO;
 
-public class PlayerWorldDomination extends Observable {
+public class PlayerWorldDomination extends Observable implements Serializable {
 
 	public HashMap<Player, Double> generateWorldDominationData(MapIO map) {
 

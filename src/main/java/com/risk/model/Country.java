@@ -1,5 +1,6 @@
 package com.risk.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -9,7 +10,7 @@ import java.util.ArrayList;
  * @author Palash Jain
  */
 
-public class Country {
+public class Country implements Serializable {
 
 	/** Name of country. */
 	private String name;

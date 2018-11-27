@@ -3,6 +3,7 @@ package com.risk.services;
 import com.risk.model.Continent;
 import com.risk.model.Country;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +17,7 @@ import java.util.Map;
  * @author Ruthvik Shandilya
  *
  */
-public class MapGraph {
+public class MapGraph implements Serializable {
 
 	/** HashMap to store the continent names */
 	private HashMap<String, Continent> continents;

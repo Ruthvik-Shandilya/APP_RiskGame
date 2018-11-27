@@ -228,7 +228,7 @@ public class Player extends Observable implements Observer,Serializable {
         int armiesPerPlayer = 0;
 
         if (players.size() == 3) {
-            armiesPerPlayer = 5;
+            armiesPerPlayer = 35;
         } else if (players.size() == 4) {
             armiesPerPlayer = 30;
         } else if (players.size() == 5) {

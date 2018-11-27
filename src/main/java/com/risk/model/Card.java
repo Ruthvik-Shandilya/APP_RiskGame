@@ -2,6 +2,7 @@ package com.risk.model;
 
 import javafx.scene.control.CheckBox;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -16,7 +17,7 @@ import java.util.Observable;
  * @author Ruthvik Shandilya
  */
 
-public class Card extends Observable {
+public class Card extends Observable implements Serializable {
 
     /**
      * Type of the card

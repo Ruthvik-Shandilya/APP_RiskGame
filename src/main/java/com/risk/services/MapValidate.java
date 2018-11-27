@@ -3,6 +3,7 @@ package com.risk.services;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -12,6 +13,7 @@ import java.util.regex.Pattern;
 
 import com.risk.model.Country;
 import com.risk.model.Continent;
+import org.omg.PortableServer.ServantActivator;
 
 /**
  * Map Validation class contains methods for the verification of a already map
@@ -21,7 +23,7 @@ import com.risk.model.Continent;
  * @author Ruthvik Shandilya
  * @author Palash Jain
  */
-public class MapValidate {
+public class MapValidate implements Serializable {
 
     /**
      * Containing set of all the continents

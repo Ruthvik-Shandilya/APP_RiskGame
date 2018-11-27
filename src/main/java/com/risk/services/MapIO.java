@@ -3,10 +3,8 @@ package com.risk.services;
 import com.risk.model.Continent;
 
 import com.risk.model.Country;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -17,7 +15,7 @@ import java.util.Map;
  * @author Karandeep Singh
  * @author Palash Jain
  */
-public class MapIO {
+public class MapIO implements Serializable {
 
 	/** FileName of the existing map */
 	private String fileName;
