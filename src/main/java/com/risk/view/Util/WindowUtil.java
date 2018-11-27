@@ -5,6 +5,7 @@ import com.risk.model.Country;
 import com.risk.model.Dice;
 import com.risk.model.Player;
 import com.risk.services.StartUpPhase;
+import com.risk.services.saveload.SaveData;
 import com.risk.view.controller.DiceController;
 import com.risk.view.controller.GamePlayController;
 import javafx.application.Platform;
@@ -25,19 +26,15 @@ import java.util.Optional;
  *
  * @author Palash Jain
  */
-public class WindowUtil implements Observer {
+public class WindowUtil extends Observable implements Observer{
 
     public WindowUtil(GamePlayController gamePlayController) {
-        gamePlayController.addObserver(this);
+        this.addObserver(gamePlayController);
     }
 
-    public WindowUtil(Player player){
-        player.addObserver(this);
-    }
-
-    public WindowUtil(StartUpPhase startUpPhase){
-        startUpPhase.addObserver(this);
-    }
+//    public WindowUtil(Player player){
+//        player.addObserver(this);
+//    }
 
     public WindowUtil(DiceController diceController){
         diceController.addObserver(this);
@@ -214,35 +211,27 @@ public class WindowUtil implements Observer {
         return numberOfArmies;
     }
 
-    /**
-     * This method helps in updating the terminal window by running single thread
-     *
-     * @param information    Information
-     * @param terminalWindow Console
-     */
-    public void updateTerminalWindow(String information, TextArea terminalWindow) {
-        Platform.runLater(() -> {
-            if (terminalWindow != null)
-                terminalWindow.appendText(information);
-        });
-    }
+
+
 
     @Override
     public void update(Observable o, Object arg) {
         String information = (String) arg;
-        TextArea terminalWindow;
-        if(o instanceof  GamePlayController)
-            terminalWindow = ((GamePlayController) o).getTerminalWindow();
-        else if(o instanceof Player)
-            terminalWindow = ((Player) o).getTerminalWindow();
-        else if(o instanceof DiceController)
-            terminalWindow = ((DiceController) o).getTerminalWindow();
-        else
-            terminalWindow = ((StartUpPhase) o).getTerminalWindow();
-        if(information.equals("Attack")  || information.equals("Fortification") || information.equals("noFortificationMove")
+//        TextArea terminalWindow;
+//        if(o instanceof  GamePlayController)
+//            terminalWindow = ((GamePlayController) o).getTerminalWindow();
+//        else if(o instanceof Player)
+//            terminalWindow = ((Player) o).getTerminalWindow();
+//        else
+//            terminalWindow = ((DiceController) o).getTerminalWindow();
+
+        if(!(information.equals("Attack")  || information.equals("Fortification") || information.equals("noFortificationMove")
             || information.equals("FirstAttack") || information.equals("placeArmyOnCountry") || information.equals("checkIfFortificationPhaseValid")
-                || information.equals("rollDiceComplete"))
-            return;
-        updateTerminalWindow(information, terminalWindow);
+                || information.equals("rollDiceComplete"))){
+         setChanged();
+         notifyObservers(information);
+        }
+
+
     }
 }

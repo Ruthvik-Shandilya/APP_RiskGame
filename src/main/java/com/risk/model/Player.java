@@ -45,22 +45,15 @@ public class Player extends Observable implements Observer,Serializable {
      */
     private ArrayList<Card> cardList;
 
-    private TextArea terminalWindow;
-
     private String playerType;
 
     private PlayerBehaviour playerBehaviour;
-
-    public TextArea getTerminalWindow() {
-        return terminalWindow;
-    }
 
     /**
      * Player constructor, initializes initial army count
      */
     public Player() {
         armyCount = 0;
-        new WindowUtil(this);
     }
 
     /**
@@ -84,7 +77,6 @@ public class Player extends Observable implements Observer,Serializable {
             this.playerBehaviour = new Human();
         else if(playerType.equals(IPlayerType.RANDOM))
             this.playerBehaviour = new Random();
-        new WindowUtil(this);
     }
 
     /**
@@ -223,7 +215,6 @@ public class Player extends Observable implements Observer,Serializable {
 
     public boolean assignArmiesToPlayers(List<Player> players, TextArea textArea) {
 
-        this.terminalWindow = textArea;
         boolean isSuccessfulAssignment = false;
         int armiesPerPlayer = 0;
 
@@ -257,7 +248,6 @@ public class Player extends Observable implements Observer,Serializable {
      * @return List of player objects
      */
     public ArrayList<Player> generatePlayer(HashMap<String,String> hm, TextArea textArea) {
-        this.terminalWindow = textArea;
         ArrayList<Player> listPlayer = new ArrayList<>();
         for(Map.Entry<String,String> playerEntry : hm.entrySet()){
             listPlayer.add(new Player(playerEntry.getKey().trim(), playerEntry.getValue()));
@@ -318,7 +308,6 @@ public int findNoOfArmies(Player player) {
      * @param textArea TextArea to which current game information will be displayed
      */
     public void reinforcementPhase(Country country, TextArea textArea) {
-        this.terminalWindow = textArea;
         if (currentPlayer.getArmyCount() > 0) {
             if (country == null) {
                 WindowUtil.popUpWindow("No Country Selected", "popUp", "Please select a country");
@@ -376,7 +365,7 @@ public int findNoOfArmies(Player player) {
      */
 
     public void fortificationPhase(Country selectedCountry, Country adjCountry, TextArea terminalWindow) {
-        this.terminalWindow = terminalWindow;
+
         if (selectedCountry == null) {
             WindowUtil.popUpWindow("No country selected", "Fortification Phase popup", "Please select a source country");
             return;
@@ -455,7 +444,7 @@ public int findNoOfArmies(Player player) {
      * @param terminalWindow      TextArea to which current game information will be displayed
      */
     public void placeArmyOnCountry(Player playerPlaying, ListView<Country> selectedCountryList, List<Player> gamePlayerList, TextArea terminalWindow) {
-        this.terminalWindow = terminalWindow;
+
         int playerArmies = playerPlaying.getArmyCount();
         if (playerArmies > 0) {
             Country Country = selectedCountryList.getSelectionModel().getSelectedItem();
@@ -533,7 +522,7 @@ public int findNoOfArmies(Player player) {
      */
 
     public boolean playerCanAttack(ListView<Country> countries, TextArea terminalWindow) {
-        this.terminalWindow = terminalWindow;
+
         boolean canAttack = false;
         for (com.risk.model.Country Country : countries.getItems()) {
             if (Country.getNoOfArmies() > 1) {
@@ -583,7 +572,7 @@ public int findNoOfArmies(Player player) {
      */
 
     public Player exchangeCards(List<Card> selectedCards, int numberOfCardSetExchanged, TextArea terminalWindow) {
-        this.terminalWindow = terminalWindow;
+        
         currentPlayer.setArmyCount(currentPlayer.getArmyCount() + (5 * numberOfCardSetExchanged));
         setChanged();
         notifyObservers(currentPlayer.getName() + " successfully exchanged 3 cards for 1 army! \n");

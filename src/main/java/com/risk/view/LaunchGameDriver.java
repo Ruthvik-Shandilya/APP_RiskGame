@@ -137,7 +137,7 @@ public class LaunchGameDriver extends Application {
 
 	public static Button startSavedGameButton(){
 		Button startSavedGameButton = new Button("Load Saved Game");
-		startSavedGameButton.setOnAction(new LoadGame());
+		startSavedGameButton.setOnAction(e -> LoadGame.openLoadGame());
 		startSavedGameButton.setMaxWidth(200);
 		return startSavedGameButton;
 	}

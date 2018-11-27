@@ -1,5 +1,6 @@
 package com.risk.services;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
@@ -14,7 +15,7 @@ import com.risk.model.Country;
  * @author Ruthvik Shandilya
  */
 
-public class ConnectedGraph {
+public class ConnectedGraph implements Serializable {
 
     /**
      * HashMap for marking a country as visited or not

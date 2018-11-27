@@ -7,6 +7,7 @@ import com.risk.services.gameplay.RoundRobin;
 import com.risk.view.CardView;
 import com.risk.view.Util.WindowUtil;
 import com.risk.services.saveload.ResourceManager;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -185,14 +186,9 @@ public class GamePlayController extends Observable implements Initializable, Obs
      */
     private int numberOfCardSetExchanged;
 
-    private WindowUtil windowUtil;
 
     public GamePlayController(){
 
-    }
-
-    public TextArea getTerminalWindow() {
-        return terminalWindow;
     }
 
 
@@ -205,7 +201,7 @@ public class GamePlayController extends Observable implements Initializable, Obs
         worldDomination = new PlayerWorldDomination();
         worldDomination.addObserver(this);
         this.setNumberOfCardSetExchanged(0);
-        this.windowUtil = new WindowUtil(this);
+        new WindowUtil(this);
     }
 
     /**
@@ -244,10 +240,12 @@ public class GamePlayController extends Observable implements Initializable, Obs
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        gamePlayerList = new ArrayList<>();
-        playerCreation();
-        loadGameCard();
-        loadMapData();
+        if(!isGameSaved) {
+            gamePlayerList = new ArrayList<>();
+            playerCreation();
+            loadGameCard();
+            loadMapData();
+        }
         phaseView.setText("Phase: Start Up");
         WindowUtil.disableButtonControl(reinforcement, fortify, attack, cards);
 
@@ -769,6 +767,21 @@ public class GamePlayController extends Observable implements Initializable, Obs
             Card cardObject = (Card) o;
             exchangeCards(cardObject);
         }
+        else {
+            updateTerminalWindow(view);
+        }
+    }
+
+    /**
+     * This method helps in updating the terminal window by running single thread
+     *
+     * @param information    Information
+     */
+    public void updateTerminalWindow(String information) {
+        Platform.runLater(() -> {
+            if (terminalWindow != null)
+                terminalWindow.appendText(information);
+        });
     }
 
     /**
@@ -846,7 +859,7 @@ public class GamePlayController extends Observable implements Initializable, Obs
     public void writeExternal(ObjectOutput data) throws IOException {
 
         data.writeObject(map);
-        //data.writeObject(startUpPhase);
+        data.writeObject(startUpPhase);
         data.writeObject(playerPlaying);
         data.writeObject(card);
         data.writeObject(cardStack);
@@ -862,11 +875,12 @@ public class GamePlayController extends Observable implements Initializable, Obs
     @Override
     public void readExternal(ObjectInput data) throws IOException, ClassNotFoundException {
 
+        isGameSaved = true;
         map=(MapIO)data.readObject();
-        //startUpPhase=(StartUpPhase)data.readObject();
+        startUpPhase=(StartUpPhase)data.readObject();
         playerPlaying=(Player)data.readObject();
         card=(Card)data.readObject();
-        cardStack=(Stack<Card>) data.readObject();
+        cardStack=(Stack<Card>)data.readObject();
         gamePlayerList=(ArrayList<Player>)data.readObject();
         gameDataString=(String)data.readObject();
         phaseViewString=(String)data.readObject();
@@ -881,7 +895,7 @@ public class GamePlayController extends Observable implements Initializable, Obs
 
     private void dataToLoad(){
         phaseView.setText(phaseViewString);
-        windowUtil.updateTerminalWindow(gameDataString,terminalWindow);
+        updateTerminalWindow(gameDataString);
         playerChosen.setText(playerData);
         generateBarGraph();
         ObservableList<Country> list = FXCollections.observableArrayList(playerPlaying.getPlayerCountries());
