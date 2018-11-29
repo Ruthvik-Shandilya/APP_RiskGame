@@ -4,7 +4,7 @@ import com.risk.model.Card;
 import com.risk.model.Country;
 import com.risk.model.ICardType;
 import com.risk.model.Player;
-import javafx.scene.control.TextArea;
+import com.risk.view.controller.GamePlayController;
 
 import java.io.Serializable;
 import java.util.*;
@@ -19,14 +19,17 @@ import java.util.*;
  */
 public class StartUpPhase extends Observable implements Serializable {
 
+    public StartUpPhase(GamePlayController gamePlayController){
+        this.addObserver(gamePlayController);
+    }
+
     /**
      * Method to assign countries to a player
      *
      * @param map      MapIO Object
-     * @param textArea to show data on UI
      * @return stackOfCards
      */
-    public Stack<Card> assignCardToCountry(MapIO map, TextArea textArea) {
+    public Stack<Card> assignCardToCountry(MapIO map) {
 
         Stack<Card> stackOfCards = new Stack<>();
 
@@ -50,11 +53,10 @@ public class StartUpPhase extends Observable implements Serializable {
      *
      * @param map      MapIO Object
      * @param players  list of players
-     * @param textArea to show data on UI
      * @return players
      */
 
-    public List<Player> assignCountryToPlayer(MapIO map, List<Player> players, TextArea textArea) {
+    public List<Player> assignCountryToPlayer(MapIO map, List<Player> players) {
 
         ArrayList<Country> countries = new ArrayList<>(map.getMapGraph().getCountrySet().values());
         while (countries.size() > 0) {

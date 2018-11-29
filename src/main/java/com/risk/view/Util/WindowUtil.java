@@ -17,8 +17,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.Optional;
 
 /**
@@ -26,19 +24,8 @@ import java.util.Optional;
  *
  * @author Palash Jain
  */
-public class WindowUtil extends Observable implements Observer{
 
-    public WindowUtil(GamePlayController gamePlayController) {
-        this.addObserver(gamePlayController);
-    }
-
-//    public WindowUtil(Player player){
-//        player.addObserver(this);
-//    }
-
-    public WindowUtil(DiceController diceController){
-        diceController.addObserver(this);
-    }
+public class WindowUtil {
 
     /**
      * This method is used to close the window.
@@ -209,29 +196,5 @@ public class WindowUtil extends Observable implements Observer{
             numberOfArmies = inputFromUser.get();
         }
         return numberOfArmies;
-    }
-
-
-
-
-    @Override
-    public void update(Observable o, Object arg) {
-        String information = (String) arg;
-//        TextArea terminalWindow;
-//        if(o instanceof  GamePlayController)
-//            terminalWindow = ((GamePlayController) o).getTerminalWindow();
-//        else if(o instanceof Player)
-//            terminalWindow = ((Player) o).getTerminalWindow();
-//        else
-//            terminalWindow = ((DiceController) o).getTerminalWindow();
-
-        if(!(information.equals("Attack")  || information.equals("Fortification") || information.equals("noFortificationMove")
-            || information.equals("FirstAttack") || information.equals("placeArmyOnCountry") || information.equals("checkIfFortificationPhaseValid")
-                || information.equals("rollDiceComplete"))){
-         setChanged();
-         notifyObservers(information);
-        }
-
-
     }
 }
