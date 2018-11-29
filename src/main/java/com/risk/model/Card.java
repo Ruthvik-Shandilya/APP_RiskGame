@@ -1,7 +1,11 @@
 package com.risk.model;
 
+import com.risk.view.controller.CardController;
 import javafx.scene.control.CheckBox;
 
+
+import java.util.*;
+import java.util.stream.Collectors;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +60,14 @@ public class Card extends Observable implements Serializable {
         this.cardType = cardType;
     }
 
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
+
     /**
      * Get card type
      *
@@ -105,10 +117,15 @@ public class Card extends Observable implements Serializable {
         this.cardsToExchange = cardsToExchange;
     }
 
+    public void automateCardWindow(Player player){
+        CardController cardController = new CardController(player, this);
+        cardController.automaticCardInitialization();
+    }
+
 
     /**
      * Method returns a list of cards which
-     * are seleted by the current player
+     * are selected by the current player
      *
      * @param list list
      * @param checkboxes checkboxes
@@ -123,6 +140,8 @@ public class Card extends Observable implements Serializable {
         }
         return selectedCards;
     }
+
+
 
     /**
      * Method is used to verify ,
@@ -162,5 +181,24 @@ public class Card extends Observable implements Serializable {
         setCardsToExchange(selectedCards);
         setChanged();
         notifyObservers("cardsExchange");
+    }
+
+    public List<Card> generateValidCardCombination(List<Card> selectedCards) {
+        HashMap<String, Integer> cardCountMap = new HashMap<>();
+        for (Card card : selectedCards) {
+            if (cardCountMap.containsKey(card.getCardType())) {
+                cardCountMap.put(card.getCardType(), cardCountMap.get(card.getCardType()) + 1);
+            } else {
+                cardCountMap.put(card.getCardType(), 1);
+            }
+
+        }
+        for (Map.Entry<String, Integer> entry : cardCountMap.entrySet()) {
+            if (entry.getValue() >= 3) {
+                return selectedCards.stream().filter(t -> t.getCardType().equals(entry.getKey()))
+                        .collect(Collectors.toList());
+            }
+        }
+        return null;
     }
 }

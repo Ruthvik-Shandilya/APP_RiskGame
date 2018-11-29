@@ -4,8 +4,7 @@ import com.risk.model.Card;
 import com.risk.model.Country;
 import com.risk.model.ICardType;
 import com.risk.model.Player;
-import com.risk.view.Util.WindowUtil;
-import javafx.scene.control.TextArea;
+import com.risk.view.controller.GamePlayController;
 
 import java.util.*;
 
@@ -18,25 +17,18 @@ import java.util.*;
  * @author Neha Pal
  */
 public class StartUpPhase extends Observable {
-    private TextArea terminalWindow;
 
-    public TextArea getTerminalWindow() {
-        return terminalWindow;
-    }
-
-    public StartUpPhase(){
-        new WindowUtil(this);
+    public StartUpPhase(GamePlayController gamePlayController){
+        this.addObserver(gamePlayController);
     }
 
     /**
      * Method to assign countries to a player
      *
      * @param map      MapIO Object
-     * @param textArea to show data on UI
      * @return stackOfCards
      */
-    public Stack<Card> assignCardToCountry(MapIO map, TextArea textArea) {
-        this.terminalWindow = textArea;
+    public Stack<Card> assignCardToCountry(MapIO map) {
         Stack<Card> stackOfCards = new Stack<>();
 
         List<Country> allCountries = new ArrayList<>(map.getMapGraph().getCountrySet().values());
@@ -59,12 +51,10 @@ public class StartUpPhase extends Observable {
      *
      * @param map      MapIO Object
      * @param players  list of players
-     * @param textArea to show data on UI
      * @return players
      */
 
-    public List<Player> assignCountryToPlayer(MapIO map, List<Player> players, TextArea textArea) {
-        this.terminalWindow = textArea;
+    public List<Player> assignCountryToPlayer(MapIO map, List<Player> players) {
         ArrayList<Country> countries = new ArrayList<>(map.getMapGraph().getCountrySet().values());
         while (countries.size() > 0) {
             for (int i = 0; i < players.size(); ++i) {

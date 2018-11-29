@@ -55,7 +55,6 @@ public class CardController implements Initializable {
     /**
      * checkbox array
      */
-    @FXML
     private CheckBox[] checkBox;
 
     /**
@@ -106,6 +105,19 @@ public class CardController implements Initializable {
         loadCards();
     }
 
+    public void automaticCardInitialization() {
+        automaticInitializeComponents();
+        performCardExchange();
+    }
+
+    public void performCardExchange() {
+        playerOwnedCards = player.getCardList();
+        List<Card> cards = card.generateValidCardCombination(playerOwnedCards);
+        if (cards != null && cards.size() >= 3) {
+            card.cardsToBeExchanged(cards);
+        }
+    }
+
     /**
      * Method to load cards
      */
@@ -153,6 +165,14 @@ public class CardController implements Initializable {
             text.setText("Select only 3 Cards");
             return;
         }
+    }
+
+    public void automaticInitializeComponents() {
+        currentPlayer = new Label();
+        exchange = new Button();
+        cardVbox = new VBox();
+        text = new Label();
+        cancelView = new Button();
     }
 
 }
