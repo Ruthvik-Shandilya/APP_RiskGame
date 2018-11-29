@@ -1,5 +1,6 @@
 package com.risk.services;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Map;
@@ -19,7 +20,7 @@ import com.risk.view.LaunchGameDriver;
  * @author Karandeep Singh
  * 
  */
-public class MapEditor {
+public class MapEditor implements Serializable {
 
 	/** Variable for MapIO object */
 	private MapIO mapIO;

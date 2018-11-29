@@ -7,6 +7,7 @@ import com.risk.view.controller.GamePlayController;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -15,7 +16,7 @@ import java.util.*;
  * @author Karandeep Singh
  * @author Palash Jain
  */
-public class Player extends Observable implements Observer {
+public class Player extends Observable implements Observer,Serializable {
 
     /**
      * Player currently playing.
@@ -217,7 +218,7 @@ public class Player extends Observable implements Observer {
         int armiesPerPlayer = 0;
 
         if (players.size() == 3) {
-            armiesPerPlayer = 15;
+            armiesPerPlayer = 35;
         } else if (players.size() == 4) {
             armiesPerPlayer = 30;
         } else if (players.size() == 5) {

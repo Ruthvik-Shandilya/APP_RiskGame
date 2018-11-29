@@ -3,8 +3,13 @@ package com.risk.model;
 import com.risk.view.controller.CardController;
 import javafx.scene.control.CheckBox;
 
+
 import java.util.*;
 import java.util.stream.Collectors;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Observable;
 
 
 /**
@@ -16,7 +21,7 @@ import java.util.stream.Collectors;
  * @author Ruthvik Shandilya
  */
 
-public class Card extends Observable {
+public class Card extends Observable implements Serializable {
 
     /**
      * Type of the card

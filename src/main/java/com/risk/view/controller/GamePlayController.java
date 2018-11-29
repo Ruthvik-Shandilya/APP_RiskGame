@@ -8,6 +8,7 @@ import com.risk.strategy.Human;
 import com.risk.view.CardView;
 import com.risk.view.Util.WindowUtil;
 import javafx.application.Platform;
+import com.risk.services.saveload.ResourceManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,7 +20,9 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 
+import java.io.*;
 import java.net.URL;
 import java.util.*;
 import java.util.Map.Entry;
@@ -31,7 +34,7 @@ import java.util.Map.Entry;
  * @author Karandeep Singh
  * @author Ruthvik Shandilya
  */
-public class GamePlayController implements Initializable, Observer {
+public class GamePlayController implements Initializable, Observer, Externalizable{
 
     private static HashSet<Country> allAdjacentCountries = new HashSet<>();
 
@@ -143,10 +146,21 @@ public class GamePlayController implements Initializable, Observer {
     @FXML
     private Button placeArmy;
 
+    @FXML
+    private Button saveGame;
+
+    private String phaseViewString;
+
+    private String gameDataString;
+
+    private String playerData;
+
     /**
      * selected number of players who are supposed to play the Game
      */
     private int numberOfPlayersSelected;
+
+    private boolean isGameSaved = false;
 
     /**
      * List of Players
@@ -173,7 +187,7 @@ public class GamePlayController implements Initializable, Observer {
      */
     private int numberOfCardSetExchanged;
 
-    public GamePlayController() {
+    public GamePlayController(){
 
     }
 
@@ -191,7 +205,6 @@ public class GamePlayController implements Initializable, Observer {
         worldDomination = new PlayerWorldDomination();
         worldDomination.addObserver(this);
         this.setNumberOfCardSetExchanged(0);
-        //new WindowUtil(this);
     }
 
     /**
@@ -285,6 +298,10 @@ public class GamePlayController implements Initializable, Observer {
                 }
             }
         });
+
+        if(isGameSaved){
+            dataToLoad();
+        }
     }
 
     /**
@@ -852,6 +869,7 @@ public class GamePlayController implements Initializable, Observer {
         this.numberOfCardSetExchanged = numberOfCardSetExchanged;
     }
 
+
     /**
      * This method helps in updating the terminal window by running single thread
      *
@@ -859,5 +877,110 @@ public class GamePlayController implements Initializable, Observer {
      */
     public void updateTerminalWindow(String information) {
         Platform.runLater(() -> terminalWindow.appendText(information));
+    }
+  
+    @FXML
+    private void saveGame(ActionEvent event){
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save Game");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Save Game Extension(*.save or *.SAVE)","*.save","*.SAVE"));
+
+        File file = fileChooser.showSaveDialog(null);
+
+        if(file != null){
+            save(this,file);
+        }
+
+
+    }
+
+    public void save(GamePlayController gamePlayController,File file){
+
+        try{
+            ResourceManager.save(gamePlayController,file);
+            System.out.println("Data is saved");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public GamePlayController loadGame() {
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Load Game");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Save Game Extension(*.save or *.SAVE)", "*.SAVE", "*.save"));
+
+        File file = fileChooser.showOpenDialog(null);
+        GamePlayController controller = load(file);
+
+        return controller;
+
+    }
+
+        public GamePlayController load(File file){
+
+            GamePlayController controller = null;
+            try {
+                controller = (GamePlayController)ResourceManager.load(file);
+                System.out.println("Game is Loaded");
+            } catch (Exception e) {
+                System.out.println("Couldn't load save data: "+e.getMessage());
+            }
+            return controller;
+        }
+
+
+    @Override
+    public void writeExternal(ObjectOutput data) throws IOException {
+
+        data.writeObject(map);
+        //data.writeObject(startUpPhase);
+        data.writeObject(playerPlaying);
+        data.writeObject(card);
+        data.writeObject(cardStack);
+        data.writeObject(gamePlayerList);
+        data.writeObject(terminalWindow.getText());
+        data.writeObject(phaseView.getText());
+        data.writeObject(worldDomination);
+        data.writeObject(numberOfCardSetExchanged);
+        data.writeObject(playerChosen.getText());
+
+    }
+
+    @Override
+    public void readExternal(ObjectInput data) throws IOException, ClassNotFoundException {
+
+        map=(MapIO)data.readObject();
+        //startUpPhase=(StartUpPhase)data.readObject();
+        playerPlaying=(Player)data.readObject();
+        card=(Card)data.readObject();
+        cardStack=(Stack<Card>) data.readObject();
+        gamePlayerList=(ArrayList<Player>)data.readObject();
+        gameDataString=(String)data.readObject();
+        phaseViewString=(String)data.readObject();
+        worldDomination=(PlayerWorldDomination)data.readObject();
+        numberOfCardSetExchanged=(int)data.readObject();
+        playerData=(String)data.readObject();
+        playerPlaying.addObserver(this);
+        card.addObserver(this);
+        worldDomination.addObserver(this);
+
+    }
+
+    private void dataToLoad(){
+        phaseView.setText(phaseViewString);
+        windowUtil.updateTerminalWindow(gameDataString,terminalWindow);
+        playerChosen.setText(playerData);
+        generateBarGraph();
+        ObservableList<Country> list = FXCollections.observableArrayList(playerPlaying.getPlayerCountries());
+        selectedCountryList.getItems().addAll(list);
+        playerIterator = gamePlayerList.iterator();
+        while(playerIterator.hasNext()){
+            if(playerIterator.next().equals(playerPlaying)){
+                break;
+            }
+        }
     }
 }

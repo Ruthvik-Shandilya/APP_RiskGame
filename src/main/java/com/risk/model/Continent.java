@@ -1,5 +1,6 @@
 package com.risk.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -7,7 +8,7 @@ import java.util.ArrayList;
  * 
  * @author Karandeep Singh
  */
-public class Continent {
+public class Continent implements Serializable {
 
 	/** Name of the continent. */
 	private String name;

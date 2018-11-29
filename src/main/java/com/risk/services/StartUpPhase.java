@@ -16,7 +16,7 @@ import java.util.*;
  * @author Karandeep Singh
  * @author Neha Pal
  */
-public class StartUpPhase extends Observable{
+public class StartUpPhase extends Observable {
 
     public StartUpPhase(GamePlayController gamePlayController){
         this.addObserver(gamePlayController);
