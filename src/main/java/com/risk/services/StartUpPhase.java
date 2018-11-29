@@ -6,6 +6,7 @@ import com.risk.model.ICardType;
 import com.risk.model.Player;
 import com.risk.view.controller.GamePlayController;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -16,7 +17,7 @@ import java.util.*;
  * @author Karandeep Singh
  * @author Neha Pal
  */
-public class StartUpPhase extends Observable {
+public class StartUpPhase extends Observable implements Serializable {
 
     public StartUpPhase(GamePlayController gamePlayController){
         this.addObserver(gamePlayController);
@@ -29,6 +30,7 @@ public class StartUpPhase extends Observable {
      * @return stackOfCards
      */
     public Stack<Card> assignCardToCountry(MapIO map) {
+
         Stack<Card> stackOfCards = new Stack<>();
 
         List<Country> allCountries = new ArrayList<>(map.getMapGraph().getCountrySet().values());
@@ -55,6 +57,7 @@ public class StartUpPhase extends Observable {
      */
 
     public List<Player> assignCountryToPlayer(MapIO map, List<Player> players) {
+
         ArrayList<Country> countries = new ArrayList<>(map.getMapGraph().getCountrySet().values());
         while (countries.size() > 0) {
             for (int i = 0; i < players.size(); ++i) {
@@ -71,8 +74,7 @@ public class StartUpPhase extends Observable {
                     players.get(i).addCountry(countries.get(0));
                     countries.get(0).setPlayer(players.get(i));
                     countries.get(0).setNoOfArmies(1);
-                    setChanged();
-                    notifyObservers(countries.get(0).getName() + " assigned to " +
+                    System.out.println(countries.get(0).getName() + " assigned to " +
                             players.get(i).getName() + " ! \n");
                     countries.remove(0);
                     break;

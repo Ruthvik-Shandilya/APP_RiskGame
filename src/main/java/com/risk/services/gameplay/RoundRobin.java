@@ -1,5 +1,6 @@
 package com.risk.services.gameplay;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -12,7 +13,7 @@ import com.risk.model.Player;
  * @author Palash Jain
  *
  */
-public class RoundRobin {
+public class RoundRobin implements Serializable {
 
 	/** Player Iterator */
 	private Iterator<Player> iterator;

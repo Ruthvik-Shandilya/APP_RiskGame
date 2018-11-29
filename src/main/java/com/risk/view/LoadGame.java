@@ -10,16 +10,16 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class LoadGame implements EventHandler<ActionEvent> {
-    @Override
-    public void handle(ActionEvent event) {
+public class LoadGame {
+
+    public static void openLoadGame() {
 
         GamePlayController controller = new GamePlayController().loadGame();
 
         final Stage gamePlayStage = new Stage();
         gamePlayStage.setTitle("Game Screen");
 
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("MapSelectorLayout.fxml"));
+        FXMLLoader loader = new FXMLLoader(LoadGame.class.getClassLoader().getResource("MapSelectorLayout.fxml"));
         loader.setController(controller);
         Parent root = null;
         try {

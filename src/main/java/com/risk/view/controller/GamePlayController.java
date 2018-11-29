@@ -9,6 +9,7 @@ import com.risk.view.CardView;
 import com.risk.view.Util.WindowUtil;
 import javafx.application.Platform;
 import com.risk.services.saveload.ResourceManager;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -191,10 +192,6 @@ public class GamePlayController implements Initializable, Observer, Externalizab
 
     }
 
-    public TextArea getTerminalWindow() {
-        return terminalWindow;
-    }
-
 
     public GamePlayController(MapIO map, HashMap<String, String> hm) {
         this.map = map;
@@ -254,12 +251,16 @@ public class GamePlayController implements Initializable, Observer, Externalizab
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        if(!isGameSaved) {
+            gamePlayerList = new ArrayList<>();
+            playerCreation();
+            loadMapData();
+        }
+  else{
         gamePlayerList = new ArrayList<>();
-        System.out.println("creating players");
-        playerCreation();
-        //System.out.println("loading game cards");
-        //loadGameCard();
+        loadGameCard();
         loadMapData();
+      }
         phaseView.setText("Phase: Start Up");
         WindowUtil.disableButtonControl(reinforcement, fortify, attack, cards);
 
@@ -936,7 +937,7 @@ public class GamePlayController implements Initializable, Observer, Externalizab
     public void writeExternal(ObjectOutput data) throws IOException {
 
         data.writeObject(map);
-        //data.writeObject(startUpPhase);
+        data.writeObject(startUpPhase);
         data.writeObject(playerPlaying);
         data.writeObject(card);
         data.writeObject(cardStack);
@@ -952,11 +953,12 @@ public class GamePlayController implements Initializable, Observer, Externalizab
     @Override
     public void readExternal(ObjectInput data) throws IOException, ClassNotFoundException {
 
+        isGameSaved = true;
         map=(MapIO)data.readObject();
-        //startUpPhase=(StartUpPhase)data.readObject();
+        startUpPhase=(StartUpPhase)data.readObject();
         playerPlaying=(Player)data.readObject();
         card=(Card)data.readObject();
-        cardStack=(Stack<Card>) data.readObject();
+        cardStack=(Stack<Card>)data.readObject();
         gamePlayerList=(ArrayList<Player>)data.readObject();
         gameDataString=(String)data.readObject();
         phaseViewString=(String)data.readObject();
@@ -971,7 +973,7 @@ public class GamePlayController implements Initializable, Observer, Externalizab
 
     private void dataToLoad(){
         phaseView.setText(phaseViewString);
-        windowUtil.updateTerminalWindow(gameDataString,terminalWindow);
+        updateTerminalWindow(gameDataString);
         playerChosen.setText(playerData);
         generateBarGraph();
         ObservableList<Country> list = FXCollections.observableArrayList(playerPlaying.getPlayerCountries());

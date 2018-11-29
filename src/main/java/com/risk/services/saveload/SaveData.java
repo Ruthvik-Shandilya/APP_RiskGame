@@ -1,59 +1,28 @@
 package com.risk.services.saveload;
 
-import com.risk.model.Card;
-import com.risk.model.Player;
-import com.risk.model.PlayerWorldDomination;
-import com.risk.services.MapIO;
-import com.risk.services.StartUpPhase;
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import com.risk.view.Util.WindowUtil;
 import javafx.scene.control.TextArea;
 
+import java.util.Observable;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Stack;
+public class SaveData extends Observable {
 
-public class SaveData implements Serializable {
-
-    public MapIO mapIO;
-
-    public StartUpPhase startUpPhase;
-
-    public Player playingPlayer;
-
-   // public Player playerGamePhase;
-
-    public String gameDataString;
-
-    public Card card;
-
-    public Stack<Card> cardStack;
-
-    public ArrayList<Player> gamePlayerList;
-
-
-    @FXML
-    public TextArea terminalWindow;
-
-    public String phaseView;
-
-    public PlayerWorldDomination playerWorldDomination;
-
-    public int numberOfCardsExchanged;
-
-    public int attackCount = 5;
-
-    @FXML
-    public Label playerChosen;
-
-//    @Override
-//    public void writeExternal(ObjectOutput out) throws IOException {
-//
+//    public SaveData() {
+//        new WindowUtil(this);
 //    }
 //
-//    @Override
-//    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+//    private transient TextArea terminalWindow;
 //
+//    public TextArea getTerminalWindow() {
+//        return terminalWindow;
+//    }
+//
+//    public void setTerminalWindow(TextArea terminalWindow) {
+//        this.terminalWindow = terminalWindow;
+//    }
+//
+//    public void sendDataToWindow(String message){
+//        setChanged();
+//        notifyObservers(message);
 //    }
 }

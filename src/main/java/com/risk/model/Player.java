@@ -247,6 +247,7 @@ public class Player extends Observable implements Observer,Serializable {
      * @return List of player objects
      */
     public ArrayList<Player> generatePlayer(HashMap<String, String> hm, GamePlayController gamePlayController) {
+
         ArrayList<Player> listPlayer = new ArrayList<>();
         for (Map.Entry<String, String> playerEntry : hm.entrySet()) {
             listPlayer.add(new Player(playerEntry.getKey().trim(), playerEntry.getValue(), gamePlayController));
@@ -512,6 +513,7 @@ public class Player extends Observable implements Observer,Serializable {
      */
 
     public Player exchangeCards(List<Card> selectedCards, int numberOfCardSetExchanged) {
+
         currentPlayer.setArmyCount(currentPlayer.getArmyCount() + (5 * numberOfCardSetExchanged));
         System.out.println(currentPlayer.getName() + " successfully exchanged 3 cards for " + (5 * numberOfCardSetExchanged) + " armies.\n");
         setChanged();
