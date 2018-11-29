@@ -186,11 +186,13 @@ public class Dice extends Observable {
      */
     public void updateArmiesAfterAttack(Integer defenderValue, Integer attackerValue, ArrayList<String> playResult) {
         if (attackerValue - defenderValue > 0) {
+            System.out.println("Defender has lost one army.");
             playResult.add("Defender has lost one army.");
             if (defendingCountry.getNoOfArmies() > 0) {
                 defendingCountry.setNoOfArmies(defendingCountry.getNoOfArmies() - 1);
             }
         } else {
+            System.out.println("Attacker has lost one army.");
             playResult.add("Attacker has lost one army.");
             if (attackingCountry.getNoOfArmies() > 1) {
                 attackingCountry.setNoOfArmies(attackingCountry.getNoOfArmies() - 1);
@@ -209,13 +211,25 @@ public class Dice extends Observable {
 
 
     /**
-     * Method for skipping the army move after attacke has won the attack.
+     * Method for skipping the army move after attacker has won the attack.
      * But at least one army will move from attacking to defending country.
      */
     public void skipMoveArmy() {
         int attackingArmyCount = getAttackingCountry().getNoOfArmies();
         getAttackingCountry().setNoOfArmies(attackingArmyCount - 1);
         getDefendingCountry().setNoOfArmies(1);
+        updateCountryList();
+        setChanged();
+        notifyObservers("rollDiceComplete");
+    }
+
+    /**
+     * Move All Armies
+     */
+    public void moveAllArmies() {
+        int attackingArmyCount = getAttackingCountry().getNoOfArmies();
+        getAttackingCountry().setNoOfArmies(1);
+        getDefendingCountry().setNoOfArmies(attackingArmyCount - 1);
         updateCountryList();
         setChanged();
         notifyObservers("rollDiceComplete");

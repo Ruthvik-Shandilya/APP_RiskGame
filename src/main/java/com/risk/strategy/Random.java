@@ -3,32 +3,24 @@ package com.risk.strategy;
 import com.risk.model.Country;
 import com.risk.model.Dice;
 import com.risk.model.Player;
-import com.risk.view.Util.WindowUtil;
 import com.risk.view.controller.DiceController;
+import com.risk.view.controller.GamePlayController;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Random extends PlayerBehaviour {
 
-    private TextArea terminalWindow;
+    private GamePlayController gamePlayController;
 
-    public Random() {
-        new WindowUtil(this);
+    public Random(GamePlayController gamePlayController) {
+        this.gamePlayController = gamePlayController;
     }
 
     @Override
-    public TextArea getTerminalWindow() {
-        return this.terminalWindow;
-    }
-
-    @Override
-    public void reinforcementPhase(ObservableList<Country> countryList, Country country, TextArea terminalWindow,
-                                   Player currentPlayer) {
-        this.terminalWindow = terminalWindow;
+    public void reinforcementPhase(ObservableList<Country> countryList, Country country, Player currentPlayer) {
         System.out.println("Beginning Reinforcement phase for random player " + currentPlayer.getName() + ".\n");
         setChanged();
         notifyObservers("Beginning Reinforcement phase for random player " + currentPlayer.getName() + ".\n");
@@ -48,8 +40,7 @@ public class Random extends PlayerBehaviour {
 
     @Override
     public void attackPhase(ListView<Country> attackingCountryList, ListView<Country> defendingCountryList,
-                            Player currentPlayer, TextArea terminalWindow) {
-        this.terminalWindow = terminalWindow;
+                            Player currentPlayer) {
         System.out.println("Beginning attack phase for random player " + currentPlayer.getName() + ".\n");
         setChanged();
         notifyObservers("Beginning attack phase for random player " + currentPlayer.getName() + ".\n");
@@ -75,7 +66,7 @@ public class Random extends PlayerBehaviour {
         System.out.println("Attacking from random country " + attackingCountry.getName() + " to random country " + defendingCountry.getName() + ".\n");
         setChanged();
         notifyObservers("Attacking from random country " + attackingCountry.getName() + " to random country " + defendingCountry.getName() + ".\n");
-        attack(attackingCountry, defendingCountry, currentPlayer, terminalWindow);
+        attack(attackingCountry, defendingCountry, currentPlayer);
 //        }
         System.out.println("Ended Attack phase for random player " + currentPlayer.getName() + ".\n");
         setChanged();
@@ -84,8 +75,7 @@ public class Random extends PlayerBehaviour {
 
     @Override
     public boolean fortificationPhase(ListView<Country> selectedCountryList, ListView<Country> adjCountryList,
-                                      TextArea terminalWindow, Player currentPlayer) {
-        this.terminalWindow = terminalWindow;
+                                      Player currentPlayer) {
         System.out.println("Beginning Fortification phase for random player " + currentPlayer.getName() + ".\n");
         notifyObservers("Beginning Fortification phase for random player " + currentPlayer.getName() + ".\n");
         System.out.println("List of countries owned: " + selectedCountryList.toString() + "\n");
@@ -114,8 +104,7 @@ public class Random extends PlayerBehaviour {
     }
 
     @Override
-    public boolean playerCanAttack(ListView<Country> countries, TextArea terminalWindow) {
-        this.terminalWindow = terminalWindow;
+    public boolean playerCanAttack(ListView<Country> countries) {
         boolean canAttack = false;
         for (Country country : countries.getItems()) {
             if (country.getNoOfArmies() > 1 && getDefendingCountryList(country).size() > 0) {
@@ -134,12 +123,12 @@ public class Random extends PlayerBehaviour {
         return canAttack;
     }
 
-    private void attack(Country attacking, Country defending, Player currentPlayer, TextArea terminalWindow) {
+    private void attack(Country attacking, Country defending, Player currentPlayer) {
         Dice diceModel = new Dice(attacking, defending);
         if (currentPlayer != null) {
             diceModel.addObserver(currentPlayer);
         }
-        DiceController diceController = new DiceController(diceModel, this, terminalWindow);
+        DiceController diceController = new DiceController(diceModel, this, this.gamePlayController);
         diceController.automateDiceRoll();
     }
 

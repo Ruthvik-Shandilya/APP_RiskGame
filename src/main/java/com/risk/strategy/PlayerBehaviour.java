@@ -6,7 +6,6 @@ import com.risk.model.Player;
 import com.risk.services.MapIO;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
 
 import java.io.Serializable;
 import java.util.List;
@@ -15,18 +14,15 @@ import java.util.stream.Collectors;
 
 public abstract class PlayerBehaviour extends Observable implements Serializable {
 
-    abstract public TextArea getTerminalWindow();
-
-    abstract public void reinforcementPhase(ObservableList<Country> countryList, Country country, TextArea terminalWindow,
-                                            Player currentPlayer);
+    abstract public void reinforcementPhase(ObservableList<Country> countryList, Country country, Player currentPlayer);
 
 
     abstract public void attackPhase(ListView<Country> attackingCountryList, ListView<Country> defendingCountryList,
-                                     Player currentPlayer, TextArea terminalWindow);
+                                     Player currentPlayer);
 
 
     abstract public boolean fortificationPhase(ListView<Country> selectedCountry, ListView<Country> adjCountry,
-                                               TextArea terminalWindow, Player playerPlaying);
+                                               Player playerPlaying);
 
 
     public List<Country> getDefendingCountryList(Country attackingCountry) {
@@ -37,7 +33,7 @@ public abstract class PlayerBehaviour extends Observable implements Serializable
 
     }
 
-    abstract public boolean playerCanAttack(ListView<Country> countries, TextArea terminalWindow);
+    abstract public boolean playerCanAttack(ListView<Country> countries);
 
 
     public boolean isFortificationPhaseValid(MapIO mapIO, Player playerPlaying) {

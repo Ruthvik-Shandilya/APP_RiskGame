@@ -4,6 +4,7 @@ import com.risk.model.Country;
 import com.risk.model.Player;
 import com.risk.services.MapIO;
 import com.risk.view.Util.WindowUtil;
+import com.risk.view.controller.GamePlayController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
@@ -18,26 +19,19 @@ public class Cheater extends PlayerBehaviour {
 
     private ObservableList<Country> attackerCountryList = FXCollections.observableArrayList();
 
-    private TextArea terminalWindow;
+    private GamePlayController gamePlayController;
 
-    public Cheater() {
-        new WindowUtil(this);
+    public Cheater(GamePlayController gamePlayController) {
+        this.gamePlayController = gamePlayController;
+        this.addObserver(gamePlayController);
     }
 
     @Override
-    public TextArea getTerminalWindow() {
-        return this.terminalWindow;
-    }
-
-    @Override
-    public void reinforcementPhase(ObservableList<Country> countryList, Country country, TextArea terminalWindow,
-                                   Player currentPlayer) {
+    public void reinforcementPhase(ObservableList<Country> countryList, Country country, Player currentPlayer) {
         System.out.println("Beginning Reinforcement phase for cheater player " + currentPlayer.getName() + ".\n");
-        this.terminalWindow = terminalWindow;
         setChanged();
         notifyObservers("Beginning Reinforcement phase for cheater player " + currentPlayer.getName() + ".\n");
         System.out.println("List of countries owned: " + countryList.toString() + "\n");
-        this.terminalWindow = terminalWindow;
         for (Country country1 : countryList) {
             if (country1.getNoOfArmies() < Integer.MAX_VALUE / 2)
                 country1.setNoOfArmies(country1.getNoOfArmies() * 2);
@@ -59,8 +53,7 @@ public class Cheater extends PlayerBehaviour {
 
     @Override
     public void attackPhase(ListView<Country> attackingCountryList, ListView<Country> defendingCountryList,
-                            Player currentPlayer, TextArea terminalWindow) {
-        this.terminalWindow = terminalWindow;
+                            Player currentPlayer) {
         System.out.println("Beginning attack phase for cheater player " + currentPlayer.getName() + ".\n");
         setChanged();
         notifyObservers("Beginning attack phase for cheater player " + currentPlayer.getName() + ".\n");
@@ -100,8 +93,7 @@ public class Cheater extends PlayerBehaviour {
 
     @Override
     public boolean fortificationPhase(ListView<Country> selectedCountryList, ListView<Country> adjCountryList,
-                                      TextArea terminalWindow, Player currentPlayer) {
-        this.terminalWindow = terminalWindow;
+                                      Player currentPlayer) {
         System.out.println("Beginning Fortification phase for cheater player " + currentPlayer.getName() + ".\n");
         setChanged();
         notifyObservers("Beginning Fortification phase for cheater player " + currentPlayer.getName() + ".\n");
@@ -135,8 +127,7 @@ public class Cheater extends PlayerBehaviour {
 
 
     @Override
-    public boolean playerCanAttack(ListView<Country> countries, TextArea terminalWindow) {
-        this.terminalWindow = terminalWindow;
+    public boolean playerCanAttack(ListView<Country> countries) {
         boolean canAttack = false;
         if (attackerCountryList == null || attackerCountryList.isEmpty()) {
             attackerCountryList.addAll(countries.getItems());

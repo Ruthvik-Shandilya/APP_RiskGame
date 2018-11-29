@@ -3,11 +3,10 @@ package com.risk.strategy;
 import com.risk.model.Country;
 import com.risk.model.Dice;
 import com.risk.model.Player;
-import com.risk.view.Util.WindowUtil;
 import com.risk.view.controller.DiceController;
+import com.risk.view.controller.GamePlayController;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
 
 import java.util.*;
 
@@ -15,25 +14,19 @@ public class Aggressive extends PlayerBehaviour {
 
     private Country strongestCountry;
 
-    private TextArea terminalWindow;
+    private GamePlayController gamePlayController;
 
-    public Aggressive() {
-        new WindowUtil(this);
+    public Aggressive(GamePlayController gamePlayController) {
+        this.gamePlayController = gamePlayController;
+        this.addObserver(gamePlayController);
     }
 
     @Override
-    public TextArea getTerminalWindow() {
-        return this.terminalWindow;
-    }
-
-    @Override
-    public void reinforcementPhase(ObservableList<Country> countryList, Country country, TextArea terminalWindow,
-                                   Player currentPlayer) {
+    public void reinforcementPhase(ObservableList<Country> countryList, Country country, Player currentPlayer) {
         System.out.println("Beginning Reinforcement phase for aggressive player " + currentPlayer.getName());
         setChanged();
         notifyObservers("Beginning Reinforcement phase for aggressive player " + currentPlayer.getName() + ".\n");
         System.out.println("List of countries owned: " + countryList.toString() + "\n");
-        this.terminalWindow = terminalWindow;
         List<Country> sortedList = sortCountryListByArmyCount(countryList);
         for (Country country1 : sortedList) {
             System.out.println(country1.getName() + ":" + country1.getNoOfArmies());
@@ -56,9 +49,7 @@ public class Aggressive extends PlayerBehaviour {
     }
 
     @Override
-    public boolean playerCanAttack(ListView<Country> countries, TextArea terminalWindow) {
-
-        this.terminalWindow = terminalWindow;
+    public boolean playerCanAttack(ListView<Country> countries) {
         strongestCountry = checkAndFindStrongestIfNoAdjacentCountryToAttack(sortCountryListByArmyCount(countries.getItems()));
         if (strongestCountry == null) {
             System.out.println("Aggressive player cannot continue with attack phase, move to fortification phase.");
@@ -76,8 +67,7 @@ public class Aggressive extends PlayerBehaviour {
 
     @Override
     public boolean fortificationPhase(ListView<Country> selectedCountryList, ListView<Country> adjCountryList,
-                                      TextArea terminalWindow, Player currentPlayer) {
-        this.terminalWindow = terminalWindow;
+                                      Player currentPlayer) {
         System.out.println("Beginning Fortification phase for aggressive player " + currentPlayer.getName());
         setChanged();
         notifyObservers("Beginning Fortification phase for aggressive player " + currentPlayer.getName() + ".\n");
@@ -117,21 +107,18 @@ public class Aggressive extends PlayerBehaviour {
         return false;
     }
 
-    private void attack(Country attacking, Country defending, Player player, TextArea terminalWindow) {
-
-        this.terminalWindow = terminalWindow;
+    private void attack(Country attacking, Country defending, Player player) {
         Dice dice = new Dice(attacking, defending);
         if (player != null) {
             dice.addObserver(player);
         }
-        DiceController diceController = new DiceController(dice, this, terminalWindow);
+        DiceController diceController = new DiceController(dice, this, this.gamePlayController);
         diceController.automateDiceRoll();
     }
 
     @Override
     public void attackPhase(ListView<Country> attackingCountryList, ListView<Country> defendingCountryList,
-                            Player currentPlayer, TextArea terminalWindow) {
-        this.terminalWindow = terminalWindow;
+                            Player currentPlayer) {
         System.out.println("Beginning attack phase for aggressive player " + currentPlayer.getName());
         setChanged();
         notifyObservers("Beginning attack phase for aggressive player " + currentPlayer.getName() + ".\n");
@@ -144,7 +131,7 @@ public class Aggressive extends PlayerBehaviour {
                 System.out.println("Ended attack phase for aggressive player " + currentPlayer.getName());
                 setChanged();
                 notifyObservers("Attacking with strongest country " + strongestCountry.getName() + ".\n");
-                attack(strongestCountry, defendingCountriesIterator.next(), currentPlayer, terminalWindow);
+                attack(strongestCountry, defendingCountriesIterator.next(), currentPlayer);
                 setChanged();
                 notifyObservers("Ended attack phase for aggressive player " + currentPlayer.getName() + ".\n");
                 break;

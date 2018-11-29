@@ -2,10 +2,9 @@ package com.risk.strategy;
 
 import com.risk.model.Country;
 import com.risk.model.Player;
-import com.risk.view.Util.WindowUtil;
+import com.risk.view.controller.GamePlayController;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,26 +13,19 @@ import java.util.List;
 
 public class Benevolent extends PlayerBehaviour {
 
-    private TextArea terminalWindow;
+    private GamePlayController gamePlayController;
 
-    public Benevolent() {
-        new WindowUtil(this);
+    public Benevolent(GamePlayController gamePlayController) {
+        this.gamePlayController = gamePlayController;
+        this.addObserver(gamePlayController);
     }
 
     @Override
-    public TextArea getTerminalWindow() {
-        return this.terminalWindow;
-    }
-
-    @Override
-    public void reinforcementPhase(ObservableList<Country> countryList, Country country, TextArea terminalWindow,
-                                   Player currentPlayer) {
-        this.terminalWindow = terminalWindow;
+    public void reinforcementPhase(ObservableList<Country> countryList, Country country, Player currentPlayer) {
         System.out.println("Beginning Reinforcement phase for benevolent player " + currentPlayer.getName());
         setChanged();
         notifyObservers("Beginning Reinforcement phase for benevolent player " + currentPlayer.getName() + ".\n");
         System.out.println("List of countries owned: " + countryList.toString() + "\n");
-        this.terminalWindow = terminalWindow;
         List<Country> sortedList = sortCountryListByArmyCount(countryList);
         for (Country country1 : sortedList) {
             System.out.println(country1.getName() + ":" + country1.getNoOfArmies());
@@ -56,8 +48,7 @@ public class Benevolent extends PlayerBehaviour {
 
     @Override
     public void attackPhase(ListView<Country> attackingCountryList, ListView<Country> defendingCountryList,
-                            Player gamePhase, TextArea terminalWindow) {
-        this.terminalWindow = terminalWindow;
+                            Player gamePhase) {
         System.out.println("Benevolent player cannot attack.");
         setChanged();
         notifyObservers("Benevolent player cannot attack.\n");
@@ -65,8 +56,7 @@ public class Benevolent extends PlayerBehaviour {
 
     @Override
     public boolean fortificationPhase(ListView<Country> selectedCountryList, ListView<Country> adjCountry,
-                                      TextArea terminalWindow, Player currentPlayer) {
-        this.terminalWindow = terminalWindow;
+                                      Player currentPlayer) {
         System.out.println("Beginning Fortification phase for benevolent player " + currentPlayer.getName());
         setChanged();
         notifyObservers("Beginning Fortification phase for benevolent player " + currentPlayer.getName() + ".\n");
@@ -97,8 +87,7 @@ public class Benevolent extends PlayerBehaviour {
     }
 
     @Override
-    public boolean playerCanAttack(ListView<Country> countries, TextArea terminalWindow) {
-        this.terminalWindow = terminalWindow;
+    public boolean playerCanAttack(ListView<Country> countries) {
         System.out.println("Benevolent player cannot attack.");
         setChanged();
         notifyObservers("Benevolent player cannot attack.\n");

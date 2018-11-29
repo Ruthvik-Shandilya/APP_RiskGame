@@ -5,27 +5,21 @@ import com.risk.model.Dice;
 import com.risk.model.Player;
 import com.risk.view.DiceView;
 import com.risk.view.Util.WindowUtil;
+import com.risk.view.controller.GamePlayController;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
 
 public class Human extends PlayerBehaviour {
 
-    private TextArea terminalWindow;
+    private GamePlayController gamePlayController;
 
-    @Override
-    public TextArea getTerminalWindow() {
-        return terminalWindow;
-    }
-
-    public Human() {
-        new WindowUtil(this);
+    public Human(GamePlayController gamePlayController) {
+        this.gamePlayController = gamePlayController;
+        this.addObserver(gamePlayController);
     }
 
     @Override
-    public void reinforcementPhase(ObservableList<Country> countryList, Country country, TextArea terminalWindow,
-                                   Player currentPlayer) {
-        this.terminalWindow = terminalWindow;
+    public void reinforcementPhase(ObservableList<Country> countryList, Country country, Player currentPlayer) {
         System.out.println("Beginning Reinforcement phase for human player " + currentPlayer.getName() + ".\n");
         setChanged();
         notifyObservers("Beginning Reinforcement phase for human player " + currentPlayer.getName() + ".\n");
@@ -52,7 +46,7 @@ public class Human extends PlayerBehaviour {
 
     @Override
     public void attackPhase(ListView<Country> attackingCountryList, ListView<Country> defendingCountryList,
-                            Player currentPlayer, TextArea terminalWindow) {
+                            Player currentPlayer) {
         Country attackingCountry = attackingCountryList.getSelectionModel().getSelectedItem();
         Country defendingCountry = defendingCountryList.getSelectionModel().getSelectedItem();
         if (attackingCountry != null && defendingCountry != null) {
@@ -62,7 +56,7 @@ public class Human extends PlayerBehaviour {
             if (playerCanAttack) {
                 Dice dice = new Dice(attackingCountry, defendingCountry);
                 dice.addObserver(currentPlayer);
-                DiceView.openDiceWindow(dice, currentPlayer, terminalWindow);
+                DiceView.openDiceWindow(dice, currentPlayer, this.gamePlayController);
             }
 
         } else {
@@ -74,7 +68,7 @@ public class Human extends PlayerBehaviour {
 
     @Override
     public boolean fortificationPhase(ListView<Country> selectedCountryList, ListView<Country> adjCountryList,
-                                      TextArea terminalWindow, Player playerPlaying) {
+                                      Player playerPlaying) {
         Country selectedCountry = selectedCountryList.getSelectionModel().getSelectedItem();
         Country adjCountry = adjCountryList.getSelectionModel().getSelectedItem();
         if (selectedCountry == null) {
@@ -141,13 +135,11 @@ public class Human extends PlayerBehaviour {
     /**
      * Method to check if the player can attack or not.
      *
-     * @param countries      List view of all the countries of the player
-     * @param terminalWindow TextArea to which current game information will be displayed
+     * @param countries List view of all the countries of the player
      * @return true if the player can attack; other wise false
      */
     @Override
-    public boolean playerCanAttack(ListView<Country> countries, TextArea terminalWindow) {
-        this.terminalWindow = terminalWindow;
+    public boolean playerCanAttack(ListView<Country> countries) {
         boolean canAttack = false;
         for (com.risk.model.Country Country : countries.getItems()) {
             if (Country.getNoOfArmies() > 1) {
