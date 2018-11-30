@@ -24,6 +24,7 @@ import javafx.stage.FileChooser;
 
 import java.io.*;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -991,7 +992,7 @@ public class GamePlayController implements Initializable, Observer, Externalizab
     public BufferedWriter clearContentsOfFile() {
         BufferedWriter bufferedWriter = null;
         try {
-            bufferedWriter = new BufferedWriter(new FileWriter(new File("").getAbsolutePath() + "\\src\\main\\resources\\GamePlay.txt", false));
+            bufferedWriter = new BufferedWriter(new FileWriter(new File("").getAbsolutePath() + "\\src\\main\\resources\\GamePlay" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".txt", true));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1001,6 +1002,7 @@ public class GamePlayController implements Initializable, Observer, Externalizab
     public void writeToFile(String output) {
         try {
             this.bufferedWriter.write(output);
+            this.bufferedWriter.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
