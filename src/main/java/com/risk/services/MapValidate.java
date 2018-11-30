@@ -13,7 +13,6 @@ import java.util.regex.Pattern;
 
 import com.risk.model.Country;
 import com.risk.model.Continent;
-import org.omg.PortableServer.ServantActivator;
 
 /**
  * Map Validation class contains methods for the verification of a already map
@@ -224,11 +223,30 @@ public class MapValidate implements Serializable {
                                     }
                                     country.setPartOfContinent(continentSetOfTerritories.get(input[3]));
                                     countries.add(country);
+                                    for (Continent continent : countriesInContinent.keySet()) {
+                                        if (continent.getListOfCountries().contains(country)) {
+                                            continent.getListOfCountries().remove(country);
+                                            countriesInContinent.get(continent).remove(country);
+                                        }
+                                    }
+                                    for (Continent continent : continentSetOfTerritories.values()) {
+                                        if (continent.getListOfCountries().contains(country)) {
+                                            continent.getListOfCountries().remove(country);
+                                        }
+                                    }
+
                                     if (!continentSetOfTerritories.get(input[3]).getListOfCountries()
                                             .contains(country)) {
                                         continentSetOfTerritories.get(input[3]).getListOfCountries().add(country);
                                     }
-                                    countriesInContinent.put(continentSetOfTerritories.get(input[3]), countries);
+                                    if (countriesInContinent.get(continentSetOfTerritories.get(input[3])) == null) {
+                                        countriesInContinent.put(continentSetOfTerritories.get(input[3]), countries);
+                                    } else {
+                                        if (!countriesInContinent.get(continentSetOfTerritories.get(input[3])).contains(country)) {
+                                            countriesInContinent.get(continentSetOfTerritories.get(input[3])).add(country);
+                                        }
+                                    }
+
                                 } else {
                                     HashSet<Country> countries = getCountriesFromContinent(input[3].trim(),
                                             countriesInContinent);
@@ -246,26 +264,88 @@ public class MapValidate implements Serializable {
                                     }
                                     country.setPartOfContinent(continentSetOfTerritories.get(input[3]));
                                     countries.add(country);
+                                    for (Continent continent : countriesInContinent.keySet()) {
+                                        if (continent.getListOfCountries().contains(country)) {
+                                            continent.getListOfCountries().remove(country);
+                                            countriesInContinent.get(continent).remove(country);
+                                        }
+                                    }
+                                    for (Continent continent : continentSetOfTerritories.values()) {
+                                        if (continent.getListOfCountries().contains(country)) {
+                                            continent.getListOfCountries().remove(country);
+                                        }
+                                    }
+
                                     if (!continentSetOfTerritories.get(input[3]).getListOfCountries()
                                             .contains(country)) {
                                         continentSetOfTerritories.get(input[3]).getListOfCountries().add(country);
                                     }
-                                    countriesInContinent.put(continentSetOfTerritories.get(input[3]), countries);
+                                    if (countriesInContinent.get(continentSetOfTerritories.get(input[3])) == null) {
+                                        countriesInContinent.put(continentSetOfTerritories.get(input[3]), countries);
+                                    } else {
+                                        if (!countriesInContinent.get(continentSetOfTerritories.get(input[3])).contains(country)) {
+                                            countriesInContinent.get(continentSetOfTerritories.get(input[3])).add(country);
+                                        }
+                                    }
                                 }
                                 ArrayList<Country> countries = new ArrayList<>();
                                 for (int i = 4; i < input.length; ++i) {
                                     Country adjacentCountry;
                                     if (!countrySet.containsKey(input[i].trim())) {
                                         adjacentCountry = new Country(input[i].trim());
-                                        countrySet.put(input[i].trim(), adjacentCountry);
+                                        adjacentCountry.getAdjacentCountries().add(country);
+                                        adjacentCountry.setPartOfContinent(continentSetOfTerritories.get(input[3]));
+                                        adjacentCountry.setContinent(continentSetOfTerritories.get(input[3]).getName());
+                                        countrySet.put(adjacentCountry.getName(), adjacentCountry);
+                                        if (!continentSetOfTerritories.get(input[3]).getListOfCountries().contains(adjacentCountry)) {
+                                            continentSetOfTerritories.get(input[3]).getListOfCountries().add(adjacentCountry);
+                                        }
+                                        if (!countriesInContinent.get(continentSetOfTerritories.get(input[3])).contains(adjacentCountry)) {
+                                            countriesInContinent.get(continentSetOfTerritories.get(input[3])).add(adjacentCountry);
+                                        }
+                                        if (adjacentCountries.get(adjacentCountry) == null) {
+                                            adjacentCountries.put(adjacentCountry, adjacentCountry.getAdjacentCountries());
+                                        } else {
+                                            if (!adjacentCountries.get(adjacentCountry).contains(country))
+                                                adjacentCountries.get(adjacentCountry).add(country);
+                                        }
                                     } else {
                                         adjacentCountry = countrySet.get(input[i].trim());
+                                        if (!adjacentCountry.getAdjacentCountries().contains(country)) {
+                                            adjacentCountry.getAdjacentCountries().add(country);
+                                        }
                                     }
                                     countries.add(adjacentCountry);
                                 }
-                                country.setAdjacentCountries(countries);
-                                adjacentCountries.put(country, countries);
+                                for (Country country1 : countries) {
+                                    if (!country.getAdjacentCountries().contains(country1)) {
+                                        country.getAdjacentCountries().add(country1);
+                                    }
+                                }
+                                if (adjacentCountries.get(country) == null) {
+                                    adjacentCountries.put(country, countries);
+                                } else {
+                                    for (Country country1 : countries) {
+                                        if (!adjacentCountries.get(country).contains(country1)) {
+                                            adjacentCountries.get(country).add(country1);
+                                        }
+                                    }
+                                }
                             }
+                        }
+                        System.out.println("adjacency list:");
+                        for (Country country1 : adjacentCountries.keySet()) {
+                            System.out.println(country1.getName() + ":" + adjacentCountries.get(country1).toString());
+                        }
+
+                        System.out.println("Countries adjacent list:");
+                        for (Country country1 : countrySet.values()) {
+                            System.out.println(country1.getName() + ":" + country1.getAdjacentCountries().toString());
+                        }
+
+                        System.out.println("Countries in continent:");
+                        for (Continent continent : countriesInContinent.keySet()) {
+                            System.out.println(continent.getName() + ":" + countriesInContinent.get(continent).toString());
                         }
                     }
                 }
@@ -274,7 +354,7 @@ public class MapValidate implements Serializable {
             }
 
             for (Map.Entry<Continent, HashSet<Country>> countries : countriesInContinent.entrySet()) {
-                if (countries.getValue().size() < 2) {
+                if (countries.getValue().size() < 1) {
                     System.out.println(countries);
                     System.out.println("Number of countries in a continent is less");
                     return false;
@@ -285,7 +365,7 @@ public class MapValidate implements Serializable {
                 Country checkCountry = countries.getKey();
                 ArrayList<Country> neighbours = countries.getValue();
                 for (Country adjacent : neighbours) {
-                    if(adjacentCountries.get(adjacent)==null){
+                    if (adjacentCountries.get(adjacent) == null) {
                         System.out.println("Adjacency list of country " + adjacent.getName() + " is not present.");
                         return false;
                     }
