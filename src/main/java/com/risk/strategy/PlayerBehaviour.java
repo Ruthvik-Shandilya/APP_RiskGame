@@ -76,7 +76,7 @@ public abstract class PlayerBehaviour extends Observable implements Serializable
 
     /**
      * 
-	 * Method to get list of defending country. 
+	 * Method to get list of defending countries. 
 	 * 
 	 * @param attackingCountry
 	 *            Attacking country.

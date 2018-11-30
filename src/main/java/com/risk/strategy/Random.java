@@ -79,6 +79,7 @@ public class Random extends PlayerBehaviour {
     /**
      * 
 	 * Method for Random class for attack phase.
+	 * Start and end of the attack phase. 
 	 * 
 	 * @param attackingCountryList
 	 *            List of countries attacking.

@@ -96,6 +96,7 @@ public class Cheater extends PlayerBehaviour {
     /**
      * 
 	 * Method for Cheater class for attack phase.
+	 * Start and end of the attack phase. 
 	 * 
 	 * @param attackingCountryList
 	 *            List of countries attacking.
