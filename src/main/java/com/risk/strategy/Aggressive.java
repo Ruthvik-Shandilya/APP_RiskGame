@@ -91,6 +91,9 @@ public class Aggressive extends PlayerBehaviour {
 	 * 
 	 * @param countryList
 	 *            List of countries owned by the player.
+	 *            
+	 * @return true 
+     * 			  If player can attack; other wise false.           
 	 */
     @Override
     public boolean playerCanAttack(ListView<Country> countries) {
@@ -118,7 +121,10 @@ public class Aggressive extends PlayerBehaviour {
 	 *            List of adjacent countries.
 	 * @param currentPlayer
 	 *            Current player.
-	 * 
+	 *            
+	 * @return true 
+     * 			  If the fortification successful; other wise false.
+     * 
 	 */
     @Override
     public boolean fortificationPhase(ListView<Country> selectedCountryList, ListView<Country> adjCountryList,

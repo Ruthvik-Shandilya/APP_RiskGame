@@ -114,6 +114,9 @@ public class Benevolent extends PlayerBehaviour {
 	 *            List of adjacent countries.
 	 * @param currentPlayer
 	 *            Current player.
+	 *            
+	 * @return true 
+     * 			  If the fortification successful; other wise false.            
 	 * 
 	 */
     @Override
@@ -154,7 +157,10 @@ public class Benevolent extends PlayerBehaviour {
 	 * 
 	 * @param countries
 	 *            List of countries owned by the player.
-	 *            
+	 *
+	 * @return true 
+     * 			  If player can attack; other wise false.
+     *             
 	 */
     @Override
     public boolean playerCanAttack(ListView<Country> countries) {
