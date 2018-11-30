@@ -3,10 +3,13 @@ package com.risk.strategy;
 import com.risk.model.Country;
 import com.risk.model.Dice;
 import com.risk.model.Player;
+import com.risk.model.TournamentModel;
+import com.risk.view.Util.WindowUtil;
 import com.risk.view.controller.DiceController;
 import com.risk.view.controller.GamePlayController;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 
 import java.util.*;
 
@@ -31,6 +34,15 @@ public class Aggressive extends PlayerBehaviour {
      * Object of country, which is the strongest country.
      */
     private Country strongestCountry;
+
+//    private TextArea terminalWindow;
+
+    public Aggressive() {}
+
+//    @Override
+//    public TextArea getTerminalWindow() {
+//        return this.terminalWindow;
+//    }
 
     /**
      * Object of GamePlayController, control various activities during the game play.
@@ -183,8 +195,14 @@ public class Aggressive extends PlayerBehaviour {
         if (player != null) {
             dice.addObserver(player);
         }
-        DiceController diceController = new DiceController(dice, this, this.gamePlayController);
-        diceController.automateDiceRoll();
+        if(TournamentModel.isTournament){
+            DiceController diceController = new DiceController(dice, this);
+            diceController.automateDiceRoll();
+        }
+        else {
+            DiceController diceController = new DiceController(dice, this, this.gamePlayController);
+            diceController.automateDiceRoll();
+        }
     }
 
     /**

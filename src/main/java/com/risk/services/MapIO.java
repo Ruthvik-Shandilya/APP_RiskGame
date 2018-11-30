@@ -17,6 +17,10 @@ import java.util.Map;
  */
 public class MapIO implements Serializable {
 
+	public String getFileName() {
+		return fileName;
+	}
+
 	/** FileName of the existing map */
 	private String fileName;
 

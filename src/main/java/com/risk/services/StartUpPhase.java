@@ -23,6 +23,8 @@ public class StartUpPhase extends Observable implements Serializable {
         this.addObserver(gamePlayController);
     }
 
+    public StartUpPhase(){}
+
     /**
      * Method to assign countries to a player
      *

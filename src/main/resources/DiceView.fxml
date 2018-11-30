@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.control.*?>
 <?import java.lang.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="367.0" prefWidth="542.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox alignment="TOP_CENTER" layoutX="3.0" prefHeight="382.0" prefWidth="542.0">
+      <VBox alignment="TOP_CENTER" layoutX="3.0" prefHeight="115.0" prefWidth="542.0">
          <children>
             <HBox alignment="TOP_CENTER" prefHeight="42.0" prefWidth="542.0">
                <children>
@@ -31,7 +28,7 @@
             </HBox>
          </children>
       </VBox>
-      <Button fx:id="startRoll" layoutX="97.0" layoutY="266.0" mnemonicParsing="false" onAction="#startRoll" prefHeight="31.0" prefWidth="85.0" text="Roll" />
+      <Button fx:id="startRoll" layoutX="30.0" layoutY="269.0" mnemonicParsing="false" onAction="#startRoll" prefHeight="31.0" prefWidth="85.0" text="Roll" />
       <CheckBox fx:id="dice1_Attacker" layoutX="183.0" layoutY="123.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="38.0" />
       <CheckBox fx:id="dice2_Attacker" layoutX="183.0" layoutY="156.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="38.0" />
       <CheckBox fx:id="dice3_Attacker" layoutX="183.0" layoutY="192.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="38.0" />
@@ -48,6 +45,7 @@
          </children>
       </Pane>
       <Label fx:id="winnerName" alignment="CENTER" contentDisplay="CENTER" layoutX="15.0" layoutY="240.0" prefHeight="21.0" prefWidth="522.0" text="Winner Name" wrapText="true" />
-      <Button fx:id="continueRoll" layoutX="230.0" layoutY="268.0" mnemonicParsing="false" onAction="#continueDiceRoll" prefHeight="32.0" prefWidth="92.0" text="All Out" wrapText="true" />
+      <Button fx:id="continueRoll" layoutX="137.0" layoutY="269.0" mnemonicParsing="false" onAction="#continueDiceRoll" prefHeight="32.0" prefWidth="92.0" text="continue" wrapText="true" />
+      <Button fx:id="allOut" layoutX="255.0" layoutY="269.0" mnemonicParsing="false" onAction="#allOut" prefHeight="31.0" prefWidth="76.0" text="All Out" />
    </children>
 </Pane>

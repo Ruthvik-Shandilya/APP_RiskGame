@@ -3,6 +3,7 @@ package com.risk.strategy;
 import com.risk.model.Country;
 import com.risk.model.Dice;
 import com.risk.model.Player;
+import com.risk.model.TournamentModel;
 import com.risk.view.controller.DiceController;
 import com.risk.view.controller.GamePlayController;
 import javafx.collections.ObservableList;
@@ -31,6 +32,8 @@ public class Random extends PlayerBehaviour {
      * Object of GamePlayController, control various activities during the game play.
      */    
     private GamePlayController gamePlayController;
+
+    public Random (){}
     
     /**
      * 
@@ -216,8 +219,16 @@ public class Random extends PlayerBehaviour {
         if (currentPlayer != null) {
             diceModel.addObserver(currentPlayer);
         }
-        DiceController diceController = new DiceController(diceModel, this, this.gamePlayController);
-        diceController.automateDiceRoll();
+
+        if(TournamentModel.isTournament){
+            DiceController diceController = new DiceController(diceModel, this);
+            diceController.automateDiceRoll();
+        }
+        else {
+            DiceController diceController = new DiceController(diceModel, this, this.gamePlayController);
+            diceController.automateDiceRoll();
+        }
+
     }
 
     /**
