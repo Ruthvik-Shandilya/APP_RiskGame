@@ -5,8 +5,6 @@ import com.risk.model.Player;
 import com.risk.model.TournamentModel;
 import com.risk.services.MapIO;
 import com.risk.view.Util.WindowUtil;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -97,7 +95,6 @@ public class TournamentController extends Observable implements Initializable {
     private TextArea textArea;
 
 
-
     public int getNumberOfTurnsToPlay() {
         return numberOfTurnsToPlay;
     }
@@ -145,30 +142,30 @@ public class TournamentController extends Observable implements Initializable {
     }
 
     @FXML
-    private void register(ActionEvent event) throws NumberFormatException{
+    private void register(ActionEvent event) throws NumberFormatException {
         System.out.println("In register");
         try {
-            int bufferNumberOfGames =  Integer.parseInt(numberOfGames.getText().trim());
-            int bufferNumberOfTurns =  Integer.parseInt(numberOfTurns.getText().trim());
-            int bufferNumberOfMaps =  Integer.parseInt(numberOfMaps.getText().trim());
+            int bufferNumberOfGames = Integer.parseInt(numberOfGames.getText().trim());
+            int bufferNumberOfTurns = Integer.parseInt(numberOfTurns.getText().trim());
+            int bufferNumberOfMaps = Integer.parseInt(numberOfMaps.getText().trim());
 
             setNumberOfGamesToPlay(bufferNumberOfGames);
             setNumberOfTurnsToPlay(bufferNumberOfTurns);
             setNumberOfMapsToPlay(bufferNumberOfMaps);
 
-            if(numberOfGamesToPlay > 5 || numberOfGamesToPlay < 1){
+            if (numberOfGamesToPlay > 5 || numberOfGamesToPlay < 1) {
                 WindowUtil.popUpWindow("Games to be played should be between 1 to 5", "Problem in games to play", "You have entered a value less than 1 or greater than 5");
                 WindowUtil.disableButtonControl(start);
                 return;
             }
 
-            if(numberOfTurnsToPlay > 50 || numberOfTurnsToPlay < 10){
+            if (numberOfTurnsToPlay > 50 || numberOfTurnsToPlay < 10) {
                 WindowUtil.popUpWindow("Turns to be played should be between 10 to 50", "Problem in turns to play", "You have entered a value less than 10 or greater than 50");
                 WindowUtil.disableButtonControl(start);
                 return;
             }
 
-            if(numberOfMapsToPlay > 5 || numberOfMapsToPlay < 1){
+            if (numberOfMapsToPlay > 5 || numberOfMapsToPlay < 1) {
                 WindowUtil.popUpWindow("Maps to be played should be between 1 to 5", "Problem in maps to play", "You have entered a value less than 1 or greater than 5");
                 WindowUtil.disableButtonControl(start);
                 return;
@@ -183,14 +180,14 @@ public class TournamentController extends Observable implements Initializable {
 
             int mapToEnable;
 
-            for ( mapToEnable = 0; mapToEnable < numberOfMapsToPlay; mapToEnable++){
+            for (mapToEnable = 0; mapToEnable < numberOfMapsToPlay; mapToEnable++) {
                 WindowUtil.enableButtonControl(mapButtonList.get(mapToEnable));
             }
-            for(int i = mapToEnable; i < 5; i++){
+            for (int i = mapToEnable; i < 5; i++) {
                 WindowUtil.disableButtonControl(mapButtonList.get(i));
             }
 
-            if(numberOfGamesToPlay != 0 && numberOfTurnsToPlay != 0 && numberOfPlayersPlaying != 0 && numberOfTurnsToPlay != 0){
+            if (numberOfGamesToPlay != 0 && numberOfTurnsToPlay != 0 && numberOfPlayersPlaying != 0 && numberOfTurnsToPlay != 0) {
                 WindowUtil.enableButtonControl(start);
                 errorMessage.setText("Select players properly and then click start");
             }
@@ -202,7 +199,7 @@ public class TournamentController extends Observable implements Initializable {
     }
 
     @FXML
-    public void showPlayer(ActionEvent event) throws NumberFormatException{
+    public void showPlayer(ActionEvent event) throws NumberFormatException {
         System.out.println("In Player");
 
         try {
@@ -210,7 +207,7 @@ public class TournamentController extends Observable implements Initializable {
 
             setNumberOfPlayersPlaying(bufferNumberOfPlayers);
 
-            if(numberOfPlayersPlaying > 4 || numberOfPlayersPlaying < 1){
+            if (numberOfPlayersPlaying > 4 || numberOfPlayersPlaying < 1) {
                 WindowUtil.popUpWindow("Players playing should be between 1 to 4", "Problem in number of players", "You have entered a value less than 1 or greater than 4");
                 WindowUtil.disableButtonControl(start);
                 return;
@@ -230,12 +227,12 @@ public class TournamentController extends Observable implements Initializable {
                 WindowUtil.disableButtonControl(playerDropDownList.get(i));
             }
 
-            if(numberOfGamesToPlay != 0 && numberOfMapsToPlay != 0 && numberOfPlayersPlaying != 0 && (numberOfTurnsToPlay >= 10 && numberOfTurnsToPlay <= 50)){
+            if (numberOfGamesToPlay != 0 && numberOfMapsToPlay != 0 && numberOfPlayersPlaying != 0 && (numberOfTurnsToPlay >= 10 && numberOfTurnsToPlay <= 50)) {
                 WindowUtil.enableButtonControl(start);
                 errorMessage.setText("Select players properly and then click start");
             }
 
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             WindowUtil.popUpWindow("Please enter a number", "NumberFormatException", "You did not enter a number");
         }
 
@@ -243,9 +240,9 @@ public class TournamentController extends Observable implements Initializable {
     }
 
     @FXML
-    private void map1(ActionEvent event){
+    private void map1(ActionEvent event) {
         File selectedFile = tournamentModel.checkAndLoadMap(mapList);
-        if(selectedFile == null){
+        if (selectedFile == null) {
             map1.setText("Invalidmap selected");
             errorMessage.setText("Invalidmap selected");
             WindowUtil.disableButtonControl(start);
@@ -255,9 +252,9 @@ public class TournamentController extends Observable implements Initializable {
     }
 
     @FXML
-    private void map2(ActionEvent event){
+    private void map2(ActionEvent event) {
         File selectedFile = tournamentModel.checkAndLoadMap(mapList);
-        if(selectedFile == null){
+        if (selectedFile == null) {
             map2.setText("Invalidmap selected");
             errorMessage.setText("Invalidmap selected");
             WindowUtil.disableButtonControl(start);
@@ -267,9 +264,9 @@ public class TournamentController extends Observable implements Initializable {
     }
 
     @FXML
-    private void map3(ActionEvent event){
+    private void map3(ActionEvent event) {
         File selectedFile = tournamentModel.checkAndLoadMap(mapList);
-        if(selectedFile == null){
+        if (selectedFile == null) {
             map3.setText("Invalidmap selected");
             errorMessage.setText("Invalidmap selected");
             WindowUtil.disableButtonControl(start);
@@ -279,9 +276,9 @@ public class TournamentController extends Observable implements Initializable {
     }
 
     @FXML
-    private void map4(ActionEvent event){
+    private void map4(ActionEvent event) {
         File selectedFile = tournamentModel.checkAndLoadMap(mapList);
-        if(selectedFile == null){
+        if (selectedFile == null) {
             map4.setText("Invalidmap selected");
             errorMessage.setText("Invalidmap selected");
             WindowUtil.disableButtonControl(start);
@@ -291,9 +288,9 @@ public class TournamentController extends Observable implements Initializable {
     }
 
     @FXML
-    private void map5(ActionEvent event){
+    private void map5(ActionEvent event) {
         File selectedFile = tournamentModel.checkAndLoadMap(mapList);
-        if(selectedFile == null){
+        if (selectedFile == null) {
             map5.setText("Invalidmap selected");
             errorMessage.setText("Invalidmap selected");
             WindowUtil.disableButtonControl(start);
@@ -303,7 +300,7 @@ public class TournamentController extends Observable implements Initializable {
     }
 
 
-    public void populatePlayerCheckBox(){
+    public void populatePlayerCheckBox() {
         String playerTypes[] = {IPlayerType.AGGRESSIVE, IPlayerType.BENEVOLENT, IPlayerType.RANDOM, IPlayerType.CHEATER};
         player1.getItems().addAll(playerTypes);
         player2.getItems().addAll(playerTypes);
@@ -313,48 +310,33 @@ public class TournamentController extends Observable implements Initializable {
     }
 
     @FXML
-    public void start(ActionEvent event){
+    public void start(ActionEvent event) {
 
         HashMap<String, ArrayList<HashMap<Player, Integer>>> result = new HashMap<>();
         System.out.println("In start");
 
         playerList.clear();
-        for (int i = 0; i < numberOfPlayersPlaying; i++){
-            playerList.add(new Player("Player "+ (i+1), (String)playerDropDownList.get(i).getValue()));
+        for (int i = 0; i < numberOfPlayersPlaying; i++) {
+            playerList.add(new Player("Player " + (i + 1), (String) playerDropDownList.get(i).getValue()));
         }
 
-        for(MapIO mapIO: mapList) {
+        for (MapIO mapIO : mapList) {
             playerList.clear();
-            for (int i = 0; i < numberOfPlayersPlaying; i++){
-                playerList.add(new Player("Player "+ (i+1), (String)playerDropDownList.get(i).getValue()));
+            for (int i = 0; i < numberOfPlayersPlaying; i++) {
+                playerList.add(new Player("Player " + (i + 1), (String) playerDropDownList.get(i).getValue()));
             }
             result.put(mapIO.getFileName(), new ArrayList<>());
-            for(int gameCount = 1; gameCount <= numberOfGamesToPlay; gameCount++){
+            for (int gameCount = 1; gameCount <= numberOfGamesToPlay; gameCount++) {
                 // Adding result
                 playerList.clear();
-                for (int i = 0; i < numberOfPlayersPlaying; i++){
-                    playerList.add(new Player("Player "+ (i+1), (String)playerDropDownList.get(i).getValue()));
+                for (int i = 0; i < numberOfPlayersPlaying; i++) {
+                    playerList.add(new Player("Player " + (i + 1), (String) playerDropDownList.get(i).getValue()));
                 }
                 result.get(mapIO.getFileName()).add(tournamentModel.playGame(playerList, numberOfTurnsToPlay, gameCount, mapIO, textArea));
                 System.out.println(gameCount);
             }
             System.out.println(result.toString());
         }
-
-
-
-
-
-
     }
-
-
-
-
-
-
-
-
-
 
 }
