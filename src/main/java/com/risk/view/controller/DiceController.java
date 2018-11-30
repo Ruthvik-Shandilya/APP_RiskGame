@@ -164,6 +164,13 @@ public class DiceController extends Observable implements Initializable {
         this.addObserver(gamePlayController);
     }
 
+    public DiceController(Dice dice, PlayerBehaviour playerBehaviour) {
+        this.dice = dice;
+        this.playerBehaviour = playerBehaviour;
+    }
+
+
+
     /**
      * Method to call load attack screen and dice view
      *
@@ -299,6 +306,120 @@ public class DiceController extends Observable implements Initializable {
         WindowUtil.exitWindow(cancelThrow);
     }
 
+
+    @FXML
+    private void allOut(ActionEvent event){
+        dice.setAttackerDiceList(new ArrayList<>());
+        dice.setDefenderDiceList(new ArrayList<>());
+        loadAttackScreen();
+
+
+        Country countryAttacking = dice.getAttackingCountry();
+        Country defendingCountry = dice.getDefendingCountry();
+        ArrayList<String> diceResult =  new ArrayList<>();
+
+        int bufferAttackingArmies = countryAttacking.getNoOfArmies();
+        int bufferDefendingArmies = defendingCountry.getNoOfArmies();
+
+        boolean flagAttack = false;
+        boolean flagDefender = false;
+
+        while(dice.getAttackingCountry().getNoOfArmies() > 1 && dice.getDefendingCountry().getNoOfArmies() > 0 ) {
+            // Refreshing a the dices
+            dice.getAttackerDiceList().clear();
+            dice.getDefenderDiceList().clear();
+            if (countryAttacking.getNoOfArmies() >= 4) {
+
+                WindowUtil.showCheckBox(dice1_Attacker, dice2_Attacker, dice3_Attacker);
+                WindowUtil.checkCheckBoxes(dice1_Attacker, dice2_Attacker, dice3_Attacker);
+                attackDiceValue(dice1_Attacker, dice2_Attacker, dice3_Attacker);
+
+            } else if (countryAttacking.getNoOfArmies() == 3) {
+
+                WindowUtil.showCheckBox(dice1_Attacker, dice2_Attacker);
+                WindowUtil.hideButtonControl(dice3_Attacker);
+                WindowUtil.checkCheckBoxes(dice1_Attacker, dice2_Attacker);
+                attackDiceValue(dice1_Attacker, dice2_Attacker);
+
+            } else if (countryAttacking.getNoOfArmies() == 2) {
+
+                WindowUtil.showCheckBox(dice1_Attacker);
+                WindowUtil.checkCheckBoxes(dice1_Attacker);
+                WindowUtil.hideButtonControl(dice2_Attacker, dice3_Attacker);
+                attackDiceValue(dice1_Attacker);
+            }
+
+            if (defendingCountry.getNoOfArmies() >= 2) {
+
+                WindowUtil.showCheckBox(dice1_Defender, dice2_Defender);
+                WindowUtil.checkCheckBoxes(dice1_Defender, dice2_Defender);
+                defenceDiceValue(dice1_Defender, dice2_Defender);
+
+            } else if (defendingCountry.getNoOfArmies() == 1) {
+
+                WindowUtil.showCheckBox(dice1_Defender);
+                WindowUtil.checkCheckBoxes(dice1_Defender);
+                WindowUtil.hideButtonControl(dice2_Defender);
+                defenceDiceValue(dice1_Defender);
+            }
+            diceResult = dice.getDicePlayResult();
+
+
+
+            if(countryAttacking.getNoOfArmies() != bufferAttackingArmies){
+                flagAttack = true;
+                System.out.println(countryAttacking.getPlayer().getName() + " lost: " + (bufferAttackingArmies - countryAttacking.getNoOfArmies() ) + " armies\n");
+                setChanged();
+                notifyObservers(countryAttacking.getPlayer().getName() + " lost: " + (bufferAttackingArmies - countryAttacking.getNoOfArmies()) + " armies\n");
+            }
+            if(defendingCountry.getNoOfArmies() != bufferDefendingArmies){
+                flagDefender = true;
+                System.out.println(defendingCountry.getPlayer().getName() + " lost: " + (bufferDefendingArmies - defendingCountry.getNoOfArmies()) + " armies\n");
+                setChanged();
+                notifyObservers(defendingCountry.getPlayer().getName() + " lost: " + (bufferDefendingArmies - defendingCountry.getNoOfArmies()) + " armies\n");
+            }
+
+            defendingArmies.setText("Armies: " + String.valueOf(defendingCountry.getNoOfArmies()));
+            attackingArmies.setText("Armies: " + String.valueOf(countryAttacking.getNoOfArmies()));
+        }
+
+        if (defendingCountry.getNoOfArmies() <= 0) {
+            System.out.println(countryAttacking.getPlayer().getName() + " won " + defendingCountry.getName() + " country.\n");
+            diceResult.add(countryAttacking.getPlayer().getName() + " won " + defendingCountry.getName() + " country.\n");
+            setChanged();
+            notifyObservers(countryAttacking.getPlayer().getName() + " won " + defendingCountry.getName() + " country.\n");
+            dice.setCountriesWonCount(dice.getCountriesWonCount() + 1);
+            WindowUtil.enablePane(afterAttackView);
+            WindowUtil.hideButtonControl(startRoll, continueRoll);
+        } else if (countryAttacking.getNoOfArmies() < 2) {
+            System.out.println(countryAttacking.getPlayer().getName() + " lost the match.\n");
+            setChanged();
+            notifyObservers(countryAttacking.getPlayer().getName() + " lost the match.\n");
+            diceResult.add(countryAttacking.getPlayer().getName() + " lost the match.\n");
+            WindowUtil.disableButtonControl(startRoll, continueRoll);
+        } else {
+            WindowUtil.disableButtonControl(startRoll);
+        }
+
+        if(flagAttack && flagDefender){
+            winnerName.setText(countryAttacking.getPlayer().getName() + " lost: " + (bufferAttackingArmies - countryAttacking.getNoOfArmies() ) + " armies\n" + " & " +
+                    defendingCountry.getPlayer().getName() + " lost: " + (bufferDefendingArmies - defendingCountry.getNoOfArmies() ) + " armies\n"
+            );
+        }
+        else if(flagAttack){
+            winnerName.setText(countryAttacking.getPlayer().getName() + " lost: " + (bufferAttackingArmies - countryAttacking.getNoOfArmies()) + " armies\n");
+        }
+        else if (flagDefender){
+            winnerName.setText(defendingCountry.getPlayer().getName() + " lost: " + (bufferDefendingArmies - defendingCountry.getNoOfArmies()) + " armies\n");
+        }
+        winnerName.setVisible(true);
+
+        diceView();
+        if(!(playerBehaviour instanceof Human)){
+            autoRollDice();
+        }
+    }
+
     /**
      * Method to continue dice roll
      *
@@ -310,108 +431,6 @@ public class DiceController extends Observable implements Initializable {
         dice.setAttackerDiceList(new ArrayList<>());
         dice.setDefenderDiceList(new ArrayList<>());
         loadAttackScreen();
-
-//
-//        Country countryAttacking = dice.getAttackingCountry();
-//        Country defendingCountry = dice.getDefendingCountry();
-//        ArrayList<String> diceResult =  new ArrayList<>();
-//
-//        int bufferAttackingArmies = countryAttacking.getNoOfArmies();
-//        int bufferDefendingArmies = defendingCountry.getNoOfArmies();
-//
-//		boolean flagAttack = false;
-//		boolean flagDefender = false;
-//
-//        while(dice.getAttackingCountry().getNoOfArmies() > 1 && dice.getDefendingCountry().getNoOfArmies() > 0 ) {
-//            // Refreshing a the dices
-//            dice.getAttackerDiceList().clear();
-//            dice.getDefenderDiceList().clear();
-//            if (countryAttacking.getNoOfArmies() >= 4) {
-//
-//                WindowUtil.showCheckBox(dice1_Attacker, dice2_Attacker, dice3_Attacker);
-//                WindowUtil.checkCheckBoxes(dice1_Attacker, dice2_Attacker, dice3_Attacker);
-//                attackDiceValue(dice1_Attacker, dice2_Attacker, dice3_Attacker);
-//
-//            } else if (countryAttacking.getNoOfArmies() == 3) {
-//
-//                WindowUtil.showCheckBox(dice1_Attacker, dice2_Attacker);
-//                WindowUtil.hideButtonControl(dice3_Attacker);
-//                WindowUtil.checkCheckBoxes(dice1_Attacker, dice2_Attacker);
-//                attackDiceValue(dice1_Attacker, dice2_Attacker);
-//
-//            } else if (countryAttacking.getNoOfArmies() == 2) {
-//
-//                WindowUtil.showCheckBox(dice1_Attacker);
-//                WindowUtil.checkCheckBoxes(dice1_Attacker);
-//                WindowUtil.hideButtonControl(dice2_Attacker, dice3_Attacker);
-//                attackDiceValue(dice1_Attacker);
-//            }
-//
-//            if (defendingCountry.getNoOfArmies() >= 2) {
-//
-//                WindowUtil.showCheckBox(dice1_Defender, dice2_Defender);
-//                WindowUtil.checkCheckBoxes(dice1_Defender, dice2_Defender);
-//                defenceDiceValue(dice1_Defender, dice2_Defender);
-//
-//            } else if (defendingCountry.getNoOfArmies() == 1) {
-//
-//                WindowUtil.showCheckBox(dice1_Defender);
-//                WindowUtil.checkCheckBoxes(dice1_Defender);
-//                WindowUtil.hideButtonControl(dice2_Defender);
-//                defenceDiceValue(dice1_Defender);
-//            }
-//            diceResult = dice.getDicePlayResult();
-//
-//
-//
-//            if(countryAttacking.getNoOfArmies() != bufferAttackingArmies){
-//				flagAttack = true;
-//                System.out.println(countryAttacking.getPlayer().getName() + " lost: " + (countryAttacking.getNoOfArmies() - bufferAttackingArmies) + " armies\n");
-//            	setChanged();
-//            	notifyObservers(countryAttacking.getPlayer().getName() + " lost: " + (countryAttacking.getNoOfArmies() - bufferAttackingArmies) + " armies\n");
-//            }
-//			if(defendingCountry.getNoOfArmies() != bufferDefendingArmies){
-//				flagDefender = true;
-//                System.out.println(defendingCountry.getPlayer().getName() + " lost: " + (defendingCountry.getNoOfArmies() - bufferDefendingArmies) + " armies\n");
-//				setChanged();
-//				notifyObservers(defendingCountry.getPlayer().getName() + " lost: " + (defendingCountry.getNoOfArmies() - bufferDefendingArmies) + " armies\n");
-//			}
-//
-//            defendingArmies.setText("Armies: " + String.valueOf(defendingCountry.getNoOfArmies()));
-//            attackingArmies.setText("Armies: " + String.valueOf(countryAttacking.getNoOfArmies()));
-//        }
-//
-//        if (defendingCountry.getNoOfArmies() <= 0) {
-//            System.out.println(countryAttacking.getPlayer().getName() + " won " + defendingCountry.getName() + " country.\n");
-//            System.out.println(countryAttacking.getPlayer().getName() + " won " + defendingCountry.getName() + " country.\n");
-//            diceResult.add(countryAttacking.getPlayer().getName() + " won " + defendingCountry.getName() + " country.\n");
-//            setChanged();
-//            notifyObservers(countryAttacking.getPlayer().getName() + " won " + defendingCountry.getName() + " country.\n");
-//            dice.setCountriesWonCount(dice.getCountriesWonCount() + 1);
-//            WindowUtil.enablePane(afterAttackView);
-//            WindowUtil.hideButtonControl(startRoll, continueRoll, cancelThrow);
-//        } else if (countryAttacking.getNoOfArmies() < 2) {
-//            System.out.println(countryAttacking.getPlayer().getName() + " lost the match.\n");
-//        	setChanged();
-//        	notifyObservers(countryAttacking.getPlayer().getName() + " lost the match.\n");
-//            diceResult.add(countryAttacking.getPlayer().getName() + " lost the match.\n");
-//            WindowUtil.disableButtonControl(startRoll, continueRoll);
-//        } else {
-//            WindowUtil.disableButtonControl(startRoll);
-//        }
-//
-//		if(flagAttack && flagDefender){
-//			winnerName.setText(countryAttacking.getPlayer().getName() + " lost: " + (countryAttacking.getNoOfArmies() - bufferAttackingArmies) + " armies\n" + " & " +
-//					defendingCountry.getPlayer().getName() + " lost: " + (defendingCountry.getNoOfArmies() - bufferDefendingArmies) + " armies\n"
-//			);
-//		}
-//		else if(flagAttack){
-//			winnerName.setText(countryAttacking.getPlayer().getName() + " lost: " + (countryAttacking.getNoOfArmies() - bufferAttackingArmies) + " armies\n");
-//		}
-//		else if (flagDefender){
-//			winnerName.setText(defendingCountry.getPlayer().getName() + " lost: " + (defendingCountry.getNoOfArmies() - bufferDefendingArmies) + " armies\n");
-//		}
-//		winnerName.setVisible(true);
 
         diceView();
         if (!(playerBehaviour instanceof Human)) {

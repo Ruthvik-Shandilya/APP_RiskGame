@@ -3,6 +3,7 @@ package com.risk.model;
 import com.risk.services.MapIO;
 import com.risk.strategy.*;
 import com.risk.strategy.Random;
+import com.risk.view.Util.WindowUtil;
 import com.risk.view.controller.GamePlayController;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
@@ -82,6 +83,25 @@ public class Player extends Observable implements Observer,Serializable {
         else if (playerType.equals(IPlayerType.RANDOM))
             this.playerBehaviour = new Random(gamePlayController);
         this.addObserver(gamePlayController);
+    }
+
+    public Player(String name, String playerType) {
+        armyCount = 0;
+        this.name = name;
+        this.playerType = playerType;
+        this.playerCountries = new ArrayList<>();
+        this.cardList = new ArrayList<>();
+        if (playerType.equals(IPlayerType.AGGRESSIVE))
+            this.playerBehaviour = new Aggressive();
+        else if (playerType.equals(IPlayerType.BENEVOLENT))
+            this.playerBehaviour = new Benevolent();
+        else if (playerType.equals(IPlayerType.CHEATER))
+            this.playerBehaviour = new Cheater();
+//        else if (playerType.equals(IPlayerType.HUMAN))
+//            this.playerBehaviour = new Human();
+        else if (playerType.equals(IPlayerType.RANDOM))
+            this.playerBehaviour = new Random();
+//        new WindowUtil(this);
     }
 
     /**

@@ -16,11 +16,11 @@
             <ChoiceBox fx:id="player2" layoutX="316.0" layoutY="170.0" prefWidth="150.0" />
             <ChoiceBox fx:id="player3" layoutX="316.0" layoutY="213.0" prefWidth="150.0" />
             <ChoiceBox fx:id="player4" layoutX="316.0" layoutY="258.0" prefWidth="150.0" />
-            <Button fx:id="map1" layoutX="39.0" layoutY="132.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="197.0" text="map1" />
-            <Button fx:id="map2" layoutX="39.0" layoutY="170.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="197.0" text="map2" />
-            <Button fx:id="map3" layoutX="39.0" layoutY="213.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="197.0" text="map3" />
-            <Button fx:id="map4" layoutX="39.0" layoutY="258.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="197.0" text="map4" />
-            <Button fx:id="map5" layoutX="39.0" layoutY="304.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="197.0" text="map5" />
+            <Button fx:id="map1" layoutX="39.0" layoutY="132.0" mnemonicParsing="false" onAction="#map1" prefHeight="25.0" prefWidth="197.0" text="map1" />
+            <Button fx:id="map2" layoutX="39.0" layoutY="170.0" mnemonicParsing="false" onAction="#map2" prefHeight="25.0" prefWidth="197.0" text="map2" />
+            <Button fx:id="map3" layoutX="39.0" layoutY="213.0" mnemonicParsing="false" onAction="#map3" prefHeight="25.0" prefWidth="197.0" text="map3" />
+            <Button fx:id="map4" layoutX="39.0" layoutY="258.0" mnemonicParsing="false" onAction="#map4" prefHeight="25.0" prefWidth="197.0" text="map4" />
+            <Button fx:id="map5" layoutX="39.0" layoutY="304.0" mnemonicParsing="false" onAction="#map5" prefHeight="25.0" prefWidth="197.0" text="map5" />
             <Label fx:id="errorMessage" layoutX="316.0" layoutY="308.0" prefHeight="17.0" prefWidth="150.0" text="errorMessage" />
             <Button fx:id="start" layoutX="148.0" layoutY="342.0" mnemonicParsing="false" onAction="#start" prefHeight="25.0" prefWidth="96.0" text="Start" />
             <Button fx:id="exit" layoutX="316.0" layoutY="342.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="96.0" text="Exit" />

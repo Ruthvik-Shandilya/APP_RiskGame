@@ -10,19 +10,23 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
+import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
-public class TournamentController implements Initializable {
+public class TournamentController extends Observable implements Initializable {
 
     private TournamentModel tournamentModel;
+
+    private TextArea terminalWindow;
+
+    public TextArea getTerminalWindow() {
+
+        return terminalWindow;
+
+    }
 
     @FXML
     private TextField numberOfGames;
@@ -90,6 +94,10 @@ public class TournamentController implements Initializable {
 
     private int numberOfGamesToPlay;
 
+    private TextArea textArea;
+
+
+
     public int getNumberOfTurnsToPlay() {
         return numberOfTurnsToPlay;
     }
@@ -133,11 +141,12 @@ public class TournamentController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         WindowUtil.disableButtonControl(player1, player2, player3, player4, map1, map2, map3, map4, map5, start);
         populatePlayerCheckBox();
+        tournamentModel = new TournamentModel();
     }
 
-   @FXML
+    @FXML
     private void register(ActionEvent event) throws NumberFormatException{
-       System.out.println("In register");
+        System.out.println("In register");
         try {
             int bufferNumberOfGames =  Integer.parseInt(numberOfGames.getText().trim());
             int bufferNumberOfTurns =  Integer.parseInt(numberOfTurns.getText().trim());
@@ -183,75 +192,161 @@ public class TournamentController implements Initializable {
 
             if(numberOfGamesToPlay != 0 && numberOfTurnsToPlay != 0 && numberOfPlayersPlaying != 0 && numberOfTurnsToPlay != 0){
                 WindowUtil.enableButtonControl(start);
+                errorMessage.setText("Select players properly and then click start");
             }
 
 
         } catch (NumberFormatException exception) {
             WindowUtil.popUpWindow("Please enter a number", "NumberFormatException", "You did not enter a number");
-       }
-   }
+        }
+    }
 
-   @FXML
-   public void showPlayer(ActionEvent event) throws NumberFormatException{
-       System.out.println("In Player");
+    @FXML
+    public void showPlayer(ActionEvent event) throws NumberFormatException{
+        System.out.println("In Player");
 
-       try {
-           int bufferNumberOfPlayers = Integer.parseInt(numberOfPlayers.getText().trim());
+        try {
+            int bufferNumberOfPlayers = Integer.parseInt(numberOfPlayers.getText().trim());
 
-           setNumberOfPlayersPlaying(bufferNumberOfPlayers);
+            setNumberOfPlayersPlaying(bufferNumberOfPlayers);
 
-           if(numberOfPlayersPlaying > 4 || numberOfPlayersPlaying < 1){
-               WindowUtil.popUpWindow("Players playing should be between 1 to 4", "Problem in number of players", "You have entered a value less than 1 or greater than 4");
-               WindowUtil.disableButtonControl(start);
-               return;
-           }
+            if(numberOfPlayersPlaying > 4 || numberOfPlayersPlaying < 1){
+                WindowUtil.popUpWindow("Players playing should be between 1 to 4", "Problem in number of players", "You have entered a value less than 1 or greater than 4");
+                WindowUtil.disableButtonControl(start);
+                return;
+            }
 
-           playerDropDownList.add(player1);
-           playerDropDownList.add(player2);
-           playerDropDownList.add(player3);
-           playerDropDownList.add(player4);
+            playerDropDownList.add(player1);
+            playerDropDownList.add(player2);
+            playerDropDownList.add(player3);
+            playerDropDownList.add(player4);
 
-           int playerToEnable;
+            int playerToEnable;
 
-           for (playerToEnable = 0; playerToEnable < numberOfPlayersPlaying; playerToEnable++) {
-               WindowUtil.enableButtonControl(playerDropDownList.get(playerToEnable));
-           }
-           for (int i = playerToEnable; i < 4; i++) {
-               WindowUtil.disableButtonControl(playerDropDownList.get(i));
-           }
+            for (playerToEnable = 0; playerToEnable < numberOfPlayersPlaying; playerToEnable++) {
+                WindowUtil.enableButtonControl(playerDropDownList.get(playerToEnable));
+            }
+            for (int i = playerToEnable; i < 4; i++) {
+                WindowUtil.disableButtonControl(playerDropDownList.get(i));
+            }
 
-           if(numberOfGamesToPlay != 0 && numberOfMapsToPlay != 0 && numberOfPlayersPlaying != 0 && (numberOfTurnsToPlay >= 10 && numberOfTurnsToPlay <= 50)){
+            if(numberOfGamesToPlay != 0 && numberOfMapsToPlay != 0 && numberOfPlayersPlaying != 0 && (numberOfTurnsToPlay >= 10 && numberOfTurnsToPlay <= 50)){
                 WindowUtil.enableButtonControl(start);
-           }
+                errorMessage.setText("Select players properly and then click start");
+            }
 
-       } catch (NumberFormatException e){
-           WindowUtil.popUpWindow("Please enter a number", "NumberFormatException", "You did not enter a number");
-       }
+        } catch (NumberFormatException e){
+            WindowUtil.popUpWindow("Please enter a number", "NumberFormatException", "You did not enter a number");
+        }
 
 
-   }
+    }
 
-   public void populatePlayerCheckBox(){
-       String playerTypes[] = {IPlayerType.AGGRESSIVE, IPlayerType.BENEVOLENT, IPlayerType.RANDOM, IPlayerType.CHEATER};
-       player1.getItems().addAll(playerTypes);
-       player2.getItems().addAll(playerTypes);
-       player3.getItems().addAll(playerTypes);
-       player4.getItems().addAll(playerTypes);
+    @FXML
+    private void map1(ActionEvent event){
+        File selectedFile = tournamentModel.checkAndLoadMap(mapList);
+        if(selectedFile == null){
+            map1.setText("Invalidmap selected");
+            errorMessage.setText("Invalidmap selected");
+            WindowUtil.disableButtonControl(start);
+            return;
+        }
+        map1.setText(selectedFile.getName());
+    }
 
-   }
+    @FXML
+    private void map2(ActionEvent event){
+        File selectedFile = tournamentModel.checkAndLoadMap(mapList);
+        if(selectedFile == null){
+            map2.setText("Invalidmap selected");
+            errorMessage.setText("Invalidmap selected");
+            WindowUtil.disableButtonControl(start);
+            return;
+        }
+        map2.setText(selectedFile.getName());
+    }
 
-   @FXML
+    @FXML
+    private void map3(ActionEvent event){
+        File selectedFile = tournamentModel.checkAndLoadMap(mapList);
+        if(selectedFile == null){
+            map3.setText("Invalidmap selected");
+            errorMessage.setText("Invalidmap selected");
+            WindowUtil.disableButtonControl(start);
+            return;
+        }
+        map3.setText(selectedFile.getName());
+    }
+
+    @FXML
+    private void map4(ActionEvent event){
+        File selectedFile = tournamentModel.checkAndLoadMap(mapList);
+        if(selectedFile == null){
+            map4.setText("Invalidmap selected");
+            errorMessage.setText("Invalidmap selected");
+            WindowUtil.disableButtonControl(start);
+            return;
+        }
+        map4.setText(selectedFile.getName());
+    }
+
+    @FXML
+    private void map5(ActionEvent event){
+        File selectedFile = tournamentModel.checkAndLoadMap(mapList);
+        if(selectedFile == null){
+            map5.setText("Invalidmap selected");
+            errorMessage.setText("Invalidmap selected");
+            WindowUtil.disableButtonControl(start);
+            return;
+        }
+        map5.setText(selectedFile.getName());
+    }
+
+
+    public void populatePlayerCheckBox(){
+        String playerTypes[] = {IPlayerType.AGGRESSIVE, IPlayerType.BENEVOLENT, IPlayerType.RANDOM, IPlayerType.CHEATER};
+        player1.getItems().addAll(playerTypes);
+        player2.getItems().addAll(playerTypes);
+        player3.getItems().addAll(playerTypes);
+        player4.getItems().addAll(playerTypes);
+
+    }
+
+    @FXML
     public void start(ActionEvent event){
+
+        HashMap<String, ArrayList<HashMap<Player, Integer>>> result = new HashMap<>();
+        System.out.println("In start");
+
+        playerList.clear();
         for (int i = 0; i < numberOfPlayersPlaying; i++){
-
             playerList.add(new Player("Player "+ (i+1), (String)playerDropDownList.get(i).getValue()));
-//            System.out.println(playerDropDownList.get(i).getValue());
         }
 
-        for(Player player: playerList){
-            System.out.println(player.getName());
+        for(MapIO mapIO: mapList) {
+            playerList.clear();
+            for (int i = 0; i < numberOfPlayersPlaying; i++){
+                playerList.add(new Player("Player "+ (i+1), (String)playerDropDownList.get(i).getValue()));
+            }
+            result.put(mapIO.getFileName(), new ArrayList<>());
+            for(int gameCount = 1; gameCount <= numberOfGamesToPlay; gameCount++){
+                // Adding result
+                playerList.clear();
+                for (int i = 0; i < numberOfPlayersPlaying; i++){
+                    playerList.add(new Player("Player "+ (i+1), (String)playerDropDownList.get(i).getValue()));
+                }
+                result.get(mapIO.getFileName()).add(tournamentModel.playGame(playerList, numberOfTurnsToPlay, gameCount, mapIO, textArea));
+                System.out.println(gameCount);
+            }
+            System.out.println(result.toString());
         }
-   }
+
+
+
+
+
+
+    }
 
 
 

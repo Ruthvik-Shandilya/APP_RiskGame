@@ -163,6 +163,14 @@ public class GamePlayController implements Initializable, Observer, Externalizab
 
     private boolean isGameSaved = false;
 
+    public ArrayList<Player> getGamePlayerList() {
+        return gamePlayerList;
+    }
+
+    public void setGamePlayerList(ArrayList<Player> gamePlayerList) {
+        this.gamePlayerList = gamePlayerList;
+    }
+
     /**
      * List of Players
      */

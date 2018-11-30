@@ -2,6 +2,7 @@ package com.risk.strategy;
 
 import com.risk.model.Country;
 import com.risk.model.Player;
+import com.risk.view.Util.WindowUtil;
 import com.risk.view.controller.GamePlayController;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
@@ -30,6 +31,9 @@ public class Benevolent extends PlayerBehaviour {
      * Object of GamePlayController, control various activities during the game play.
      */
     private GamePlayController gamePlayController;
+
+    public Benevolent() { }
+
 
     /**
      * 
