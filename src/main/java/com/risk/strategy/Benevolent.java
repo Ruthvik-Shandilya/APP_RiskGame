@@ -11,15 +11,52 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * 
+ * Benevolent class contains methods for the Player Behavior 
+ * Strategies of computer player.
+ * 
+ * A benevolent computer player strategy that focuses on protecting
+ * its weak countries (reinforces its weakest countries, never
+ * attacks, then fortifies in order to move armies to weaker countries).
+ * 
+ * @author Karandeep Singh
+ * @author Farhan Shaheen
+ * 
+ */
 public class Benevolent extends PlayerBehaviour {
 
+    /**
+     * Object of GamePlayController, control various activities during the game play.
+     */
     private GamePlayController gamePlayController;
 
+    /**
+     * 
+	 * Constructor method for Benevolent class.
+	 * 
+	 * @param gamePlayController
+	 *            Attaching with observer.
+	 *            
+	 */
     public Benevolent(GamePlayController gamePlayController) {
         this.gamePlayController = gamePlayController;
         this.addObserver(gamePlayController);
     }
 
+    /**
+     * 
+	 * Method for Benevolent class for reinforcement phase. 
+	 * Start and end of the reinforcement phase. 
+	 * 
+	 * @param countryList
+	 *            List of countries owned by the player.
+	 * @param country
+	 *            Country to which reinforcement armies are to be assigned.
+	 * @param currentPlayer
+	 *            Current player.
+	 *            
+	 */
     @Override
     public void reinforcementPhase(ObservableList<Country> countryList, Country country, Player currentPlayer) {
         System.out.println("Beginning Reinforcement phase for benevolent player " + currentPlayer.getName());
@@ -46,6 +83,18 @@ public class Benevolent extends PlayerBehaviour {
         }
     }
 
+    /**
+     * 
+	 * Method for Benevolent class for attack phase.
+	 * 
+	 * @param attackingCountryList
+	 *            List of countries attacking.
+	 * @param defendingCountryList
+	 *            List of countries defending.
+	 * @param gamePhase
+	 *            Current player.
+	 *            
+	 */
     @Override
     public void attackPhase(ListView<Country> attackingCountryList, ListView<Country> defendingCountryList,
                             Player gamePhase) {
@@ -54,6 +103,19 @@ public class Benevolent extends PlayerBehaviour {
         notifyObservers("Benevolent player cannot attack.\n");
     }
 
+    /**
+     * 
+	 * Method for Benevolent class for fortification phase. 
+	 * Start and end of the fortification phase. 
+	 * 
+	 * @param selectedCountryList
+	 *            List of countries selected by the player.
+	 * @param adjCountry
+	 *            List of adjacent countries.
+	 * @param currentPlayer
+	 *            Current player.
+	 * 
+	 */
     @Override
     public boolean fortificationPhase(ListView<Country> selectedCountryList, ListView<Country> adjCountry,
                                       Player currentPlayer) {
@@ -86,6 +148,14 @@ public class Benevolent extends PlayerBehaviour {
         return false;
     }
 
+    /**
+     * 
+	 * Method for Benevolent class for if player can attack.
+	 * 
+	 * @param countries
+	 *            List of countries owned by the player.
+	 *            
+	 */
     @Override
     public boolean playerCanAttack(ListView<Country> countries) {
         System.out.println("Benevolent player cannot attack.");
@@ -94,6 +164,17 @@ public class Benevolent extends PlayerBehaviour {
         return false;
     }
 
+    /**
+     * 
+	 * Method to find the strongest adjacent country.
+	 * 
+	 * @param country
+	 *            Country against which to find the strongest adjacent country.
+	 * 
+	 * @return Country
+	 *            Strongest country.
+	 *            
+	 */
     public Country getStrongestAdjacentCountry(Country country) {
         if (country == null) {
             return null;
@@ -113,7 +194,18 @@ public class Benevolent extends PlayerBehaviour {
         return null;
     }
 
-
+    /**
+     * 
+	 * Method to check and find the weakest country if 
+	 * no adjacent country to fortify.
+	 * 
+	 * @param list
+	 *            List of countries.
+	 * 
+	 * @return Country
+	 *            Strongest country.
+	 *            
+	 */
     public Country checkAndFindWeakestIfNoAdjacentCountryToFortify(List<Country> list) {
         if (!list.isEmpty()) {
             for (Country country : list) {
@@ -125,6 +217,17 @@ public class Benevolent extends PlayerBehaviour {
         return null;
     }
 
+    /**
+     * 
+ 	 * Method to sort country list by army count.
+ 	 * 
+ 	 * @param list
+ 	 *            List of countries.
+ 	 * 
+ 	 * @return List
+ 	 *            List of countries which have been sorted.
+ 	 *            
+ 	 */
     public List<Country> sortCountryListByArmyCount(List<Country> list) {
         Collections.sort(list, Comparator.comparing(obj -> Integer.valueOf(obj.getNoOfArmies())));
         return list;

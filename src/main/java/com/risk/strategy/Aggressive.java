@@ -49,8 +49,8 @@ public class Aggressive extends PlayerBehaviour {
     }
 
     /**
-	 * Method for Aggressive class for reinforcement phase. Start and end 
-	 * the reinforcement phase. 
+	 * Method for Aggressive class for reinforcement phase. 
+	 * Start and end of the reinforcement phase. 
 	 * 
 	 * @param countryList
 	 *            List of countries owned by the player.
@@ -109,8 +109,8 @@ public class Aggressive extends PlayerBehaviour {
     }
 
     /**
-	 * Method for Aggressive class for fortification phase. Start and end 
-	 * the fortification phase. 
+	 * Method for Aggressive class for fortification phase. 
+	 * Start and end of the fortification phase. 
 	 * 
 	 * @param countryList
 	 *            List of countries selected by the player.
@@ -182,8 +182,8 @@ public class Aggressive extends PlayerBehaviour {
     }
 
     /**
-	 * Method for Aggressive class for attack phase. Start and end 
-	 * the attack phase. 
+	 * Method for Aggressive class for attack phase. 
+	 * Start and end of the attack phase. 
 	 * 
 	 * @param attackingCountryList
 	 *            List of countries attacking.
