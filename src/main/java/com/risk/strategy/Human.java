@@ -10,15 +10,13 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
 
 /**
- * 
- * Human class contains methods for the Player Behavior 
+ * Human class contains methods for the Player Behavior
  * Strategies of computer player.
- * 
+ * <p>
  * A human player that requires user interaction to make decisions.
- * 
+ *
  * @author Karandeep Singh
  * @author Ruthvik Shandilya
- * 
  */
 public class Human extends PlayerBehaviour {
 
@@ -28,37 +26,31 @@ public class Human extends PlayerBehaviour {
     private GamePlayController gamePlayController;
 
     /**
-     * 
-	 * Constructor method for Human class.
-	 * 
-	 * @param gamePlayController
-	 *            Attaching with observer.
-	 *            
-	 */    
+     * Constructor method for Human class.
+     *
+     * @param gamePlayController Attaching with observer.
+     */
     public Human(GamePlayController gamePlayController) {
         this.gamePlayController = gamePlayController;
         this.addObserver(gamePlayController);
     }
 
     /**
-     * 
-	 * Method for Human class for reinforcement phase. 
-	 * Start and end of the reinforcement phase. 
-	 * 
-	 * @param countryList
-	 *            List of countries owned by the player.
-	 * @param country
-	 *            Country to which reinforcement armies are to be assigned.
-	 * @param currentPlayer
-	 *            Current player.
-	 *            
-	 */
+     * Method for Human class for reinforcement phase.
+     * Start and end of the reinforcement phase.
+     *
+     * @param countryList   List of countries owned by the player.
+     * @param country       Country to which reinforcement armies are to be assigned.
+     * @param currentPlayer Current player.
+     */
     @Override
     public void reinforcementPhase(ObservableList<Country> countryList, Country country, Player currentPlayer) {
         System.out.println("Beginning Reinforcement phase for human player " + currentPlayer.getName() + ".\n");
         setChanged();
         notifyObservers("Beginning Reinforcement phase for human player " + currentPlayer.getName() + ".\n");
         System.out.println("List of countries owned: " + countryList.toString() + "\n");
+        setChanged();
+        notifyObservers("List of countries owned: " + countryList.toString() + "\n");
         if (currentPlayer.getArmyCount() > 0) {
             if (country == null) {
                 WindowUtil.popUpWindow("No Country Selected", "popUp", "Please select a country");
@@ -80,17 +72,12 @@ public class Human extends PlayerBehaviour {
     }
 
     /**
-     * 
-	 * Method for Human class for attack phase.
-	 * 
-	 * @param attackingCountryList
-	 *            List of countries attacking.
-	 * @param defendingCountryList
-	 *            List of countries defending.
-	 * @param currentPlayer
-	 *            Current player.
-	 *            
-	 */    
+     * Method for Human class for attack phase.
+     *
+     * @param attackingCountryList List of countries attacking.
+     * @param defendingCountryList List of countries defending.
+     * @param currentPlayer        Current player.
+     */
     @Override
     public void attackPhase(ListView<Country> attackingCountryList, ListView<Country> defendingCountryList,
                             Player currentPlayer) {
@@ -114,21 +101,15 @@ public class Human extends PlayerBehaviour {
     }
 
     /**
-     * 
-	 * Method for Human class for fortification phase. 
-	 * Start and end of the fortification phase. 
-	 * 
-	 * @param selectedCountryList
-	 *            List of countries selected by the player.
-	 * @param adjCountryList
-	 *            List of adjacent countries.
-	 * @param playerPlaying
-	 *            Current player.
-	 * 
-	 * @return true 
-     * 			  If the fortification successful; other wise false.
-     * 
-	 */    
+     * Method for Human class for fortification phase.
+     * Start and end of the fortification phase.
+     *
+     * @param selectedCountryList List of countries selected by the player.
+     * @param adjCountryList      List of adjacent countries.
+     * @param playerPlaying       Current player.
+     * @return true
+     * If the fortification successful; other wise false.
+     */
     @Override
     public boolean fortificationPhase(ListView<Country> selectedCountryList, ListView<Country> adjCountryList,
                                       Player playerPlaying) {
@@ -173,17 +154,12 @@ public class Human extends PlayerBehaviour {
     }
 
     /**
-     * 
      * Method to check if the attack move is valid or not.
      *
-     * @param attacking 
-     * 			  Country attacking.
-     * @param defending 
-     * 			  Country under attack.
-     * 
-     * @return true 
-     * 			  If the attack move is valid; other wise false.
-     * 
+     * @param attacking Country attacking.
+     * @param defending Country under attack.
+     * @return true
+     * If the attack move is valid; other wise false.
      */
 
     public boolean isAttackMoveValid(Country attacking, Country defending) {
@@ -202,15 +178,11 @@ public class Human extends PlayerBehaviour {
 
 
     /**
-     * 
      * Method to check if the player can attack or not.
      *
-     * @param countries 
-     * 			  List view of all the countries of the player.
-     * 
-     * @return true 
-     * 			  If the player can attack; other wise false.
-     * 
+     * @param countries List view of all the countries of the player.
+     * @return true
+     * If the player can attack; other wise false.
      */
     @Override
     public boolean playerCanAttack(ListView<Country> countries) {

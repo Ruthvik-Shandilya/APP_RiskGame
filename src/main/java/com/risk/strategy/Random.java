@@ -13,53 +13,45 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 
- * Random class contains methods for the Player Behavior 
+ * Random class contains methods for the Player Behavior
  * Strategies of computer player.
- * 
- * A random computer player strategy that reinforces random a 
- * random country, attacks a random number of times a random 
- * country, and fortifies a random country, all following the 
+ * <p>
+ * A random computer player strategy that reinforces random a
+ * random country, attacks a random number of times a random
+ * country, and fortifies a random country, all following the
  * standard rules for each phase.
- * 
+ *
  * @author Karandeep Singh
  * @author Neha Pal
- * 
  */
 public class Random extends PlayerBehaviour {
 
     /**
      * Object of GamePlayController, control various activities during the game play.
-     */    
+     */
     private GamePlayController gamePlayController;
 
-    public Random (){}
-    
-    /**
-     * 
-	 * Constructor method for Random class.
-	 * 
-	 * @param gamePlayController
-	 *            Attaching with observer.
-	 *            
-	 */
-    public Random(GamePlayController gamePlayController) {
-        this.gamePlayController = gamePlayController;
+    public Random() {
     }
 
     /**
-     * 
-	 * Method for Random class for reinforcement phase. 
-	 * Start and end of the reinforcement phase. 
-	 * 
-	 * @param countryList
-	 *            List of countries owned by the player.
-	 * @param country
-	 *            Country to which reinforcement armies are to be assigned.
-	 * @param currentPlayer
-	 *            Current player.
-	 *            
-	 */    
+     * Constructor method for Random class.
+     *
+     * @param gamePlayController Attaching with observer.
+     */
+    public Random(GamePlayController gamePlayController) {
+        this.gamePlayController = gamePlayController;
+        this.addObserver(gamePlayController);
+    }
+
+    /**
+     * Method for Random class for reinforcement phase.
+     * Start and end of the reinforcement phase.
+     *
+     * @param countryList   List of countries owned by the player.
+     * @param country       Country to which reinforcement armies are to be assigned.
+     * @param currentPlayer Current player.
+     */
     @Override
     public void reinforcementPhase(ObservableList<Country> countryList, Country country, Player currentPlayer) {
         System.out.println("Beginning Reinforcement phase for random player " + currentPlayer.getName() + ".\n");
@@ -73,25 +65,20 @@ public class Random extends PlayerBehaviour {
             System.out.println("Country " + randomCountry.getName() + " has been assigned " + armies + " armies.\n");
             setChanged();
             notifyObservers("Country " + randomCountry.getName() + " has been assigned " + armies + " armies.\n");
-            setChanged();
         }
         System.out.println("Ended Reinforcement phase for random player " + currentPlayer.getName() + ".\n");
+        setChanged();
         notifyObservers("Ended Reinforcement phase for random player " + currentPlayer.getName() + ".\n");
     }
 
     /**
-     * 
-	 * Method for Random class for attack phase.
-	 * Start and end of the attack phase. 
-	 * 
-	 * @param attackingCountryList
-	 *            List of countries attacking.
-	 * @param defendingCountryList
-	 *            List of countries defending.
-	 * @param currentPlayer
-	 *            Current player.
-	 *            
-	 */    
+     * Method for Random class for attack phase.
+     * Start and end of the attack phase.
+     *
+     * @param attackingCountryList List of countries attacking.
+     * @param defendingCountryList List of countries defending.
+     * @param currentPlayer        Current player.
+     */
     @Override
     public void attackPhase(ListView<Country> attackingCountryList, ListView<Country> defendingCountryList,
                             Player currentPlayer) {
@@ -100,11 +87,14 @@ public class Random extends PlayerBehaviour {
         notifyObservers("Beginning attack phase for random player " + currentPlayer.getName() + ".\n");
         ObservableList<Country> attackableCountries = attackingCountryList.getItems();
         System.out.println("Attackable country list=" + attackableCountries.toString());
+        setChanged();
+        notifyObservers("Attackable country list=" + attackableCountries.toString());
         Country attackingCountry;
         while ((attackingCountry = attackableCountries.get(new java.util.Random().nextInt(attackableCountries.size()))).getNoOfArmies() < 2) {
         }
         System.out.println("Attacking country = " + attackingCountry.getName() + " , no of armies=" + attackingCountry.getNoOfArmies());
-
+        setChanged();
+        notifyObservers("Attacking country = " + attackingCountry.getName() + " , no of armies=" + attackingCountry.getNoOfArmies());
         List<Country> defendingCountries;
 
         while ((defendingCountries = getDefendingCountryList(attackingCountry)).isEmpty()) {
@@ -113,42 +103,35 @@ public class Random extends PlayerBehaviour {
 
         Country defendingCountry = defendingCountries.get(new java.util.Random().nextInt(defendingCountries.size()));
 
-//        int maxTries = new java.util.Random().nextInt(attackingCountry.getNoOfArmies() + defendingCountry.getNoOfArmies() - 3) + 1;
-//
-//
-//        while ((maxTries--) > 0 && attackingCountry.getNoOfArmies() > 1 && defendingCountry.getNoOfArmies() > 0 && !defendingCountry.getPlayer().equals(attackingCountry.getPlayer())) {
         System.out.println("Attacking from random country " + attackingCountry.getName() + " to random country " + defendingCountry.getName() + ".\n");
         setChanged();
         notifyObservers("Attacking from random country " + attackingCountry.getName() + " to random country " + defendingCountry.getName() + ".\n");
         attack(attackingCountry, defendingCountry, currentPlayer);
-//        }
+
         System.out.println("Ended Attack phase for random player " + currentPlayer.getName() + ".\n");
         setChanged();
         notifyObservers("Ended Attack phase for random player " + currentPlayer.getName() + ".\n");
     }
 
     /**
-     * 
-	 * Method for Random class for fortification phase. 
-	 * Start and end of the fortification phase. 
-	 * 
-	 * @param selectedCountryList
-	 *            List of countries selected by the player.
-	 * @param adjCountryList
-	 *            List of adjacent countries.
-	 * @param currentPlayer
-	 *            Current player.
-	 *            
-	 * @return true 
-     * 			  If the fortification successful; other wise false.
-	 * 
-	 */     
+     * Method for Random class for fortification phase.
+     * Start and end of the fortification phase.
+     *
+     * @param selectedCountryList List of countries selected by the player.
+     * @param adjCountryList      List of adjacent countries.
+     * @param currentPlayer       Current player.
+     * @return true
+     * If the fortification successful; other wise false.
+     */
     @Override
     public boolean fortificationPhase(ListView<Country> selectedCountryList, ListView<Country> adjCountryList,
                                       Player currentPlayer) {
         System.out.println("Beginning Fortification phase for random player " + currentPlayer.getName() + ".\n");
+        setChanged();
         notifyObservers("Beginning Fortification phase for random player " + currentPlayer.getName() + ".\n");
-        System.out.println("List of countries owned: " + selectedCountryList.toString() + "\n");
+        setChanged();
+        notifyObservers("List of countries owned: " + selectedCountryList.getItems() + "\n");
+        System.out.println("List of countries owned: " + selectedCountryList.getItems() + "\n");
         ObservableList<Country> selectedCountry = selectedCountryList.getItems();
         Country countryToFortify = selectedCountry.get(new java.util.Random().nextInt(selectedCountry.size()));
         List<Country> adjacentOwnedCountryList;
@@ -174,16 +157,12 @@ public class Random extends PlayerBehaviour {
     }
 
     /**
-     * 
-	 * Method for Random class for if player can attack.
-	 * 
-	 * @param countries
-	 *            List of countries owned by the player.
-	 *   
-	 * @return true 
-     * 			  If player can attack; other wise false.
-     *            
-	 */    
+     * Method for Random class for if player can attack.
+     *
+     * @param countries List of countries owned by the player.
+     * @return true
+     * If player can attack; other wise false.
+     */
     @Override
     public boolean playerCanAttack(ListView<Country> countries) {
         boolean canAttack = false;
@@ -205,26 +184,22 @@ public class Random extends PlayerBehaviour {
     }
 
     /**
-	 * Method for Random class for attack.
-	 * 
-	 * @param attacking
-	 *            Country attacking.
-	 * @param defending
-	 *            Country defending.
-	 * @param currentPlayer
-	 *            Current player.          
-	 */
+     * Method for Random class for attack.
+     *
+     * @param attacking     Country attacking.
+     * @param defending     Country defending.
+     * @param currentPlayer Current player.
+     */
     private void attack(Country attacking, Country defending, Player currentPlayer) {
         Dice diceModel = new Dice(attacking, defending);
         if (currentPlayer != null) {
             diceModel.addObserver(currentPlayer);
         }
 
-        if(TournamentModel.isTournament){
+        if (TournamentModel.isTournament) {
             DiceController diceController = new DiceController(diceModel, this);
             diceController.automateDiceRoll();
-        }
-        else {
+        } else {
             DiceController diceController = new DiceController(diceModel, this, this.gamePlayController);
             diceController.automateDiceRoll();
         }
@@ -232,14 +207,12 @@ public class Random extends PlayerBehaviour {
     }
 
     /**
-  	 * Method to get list of adjacent countries owned.
-  	 * 
-  	 * @param attackingCountry
-  	 *            List of countries attacking.
-  	 * 
-  	 * @return List
-  	 *            List of adjacent countries owned.
-  	 */
+     * Method to get list of adjacent countries owned.
+     *
+     * @param attackingCountry List of countries attacking.
+     * @return List
+     * List of adjacent countries owned.
+     */
     public List<Country> getAdjacentOwnedCountryList(Country attackingCountry) {
         List<Country> adjacentOwnedCountries = attackingCountry.getAdjacentCountries().stream()
                 .filter(t -> ((attackingCountry.getPlayer() == t.getPlayer()) && t.getNoOfArmies() > 1)).collect(Collectors.toList());

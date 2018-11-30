@@ -9,7 +9,6 @@ import com.risk.view.CardView;
 import com.risk.view.Util.WindowUtil;
 import javafx.application.Platform;
 import com.risk.services.saveload.ResourceManager;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -35,7 +34,7 @@ import java.util.Map.Entry;
  * @author Karandeep Singh
  * @author Ruthvik Shandilya
  */
-public class GamePlayController implements Initializable, Observer, Externalizable{
+public class GamePlayController implements Initializable, Observer, Externalizable {
 
     private static HashSet<Country> allAdjacentCountries = new HashSet<>();
 
@@ -196,7 +195,9 @@ public class GamePlayController implements Initializable, Observer, Externalizab
      */
     private int numberOfCardSetExchanged;
 
-    public GamePlayController(){
+    private BufferedWriter bufferedWriter;
+
+    public GamePlayController() {
 
     }
 
@@ -210,6 +211,7 @@ public class GamePlayController implements Initializable, Observer, Externalizab
         worldDomination = new PlayerWorldDomination();
         worldDomination.addObserver(this);
         this.setNumberOfCardSetExchanged(0);
+        this.bufferedWriter = clearContentsOfFile();
     }
 
     /**
@@ -259,16 +261,15 @@ public class GamePlayController implements Initializable, Observer, Externalizab
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if(!isGameSaved) {
+        if (!isGameSaved) {
             gamePlayerList = new ArrayList<>();
             playerCreation();
             loadMapData();
+        } else {
+            gamePlayerList = new ArrayList<>();
+            loadGameCard();
+            loadMapData();
         }
-  else{
-        gamePlayerList = new ArrayList<>();
-        loadGameCard();
-        loadMapData();
-      }
         phaseView.setText("Phase: Start Up");
         WindowUtil.disableButtonControl(reinforcement, fortify, attack, cards);
 
@@ -308,7 +309,7 @@ public class GamePlayController implements Initializable, Observer, Externalizab
             }
         });
 
-        if(isGameSaved){
+        if (isGameSaved) {
             dataToLoad();
         }
     }
@@ -821,41 +822,30 @@ public class GamePlayController implements Initializable, Observer, Externalizab
 
         if (view.equals("Attack")) {
             initializeAttack();
-        }
-        else if (view.equals("FirstAttack")) {
+        } else if (view.equals("FirstAttack")) {
             loadCurrentPlayer();
             initializeReinforcement();
-        }
-        else if (view.equals("Reinforcement")) {
+        } else if (view.equals("Reinforcement")) {
             initializeReinforcement();
-        }
-        else if (view.equals("Fortification")) {
+        } else if (view.equals("Fortification")) {
             initializeFortification();
-        }
-        else if (view.equals("placeArmyOnCountry")) {
+        } else if (view.equals("placeArmyOnCountry")) {
             initializePlaceArmy();
-        }
-        else if (view.equals("WorldDomination")) {
+        } else if (view.equals("WorldDomination")) {
             generateBarGraph();
-        }
-        else if (view.equals("checkIfFortificationPhaseValid")) {
+        } else if (view.equals("checkIfFortificationPhaseValid")) {
             isValidFortificationPhase();
-        }
-        else if (view.equals("noFortificationMove")) {
+        } else if (view.equals("noFortificationMove")) {
             noFortificationPhase();
-        }
-        else if (view.equals("rollDiceComplete")) {
+        } else if (view.equals("rollDiceComplete")) {
             resetWindow();
-        }
-        else if (view.equals("cardsExchange")) {
+        } else if (view.equals("cardsExchange")) {
             Card cardObject = (Card) o;
             exchangeCards(cardObject);
-        }
-        else if (view.equals("skipAttack")) {
+        } else if (view.equals("skipAttack")) {
             updateTerminalWindow(gamePlayerList.size() + " number of players are left.\n");
             skipAttack();
-        }
-        else {
+        } else {
             updateTerminalWindow(view);
         }
     }
@@ -885,31 +875,35 @@ public class GamePlayController implements Initializable, Observer, Externalizab
      * @param information Information
      */
     public void updateTerminalWindow(String information) {
-        Platform.runLater(() -> terminalWindow.appendText(information));
+        Platform.runLater(() -> {
+            if (terminalWindow != null)
+                terminalWindow.appendText(information);
+        });
+        writeToFile(information);
     }
-  
+
     @FXML
-    private void saveGame(ActionEvent event){
+    private void saveGame(ActionEvent event) {
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save Game");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Save Game Extension(*.save or *.SAVE)","*.save","*.SAVE"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Save Game Extension(*.save or *.SAVE)", "*.save", "*.SAVE"));
 
         File file = fileChooser.showSaveDialog(null);
 
-        if(file != null){
-            save(this,file);
+        if (file != null) {
+            save(this, file);
         }
 
 
     }
 
-    public void save(GamePlayController gamePlayController,File file){
+    public void save(GamePlayController gamePlayController, File file) {
 
-        try{
-            ResourceManager.save(gamePlayController,file);
+        try {
+            ResourceManager.save(gamePlayController, file);
             System.out.println("Data is saved");
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -928,17 +922,17 @@ public class GamePlayController implements Initializable, Observer, Externalizab
 
     }
 
-        public GamePlayController load(File file){
+    public GamePlayController load(File file) {
 
-            GamePlayController controller = null;
-            try {
-                controller = (GamePlayController)ResourceManager.load(file);
-                System.out.println("Game is Loaded");
-            } catch (Exception e) {
-                System.out.println("Couldn't load save data: "+e.getMessage());
-            }
-            return controller;
+        GamePlayController controller = null;
+        try {
+            controller = (GamePlayController) ResourceManager.load(file);
+            System.out.println("Game is Loaded");
+        } catch (Exception e) {
+            System.out.println("Couldn't load save data: " + e.getMessage());
         }
+        return controller;
+    }
 
 
     @Override
@@ -962,24 +956,24 @@ public class GamePlayController implements Initializable, Observer, Externalizab
     public void readExternal(ObjectInput data) throws IOException, ClassNotFoundException {
 
         isGameSaved = true;
-        map=(MapIO)data.readObject();
-        startUpPhase=(StartUpPhase)data.readObject();
-        playerPlaying=(Player)data.readObject();
-        card=(Card)data.readObject();
-        cardStack=(Stack<Card>)data.readObject();
-        gamePlayerList=(ArrayList<Player>)data.readObject();
-        gameDataString=(String)data.readObject();
-        phaseViewString=(String)data.readObject();
-        worldDomination=(PlayerWorldDomination)data.readObject();
-        numberOfCardSetExchanged=(int)data.readObject();
-        playerData=(String)data.readObject();
+        map = (MapIO) data.readObject();
+        startUpPhase = (StartUpPhase) data.readObject();
+        playerPlaying = (Player) data.readObject();
+        card = (Card) data.readObject();
+        cardStack = (Stack<Card>) data.readObject();
+        gamePlayerList = (ArrayList<Player>) data.readObject();
+        gameDataString = (String) data.readObject();
+        phaseViewString = (String) data.readObject();
+        worldDomination = (PlayerWorldDomination) data.readObject();
+        numberOfCardSetExchanged = (int) data.readObject();
+        playerData = (String) data.readObject();
         playerPlaying.addObserver(this);
         card.addObserver(this);
         worldDomination.addObserver(this);
 
     }
 
-    private void dataToLoad(){
+    private void dataToLoad() {
         phaseView.setText(phaseViewString);
         updateTerminalWindow(gameDataString);
         playerChosen.setText(playerData);
@@ -987,10 +981,28 @@ public class GamePlayController implements Initializable, Observer, Externalizab
         ObservableList<Country> list = FXCollections.observableArrayList(playerPlaying.getPlayerCountries());
         selectedCountryList.getItems().addAll(list);
         playerIterator = gamePlayerList.iterator();
-        while(playerIterator.hasNext()){
-            if(playerIterator.next().equals(playerPlaying)){
+        while (playerIterator.hasNext()) {
+            if (playerIterator.next().equals(playerPlaying)) {
                 break;
             }
+        }
+    }
+
+    public BufferedWriter clearContentsOfFile() {
+        BufferedWriter bufferedWriter = null;
+        try {
+            bufferedWriter = new BufferedWriter(new FileWriter(new File("").getAbsolutePath() + "\\src\\main\\resources\\GamePlay.txt", false));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bufferedWriter;
+    }
+
+    public void writeToFile(String output) {
+        try {
+            this.bufferedWriter.write(output);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
