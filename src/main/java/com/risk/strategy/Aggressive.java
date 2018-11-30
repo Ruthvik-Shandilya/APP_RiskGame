@@ -10,17 +10,55 @@ import javafx.scene.control.ListView;
 
 import java.util.*;
 
+/**
+ * 
+ * Aggressive class contains methods for the Player Behavior 
+ * Strategies of computer player.
+ * 
+ * An aggressive computer player strategy that focuses on attack 
+ * (reinforces its strongest country, then always attack with it 
+ * until it cannot attack anymore, then fortifies in order to 
+ * maximize aggregation of forces in one country).
+ * 
+ * @author Karandeep Singh
+ * @author Farhan Shaheen
+ * 
+ */
+
 public class Aggressive extends PlayerBehaviour {
 
+    /**
+     * Object of country, which is the strongest country.
+     */
     private Country strongestCountry;
 
+    /**
+     * Object of GamePlayController, control various activities during the game play.
+     */
     private GamePlayController gamePlayController;
 
+    /**
+	 * Constructor method for Aggressive class.
+	 * 
+	 * @param gamePlayController
+	 *            Attaching with observer.
+	 */
     public Aggressive(GamePlayController gamePlayController) {
         this.gamePlayController = gamePlayController;
         this.addObserver(gamePlayController);
     }
 
+    /**
+	 * Method for Aggressive class for reinforcement phase. 
+	 * Start and end of the reinforcement phase. 
+	 * 
+	 * @param countryList
+	 *            List of countries owned by the player.
+	 * @param country
+	 *            Country to which reinforcement armies are to be assigned.
+	 * @param currentPlayer
+	 *            Current player.
+	 */
     @Override
     public void reinforcementPhase(ObservableList<Country> countryList, Country country, Player currentPlayer) {
         System.out.println("Beginning Reinforcement phase for aggressive player " + currentPlayer.getName());
@@ -48,6 +86,15 @@ public class Aggressive extends PlayerBehaviour {
         }
     }
 
+    /**
+	 * Method for Aggressive class for if player can attack.
+	 * 
+	 * @param countryList
+	 *            List of countries owned by the player.
+	 *            
+	 * @return true 
+     * 			  If player can attack; other wise false.           
+	 */
     @Override
     public boolean playerCanAttack(ListView<Country> countries) {
         strongestCountry = checkAndFindStrongestIfNoAdjacentCountryToAttack(sortCountryListByArmyCount(countries.getItems()));
@@ -64,7 +111,21 @@ public class Aggressive extends PlayerBehaviour {
         return true;
     }
 
-
+    /**
+	 * Method for Aggressive class for fortification phase. 
+	 * Start and end of the fortification phase. 
+	 * 
+	 * @param countryList
+	 *            List of countries selected by the player.
+	 * @param adjCountryList
+	 *            List of adjacent countries.
+	 * @param currentPlayer
+	 *            Current player.
+	 *            
+	 * @return true 
+     * 			  If the fortification successful; other wise false.
+     * 
+	 */
     @Override
     public boolean fortificationPhase(ListView<Country> selectedCountryList, ListView<Country> adjCountryList,
                                       Player currentPlayer) {
@@ -107,6 +168,16 @@ public class Aggressive extends PlayerBehaviour {
         return false;
     }
 
+    /**
+	 * Method for Aggressive class for attack.
+	 * 
+	 * @param attacking
+	 *            Country attacking.
+	 * @param defending
+	 *            Country defending.
+	 * @param player
+	 *            Current player.          
+	 */
     private void attack(Country attacking, Country defending, Player player) {
         Dice dice = new Dice(attacking, defending);
         if (player != null) {
@@ -116,6 +187,17 @@ public class Aggressive extends PlayerBehaviour {
         diceController.automateDiceRoll();
     }
 
+    /**
+	 * Method for Aggressive class for attack phase. 
+	 * Start and end of the attack phase. 
+	 * 
+	 * @param attackingCountryList
+	 *            List of countries attacking.
+	 * @param defendingCountryList
+	 *            List of countries defending.
+	 * @param currentPlayer
+	 *            Current player.
+	 */
     @Override
     public void attackPhase(ListView<Country> attackingCountryList, ListView<Country> defendingCountryList,
                             Player currentPlayer) {
@@ -139,7 +221,17 @@ public class Aggressive extends PlayerBehaviour {
         }
 
     }
-
+    
+    /**
+	 * Method to check and find the strongest country if 
+	 * no adjacent country to attack.
+	 * 
+	 * @param list
+	 *            List of countries.
+	 * 
+	 * @return Country
+	 *            Strongest country.
+	 */
     public Country checkAndFindStrongestIfNoAdjacentCountryToAttack(List<Country> list) {
         if (!list.isEmpty()) {
             for (Country country : list) {
@@ -151,6 +243,15 @@ public class Aggressive extends PlayerBehaviour {
         return null;
     }
 
+    /**
+	 * Method to find the strongest country for reinforcement.
+	 * 
+	 * @param list
+	 *            List of countries.
+	 * 
+	 * @return Country
+	 *            Strongest country.
+	 */
     public Country findStrongestCountryForReinforcement(List<Country> list) {
         if (!list.isEmpty()) {
             for (Country country : list) {
@@ -162,7 +263,15 @@ public class Aggressive extends PlayerBehaviour {
         return null;
     }
 
-
+    /**
+ 	 * Method to sort country list by army count.
+ 	 * 
+ 	 * @param list
+ 	 *            List of countries.
+ 	 * 
+ 	 * @return List
+ 	 *            List of countries which have been sorted.
+ 	 */
     public List<Country> sortCountryListByArmyCount(List<Country> list) {
         Collections.sort(list, Comparator.comparing(obj -> Integer.valueOf(obj.getNoOfArmies()), Comparator.reverseOrder()));
         return list;
