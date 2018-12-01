@@ -574,9 +574,9 @@ public class Player extends Observable implements Observer,Serializable {
         for (Card card : selectedCards) {
             if (currentPlayer.getPlayerCountries().contains(card.getCountry())) {
                 card.getCountry().setNoOfArmies(card.getCountry().getNoOfArmies() + 2);
-                System.out.println(currentPlayer.getName() + "\" got extra 2 armies on \"" + card.getCountry().getName() + "\n");
+                System.out.println(currentPlayer.getName() + " \" got extra 2 armies on \" " + card.getCountry().getName() + "\n");
                 setChanged();
-                notifyObservers(currentPlayer.getName() + "\" got extra 2 armies on \"" + card.getCountry().getName() + "\n");
+                notifyObservers(currentPlayer.getName() + " \" got extra 2 armies on \" " + card.getCountry().getName() + "\n");
                 break;
             }
         }

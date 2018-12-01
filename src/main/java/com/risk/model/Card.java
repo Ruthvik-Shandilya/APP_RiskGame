@@ -1,6 +1,7 @@
 package com.risk.model;
 
 import com.risk.controller.CardController;
+import com.risk.controller.GamePlayController;
 import javafx.scene.control.CheckBox;
 
 
@@ -181,6 +182,7 @@ public class Card extends Observable implements Serializable {
         setCardsToExchange(selectedCards);
         setChanged();
         notifyObservers("cardsExchange");
+
     }
 
     public List<Card> generateValidCardCombination(List<Card> selectedCards) {
