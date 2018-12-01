@@ -88,7 +88,7 @@ public class Dice extends Observable {
     }
 
     /**
-     * Setter for attcking dice values.
+     * Setter for attacking dice values.
      *
      * @param attackerDiceList list of values of the attacking dice.
      */
@@ -99,7 +99,7 @@ public class Dice extends Observable {
     /**
      *  Getter for the defending Country.
      *
-     * @return Country underattack
+     * @return Country under attack
      */
     public Country getDefendingCountry() {
         return defendingCountry;
