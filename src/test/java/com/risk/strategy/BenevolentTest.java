@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import com.risk.model.Country;
 import com.risk.model.Player;
-import com.risk.view.controller.GamePlayController;
+import com.risk.controller.GamePlayController;
 
 public class BenevolentTest {
 	

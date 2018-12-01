@@ -284,4 +284,16 @@ public class PlayerTest {
 		testPlayer = player3.exchangeCards(listOfCards,1);
 		assertEquals(5,testPlayer.getArmyCount());
 	}
+	
+	@Test
+	public void automaticAssignPlayerArmiesToCountryTest() {
+		Player player1 = new Player("Karan");
+		player1.setArmyCount(10);
+		ArrayList<Country> listOfCountries = new ArrayList<>();
+		listOfCountries.add(country1);
+		listOfCountries.add(country2);
+		player1.setMyCountries(listOfCountries);
+		player.automaticAssignPlayerArmiesToCountry(player1);
+		assertEquals(9,player1.getArmyCount());
+	}
 }

@@ -1,6 +1,5 @@
 package com.risk.strategy;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
@@ -8,10 +7,7 @@ import org.junit.Test;
 
 import com.risk.model.Country;
 import com.risk.model.Player;
-import com.risk.view.Util.WindowUtil;
-import com.risk.view.controller.GamePlayController;
-
-import javafx.scene.control.ListView;
+import com.risk.controller.GamePlayController;
 
 public class HumanTest {
 
