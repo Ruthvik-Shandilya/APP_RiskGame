@@ -209,7 +209,7 @@ public class Country implements Serializable {
 		if (!(obj instanceof Country)) {
 			return false;
 		}
-		return this.getName().toLowerCase().trim().equals(((Country) obj).getName().toLowerCase().trim());
+		return this.getName().trim().equals(((Country) obj).getName().trim());
 	}
 
 	/**
