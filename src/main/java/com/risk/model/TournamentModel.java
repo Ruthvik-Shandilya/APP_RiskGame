@@ -19,12 +19,24 @@ import java.util.List;
 
 public class TournamentModel {
 
+    /** Static flag to check if tournament is being played*/
     public static boolean isTournament = false;
 
+    /**
+     * Constrcutor for TournamentModel
+     *
+     */
     public TournamentModel(){
         isTournament = true;
     }
 
+    /**
+     * Method for checking if the map is valid or not,
+     * then uploading it to play the tournament
+     *
+     * @param mapList List of maps to be updated when a file is uploaded
+     * @return Map File
+     */
     public File checkAndLoadMap(List<MapIO> mapList) {
 
         FileChooser fileChooser = new FileChooser();
@@ -50,6 +62,18 @@ public class TournamentModel {
 
         return null;
     }
+
+    /**
+     *
+     * Method for controlling the flow of each game in the tournament
+     *
+     * @param playerList List of players playing
+     * @param numberOfTurnsToPlay NUmber of turns to be played in each game
+     * @param gameCount Number of the game being played
+     * @param mapIO Map on which the game would be played
+     * @param textArea Text Area where the game details would be printed
+     * @return HashMAp with the winner name and game number.
+     */
 
     public HashMap<Player, Integer> playGame(List<Player> playerList, int numberOfTurnsToPlay, int gameCount, MapIO mapIO, TextArea textArea) {
 
