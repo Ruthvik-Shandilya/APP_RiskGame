@@ -4,8 +4,8 @@ import com.risk.model.Country;
 import com.risk.model.Dice;
 import com.risk.model.Player;
 import com.risk.view.DiceView;
-import com.risk.view.Util.WindowUtil;
-import com.risk.view.controller.GamePlayController;
+import com.risk.services.Util.WindowUtil;
+import com.risk.controller.GamePlayController;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
 

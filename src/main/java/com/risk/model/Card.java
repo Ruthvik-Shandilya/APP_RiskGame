@@ -1,6 +1,6 @@
 package com.risk.model;
 
-import com.risk.view.controller.CardController;
+import com.risk.controller.CardController;
 import javafx.scene.control.CheckBox;
 
 

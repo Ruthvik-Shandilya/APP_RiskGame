@@ -1,6 +1,6 @@
 package com.risk.view;
 
-import com.risk.view.controller.TournamentController;
+import com.risk.controller.TournamentController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;

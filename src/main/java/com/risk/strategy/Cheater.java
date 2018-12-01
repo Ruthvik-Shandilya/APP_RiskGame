@@ -2,7 +2,7 @@ package com.risk.strategy;
 
 import com.risk.model.Country;
 import com.risk.model.Player;
-import com.risk.view.controller.GamePlayController;
+import com.risk.controller.GamePlayController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;

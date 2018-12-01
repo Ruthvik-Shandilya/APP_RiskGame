@@ -1,10 +1,10 @@
-package com.risk.view.controller;
+package com.risk.controller;
 
 import com.risk.model.Country;
 import com.risk.model.Dice;
 import com.risk.strategy.Human;
 import com.risk.strategy.PlayerBehaviour;
-import com.risk.view.Util.WindowUtil;
+import com.risk.services.Util.WindowUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

@@ -1,4 +1,4 @@
-package com.risk.view.controller;
+package com.risk.controller;
 
 import com.risk.model.*;
 import com.risk.services.MapIO;
@@ -6,7 +6,7 @@ import com.risk.services.StartUpPhase;
 import com.risk.services.gameplay.RoundRobin;
 import com.risk.strategy.Human;
 import com.risk.view.CardView;
-import com.risk.view.Util.WindowUtil;
+import com.risk.services.Util.WindowUtil;
 import javafx.application.Platform;
 import com.risk.services.saveload.ResourceManager;
 import javafx.collections.FXCollections;

@@ -2,7 +2,7 @@ package com.risk.view;
 
 import com.risk.model.Card;
 import com.risk.model.Player;
-import com.risk.view.controller.CardController;
+import com.risk.controller.CardController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

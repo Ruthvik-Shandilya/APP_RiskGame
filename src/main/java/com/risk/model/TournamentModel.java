@@ -3,8 +3,8 @@ package com.risk.model;
 import com.risk.services.MapIO;
 import com.risk.services.MapValidate;
 import com.risk.services.StartUpPhase;
-import com.risk.view.Util.WindowUtil;
-import com.risk.view.controller.GamePlayController;
+import com.risk.services.Util.WindowUtil;
+import com.risk.controller.GamePlayController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
@@ -12,7 +12,6 @@ import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 
 import java.io.File;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;

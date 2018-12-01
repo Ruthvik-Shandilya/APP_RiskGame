@@ -1,8 +1,6 @@
 package com.risk.view;
 
-import com.risk.view.controller.GamePlayController;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import com.risk.controller.GamePlayController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

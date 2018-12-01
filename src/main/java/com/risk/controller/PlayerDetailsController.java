@@ -1,9 +1,9 @@
-package com.risk.view.controller;
+package com.risk.controller;
 
 import com.risk.model.IPlayerType;
 import com.risk.services.MapIO;
 import com.risk.view.GamePlayView;
-import com.risk.view.Util.WindowUtil;
+import com.risk.services.Util.WindowUtil;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;

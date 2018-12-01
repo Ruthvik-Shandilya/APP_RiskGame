@@ -1,11 +1,11 @@
-package com.risk.view.controller;
+package com.risk.controller;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import com.risk.view.Util.WindowUtil;
+import com.risk.services.Util.WindowUtil;
 import com.risk.model.Card;
 import com.risk.model.Player;
 

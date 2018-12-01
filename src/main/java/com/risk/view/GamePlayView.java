@@ -1,7 +1,7 @@
 package com.risk.view;
 
 import com.risk.services.MapIO;
-import com.risk.view.controller.GamePlayController;
+import com.risk.controller.GamePlayController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;

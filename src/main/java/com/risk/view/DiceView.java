@@ -3,10 +3,10 @@ package com.risk.view;
 import java.io.IOException;
 
 import com.risk.model.Player;
-import com.risk.view.controller.DiceController;
+import com.risk.controller.DiceController;
 import com.risk.model.Dice;
 
-import com.risk.view.controller.GamePlayController;
+import com.risk.controller.GamePlayController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

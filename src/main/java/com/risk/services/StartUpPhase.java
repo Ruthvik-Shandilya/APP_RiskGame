@@ -4,7 +4,7 @@ import com.risk.model.Card;
 import com.risk.model.Country;
 import com.risk.model.ICardType;
 import com.risk.model.Player;
-import com.risk.view.controller.GamePlayController;
+import com.risk.controller.GamePlayController;
 
 import java.io.Serializable;
 import java.util.*;

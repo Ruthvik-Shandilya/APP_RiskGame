@@ -1,7 +1,5 @@
 package com.risk.services.saveload;
 
-import com.risk.view.controller.GamePlayController;
-
 import java.io.*;
 
 public class ResourceManager {

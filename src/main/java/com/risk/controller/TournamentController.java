@@ -1,10 +1,10 @@
-package com.risk.view.controller;
+package com.risk.controller;
 
 import com.risk.model.IPlayerType;
 import com.risk.model.Player;
 import com.risk.model.TournamentModel;
 import com.risk.services.MapIO;
-import com.risk.view.Util.WindowUtil;
+import com.risk.services.Util.WindowUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

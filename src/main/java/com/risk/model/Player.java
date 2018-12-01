@@ -3,8 +3,8 @@ package com.risk.model;
 import com.risk.services.MapIO;
 import com.risk.strategy.*;
 import com.risk.strategy.Random;
-import com.risk.view.Util.WindowUtil;
-import com.risk.view.controller.GamePlayController;
+import com.risk.services.Util.WindowUtil;
+import com.risk.controller.GamePlayController;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
 
