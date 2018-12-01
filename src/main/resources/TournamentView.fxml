@@ -4,9 +4,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="653.0" prefWidth="578.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="590.0" prefWidth="578.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Pane layoutY="6.0" prefHeight="643.0" prefWidth="578.0">
+      <Pane layoutY="4.0" prefHeight="375.0" prefWidth="578.0">
          <children>
             <Label layoutX="22.0" layoutY="24.0" prefHeight="21.0" prefWidth="122.0" text="Number of Games" />
             <Label layoutX="22.0" layoutY="57.0" prefHeight="21.0" prefWidth="111.0" text="Number of turns" />
@@ -21,9 +21,9 @@
             <Button fx:id="map3" layoutX="57.0" layoutY="201.0" mnemonicParsing="false" onAction="#map3" prefHeight="25.0" prefWidth="197.0" text="map3" />
             <Button fx:id="map4" layoutX="57.0" layoutY="243.0" mnemonicParsing="false" onAction="#map4" prefHeight="25.0" prefWidth="197.0" text="map4" />
             <Button fx:id="map5" layoutX="57.0" layoutY="278.0" mnemonicParsing="false" onAction="#map5" prefHeight="25.0" prefWidth="197.0" text="map5" />
-            <Label fx:id="errorMessage" layoutX="338.0" layoutY="309.0" prefHeight="17.0" prefWidth="150.0" text="errorMessage" />
+            <Label fx:id="errorMessage" layoutX="338.0" layoutY="303.0" prefHeight="17.0" prefWidth="150.0" text="errorMessage" />
             <Button fx:id="start" layoutX="137.0" layoutY="330.0" mnemonicParsing="false" onAction="#start" prefHeight="25.0" prefWidth="96.0" text="Start" />
-            <Button fx:id="exit" layoutX="338.0" layoutY="335.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="96.0" text="Exit" />
+            <Button fx:id="exit" layoutX="338.0" layoutY="330.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="96.0" text="Exit" />
             <TextField fx:id="numberOfGames" layoutX="148.0" layoutY="20.0" prefHeight="25.0" prefWidth="37.0" />
             <TextField fx:id="numberOfTurns" layoutX="148.0" layoutY="52.0" prefHeight="25.0" prefWidth="37.0" />
             <TextField fx:id="numberOfMaps" layoutX="148.0" layoutY="82.0" prefHeight="25.0" prefWidth="37.0" />
@@ -33,5 +33,6 @@
             <Button fx:id="register" layoutX="210.0" layoutY="52.0" mnemonicParsing="false" onAction="#register" text="Register" />
          </children>
       </Pane>
+      <TextArea fx:id="textArea" layoutX="6.0" layoutY="394.0" prefHeight="185.0" prefWidth="563.0" style="-fx-background-color: #fff; -fx-border-color: #000;" wrapText="true"/>
    </children>
 </AnchorPane>

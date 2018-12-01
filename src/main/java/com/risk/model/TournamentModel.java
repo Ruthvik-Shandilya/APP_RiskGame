@@ -62,8 +62,6 @@ public class TournamentModel {
             currentGamePlayerList.add(p);
         }
 
-
-
         // TEXT CONSOLE game started
         System.out.println("TEXT CONSOLE game started");
         Player player = new Player();
@@ -77,15 +75,21 @@ public class TournamentModel {
         gamePlayController.setGamePlayerList(new ArrayList<Player>());
         gamePlayController.getGamePlayerList().clear();
 
-//    CARD    Card card = new Card();
+//        Card card = new Card();
 
         // Startup phase started
         System.out.println(" Startup phase started");
         StartUpPhase startUpPhase =  new StartUpPhase();
         // Assign armies to player
         // Loading cards
-//   CARD     gamePlayController.setCardStack(startUpPhase.assignCardToCountry(mapIO, textArea));
-//        startUpPhase.assignCardToCountry(mapIO, textArea);
+
+
+//        gamePlayController.setCardStack(startUpPhase.assignCardToCountry(mapIO));
+
+//        startUpPhase.assignCardToCountry(mapIO);
+//        cardStack = startUpPhase.assignCardToCountry(map);
+
+//        System.out.println("cardstack=" + gamePlayController.getCardStack().toString());
 
         player.assignArmiesToPlayers(currentGamePlayerList);
         // Assign country to players
@@ -113,7 +117,7 @@ public class TournamentModel {
 //                System.out.println(Player.currentPlayer.getName());
 
                 // Reinforcement phase
-//       CARD         card.automateCardWindow(Player.currentPlayer);
+//                card.automateCardWindow(Player.currentPlayer);
                 ObservableList<Country> observableListReinforcementPhase = FXCollections.observableArrayList(Player.currentPlayer.getPlayerCountries());
                 player.noOfReinforcementArmies(Player.currentPlayer);
 
@@ -130,6 +134,8 @@ public class TournamentModel {
                 while(Player.currentPlayer.playerCanAttack(listViewOfCountries)){
                     System.out.println("true");
                     Player.currentPlayer.getPlayerBehaviour().attackPhase(listViewOfCountries, null,  Player.currentPlayer);
+
+
 
                     System.out.println(Player.currentPlayer.getCountryWon() + " 8*************************");
                     List<Player> lostPlayerList = player.checkPlayerLost(currentGamePlayerList);
@@ -157,12 +163,6 @@ public class TournamentModel {
                         return winnerMap;
                     }
 
-//                    if(currentGamePlayerList.size() == 1){
-//                        winner = currentGamePlayerList.get(0);
-//                        HashMap<Player, Integer> winnerMap = new HashMap<Player, Integer>();
-//                        winnerMap.put(winner, gameCount);
-//                        return winnerMap;
-//                    }
                 }
 
                 System.out.println("Attack phase ended");

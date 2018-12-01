@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import java.io.File;
 import java.net.URL;
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class TournamentController extends Observable implements Initializable {
 
@@ -92,6 +93,7 @@ public class TournamentController extends Observable implements Initializable {
 
     private int numberOfGamesToPlay;
 
+    @FXML
     private TextArea textArea;
 
 
@@ -336,6 +338,27 @@ public class TournamentController extends Observable implements Initializable {
                 System.out.println(gameCount);
             }
             System.out.println(result.toString());
+
+            String text="";
+            for (Map.Entry<String, ArrayList<HashMap<Player, Integer>>> mapEntry: result.entrySet() ) {
+                String str = mapEntry.getKey();
+                String separator = "\\";
+                String[] mapSplit = str.replaceAll(Pattern.quote(separator), "\\\\").split("\\\\");
+
+                text = text + "Map: " + mapSplit[mapSplit.length - 1]  + " -> \n";
+                for(HashMap<Player, Integer> winnerHashMap: mapEntry.getValue()){
+                    for(Map.Entry<Player, Integer> winnerHashMapMapntry: winnerHashMap.entrySet()){
+                        if(winnerHashMapMapntry.getKey() != null){
+                            text = text + " Winner: " + winnerHashMapMapntry.getKey().getName() + " | Game Number " + winnerHashMapMapntry.getValue();
+                        }
+                        else {
+                            text = text + " Winner: Draw |" + " Game Number" + winnerHashMapMapntry.getValue();
+                        }
+                    }
+                    text = text + "\n\n";
+                }
+            }
+            textArea.setText(text);
         }
     }
 
