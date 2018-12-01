@@ -333,20 +333,6 @@ public class MapValidate implements Serializable {
                                 }
                             }
                         }
-                        System.out.println("adjacency list:");
-                        for (Country country1 : adjacentCountries.keySet()) {
-                            System.out.println(country1.getName() + ":" + adjacentCountries.get(country1).toString());
-                        }
-
-                        System.out.println("Countries adjacent list:");
-                        for (Country country1 : countrySet.values()) {
-                            System.out.println(country1.getName() + ":" + country1.getAdjacentCountries().toString());
-                        }
-
-                        System.out.println("Countries in continent:");
-                        for (Continent continent : countriesInContinent.keySet()) {
-                            System.out.println(continent.getName() + ":" + countriesInContinent.get(continent).toString());
-                        }
                     }
                 }
             } catch (IOException e) {
