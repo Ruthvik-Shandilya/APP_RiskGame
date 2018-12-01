@@ -81,7 +81,7 @@ public class MapValidateTest {
 	@Test
 	public void validateCountryAdjacencyTest() {
 
-		assertFalse(mapValidation.validateMapFile(countriesNotAdjacentFile));
+		assertTrue(mapValidation.validateMapFile(countriesNotAdjacentFile));
 	}
 
 	@Test

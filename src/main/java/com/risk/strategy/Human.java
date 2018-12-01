@@ -19,6 +19,10 @@ import javafx.scene.control.ListView;
  * @author Ruthvik Shandilya
  */
 public class Human extends PlayerBehaviour {
+	
+	public Human() {
+		
+	}
 
     /**
      * Object of GamePlayController, control various activities during the game play.

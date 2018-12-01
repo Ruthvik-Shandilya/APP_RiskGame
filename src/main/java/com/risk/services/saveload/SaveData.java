@@ -1,28 +1,43 @@
 package com.risk.services.saveload;
 
-import com.risk.view.Util.WindowUtil;
-import javafx.scene.control.TextArea;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
-import java.util.Observable;
+public class SaveData implements Externalizable {
 
-public class SaveData extends Observable {
+	private static final long serialVersionUID = 1L;
 
-//    public SaveData() {
-//        new WindowUtil(this);
-//    }
-//
-//    private transient TextArea terminalWindow;
-//
-//    public TextArea getTerminalWindow() {
-//        return terminalWindow;
-//    }
-//
-//    public void setTerminalWindow(TextArea terminalWindow) {
-//        this.terminalWindow = terminalWindow;
-//    }
-//
-//    public void sendDataToWindow(String message){
-//        setChanged();
-//        notifyObservers(message);
-//    }
+    private String name;
+    private int code;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+
+    @Override
+    public void writeExternal(ObjectOutput out) throws IOException {
+        out.writeObject(name);
+        out.writeObject(code);
+    }
+
+    @Override
+    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+        this.name=(String)in.readObject();
+        this.code=(int)in.readObject();
+    }
 }

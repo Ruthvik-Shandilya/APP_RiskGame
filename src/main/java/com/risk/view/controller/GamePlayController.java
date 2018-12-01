@@ -195,7 +195,7 @@ public class GamePlayController implements Initializable, Observer, Externalizab
      */
     private int numberOfCardSetExchanged;
 
-    private BufferedWriter bufferedWriter;
+    private transient BufferedWriter bufferedWriter;
 
     public GamePlayController() {
 
@@ -266,7 +266,6 @@ public class GamePlayController implements Initializable, Observer, Externalizab
             playerCreation();
             loadMapData();
         } else {
-            gamePlayerList = new ArrayList<>();
             loadGameCard();
             loadMapData();
         }
@@ -527,6 +526,19 @@ public class GamePlayController implements Initializable, Observer, Externalizab
         }
         playerChosen.setText(playerPlaying.getName() + ":- " + playerPlaying.getArmyCount() + " armies left.\n");
     }
+    
+    private void loadCurrentPlayerSave(){
+        System.out.println(playerPlaying.getName() + "'s turn started.\n");
+        updateTerminalWindow(playerPlaying.getName() + "'s turn started.\n");
+
+        selectedCountryList.getItems().clear();
+        adjacentCountryList.getItems().clear();
+        loadMapData();
+        for (Country territory : playerPlaying.getPlayerCountries()) {
+            selectedCountryList.getItems().add(territory);
+        }
+        playerChosen.setText(playerPlaying.getName() + ":- " + playerPlaying.getArmyCount() + " armies left.\n");
+    }
 
     /**
      * Method which helps to calculate the reinforcement armies.
@@ -563,6 +575,29 @@ public class GamePlayController implements Initializable, Observer, Externalizab
         WindowUtil.enableButtonControl(reinforcement, cards);
         updateTerminalWindow("\nReinforcement phase started\n");
         calculateReinforcementArmies();
+        if (!(playerPlaying.getPlayerBehaviour() instanceof Human)) {
+            card.automateCardWindow(playerPlaying);
+            playerPlaying.reinforcementPhase(selectedCountryList.getItems(), null, gamePlayerList);
+            selectedCountryList.refresh();
+            System.out.println(playerPlaying.getName() + ":- " + playerPlaying.getArmyCount() + " armies left.");
+            loadMapData();
+            playerChosen.setText(playerPlaying.getName() + ":- " + playerPlaying.getArmyCount() + " armies left.");
+
+        } else {
+            WindowUtil.enableButtonControl(reinforcement);
+            reinforcement.requestFocus();
+            CardView.openCardWindow(playerPlaying, card);
+        }
+    }
+    
+    private void initializeReinforcementSave() {
+        loadCurrentPlayerSave();
+
+        phaseView.setText("Phase: Reinforcement");
+        WindowUtil.disableButtonControl(placeArmy, fortify, attack);
+        WindowUtil.enableButtonControl(reinforcement, cards);
+        updateTerminalWindow("\nReinforcement phase started\n");
+
         if (!(playerPlaying.getPlayerBehaviour() instanceof Human)) {
             card.automateCardWindow(playerPlaying);
             playerPlaying.reinforcementPhase(selectedCountryList.getItems(), null, gamePlayerList);
@@ -940,6 +975,7 @@ public class GamePlayController implements Initializable, Observer, Externalizab
 
         data.writeObject(map);
         data.writeObject(startUpPhase);
+        data.writeObject(Player.currentPlayer);
         data.writeObject(playerPlaying);
         data.writeObject(card);
         data.writeObject(cardStack);
@@ -958,6 +994,7 @@ public class GamePlayController implements Initializable, Observer, Externalizab
         isGameSaved = true;
         map = (MapIO) data.readObject();
         startUpPhase = (StartUpPhase) data.readObject();
+        Player.currentPlayer=(Player)data.readObject();
         playerPlaying = (Player) data.readObject();
         card = (Card) data.readObject();
         cardStack = (Stack<Card>) data.readObject();
@@ -970,6 +1007,7 @@ public class GamePlayController implements Initializable, Observer, Externalizab
         playerPlaying.addObserver(this);
         card.addObserver(this);
         worldDomination.addObserver(this);
+        this.bufferedWriter = clearContentsOfFile();
 
     }
 
@@ -985,6 +1023,13 @@ public class GamePlayController implements Initializable, Observer, Externalizab
             if (playerIterator.next().equals(playerPlaying)) {
                 break;
             }
+        }
+        if(phaseViewString.contains("Reinforcement")){
+            initializeReinforcementSave();
+        }else if(phaseViewString.contains("Fortification")){
+            initializeFortification();
+        }else if(phaseViewString.contains("Attack")){
+            initializeAttack();
         }
     }
 

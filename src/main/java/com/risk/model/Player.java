@@ -60,6 +60,11 @@ public class Player extends Observable implements Observer,Serializable {
     public Player() {
         armyCount = 0;
     }
+    
+    public Player(String name) {
+    	this.name=name;
+    	this.cardList = new ArrayList<>();
+    }
 
     /**
      * Player constructor
@@ -190,8 +195,13 @@ public class Player extends Observable implements Observer,Serializable {
     public String getPlayerType() {
         return playerType;
     }
+    
 
-    public PlayerBehaviour getPlayerBehaviour() {
+    public void setPlayerBehaviour(PlayerBehaviour playerBehaviour) {
+		this.playerBehaviour = playerBehaviour;
+	}
+
+	public PlayerBehaviour getPlayerBehaviour() {
         return playerBehaviour;
     }
 
@@ -490,6 +500,28 @@ public class Player extends Observable implements Observer,Serializable {
             notifyObservers("checkIfFortificationPhaseValid");
         }
         return canAttack;
+    }
+    
+    /**
+     * Method to check if the attack move is valid or not
+     *
+     * @param attacking Country attacking
+     * @param defending Country under attack
+     * @return true if the attack move is valid; other wise false
+     */
+
+    public boolean isAttackMoveValid(Country attacking, Country defending) {
+        boolean isValidAttackMove = false;
+        if (defending.getPlayer() != attacking.getPlayer()) {
+            if (attacking.getNoOfArmies() > 1) {
+                isValidAttackMove = true;
+            } else {
+                WindowUtil.popUpWindow("Select a country with more armies.", "Invalid game move", "There should be more than one army on the country which is attacking.");
+            }
+        } else {
+            WindowUtil.popUpWindow("You have selected your own country", "Invalid game move", "Select another player's country to attack");
+        }
+        return isValidAttackMove;
     }
 
     /**
