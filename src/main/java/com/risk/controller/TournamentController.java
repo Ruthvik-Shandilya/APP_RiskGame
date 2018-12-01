@@ -194,7 +194,10 @@ public class TournamentController extends Observable implements Initializable {
     public void setNumberOfPlayersPlaying(int numberOfPlayersPlaying) {
         this.numberOfPlayersPlaying = numberOfPlayersPlaying;
     }
-
+    
+    /**
+     * variable for number of players playing
+     */
     private int numberOfPlayersPlaying;
 
     /**

@@ -147,10 +147,11 @@ public class DiceController extends Observable implements Initializable {
     private TextField numberOfArmiesToMove;
 
     /**
-     * Variable for Dice Object
+     * Object for Dice class
      */
     private Dice dice;
 
+    /** Object for PlayerBehaviour class */
     private PlayerBehaviour playerBehaviour;
 
     /**
@@ -163,13 +164,17 @@ public class DiceController extends Observable implements Initializable {
         this.playerBehaviour = playerBehaviour;
         this.addObserver(gamePlayController);
     }
-
+    
+    /**
+     * DiceCOntroller Constructor
+     * 
+     * @param dice			Dice object
+     * @param playerBehaviour			PlayerBehaviour object		
+     */
     public DiceController(Dice dice, PlayerBehaviour playerBehaviour) {
         this.dice = dice;
         this.playerBehaviour = playerBehaviour;
     }
-
-
 
     /**
      * Method to call load attack screen and dice view
@@ -184,7 +189,9 @@ public class DiceController extends Observable implements Initializable {
         diceView();
 
     }
-
+    /**
+     * Method to automate dice roll
+     */
     public void automateDiceRoll() {
         automaticInitialization();
         loadAttackScreen();
@@ -194,7 +201,9 @@ public class DiceController extends Observable implements Initializable {
         }
 
     }
-
+    /**
+     * Method to auto role dice
+     */
     private void autoRollDice() {
         WindowUtil.selectVisibleDice(dice1_Attacker, dice2_Attacker, dice3_Attacker, dice1_Defender, dice2_Defender);
 
@@ -306,7 +315,10 @@ public class DiceController extends Observable implements Initializable {
         WindowUtil.exitWindow(cancelThrow);
     }
 
-
+    /**
+     * 
+     * @param event		Action event
+     */
     @FXML
     private void allOut(ActionEvent event){
         dice.setAttackerDiceList(new ArrayList<>());
@@ -549,7 +561,10 @@ public class DiceController extends Observable implements Initializable {
             winnerName.setText(diceResult.get(diceResult.size() - 1));
         winnerName.setVisible(true);
     }
-
+    
+    /** Method to automate setup of DiceController 
+     * 
+     */
     public void automaticInitialization() {
 
         attackingPlayer = new Label();

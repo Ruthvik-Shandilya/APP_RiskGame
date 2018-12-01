@@ -37,12 +37,14 @@ import java.util.Map.Entry;
  */
 public class GamePlayController implements Initializable, Observer, Externalizable {
 
+	/** HashSet to storing adjacent countries */
     private static HashSet<Country> allAdjacentCountries = new HashSet<>();
 
+    /** HashMap to store visited country */
     private static HashMap<Country, Boolean> visited = new HashMap<>();
 
+    /** HashMap to store playernames and types */
     private HashMap<String, String> playerNamesAndTypes;
-
 
     /**
      * RoundRobin Object
