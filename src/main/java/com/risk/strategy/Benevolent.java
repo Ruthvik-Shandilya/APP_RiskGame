@@ -29,6 +29,9 @@ public class Benevolent extends PlayerBehaviour {
 	 */
 	private GamePlayController gamePlayController;
 
+	/**
+	 * Benevolent Player Constructor
+	 */
 	public Benevolent() {
 	}
 

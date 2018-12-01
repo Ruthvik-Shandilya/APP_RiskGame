@@ -197,8 +197,8 @@ public class Card extends Observable implements Serializable {
     /**
      * Method to generate valid combination of cards
      * 
-     * @param selectedCards
-     * @return List of cards
+     * @param selectedCards List of selected cards
+     * @return List of valid combination of cards
      */
     public List<Card> generateValidCardCombination(List<Card> selectedCards) {
         HashMap<String, Integer> cardCountMap = new HashMap<>();

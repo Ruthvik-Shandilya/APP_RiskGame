@@ -45,7 +45,7 @@ public class ConnectedGraph implements Serializable {
     /**
      * Method for traversing the graph for depth first traversal.
      *
-     * @param startCountry
+     * @param startCountry Starting country
      */
     private void depthFirstTraversal(Country startCountry) {
         visited.put(startCountry, true);

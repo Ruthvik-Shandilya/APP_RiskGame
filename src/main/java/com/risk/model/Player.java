@@ -17,7 +17,7 @@ import java.util.*;
  * @author Karandeep Singh
  * @author Palash Jain
  */
-public class Player extends Observable implements Observer,Serializable {
+public class Player extends Observable implements Observer, Serializable {
 
     /**
      * Player currently playing.
@@ -45,8 +45,14 @@ public class Player extends Observable implements Observer,Serializable {
      */
     private ArrayList<Card> cardList;
 
+    /**
+     * PlayerType
+     */
     private String playerType;
 
+    /**
+     * PlayerBehaviour
+     */
     private PlayerBehaviour playerBehaviour;
 
     /**
@@ -60,21 +66,23 @@ public class Player extends Observable implements Observer,Serializable {
     public Player() {
         armyCount = 0;
     }
-    
+
     /**
      * Constructor for player class
-     * 
-     * @param name	player name
+     *
+     * @param name player name
      */
     public Player(String name) {
-    	this.name=name;
-    	this.cardList = new ArrayList<>();
+        this.name = name;
+        this.cardList = new ArrayList<>();
     }
 
     /**
      * Player constructor
      *
-     * @param name name
+     * @param name               name
+     * @param playerType         player type as string
+     * @param gamePlayController GamePlayController object
      */
     public Player(String name, String playerType, GamePlayController gamePlayController) {
         armyCount = 0;
@@ -97,9 +105,9 @@ public class Player extends Observable implements Observer,Serializable {
 
     /**
      * Constructor for player
-     * 
-     * @param name		name
-     * @param playerType	playerType
+     *
+     * @param name       name
+     * @param playerType playerType
      */
     public Player(String name, String playerType) {
         armyCount = 0;
@@ -113,11 +121,8 @@ public class Player extends Observable implements Observer,Serializable {
             this.playerBehaviour = new Benevolent();
         else if (playerType.equals(IPlayerType.CHEATER))
             this.playerBehaviour = new Cheater();
-//        else if (playerType.equals(IPlayerType.HUMAN))
-//            this.playerBehaviour = new Human();
         else if (playerType.equals(IPlayerType.RANDOM))
             this.playerBehaviour = new Random();
-//        new WindowUtil(this);
     }
 
     /**
@@ -203,27 +208,28 @@ public class Player extends Observable implements Observer,Serializable {
 
     /**
      * Method for getting playerType
-     * 
-     * @return
+     *
+     * @return playerType
      */
     public String getPlayerType() {
         return playerType;
     }
-    
+
     /**
      * Method for setting player behaviour
-     * @param playerBehaviour
+     *
+     * @param playerBehaviour Type of player
      */
     public void setPlayerBehaviour(PlayerBehaviour playerBehaviour) {
-		this.playerBehaviour = playerBehaviour;
-	}
+        this.playerBehaviour = playerBehaviour;
+    }
 
     /**
      * Method to get player behaviour
-     * 
+     *
      * @return playerBehaviour
      */
-	public PlayerBehaviour getPlayerBehaviour() {
+    public PlayerBehaviour getPlayerBehaviour() {
         return playerBehaviour;
     }
 
@@ -323,8 +329,8 @@ public class Player extends Observable implements Observer,Serializable {
 
     /**
      * Method to calculate no of armies
-     * 
-     * @param player
+     *
+     * @param player Player object
      * @return numberOfArmies
      */
     public int findNoOfArmies(Player player) {
@@ -475,8 +481,8 @@ public class Player extends Observable implements Observer,Serializable {
 
     /**
      * Method for assigning player armies to country
-     * 
-     * @param currentPlayer		name of current Player
+     *
+     * @param currentPlayer name of current Player
      */
     public void automaticAssignPlayerArmiesToCountry(Player currentPlayer) {
         if (currentPlayer.getArmyCount() > 0) {
@@ -525,7 +531,7 @@ public class Player extends Observable implements Observer,Serializable {
         }
         return canAttack;
     }
-    
+
     /**
      * Method to check if the attack move is valid or not
      *

@@ -37,6 +37,9 @@ public class Cheater extends PlayerBehaviour {
      */
     private GamePlayController gamePlayController;
 
+    /**
+     * Cheater Player Constructor
+     */
     public Cheater() {
     }
 

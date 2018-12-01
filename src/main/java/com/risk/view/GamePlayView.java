@@ -30,7 +30,7 @@ public class GamePlayView implements EventHandler<ActionEvent> {
      * Constructor for GamePlayView
      * 
      * @param mapIO	 MapIO object 
-     * @param hm
+     * @param hm hashmap containing player names and type
      */
     public GamePlayView(MapIO mapIO, HashMap<String,String> hm) {
         this.mapIO = mapIO;

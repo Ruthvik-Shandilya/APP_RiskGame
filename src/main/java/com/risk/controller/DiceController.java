@@ -151,25 +151,29 @@ public class DiceController extends Observable implements Initializable {
      */
     private Dice dice;
 
-    /** Object for PlayerBehaviour class */
+    /**
+     * Object for PlayerBehaviour class
+     */
     private PlayerBehaviour playerBehaviour;
 
     /**
      * DiceController Constructor
      *
-     * @param dice Dice object
+     * @param dice               Dice object
+     * @param playerBehaviour    PlayerBehaviour Object
+     * @param gamePlayController GamePlayController object
      */
     public DiceController(Dice dice, PlayerBehaviour playerBehaviour, GamePlayController gamePlayController) {
         this.dice = dice;
         this.playerBehaviour = playerBehaviour;
         this.addObserver(gamePlayController);
     }
-    
+
     /**
-     * DiceCOntroller Constructor
-     * 
-     * @param dice			Dice object
-     * @param playerBehaviour			PlayerBehaviour object		
+     * DiceController Constructor
+     *
+     * @param dice            Dice object
+     * @param playerBehaviour PlayerBehaviour object
      */
     public DiceController(Dice dice, PlayerBehaviour playerBehaviour) {
         this.dice = dice;
@@ -189,6 +193,7 @@ public class DiceController extends Observable implements Initializable {
         diceView();
 
     }
+
     /**
      * Method to automate dice roll
      */
@@ -201,6 +206,7 @@ public class DiceController extends Observable implements Initializable {
         }
 
     }
+
     /**
      * Method to auto role dice
      */
@@ -316,11 +322,10 @@ public class DiceController extends Observable implements Initializable {
     }
 
     /**
-     * 
-     * @param event		Action event
+     * @param event Action event
      */
     @FXML
-    private void allOut(ActionEvent event){
+    private void allOut(ActionEvent event) {
         dice.setAttackerDiceList(new ArrayList<>());
         dice.setDefenderDiceList(new ArrayList<>());
         loadAttackScreen();
@@ -328,7 +333,7 @@ public class DiceController extends Observable implements Initializable {
 
         Country countryAttacking = dice.getAttackingCountry();
         Country defendingCountry = dice.getDefendingCountry();
-        ArrayList<String> diceResult =  new ArrayList<>();
+        ArrayList<String> diceResult = new ArrayList<>();
 
         int bufferAttackingArmies = countryAttacking.getNoOfArmies();
         int bufferDefendingArmies = defendingCountry.getNoOfArmies();
@@ -336,7 +341,7 @@ public class DiceController extends Observable implements Initializable {
         boolean flagAttack = false;
         boolean flagDefender = false;
 
-        while(dice.getAttackingCountry().getNoOfArmies() > 1 && dice.getDefendingCountry().getNoOfArmies() > 0 ) {
+        while (dice.getAttackingCountry().getNoOfArmies() > 1 && dice.getDefendingCountry().getNoOfArmies() > 0) {
             // Refreshing a the dices
             dice.getAttackerDiceList().clear();
             dice.getDefenderDiceList().clear();
@@ -377,14 +382,13 @@ public class DiceController extends Observable implements Initializable {
             diceResult = dice.getDicePlayResult();
 
 
-
-            if(countryAttacking.getNoOfArmies() != bufferAttackingArmies){
+            if (countryAttacking.getNoOfArmies() != bufferAttackingArmies) {
                 flagAttack = true;
-                System.out.println(countryAttacking.getPlayer().getName() + " lost: " + (bufferAttackingArmies - countryAttacking.getNoOfArmies() ) + " armies\n");
+                System.out.println(countryAttacking.getPlayer().getName() + " lost: " + (bufferAttackingArmies - countryAttacking.getNoOfArmies()) + " armies\n");
                 setChanged();
                 notifyObservers(countryAttacking.getPlayer().getName() + " lost: " + (bufferAttackingArmies - countryAttacking.getNoOfArmies()) + " armies\n");
             }
-            if(defendingCountry.getNoOfArmies() != bufferDefendingArmies){
+            if (defendingCountry.getNoOfArmies() != bufferDefendingArmies) {
                 flagDefender = true;
                 System.out.println(defendingCountry.getPlayer().getName() + " lost: " + (bufferDefendingArmies - defendingCountry.getNoOfArmies()) + " armies\n");
                 setChanged();
@@ -413,21 +417,19 @@ public class DiceController extends Observable implements Initializable {
             WindowUtil.disableButtonControl(startRoll);
         }
 
-        if(flagAttack && flagDefender){
-            winnerName.setText(countryAttacking.getPlayer().getName() + " lost: " + (bufferAttackingArmies - countryAttacking.getNoOfArmies() ) + " armies\n" + " & " +
-                    defendingCountry.getPlayer().getName() + " lost: " + (bufferDefendingArmies - defendingCountry.getNoOfArmies() ) + " armies\n"
+        if (flagAttack && flagDefender) {
+            winnerName.setText(countryAttacking.getPlayer().getName() + " lost: " + (bufferAttackingArmies - countryAttacking.getNoOfArmies()) + " armies\n" + " & " +
+                    defendingCountry.getPlayer().getName() + " lost: " + (bufferDefendingArmies - defendingCountry.getNoOfArmies()) + " armies\n"
             );
-        }
-        else if(flagAttack){
+        } else if (flagAttack) {
             winnerName.setText(countryAttacking.getPlayer().getName() + " lost: " + (bufferAttackingArmies - countryAttacking.getNoOfArmies()) + " armies\n");
-        }
-        else if (flagDefender){
+        } else if (flagDefender) {
             winnerName.setText(defendingCountry.getPlayer().getName() + " lost: " + (bufferDefendingArmies - defendingCountry.getNoOfArmies()) + " armies\n");
         }
         winnerName.setVisible(true);
 
         diceView();
-        if(!(playerBehaviour instanceof Human)){
+        if (!(playerBehaviour instanceof Human)) {
             autoRollDice();
         }
     }
@@ -561,9 +563,9 @@ public class DiceController extends Observable implements Initializable {
             winnerName.setText(diceResult.get(diceResult.size() - 1));
         winnerName.setVisible(true);
     }
-    
-    /** Method to automate setup of DiceController 
-     * 
+
+    /**
+     * Method to automate setup of DiceController
      */
     public void automaticInitialization() {
 

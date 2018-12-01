@@ -25,7 +25,7 @@ public class DiceView {
      * 
      * @param dice					object of Dice
      * @param player				object of Player
-     * @param gamePlayConroller		object of GamePlayController
+     * @param gamePlayController		object of GamePlayController
      * 
      */
     public static void openDiceWindow(Dice dice, Player player, GamePlayController gamePlayController) {

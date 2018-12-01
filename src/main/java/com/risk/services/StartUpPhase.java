@@ -19,10 +19,17 @@ import java.util.*;
  */
 public class StartUpPhase extends Observable implements Serializable {
 
+    /**
+     * StartUp Phase Constructor
+     * @param gamePlayController GamePlayController Object
+     */
     public StartUpPhase(GamePlayController gamePlayController){
         this.addObserver(gamePlayController);
     }
 
+    /**
+     * StartUp Phase Default Constructor
+     */
     public StartUpPhase(){}
 
     /**

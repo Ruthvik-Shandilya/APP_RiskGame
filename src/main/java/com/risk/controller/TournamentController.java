@@ -233,7 +233,7 @@ public class TournamentController extends Observable implements Initializable {
      * Method to register number of maps, number of turns and games
      *
      * @param event		Action event
-     * @throws NumberFormatException
+     * @throws NumberFormatException NumberFormatException
      */
     @FXML
     private void register(ActionEvent event) throws NumberFormatException {
@@ -296,7 +296,7 @@ public class TournamentController extends Observable implements Initializable {
      * Method to show player
      *
      * @param event		Action event
-     * @throws NumberFormatException
+     * @throws NumberFormatException NumberFormatException
      */
     @FXML
     public void showPlayer(ActionEvent event) throws NumberFormatException {

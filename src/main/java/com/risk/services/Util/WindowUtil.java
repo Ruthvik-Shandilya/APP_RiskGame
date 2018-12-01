@@ -99,7 +99,7 @@ public class WindowUtil {
     /**
      * Method for making checkbox visible.
      *
-     * @param controls
+     * @param controls any number of checkboxes
      */
 
     public static void showCheckBox(Control... controls) {
@@ -174,7 +174,7 @@ public class WindowUtil {
     /**
      * Method to select dice
      * 
-     * @param controls
+     * @param controls any number of controls
      */
     public static void selectVisibleDice(Control... controls) {
         for (Control control : controls) {

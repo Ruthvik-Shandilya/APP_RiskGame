@@ -31,7 +31,7 @@ public class SaveData implements Externalizable {
     /**
      * Setter for Name
      *
-     * @param name
+     * @param name name of object to be stored
      */
     public void setName(String name) {
         this.name = name;
@@ -40,7 +40,7 @@ public class SaveData implements Externalizable {
     /**
      * Getter for code
      * 
-     * @return code
+     * @return code integer code for object
      */
     public int getCode() {
         return code;
@@ -49,7 +49,7 @@ public class SaveData implements Externalizable {
     /**
      * Setter for code
      * 
-     * @param code
+     * @param code integer code for object
      */
     public void setCode(int code) {
         this.code = code;

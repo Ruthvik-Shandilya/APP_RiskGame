@@ -43,7 +43,7 @@ public class GamePlayController implements Initializable, Observer, Externalizab
     /** HashMap to store visited country */
     private static HashMap<Country, Boolean> visited = new HashMap<>();
 
-    /** HashMap to store playernames and types */
+    /** HashMap to store player names and types */
     private HashMap<String, String> playerNamesAndTypes;
 
     /**
@@ -149,13 +149,25 @@ public class GamePlayController implements Initializable, Observer, Externalizab
     @FXML
     private Button placeArmy;
 
+    /**
+     * saveGame Button
+     */
     @FXML
     private Button saveGame;
 
+    /**
+     * variable to store current phase
+     */
     private String phaseViewString;
 
+    /**
+     * variable to store terminal window data
+     */
     private String gameDataString;
 
+    /**
+     * stores name of current player
+     */
     private String playerData;
 
     /**
@@ -163,12 +175,23 @@ public class GamePlayController implements Initializable, Observer, Externalizab
      */
     private int numberOfPlayersSelected;
 
+    /**
+     * variable specifying if game is started as saved game or as a normal game
+     */
     private boolean isGameSaved = false;
 
+    /**
+     *
+     * @return gamePlayerList
+     */
     public ArrayList<Player> getGamePlayerList() {
         return gamePlayerList;
     }
 
+    /**
+     *
+     * @param gamePlayerList Sets the current player list
+     */
     public void setGamePlayerList(ArrayList<Player> gamePlayerList) {
         this.gamePlayerList = gamePlayerList;
     }
@@ -183,10 +206,19 @@ public class GamePlayController implements Initializable, Observer, Externalizab
      */
     private Iterator<Player> playerIterator;
 
+    /**
+     *
+     * @return Player
+     */
     public Player getPlayerPlaying() {
         return playerPlaying;
     }
 
+
+    /**
+     *
+     * @param playerPlaying Sets current player playing
+     */
     public void setPlayerPlaying(Player playerPlaying) {
         this.playerPlaying = playerPlaying;
     }
@@ -196,10 +228,19 @@ public class GamePlayController implements Initializable, Observer, Externalizab
      */
     private Player playerPlaying;
 
+    /**
+     * Getter for Stack Card
+     * @return cardStack Stack of cards
+     */
     public Stack<Card> getCardStack() {
         return cardStack;
     }
 
+    /**
+     * Setter for Card Stack
+     *
+     * @param cardStack Card Stack to be set
+     */
     public void setCardStack(Stack<Card> cardStack) {
         this.cardStack = cardStack;
     }
@@ -214,12 +255,23 @@ public class GamePlayController implements Initializable, Observer, Externalizab
      */
     private int numberOfCardSetExchanged;
 
+    /**
+     * Buffered Writer for Log file
+     */
     private transient BufferedWriter bufferedWriter;
 
+    /**
+     * GamePlayController Default Constructor
+     */
     public GamePlayController() {
 
     }
 
+    /**
+     * GamePlayController Constructor
+     * @param map Map Object
+     * @param hm  HashMap
+     */
 
     public GamePlayController(MapIO map, HashMap<String, String> hm) {
         this.map = map;
@@ -545,7 +597,12 @@ public class GamePlayController implements Initializable, Observer, Externalizab
         }
         playerChosen.setText(playerPlaying.getName() + ":- " + playerPlaying.getArmyCount() + " armies left.\n");
     }
-    
+
+    /**
+     * The Game goes in the round robin fashion and loads a player
+     * for the next turn.
+     *
+     */
     private void loadCurrentPlayerSave(){
         System.out.println(playerPlaying.getName() + "'s turn started.\n");
         updateTerminalWindow(playerPlaying.getName() + "'s turn started.\n");
@@ -608,7 +665,10 @@ public class GamePlayController implements Initializable, Observer, Externalizab
             CardView.openCardWindow(playerPlaying, card);
         }
     }
-    
+
+    /**
+     * Method to initialize reinforcement phase after each player's turn.
+     */
     private void initializeReinforcementSave() {
         loadCurrentPlayerSave();
 
@@ -941,6 +1001,11 @@ public class GamePlayController implements Initializable, Observer, Externalizab
         writeToFile(information);
     }
 
+    /**
+     * FXML Button to save Game
+     * @param event Event
+     */
+
     @FXML
     private void saveGame(ActionEvent event) {
 
@@ -957,6 +1022,13 @@ public class GamePlayController implements Initializable, Observer, Externalizab
 
     }
 
+    /**
+     * Method to save Game
+     *
+     * @param gamePlayController gamePlayController Object
+     * @param file File
+     */
+
     public void save(GamePlayController gamePlayController, File file) {
 
         try {
@@ -967,6 +1039,11 @@ public class GamePlayController implements Initializable, Observer, Externalizab
         }
 
     }
+
+    /**
+     * Method to Load Game
+     * @return Controller File
+     */
 
     public GamePlayController loadGame() {
 
@@ -981,6 +1058,12 @@ public class GamePlayController implements Initializable, Observer, Externalizab
 
     }
 
+    /**
+     * Method to Load the contents to the Game
+     * @param file File
+     * @return GamePlayController
+     */
+
     public GamePlayController load(File file) {
 
         GamePlayController controller = null;
@@ -993,6 +1076,21 @@ public class GamePlayController implements Initializable, Observer, Externalizab
         return controller;
     }
 
+    /**
+     * The object implements the writeExternal method to save its contents
+     * by calling the methods of DataOutput for its primitive values or
+     * calling the writeObject method of ObjectOutput for objects, strings,
+     * and arrays.
+     *
+     * @serialData Overriding methods should use this tag to describe
+     *             the data layout of this Externalizable object.
+     *             List the sequence of element types and, if possible,
+     *             relate the element to a public/protected field and/or
+     *             method of this Externalizable class.
+     *
+     * @param data the stream to write the object to
+     * @exception IOException Includes any I/O exceptions that may occur
+     */
 
     @Override
     public void writeExternal(ObjectOutput data) throws IOException {
@@ -1011,7 +1109,18 @@ public class GamePlayController implements Initializable, Observer, Externalizab
         data.writeObject(playerChosen.getText());
 
     }
-
+    /**
+     * The object implements the readExternal method to restore its
+     * contents by calling the methods of DataInput for primitive
+     * types and readObject for objects, strings and arrays.  The
+     * readExternal method must read the values in the same sequence
+     * and with the same types as were written by writeExternal.
+     *
+     * @param data the stream to read data from in order to restore the object
+     * @exception IOException if I/O errors occur
+     * @exception ClassNotFoundException If the class for an object being
+     *              restored cannot be found.
+     */
     @Override
     public void readExternal(ObjectInput data) throws IOException, ClassNotFoundException {
 
@@ -1035,6 +1144,9 @@ public class GamePlayController implements Initializable, Observer, Externalizab
 
     }
 
+    /**
+     * Method to Load the contents to the Game
+     */
     private void dataToLoad() {
         phaseView.setText(phaseViewString);
         updateTerminalWindow(gameDataString);
@@ -1057,6 +1169,11 @@ public class GamePlayController implements Initializable, Observer, Externalizab
         }
     }
 
+    /**
+     * Method to generate BufferedWriter Object
+     * @return buffered Writer
+     */
+
     public BufferedWriter clearContentsOfFile() {
         BufferedWriter bufferedWriter = null;
         try {
@@ -1066,6 +1183,11 @@ public class GamePlayController implements Initializable, Observer, Externalizab
         }
         return bufferedWriter;
     }
+
+    /**
+     * Method to Write Contents to File
+     * @param output String
+     */
 
     public void writeToFile(String output) {
         try {
