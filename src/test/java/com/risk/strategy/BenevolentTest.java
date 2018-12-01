@@ -83,7 +83,7 @@ public class BenevolentTest {
 	}
 
 	/**
-	 * Test to strongest adjacent country returns null
+	 * Test to check strongest adjacent country returns null
 	 */
 	@Test
 	public void getNullStrongestAdjacentCountryTest() {
