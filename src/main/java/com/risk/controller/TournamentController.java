@@ -15,127 +15,210 @@ import java.net.URL;
 import java.util.*;
 import java.util.regex.Pattern;
 
+/**
+ * This class provides all the methods to control various activities during the game play,
+ * implements Observer.
+ *
+ * @author Palash Jain
+ * @author Neha Pal
+ * @author Karandeep Singh
+ */
 public class TournamentController extends Observable implements Initializable {
 
+    /** Object for TournamentModel class */
     private TournamentModel tournamentModel;
 
+    /** Terminal window text area */
     private TextArea terminalWindow;
 
+    /**
+     * Method to get Terminal Window
+     *
+     * @return terminalWindow
+     */
     public TextArea getTerminalWindow() {
 
         return terminalWindow;
-
     }
 
+    /**
+     * TextField for number of games
+     */
     @FXML
     private TextField numberOfGames;
 
+    /**
+     * TextField for number of turns
+     */
     @FXML
     private TextField numberOfTurns;
 
+    /**
+     * TextField for number of maps
+     */
     @FXML
     private TextField numberOfMaps;
 
+    /**
+     * TextField for number of players
+     */
     @FXML
     private TextField numberOfPlayers;
 
+    /**
+     * ChoiceBox to display player1
+     */
     @FXML
     private ChoiceBox<String> player1;
 
+    /**
+     * ChoiceBox to display player2
+     */
     @FXML
     private ChoiceBox<String> player2;
 
+    /**
+     * ChoiceBox to display player3
+     */
     @FXML
     private ChoiceBox<String> player3;
 
+    /** ChoiceBox to display player4 */
     @FXML
     private ChoiceBox<String> player4;
 
+    /** Button for map1 */
     @FXML
     private Button map1;
 
+    /** Button for map2 */
     @FXML
     private Button map2;
 
+    /** Button for map3 */
     @FXML
     private Button map3;
 
+    /** Button for map4 */
     @FXML
     private Button map4;
 
+    /** Button for map5 */
     @FXML
     private Button map5;
 
+    /** Button to start game */
     @FXML
     private Button start;
 
+    /** Button to exit game */
     @FXML
     private Button exit;
 
+    /** Button to register game */
     @FXML
     private Button register;
 
+    /** Button to show Players */
     @FXML
     private Button showPlayers;
 
+    /** Text to show error */
     @FXML
     private Label errorMessage;
 
+    /** Variable to show number of turns to play */
     private int numberOfTurnsToPlay;
 
+    /** Variable to show number of maps to play */
     private int numberOfMapsToPlay;
 
+    /** List to hold list of maps */
     private List<MapIO> mapList;
 
+    /** List to hold list of players */
     private List<Player> playerList;
 
+    /** List of choices to choose player */
     private List<ChoiceBox> playerDropDownList = new ArrayList<>();
 
+    /** Variable to show number of games to play */
     private int numberOfGamesToPlay;
 
     @FXML
     private TextArea textArea;
 
-
+    /**
+     * Getter method
+     * @return number of turns to play
+     */
     public int getNumberOfTurnsToPlay() {
         return numberOfTurnsToPlay;
     }
-
+    /**
+     * Setter method
+     * @param numberOfTurnsToPlay		number of turns to play
+     */
     public void setNumberOfTurnsToPlay(int numberOfTurnsToPlay) {
         this.numberOfTurnsToPlay = numberOfTurnsToPlay;
     }
 
-
+    /**
+     * getter method
+     * @return number of games to play
+     */
     public int getNumberOfGamesToPlay() {
         return numberOfGamesToPlay;
     }
 
+    /**
+     * Setter method
+     * @param numberOfGamesToPlay	number of games to play
+     */
     public void setNumberOfGamesToPlay(int numberOfGamesToPlay) {
         this.numberOfGamesToPlay = numberOfGamesToPlay;
     }
 
-
+    /**
+     * Getter method
+     * @return number of players playing
+     */
     public int getNumberOfPlayersPlaying() {
         return numberOfPlayersPlaying;
     }
 
+    /**
+     * Setter method
+     * @param numberOfPlayersPlaying 		number of players playing
+     */
     public void setNumberOfPlayersPlaying(int numberOfPlayersPlaying) {
         this.numberOfPlayersPlaying = numberOfPlayersPlaying;
     }
 
     private int numberOfPlayersPlaying;
 
+    /**
+     *  Setter method
+     * @param numberOfMapsToPlay		number of maps to display
+     */
     public void setNumberOfMapsToPlay(int numberOfMapsToPlay) {
         this.numberOfMapsToPlay = numberOfMapsToPlay;
     }
 
-
+    /**
+     * Constructor of TournamentController class
+     */
     public TournamentController() {
         mapList = new ArrayList<>();
         playerList = new ArrayList<>();
     }
 
-
+    /*
+     * (non-Javadoc
+     *
+     * @see javafx.fxml.Initializable#initialize(java.net.URL,
+     * java.util.ResourceBundle)
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         WindowUtil.disableButtonControl(player1, player2, player3, player4, map1, map2, map3, map4, map5, start);
@@ -143,6 +226,12 @@ public class TournamentController extends Observable implements Initializable {
         tournamentModel = new TournamentModel();
     }
 
+    /**
+     * Method to register number of maps, number of turns and games
+     *
+     * @param event		Action event
+     * @throws NumberFormatException
+     */
     @FXML
     private void register(ActionEvent event) throws NumberFormatException {
         System.out.println("In register");
@@ -200,6 +289,12 @@ public class TournamentController extends Observable implements Initializable {
         }
     }
 
+    /**
+     * Method to show player
+     *
+     * @param event		Action event
+     * @throws NumberFormatException
+     */
     @FXML
     public void showPlayer(ActionEvent event) throws NumberFormatException {
         System.out.println("In Player");
@@ -241,6 +336,11 @@ public class TournamentController extends Observable implements Initializable {
 
     }
 
+    /**
+     * Method to upload map1
+     *
+     * @param event		Action event
+     */
     @FXML
     private void map1(ActionEvent event) {
         File selectedFile = tournamentModel.checkAndLoadMap(mapList);
@@ -253,6 +353,11 @@ public class TournamentController extends Observable implements Initializable {
         map1.setText(selectedFile.getName());
     }
 
+    /**
+     * Method to upload map2
+     *
+     * @param event		Action event
+     */
     @FXML
     private void map2(ActionEvent event) {
         File selectedFile = tournamentModel.checkAndLoadMap(mapList);
@@ -265,6 +370,11 @@ public class TournamentController extends Observable implements Initializable {
         map2.setText(selectedFile.getName());
     }
 
+    /**
+     * Method to upload map3
+     *
+     * @param event		Action event
+     */
     @FXML
     private void map3(ActionEvent event) {
         File selectedFile = tournamentModel.checkAndLoadMap(mapList);
@@ -277,6 +387,11 @@ public class TournamentController extends Observable implements Initializable {
         map3.setText(selectedFile.getName());
     }
 
+    /**
+     * Method to upload map4
+     *
+     * @param event		Action event
+     */
     @FXML
     private void map4(ActionEvent event) {
         File selectedFile = tournamentModel.checkAndLoadMap(mapList);
@@ -289,6 +404,11 @@ public class TournamentController extends Observable implements Initializable {
         map4.setText(selectedFile.getName());
     }
 
+    /**
+     * Method to upload map5
+     *
+     * @param event		Action event
+     */
     @FXML
     private void map5(ActionEvent event) {
         File selectedFile = tournamentModel.checkAndLoadMap(mapList);
@@ -301,7 +421,9 @@ public class TournamentController extends Observable implements Initializable {
         map5.setText(selectedFile.getName());
     }
 
-
+    /**
+     * Method to display checkbox for players
+     */
     public void populatePlayerCheckBox() {
         String playerTypes[] = {IPlayerType.AGGRESSIVE, IPlayerType.BENEVOLENT, IPlayerType.RANDOM, IPlayerType.CHEATER};
         player1.getItems().addAll(playerTypes);
@@ -311,6 +433,11 @@ public class TournamentController extends Observable implements Initializable {
 
     }
 
+    /**
+     * Method to start tournament
+     *
+     * @param event		Action event
+     */
     @FXML
     public void start(ActionEvent event) {
 
