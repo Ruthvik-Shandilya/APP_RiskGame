@@ -55,12 +55,18 @@ public class SaveData implements Externalizable {
         this.code = code;
     }
 
+    /**
+     * {@inheritDoc} method to save content
+     */
     @Override
     public void writeExternal(ObjectOutput out) throws IOException {
         out.writeObject(name);
         out.writeObject(code);
     }
 
+    /**
+     * {@inheritDoc} method to restore its content
+     */
     @Override
     public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
         this.name=(String)in.readObject();

@@ -43,7 +43,7 @@ public class ConnectedGraph implements Serializable {
     }
 
     /**
-     * Method for traversing the graph for depth first traversal
+     * Method for traversing the graph for depth first traversal.
      *
      * @param startCountry
      */
@@ -76,6 +76,11 @@ public class ConnectedGraph implements Serializable {
         return true;
     }
 
+    /**
+     * Method to check if graph is connected.
+     * 
+     * @return true or false
+     */
     public boolean isConnectedSubGraph() {
         depthFirstTraversalSubGraph(countrySet.iterator().next());
         Iterator<Country> it = countrySet.iterator();
@@ -89,6 +94,11 @@ public class ConnectedGraph implements Serializable {
         return true;
     }
 
+    /**
+     * Method to traverse subGraph in depth first pattern.
+     * 
+     * @param startCountry	starting country
+     */
     private void depthFirstTraversalSubGraph(Country startCountry) {
         visited.put(startCountry, true);
         Iterator<Country> it = startCountry.getAdjacentCountries().iterator();

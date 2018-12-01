@@ -158,6 +158,11 @@ public class WindowUtil {
         }
     }
 
+    /**
+     * This method helps to provide checkboxes using Java FXML
+     * 
+     * @param checkBoxes checkBoxes
+     */
     public static void checkCheckBoxes(CheckBox... checkBoxes) {
         for (CheckBox checkBox : checkBoxes) {
             checkBox.setText("");
@@ -166,6 +171,11 @@ public class WindowUtil {
         }
     }
 
+    /**
+     * Method to select dice
+     * 
+     * @param controls
+     */
     public static void selectVisibleDice(Control... controls) {
         for (Control control : controls) {
             if (control.isVisible()) {
