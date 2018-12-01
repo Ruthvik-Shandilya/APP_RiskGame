@@ -531,10 +531,10 @@ public class DiceController extends Observable implements Initializable {
             WindowUtil.disableButtonControl(startRoll, continueRoll, cancelThrow);
             WindowUtil.hideButtonControl(startRoll, continueRoll, cancelThrow);
         } else if (countryAttacking.getNoOfArmies() < 2) {
-            System.out.println(defendingCountry.getPlayer().getName() + " lost: " + (defendingCountry.getNoOfArmies() - bufferDefendingArmies) + " armies\n");
+            System.out.println(defendingCountry.getPlayer().getName() + " lost: " + (bufferDefendingArmies - defendingCountry.getNoOfArmies()) + " armies\n");
             System.out.println(countryAttacking.getPlayer().getName() + " lost the match");
             setChanged();
-            notifyObservers(defendingCountry.getPlayer().getName() + " lost: " + (defendingCountry.getNoOfArmies() - bufferDefendingArmies) + " armies\n");
+            notifyObservers(defendingCountry.getPlayer().getName() + " lost: " + (bufferDefendingArmies - defendingCountry.getNoOfArmies()) + " armies\n");
             diceResult.add(countryAttacking.getPlayer().getName() + " lost the match");
             WindowUtil.disableButtonControl(startRoll, continueRoll);
             WindowUtil.enableButtonControl(cancelThrow);
@@ -549,13 +549,13 @@ public class DiceController extends Observable implements Initializable {
         attackingArmies.setText("Armies: " + String.valueOf(countryAttacking.getNoOfArmies()));
         diceResult.clear();
         if (flagAttack && flagDefender) {
-            winnerName.setText(countryAttacking.getPlayer().getName() + " lost: " + (countryAttacking.getNoOfArmies() - bufferAttackingArmies) + " armies\n" + " & " +
-                    defendingCountry.getPlayer().getName() + " lost: " + (defendingCountry.getNoOfArmies() - bufferDefendingArmies) + " armies\n"
+            winnerName.setText(countryAttacking.getPlayer().getName() + " lost: " + (bufferAttackingArmies - countryAttacking.getNoOfArmies()) + " armies\n" + " & " +
+                    defendingCountry.getPlayer().getName() + " lost: " + (bufferDefendingArmies - defendingCountry.getNoOfArmies()) + " armies\n"
             );
         } else if (flagAttack) {
-            winnerName.setText(countryAttacking.getPlayer().getName() + " lost: " + (countryAttacking.getNoOfArmies() - bufferAttackingArmies) + " armies\n");
+            winnerName.setText(countryAttacking.getPlayer().getName() + " lost: " + (bufferAttackingArmies - countryAttacking.getNoOfArmies()) + " armies\n");
         } else if (flagDefender) {
-            winnerName.setText(defendingCountry.getPlayer().getName() + " lost: " + (defendingCountry.getNoOfArmies() - bufferDefendingArmies) + " armies\n");
+            winnerName.setText(defendingCountry.getPlayer().getName() + " lost: " + (bufferDefendingArmies - defendingCountry.getNoOfArmies()) + " armies\n");
         }
         if (!diceResult.isEmpty())
             winnerName.setText(diceResult.get(diceResult.size() - 1));
