@@ -12,7 +12,6 @@ import org.junit.Test;
  * @author Farhan Shaheen
  *
  */
-
 public class CardTest {
 
 	/** Object for Card class */
