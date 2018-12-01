@@ -10,8 +10,22 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * 
+ * This class contains methods for setting up stage to view card.
+ * 
+ * @author Neha Pal
+ * @author Karandeep Singh
+ * 
+ */
 public class CardView {
 
+	/**
+     * This method is used to create a scene at UI end and opens a window for dice.
+     * 
+     * @param currentPlayer			object of Player having current playing player
+     * @param card					object of Card
+     */
     public static void openCardWindow(Player currentPlayer, Card card) {
         final Stage newCardStage = new Stage();
         newCardStage.setTitle("Card Window");

@@ -8,8 +8,20 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * 
+ * This class contains methods for setting up stage to view card.
+ * 
+ * @author Palash Jain
+ * @author Ruthvik Shandilya
+ * 
+ */
 public class LoadGame {
 
+	/**
+     * This method is is used to load the game.
+     * 
+     */
 	public static void openLoadGame() {
 
 		GamePlayController controller = new GamePlayController().loadGame();
