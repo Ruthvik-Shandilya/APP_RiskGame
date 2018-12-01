@@ -20,6 +20,7 @@ import javafx.scene.control.ListView;
  */
 public class Human extends PlayerBehaviour {
 	
+	/** Constructor for Human class */
 	public Human() {
 		
 	}
@@ -165,7 +166,6 @@ public class Human extends PlayerBehaviour {
      * @return true
      * If the attack move is valid; other wise false.
      */
-
     public boolean isAttackMoveValid(Country attacking, Country defending) {
         boolean isValidAttackMove = false;
         if (defending.getPlayer() != attacking.getPlayer()) {
@@ -179,7 +179,6 @@ public class Human extends PlayerBehaviour {
         }
         return isValidAttackMove;
     }
-
 
     /**
      * Method to check if the player can attack or not.
