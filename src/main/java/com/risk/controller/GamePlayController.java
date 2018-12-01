@@ -181,10 +181,26 @@ public class GamePlayController implements Initializable, Observer, Externalizab
      */
     private Iterator<Player> playerIterator;
 
+    public Player getPlayerPlaying() {
+        return playerPlaying;
+    }
+
+    public void setPlayerPlaying(Player playerPlaying) {
+        this.playerPlaying = playerPlaying;
+    }
+
     /**
      * The Current Player whose playing
      */
     private Player playerPlaying;
+
+    public Stack<Card> getCardStack() {
+        return cardStack;
+    }
+
+    public void setCardStack(Stack<Card> cardStack) {
+        this.cardStack = cardStack;
+    }
 
     /**
      * Stack to store and retrieve the cards
@@ -395,7 +411,7 @@ public class GamePlayController implements Initializable, Observer, Externalizab
     /**
      * Method to allocate cards to player
      */
-    private void allocateCardToPlayer() {
+    public void allocateCardToPlayer() {
         if (!cardStack.isEmpty()) {
             Card cardToBeAdded = cardStack.pop();
             cardToBeAdded.setCurrentPlayer(playerPlaying);
@@ -838,11 +854,16 @@ public class GamePlayController implements Initializable, Observer, Externalizab
         playerPlaying.getCardList().removeAll(tradedCards);
         cardStack.addAll(tradedCards);
         Collections.shuffle(cardStack);
-        selectedCountryList.refresh();
-        adjacentCountryList.refresh();
-        loadMapData();
-        generateBarGraph();
-        playerChosen.setText(playerPlaying.getName() + ":- " + playerPlaying.getArmyCount() + " armies left.\n");
+
+        if(!TournamentModel.isTournament){
+            selectedCountryList.refresh();
+            adjacentCountryList.refresh();
+            loadMapData();
+            generateBarGraph();
+            playerChosen.setText(playerPlaying.getName() + ":- " + playerPlaying.getArmyCount() + " armies left.\n");
+            System.out.println();
+        }
+
     }
 
     /**
