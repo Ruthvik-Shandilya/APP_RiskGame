@@ -31,6 +31,7 @@ public class Random extends PlayerBehaviour {
      */
     private GamePlayController gamePlayController;
 
+    /** Constructor for Random class */
     public Random() {
     }
 

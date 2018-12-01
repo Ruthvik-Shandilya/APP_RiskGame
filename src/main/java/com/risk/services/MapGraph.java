@@ -125,7 +125,6 @@ public class MapGraph implements Serializable {
 	 * @param destination
 	 *            Country
 	 * 
-	 * 
 	 */
 	public void addEdgeBetweenCountries(Country source, Country destination) {
 		if (adjacentCountries.containsKey(source)) {
@@ -145,7 +144,6 @@ public class MapGraph implements Serializable {
 	 * 
 	 * @param destination
 	 *            Country
-	 * 
 	 */
 	public void deleteEdgeBetweenCountries(Country source, Country destination) {
 		if (adjacentCountries.containsKey(source)) {

@@ -26,7 +26,12 @@ public class GamePlayView implements EventHandler<ActionEvent> {
     /** HashMap to store names and type of players */
     private HashMap<String,String> playerNamesAndTypes;
 
-
+    /**
+     * Constructor for GamePlayView
+     * 
+     * @param mapIO	 MapIO object 
+     * @param hm
+     */
     public GamePlayView(MapIO mapIO, HashMap<String,String> hm) {
         this.mapIO = mapIO;
         this.playerNamesAndTypes = hm;

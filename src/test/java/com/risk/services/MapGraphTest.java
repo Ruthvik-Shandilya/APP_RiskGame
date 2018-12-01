@@ -87,6 +87,9 @@ public class MapGraphTest {
 		assertTrue(mapGraph.removeContinent(continent));
 	}
 
+	/**
+	 * Test method for testing removal of country from map 
+	 */
 	@Test
 	public void removeCountryTest(){
 

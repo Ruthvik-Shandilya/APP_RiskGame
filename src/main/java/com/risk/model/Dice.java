@@ -209,7 +209,6 @@ public class Dice extends Observable {
         notifyObservers("rollDiceComplete");
     }
 
-
     /**
      * Method for skipping the army move after attacker has won the attack.
      * But at least one army will move from attacking to defending country.

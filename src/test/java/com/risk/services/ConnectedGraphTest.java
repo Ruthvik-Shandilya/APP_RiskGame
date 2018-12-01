@@ -95,18 +95,27 @@ public class ConnectedGraphTest {
 
 	}
 
+	/**
+	 * Test method to check non-connectivity of graph 
+	 */
 	@Test
 	public void isConnectedFalseTest(){
 
 		assertEquals(false,connectedGraph1.isConnected());
 	}
 
+	/**
+	 * Test method to check connectivity of subGraph
+	 */
 	@Test
 	public void isConnectedSubGraphTest(){
 
 		assertTrue(connectedGraph.isConnectedSubGraph());
 	}
 
+	/**
+	 * Test method to check non-connectivity of subGraph
+	 */
 	@Test
 	public void isConnectedSubGraphFalseTest(){
 

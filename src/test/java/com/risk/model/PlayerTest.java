@@ -177,6 +177,9 @@ public class PlayerTest {
 		
 	}
 
+	/**
+	 * Test to check assignment of armies to player
+	 */
 	@Test
 	public void assignArmiesToPlayerTest(){
 
@@ -235,7 +238,6 @@ public class PlayerTest {
 
 		assertEquals(continent.getControlValue()+1, player.findNoOfArmies(player));
 	}
-
 
 	/**
 	 * Test to validate number of armies when player does not owns the continent

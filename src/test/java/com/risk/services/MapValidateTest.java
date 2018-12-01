@@ -63,8 +63,7 @@ public class MapValidateTest {
 	}
 	
 	/**
-	 * Test method for testing invalid file
-	 * 
+	 * Test method for testing invalid file 
 	 */
 	@Test
 	public void validateFileInValidFileTest() {
@@ -72,18 +71,27 @@ public class MapValidateTest {
 		assertFalse(mapValidation.validateMapFile(invalidMapFile));
 	}
 
+	/**
+	 * Test method testing valid file
+	 */
 	@Test
 	public void validateFileConfigTest() {
 
 		assertFalse(mapValidation.validateMapFile(invalidContinentConfigFile));
 	}
-
+	
+	/**
+	 * Test method to check valid adjacent country
+	 */
 	@Test
 	public void validateCountryAdjacencyTest() {
 
 		assertTrue(mapValidation.validateMapFile(countriesNotAdjacentFile));
 	}
 
+	/**
+	 * Test method to check valid map file
+	 */
 	@Test
 	public void validateFileConnectedTest() {
 

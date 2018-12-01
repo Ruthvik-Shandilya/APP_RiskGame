@@ -43,6 +43,11 @@ public class RoundRobin implements Serializable {
 		return this.iterator.next();
 	}
 
+	/**
+	 * Method to update after player loses turn.
+	 * 
+	 * @param player	player object
+	 */
 	public void updateAfterPlayerLost(Player player){
         this.listOfPlayers.remove(player);
         this.iterator = this.listOfPlayers.iterator();

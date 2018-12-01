@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-
 /**
  * Card class which represents the card model of the Risk game.
  * It provides methods for performing operations on the cards
@@ -61,10 +60,20 @@ public class Card extends Observable implements Serializable {
         this.cardType = cardType;
     }
 
+    /**
+     * Method to get current player
+     * 
+     * @return currentPlayer
+     */
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
 
+    /**
+     * Method to set current player
+     * 
+     * @param currentPlayer		cuurent player
+     */
     public void setCurrentPlayer(Player currentPlayer) {
         this.currentPlayer = currentPlayer;
     }
@@ -113,11 +122,14 @@ public class Card extends Observable implements Serializable {
      *
      * @param cardsToExchange cards to exchange
      */
-
     public void setCardsToExchange(List<Card> cardsToExchange) {
         this.cardsToExchange = cardsToExchange;
     }
 
+    /**
+     * Method to automate card window
+     * @param player player object
+     */
     public void automateCardWindow(Player player){
         CardController cardController = new CardController(player, this);
         cardController.automaticCardInitialization();
@@ -141,8 +153,6 @@ public class Card extends Observable implements Serializable {
         }
         return selectedCards;
     }
-
-
 
     /**
      * Method is used to verify ,
@@ -177,7 +187,6 @@ public class Card extends Observable implements Serializable {
      *
      * @param selectedCards cards which are selected by the user to exchange
      */
-
     public void cardsToBeExchanged(List<Card> selectedCards) {
         setCardsToExchange(selectedCards);
         setChanged();
@@ -185,6 +194,12 @@ public class Card extends Observable implements Serializable {
 
     }
 
+    /**
+     * Method to generate valid combination of cards
+     * 
+     * @param selectedCards
+     * @return List of cards
+     */
     public List<Card> generateValidCardCombination(List<Card> selectedCards) {
         HashMap<String, Integer> cardCountMap = new HashMap<>();
         for (Card card : selectedCards) {

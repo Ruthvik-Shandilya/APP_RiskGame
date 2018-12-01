@@ -17,7 +17,7 @@ import java.io.IOException;
  */
 public class TournamentView  implements EventHandler<ActionEvent> {
 
-	/* This method is overridden to create a scene at UI end.
+	/** This method is overridden to create a scene at UI end.
 	 * @see javafx.event.EventHandler#handle(javafx.event.Event)
 	 */
 	@Override

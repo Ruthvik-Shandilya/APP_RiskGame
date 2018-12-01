@@ -1,5 +1,11 @@
 package com.risk.model;
 
+/**
+ * Interface which defines the types of PLAYER.
+ * 
+ * @author Palash Jain
+ *
+ */
 public interface IPlayerType {
     String HUMAN = "Human";
     String AGGRESSIVE = "Aggressive";

@@ -16,7 +16,6 @@ import javafx.stage.Stage;
 
 import java.io.File;
 
-
 /**
  * Launches the Game and provides the main window and the view for the user,
  * either to load or create a new map.
@@ -25,8 +24,6 @@ import java.io.File;
  * @author Ruthvik Shandilya
  */
 public class LaunchGameDriver extends Application {
-
-
     /**
      * The Main Method which Launches the Game and drives by providing
      * the options.
@@ -71,7 +68,6 @@ public class LaunchGameDriver extends Application {
             vbox.getChildren().addAll(gameLabel, optionLabel, loadMapButton(), createMapButton(), startGameButton(), startSavedGameButton(), startTournamentButton());
             Scene scene = new Scene(vbox, 500, 500);
             scene.getStylesheets().add("application.css");
-
 
             primaryStage.setScene(scene);
             primaryStage.show();
@@ -138,6 +134,11 @@ public class LaunchGameDriver extends Application {
         return startGameButton;
     }
 
+    /**
+     * Start saved game Button
+     * 
+     * @return {@link Button} wherein button loads chosen map and starts the game.
+     */
     public static Button startSavedGameButton() {
         Button startSavedGameButton = new Button("Load Saved Game");
         startSavedGameButton.setOnAction(e -> LoadGame.openLoadGame());
@@ -145,6 +146,11 @@ public class LaunchGameDriver extends Application {
         return startSavedGameButton;
     }
 
+    /**
+     * Start tournament Button
+     * 
+     * @return {@link Button} wherein button loads chosen map and starts the game.
+     */
     public static Button startTournamentButton() {
         Button startTournamentButton = new Button("Start Tournament");
         startTournamentButton.setOnAction(new TournamentView());

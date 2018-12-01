@@ -61,6 +61,11 @@ public class Player extends Observable implements Observer,Serializable {
         armyCount = 0;
     }
     
+    /**
+     * Constructor for player class
+     * 
+     * @param name	player name
+     */
     public Player(String name) {
     	this.name=name;
     	this.cardList = new ArrayList<>();
@@ -90,6 +95,12 @@ public class Player extends Observable implements Observer,Serializable {
         this.addObserver(gamePlayController);
     }
 
+    /**
+     * Constructor for player
+     * 
+     * @param name		name
+     * @param playerType	playerType
+     */
     public Player(String name, String playerType) {
         armyCount = 0;
         this.name = name;
@@ -114,7 +125,6 @@ public class Player extends Observable implements Observer,Serializable {
      *
      * @return player's name
      */
-
     public String getName() {
         return name;
     }
@@ -124,7 +134,6 @@ public class Player extends Observable implements Observer,Serializable {
      *
      * @param name of the player
      */
-
     public void setName(String name) {
         this.name = name;
     }
@@ -192,15 +201,28 @@ public class Player extends Observable implements Observer,Serializable {
         this.cardList = cardList;
     }
 
+    /**
+     * Method for getting playerType
+     * 
+     * @return
+     */
     public String getPlayerType() {
         return playerType;
     }
     
-
+    /**
+     * Method for setting player behaviour
+     * @param playerBehaviour
+     */
     public void setPlayerBehaviour(PlayerBehaviour playerBehaviour) {
 		this.playerBehaviour = playerBehaviour;
 	}
 
+    /**
+     * Method to get player behaviour
+     * 
+     * @return playerBehaviour
+     */
 	public PlayerBehaviour getPlayerBehaviour() {
         return playerBehaviour;
     }
@@ -234,7 +256,6 @@ public class Player extends Observable implements Observer,Serializable {
         return Player.currentPlayer;
     }
 
-
     /**
      * Method for allocating initial armies to the player,
      * depending upon the total number of players
@@ -242,7 +263,6 @@ public class Player extends Observable implements Observer,Serializable {
      * @param players List of all the players
      * @return true, is armies are successfully assigned,; otherwise false
      */
-
     public boolean assignArmiesToPlayers(List<Player> players) {
         boolean isSuccessfulAssignment = false;
         int armiesPerPlayer = 0;
@@ -267,7 +287,6 @@ public class Player extends Observable implements Observer,Serializable {
 
         return isSuccessfulAssignment;
     }
-
 
     /**
      * Method for generating players according to the data entered by the user
@@ -294,7 +313,6 @@ public class Player extends Observable implements Observer,Serializable {
      * @param currentPlayer Player to which armies are to be allocated
      * @return Player, object of the current player
      */
-
     public Player noOfReinforcementArmies(Player currentPlayer) {
         currentPlayer.setArmyCount(currentPlayer.getArmyCount() + currentPlayer.findNoOfArmies(currentPlayer));
         System.out.println("Total number of armies available to player " + currentPlayer.getName() + ": " + currentPlayer.getArmyCount() + "\n");
@@ -303,6 +321,12 @@ public class Player extends Observable implements Observer,Serializable {
         return currentPlayer;
     }
 
+    /**
+     * Method to calculate no of armies
+     * 
+     * @param player
+     * @return numberOfArmies
+     */
     public int findNoOfArmies(Player player) {
         int noOfCountries = player.getPlayerCountries().size();
         int numberOfArmies = (int) Math.floor(noOfCountries / 3);
@@ -384,7 +408,6 @@ public class Player extends Observable implements Observer,Serializable {
      * @param adjCountries      adjacent countries list
      * @param playerList        list of players
      */
-
     public void fortificationPhase(ListView<Country> selectedCountries, ListView<Country> adjCountries,
                                    List<Player> playerList) {
         boolean success = currentPlayer.getPlayerBehaviour().fortificationPhase(selectedCountries, adjCountries, currentPlayer);
@@ -450,6 +473,11 @@ public class Player extends Observable implements Observer,Serializable {
         }
     }
 
+    /**
+     * Method for assigning player armies to country
+     * 
+     * @param currentPlayer		name of current Player
+     */
     public void automaticAssignPlayerArmiesToCountry(Player currentPlayer) {
         if (currentPlayer.getArmyCount() > 0) {
             Country country = currentPlayer.getPlayerCountries()
@@ -468,8 +496,6 @@ public class Player extends Observable implements Observer,Serializable {
      * @param allPlayers List of all the players of playing the game.
      * @return true if player has armies left; otherwise false.
      */
-
-
     public boolean isPlayerArmyLeft(List<Player> allPlayers) {
         int count = 0;
 
@@ -485,14 +511,12 @@ public class Player extends Observable implements Observer,Serializable {
         }
     }
 
-
     /**
      * Method to check if the player can attack or not.
      *
      * @param attackingCountries List view of all the countries of the player
      * @return true if the player can attack; other wise false
      */
-
     public boolean playerCanAttack(ListView<Country> attackingCountries) {
         boolean canAttack = currentPlayer.getPlayerBehaviour().playerCanAttack(attackingCountries);
         if (!canAttack) {
@@ -530,7 +554,6 @@ public class Player extends Observable implements Observer,Serializable {
      * @param playersPlaying List containing all the players playing the game
      * @return Player object of the lost player
      */
-
     public List<Player> checkPlayerLost(List<Player> playersPlaying) {
         List<Player> playersLost = new ArrayList<>();
         for (Player player : playersPlaying) {
@@ -563,7 +586,6 @@ public class Player extends Observable implements Observer,Serializable {
      * @param numberOfCardSetExchanged Number of card sets to be exchanged
      * @return Player object exchanging the cards
      */
-
     public Player exchangeCards(List<Card> selectedCards, int numberOfCardSetExchanged) {
 
         currentPlayer.setArmyCount(currentPlayer.getArmyCount() + (5 * numberOfCardSetExchanged));

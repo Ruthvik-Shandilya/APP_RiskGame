@@ -38,10 +38,12 @@ public class PlayerDetailsController implements Initializable {
      * Map Object
      */
     private MapIO mapIO;
-
+    
+    /** Layout component for player details*/
     @FXML
     private VBox playerDetails;
 
+    /** Layout component for player types */
     @FXML
     private VBox playerTypes;
 
@@ -83,7 +85,10 @@ public class PlayerDetailsController implements Initializable {
         startGame.setDisable(true);
         playerCountListener();
     }
-
+    
+    /**
+     * Listener to count players
+     */
     public void playerCountListener() {
         playerCount.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Integer>() {
             @Override
@@ -97,6 +102,9 @@ public class PlayerDetailsController implements Initializable {
         });
     }
 
+    /**
+     * Method to refresh list of players
+     */
     public void refreshPlayerList() {
         playerDetails.getChildren().clear();
         playerDetails.setSpacing(10);
@@ -108,6 +116,9 @@ public class PlayerDetailsController implements Initializable {
 
     }
 
+    /**
+     * Method to refresh player
+     */
     public void refreshPlayerTypes(){
         playerTypes.getChildren().clear();
         playerTypes.setSpacing(10);
@@ -117,7 +128,10 @@ public class PlayerDetailsController implements Initializable {
         }
     }
 
-
+    /**
+     * Method to get plater details
+     * @return hBox		player details
+     */
     public HBox getPlayersDetailsBox() {
         PlayerDetailsController.numberOfPlayers++;
 
@@ -133,6 +147,10 @@ public class PlayerDetailsController implements Initializable {
         return hBox;
     }
 
+    /**
+     * Method to get player types
+     * @return hBox		players types
+     */
     public HBox getPlayerTypesBox(){
         String playerTypes[] = {IPlayerType.HUMAN, IPlayerType.AGGRESSIVE, IPlayerType.BENEVOLENT, IPlayerType.RANDOM,
                                 IPlayerType.CHEATER};
@@ -199,6 +217,12 @@ public class PlayerDetailsController implements Initializable {
         startGame.setOnAction(new GamePlayView(this.mapIO, playerDetailsAndType));
     }
 
+    /**
+     * Method to validate details of player
+     * 
+     * @param hBoxList		hBoxList
+     * @return true or false
+     */
     public boolean validatePlayerDetails(ObservableList<Node> hBoxList) {
         for (Node n : hBoxList) {
             HBox box = (HBox) n;
