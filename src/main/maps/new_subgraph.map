@@ -1,0 +1,17 @@
+[Map]
+author=Sean O'Connor
+warn=yes
+image=Africa.bmp
+wrap=no
+scroll=horizontal
+
+
+[Continents]
+Northern Africa=4
+UK and Ireland=4
+
+[Territories]
+Egypt,415,99,Northern Africa,Libya,Ireland,Northern Ireland
+Libya,314,94,Northern Africa,Egypt
+Ireland,81,320,UK and Ireland,Egypt
+Northern Ireland,98,295,UK and Ireland,Egypt
