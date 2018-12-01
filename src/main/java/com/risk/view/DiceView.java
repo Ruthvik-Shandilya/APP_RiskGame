@@ -20,10 +20,13 @@ import javafx.stage.Stage;
  */
 public class DiceView {
 
-    /*
-     * (non-Javadoc)
-     * This method is overridden to create a scene at UI end.
-     * @see javafx.event.EventHandler#handle(javafx.event.Event)
+    /**
+     * This method create a scene at UI end and opens a window for dice.
+     * 
+     * @param dice					object of Dice
+     * @param player				object of Player
+     * @param gamePlayConroller		object of GamePlayController
+     * 
      */
     public static void openDiceWindow(Dice dice, Player player, GamePlayController gamePlayController) {
         final Stage diceStage = new Stage();

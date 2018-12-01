@@ -23,6 +23,7 @@ public class GamePlayView implements EventHandler<ActionEvent> {
 	/** Object for MapIO Class */
     private MapIO mapIO;
 
+    /** HashMap to store names and type of players */
     private HashMap<String,String> playerNamesAndTypes;
 
 

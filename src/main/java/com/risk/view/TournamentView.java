@@ -10,31 +10,39 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-
+/**
+ * @author Palash Jain
+ * @author Neha Pal
+ * This class provides the view for the user showing game screen..
+ */
 public class TournamentView  implements EventHandler<ActionEvent> {
-    @Override
-    public void handle(ActionEvent event) {
 
-        final Stage tournamentStage = new Stage();
-        TournamentController tournamentController =  new TournamentController();
-        tournamentStage.initModality(Modality.APPLICATION_MODAL);
+	/* This method is overridden to create a scene at UI end.
+	 * @see javafx.event.EventHandler#handle(javafx.event.Event)
+	 */
+	@Override
+	public void handle(ActionEvent event) {
 
-        tournamentStage.setTitle("Tournament");
+		final Stage tournamentStage = new Stage();
+		TournamentController tournamentController =  new TournamentController();
+		tournamentStage.initModality(Modality.APPLICATION_MODAL);
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/TournamentView.fxml"));
-        loader.setController(tournamentController);
+		tournamentStage.setTitle("Tournament");
 
-        Parent root = null;
-        try {
-            root = loader.load();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/TournamentView.fxml"));
+		loader.setController(tournamentController);
 
-        }
+		Parent root = null;
+		try {
+			root = loader.load();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 
-        Scene scene = new Scene(root);
-        tournamentStage.setScene(scene);
-        tournamentStage.show();
-    }
+		}
+
+		Scene scene = new Scene(root);
+		tournamentStage.setScene(scene);
+		tournamentStage.show();
+	}
 }
