@@ -157,6 +157,8 @@ public class DiceController extends Observable implements Initializable {
      * DiceController Constructor
      *
      * @param dice Dice object
+     * @param playerBehaviour Player Behavior Object
+     * @param gamePlayController GamePlayController object
      */
     public DiceController(Dice dice, PlayerBehaviour playerBehaviour, GamePlayController gamePlayController) {
         this.dice = dice;

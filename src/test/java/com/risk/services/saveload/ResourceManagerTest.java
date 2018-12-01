@@ -17,6 +17,7 @@ public class ResourceManagerTest {
 
 	/**
 	 * Test to check name and code saved.
+	 * @throws IOException,ClassNotFoundException may throw IOException,ClassNotFoundException
 	 */
 	@Test
 	public void saveLoadTest() throws IOException,ClassNotFoundException{

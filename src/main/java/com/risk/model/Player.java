@@ -70,6 +70,8 @@ public class Player extends Observable implements Observer,Serializable {
      * Player constructor
      *
      * @param name name
+     * @param  playerType player type as string
+     * @param gamePlayController GamePlayController object
      */
     public Player(String name, String playerType, GamePlayController gamePlayController) {
         armyCount = 0;

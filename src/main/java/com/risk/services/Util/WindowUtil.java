@@ -99,7 +99,7 @@ public class WindowUtil {
     /**
      * Method for making checkbox visible.
      *
-     * @param controls
+     * @param controls any number of checkboxes
      */
 
     public static void showCheckBox(Control... controls) {
