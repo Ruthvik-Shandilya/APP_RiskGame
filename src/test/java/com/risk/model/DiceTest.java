@@ -34,6 +34,8 @@ public class DiceTest {
 	/** ArrayList to hold list of players countries */
 	private ArrayList<Country> myCountries;
 	
+	private ArrayList<Country> myCountries1;
+	
 	/** ArrayList to hold play result */
 	private ArrayList<String> playResult;
 	
@@ -44,12 +46,12 @@ public class DiceTest {
 	@Before
 	public void initialize() {
 		
-//		player1 = new Player("Player1","TestPlayer");
+		player1 = new Player("Player1");
 		attackingCountry = new Country("India");
 		attackingCountry.setPlayer(player1);
 		attackingCountry.setNoOfArmies(3);
 		
-//		player2 = new Player("Player2","TestPlayer");
+		player2 = new Player("Player2");
 		defendingCountry = new Country("China");
 		
 		myCountries = new ArrayList<>();
@@ -57,9 +59,15 @@ public class DiceTest {
 		player2.setMyCountries(myCountries);
 		defendingCountry.setPlayer(player2);
 		
+		myCountries1 = new ArrayList<>();
+		myCountries1.add(attackingCountry);
+		player1.setMyCountries(myCountries1);
+		
 		defendingCountry.setNoOfArmies(1);
 				
 		dice = new Dice(attackingCountry, defendingCountry);
+		
+		dice.setDefendingCountry(defendingCountry);
 		
 		playResult = new ArrayList<>();
 	}

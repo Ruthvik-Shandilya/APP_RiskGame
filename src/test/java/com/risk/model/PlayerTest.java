@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.risk.services.MapIO;
+import com.risk.strategy.Human;
 
 import javafx.embed.swing.JFXPanel;
 import javafx.fxml.FXML;
@@ -100,9 +101,9 @@ public class PlayerTest {
 
 		player = new Player();
 		playerArmy = new Player();
-//		player1 = new Player("player1","TestPlayer");
-//		player2 = new Player("player2","TestPlayer");
-//		playerPlaying = new Player("playerPlaying","TestPlayer");
+		player1 = new Player("player1");
+		player2 = new Player("player2");
+		playerPlaying = new Player("playerPlaying");
 		player3 = new Player();
 		
 		players = new ArrayList<Player>();
@@ -180,11 +181,11 @@ public class PlayerTest {
 	public void assignArmiesToPlayerTest(){
 
 		playersList = new ArrayList<>();
-//		playersList.add(new Player("Karan","TestPlayer"));
-//		playersList.add(new Player("Pal","TestPlayer"));
-//		playersList.add(new Player("sharma","TestPlayer"));
-//
-//		assertTrue(playerArmy.assignArmiesToPlayers(playersList,textArea));
+		playersList.add(new Player("Karan"));
+		playersList.add(new Player("Pal"));
+		playersList.add(new Player("sharma"));
+
+		assertTrue(playerArmy.assignArmiesToPlayers(playersList));
 	}
 	
 	/**
@@ -193,7 +194,7 @@ public class PlayerTest {
 	@Test
 	public void isAttackMoveValidTest() {
 		attackingCountry.setNoOfArmies(3);
-//		assertTrue(player1.isAttackMoveValid(attackingCountry,defendingCountry));
+		assertTrue(player1.isAttackMoveValid(attackingCountry,defendingCountry));
 	}
 	
 	/**
@@ -202,8 +203,9 @@ public class PlayerTest {
 	@Test
 	public void checkPlayerLostTest()  {
 		player1.setMyCountries(myCountries);
-		player1.setPlayerPlaying(player1);
-//		assertEquals(player2.getName(),player1.checkPlayerLost(players).getName());
+		player2.setMyCountries(new ArrayList<Country>());
+		Player.currentPlayer = player1;
+		assertEquals(player2.getName(),player1.checkPlayerLost(players).get(0).getName());
 	}
 	
 	/**
@@ -213,8 +215,8 @@ public class PlayerTest {
 	public void checkPlayerNotLostTest() {
 		player1.setMyCountries(myCountries);
 		player2.setMyCountries(myCountries);
-		player1.setPlayerPlaying(player1);
-		assertNull(player1.checkPlayerLost(players));	
+		Player.currentPlayer = player1;
+		assertTrue(player1.checkPlayerLost(players).isEmpty());	
 	}
 	
 	/**
@@ -251,6 +253,7 @@ public class PlayerTest {
 	 */
 	@Test
 	public void isFortificationValidTest(){
+		player1.setPlayerBehaviour(new Human());
 		country1.setPlayer(player1);
 		country1.setNoOfArmies(3);
 		country2.setPlayer(player1);
@@ -262,6 +265,7 @@ public class PlayerTest {
 	 */
 	@Test
 	public void isFortificationValidFalse(){
+		player1.setPlayerBehaviour(new Human());
 		country1.setPlayer(player1);
 		country1.setNoOfArmies(0);
 		country2.setPlayer(player1);
@@ -277,7 +281,7 @@ public class PlayerTest {
 		listOfCards.add(new Card(ICardType.ARTILLERY));
 		listOfCards.add(new Card(ICardType.INFANTRY));
 		listOfCards.add(new Card(ICardType.CAVALRY));
-//		testPlayer = player3.exchangeCards(listOfCards,1,textArea);
+		testPlayer = player3.exchangeCards(listOfCards,1);
 		assertEquals(5,testPlayer.getArmyCount());
 	}
 }

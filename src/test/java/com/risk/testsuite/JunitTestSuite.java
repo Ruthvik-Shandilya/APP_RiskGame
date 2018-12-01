@@ -9,12 +9,15 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 import com.risk.services.gameplay.RoundRobinTest;
+import com.risk.services.saveload.ResourceManagerTest;
+import com.risk.strategy.BenevolentTest;
+import com.risk.strategy.HumanTest;
 
 
 
 @RunWith(Suite.class)
-@SuiteClasses({MapEditorTest.class,MapGraphTest.class,MapValidateTest.class,
-	RoundRobinTest.class,ConnectedGraphTest.class,CardTest.class,DiceTest.class,PlayerTest.class,StartUpPhaseTest.class})
+@SuiteClasses({MapEditorTest.class,MapGraphTest.class,MapValidateTest.class,ResourceManagerTest.class,
+	RoundRobinTest.class,BenevolentTest.class,HumanTest.class,ConnectedGraphTest.class,CardTest.class,DiceTest.class,PlayerTest.class,StartUpPhaseTest.class})
 
 /**
  * TestSuite Class to test all test cases

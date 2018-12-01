@@ -65,7 +65,7 @@ public class StartUpPhaseTest {
 	 */
     @Before
     public void initialize(){
-//        startUpPhase = new StartUpPhase();
+        startUpPhase = new StartUpPhase();
         continent = new Continent("Asia",4);
 
         country1 = new Country("India");
@@ -80,7 +80,7 @@ public class StartUpPhaseTest {
         country2.setAdjacentCountries(country1.getAdjacentCountries());
 
         map = new MapIO();
-//        player = new Player("Karan","TestPlayer");
+        player = new Player("Karan");
 
         listOfContinents= new ArrayList<>();
         listOfContinents.add(continent);
@@ -101,7 +101,7 @@ public class StartUpPhaseTest {
      */
     @Test
     public void assignCardToCountryTest(){
-//        assertNotNull(startUpPhase.assignCardToCountry(map,textArea));
+        assertNotNull(startUpPhase.assignCardToCountry(map));
    }
 
     /**
@@ -109,6 +109,6 @@ public class StartUpPhaseTest {
      */
     @Test
     public void assignCountryToPlayerTest(){
-       // assertNotNull(startUpPhase.assignCountryToPlayer(map,listOfPlayers,textArea));
+        assertNotNull(startUpPhase.assignCountryToPlayer(map,listOfPlayers));
     }
 }
