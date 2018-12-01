@@ -7,7 +7,7 @@ import org.junit.Before;
 import java.io.*;
 
 /**
- * Test class for Round Robin.
+ * Test class for ResourceManager.
  * 
  * @author Neha Pal
  * @author Ruthvik Shandilya

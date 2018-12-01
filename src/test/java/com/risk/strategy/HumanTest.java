@@ -10,7 +10,7 @@ import com.risk.model.Country;
 import com.risk.model.Player;
 
 /**
- * Test class for Round Robin.
+ * Test class for Human class.
  * 
  * @author Neha Pal
  * @author Palash Jain
