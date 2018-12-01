@@ -29,8 +29,7 @@ public class PlayerWorldDomination extends Observable implements Serializable {
 	 * 			  MAPIO object.
 	 * 
 	 * @return playerTerPercent
-	 * 			  Percentage of the map controlled by every player.
-	 * 			  
+	 * 			  Percentage of the map controlled by every player.		  
 	 */
 	public HashMap<Player, Double> generateWorldDominationData(MapIO map) {
 
